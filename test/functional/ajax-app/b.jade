@@ -1,0 +1,11 @@
+div
+    p
+        span b-
+        span= number
+    p!= _view.date
+
+    ul
+        li
+            a(class='ajax-autoload', href='/c/1', data-ajax='{"reloadTime":10}') c-1
+        li
+            a(class='ajax-autoload', href='/c/2', data-ajax='{"reloadTime":15}') c-2

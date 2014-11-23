@@ -1,0 +1,26 @@
+{
+    "name": "my-app",
+    "description": "My Danf application",
+    "version": "0.1.0",
+    "author": "Me <me@myhome.me>",
+    "contributors": [],
+    "dependencies": {
+        "danf": "0.0.0"
+    },
+    "devDependencies": {
+        "mocha": "2.0.*",
+        "supertest": "0.15.*"
+    },
+    "keywords": [
+        "my-app",
+        "danf"
+    ],
+    "repository": "git://github.com/me/my-app",
+    "main": "app",
+    "scripts": {
+        "test": "make test"
+    },
+    "engines": {
+        "node": "*"
+    }
+}

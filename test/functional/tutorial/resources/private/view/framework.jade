@@ -1,0 +1,14 @@
+h2 Answer the following questions to find the framework of your dream!
+
+p (Check boxes to answer yes)
+
+form(action='/api/frameworks/scores', id='framework-form' class='ajax', method='get', data-ajax='{"dataType": "json"}')
+    ul
+      each question, name in questions
+        li
+            label= question
+            input(name='answers['+name+']', type='checkbox', value=1)
+    input(type='submit', data-ajax='{"event": "framework", "preventDefault": true, "preventHistory": true}')
+
+h3(id='result-title') Result:
+div(id='result')
