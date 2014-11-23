@@ -1,11 +1,11 @@
 {
     "name": "tutorial",
     "description": "My Danf application",
-    "version": "0.1.0",
+    "version": "0.0.0",
     "author": "Me <me@myhome.me>",
     "contributors": [],
     "dependencies": {
-        "danf": "0.1.1",
+        "danf": "0.1.2",
         "amdefine": "0.1.*"
     },
     "devDependencies": {
