@@ -5,7 +5,8 @@
     "author": "Me <me@myhome.me>",
     "contributors": [],
     "dependencies": {
-        "danf": "0.0.0"
+        "danf": "0.1.1",
+        "amdefine": "0.1.*"
     },
     "devDependencies": {
         "mocha": "1.12.1",

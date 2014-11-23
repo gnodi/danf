@@ -1,7 +1,7 @@
 {
     "name": "danf",
     "description": "Javascript/Node framework providing many features in order to produce an evolutionary, maintainable, testable and performant code",
-    "version": "0.1.0",
+    "version": "0.1.1",
     "author": "Thomas Prelot <tprelot@gmail.com>",
     "contributors": [
         {
