@@ -1,5 +1,5 @@
-Danf
-====
+![Danf](img/small-logo.jpg)
+===========================
 
 [![NPM Version][npm-image]][npm-url]
 [![NPM Downloads][downloads-image]][downloads-url]
