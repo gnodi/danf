@@ -13,20 +13,20 @@ var mapper = new Mapper(),
 ;
 
 var config = {
-    'danf/test': dirname + '/node_modules/test',
+    'danf/test': dirname + '/node-modules/test',
     'danf/public': dirname + '/public',
-    'danf/test/file': dirname + '/node_modules/test/directory/file.js',
-    'danf/test/js.js': dirname + '/node_modules/test/js.js',
-    'danf/foo/bar.js': dirname + '/node_modules/foo/bar',
+    'danf/test/file': dirname + '/node-modules/test/directory/file.js',
+    'danf/test/js.js': dirname + '/node-modules/test/js.js',
+    'danf/foo/bar.js': dirname + '/node-modules/foo/bar',
     'danf/protected/public.js': dirname + '/protected/public.js',
-    'danf/root': dirname + '/node_modules/foo/..',
-    '!danf/test/private': dirname + '/node_modules/test/private',
+    'danf/root': dirname + '/node-modules/foo/..',
+    '!danf/test/private': dirname + '/node-modules/test/private',
 }
 
 var tests = [
     {
         path: 'danf/test/test',
-        expected: dirname + '/node_modules/test/test.js'
+        expected: dirname + '/node-modules/test/test.js'
     },
     {
         path: 'danf/public/foo',
@@ -38,11 +38,11 @@ var tests = [
     },
     {
         path: 'danf/test/js',
-        expected: dirname + '/node_modules/test/js.js'
+        expected: dirname + '/node-modules/test/js.js'
     },
     {
         path: 'danf/test/file',
-        expected: dirname + '/node_modules/test/directory/file.js'
+        expected: dirname + '/node-modules/test/directory/file.js'
     },
     {
         path: 'danf/protected/public',
@@ -54,11 +54,11 @@ var tests = [
     },
     {
         path: 'danf/foo/bar',
-        expected: dirname + '/node_modules/foo/bar.js'
+        expected: dirname + '/node-modules/foo/bar.js'
     },
     {
         path: 'danf/root/index',
-        expected: dirname + '/node_modules/index.js'
+        expected: dirname + '/node-modules/index.js'
     }
 ];
 
@@ -115,11 +115,11 @@ describe('Mapper', function() {
 
     it('should allow to define a default extension', function() {
         cssMapper.processConfiguration({
-            'danf/test': dirname + '/node_modules/test'
+            'danf/test': dirname + '/node-modules/test'
         });
 
         var result = cssMapper.match('danf/test/test');
 
-        assert.equal(result, dirname + '/node_modules/test/test.css');
+        assert.equal(result, dirname + '/node-modules/test/test.css');
     })
 })
