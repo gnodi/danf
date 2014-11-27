@@ -14,7 +14,7 @@ Yes!
 
 ###Why?
 
-The main goal of this framework is to help you organize, rationalize and homogenize your javascript code (website, api, ...) on both the server (nodejs) and client (browser) sides.
+The main goal of this full-stack framework is to help you organize, rationalize and homogenize your javascript code (website, api, ...) on both the server (nodejs) and client (browser) sides.
 
 ###Which features of this framework can help me to realize that?
 

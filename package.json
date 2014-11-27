@@ -28,12 +28,24 @@
     "keywords": [
         "danf",
         "framework",
+        "full-stack"
         "client",
         "server",
         "dependency",
         "injection",
         "node",
-        "nodejs"
+        "nodejs",
+        "oop",
+        "object",
+        "class",
+        "classes",
+        "interface",
+        "inheritance",
+        "modular",
+        "module",
+        "performant",
+        "event",
+        "test"
     ],
     "repository": "git://github.com/gnodi/danf",
     "main": "index",

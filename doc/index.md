@@ -3,7 +3,7 @@ Danf Documentation
 
 [←](../README.md)
 
-Danf is a javascript/node framework providing many features in order to produce an evolutionary, maintainable, testable and performant code:
+Danf is a javascript/node full-stack framework providing many features in order to produce an evolutionary, maintainable, testable and performant code:
 * An object-oriented programming layer.
 * An inversion of control design (dependency injection via configurations files).
 * A simple system allowing to use the same code on both the client and server sides.
