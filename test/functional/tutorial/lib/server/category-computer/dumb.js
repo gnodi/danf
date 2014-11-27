@@ -12,7 +12,7 @@ function Dumb() {
 }
 
 // Define the implemented interfaces.
-Dumb.defineExtentedClass('categoryComputer.abstract');
+Dumb.defineExtendedClass('categoryComputer.abstract');
 
 /**
  * @inheritdoc

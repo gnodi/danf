@@ -273,7 +273,7 @@ function Dumb() {
 }
 
 // Define the implemented interfaces.
-Dumb.defineExtentedClass('categoryComputer.abstract');
+Dumb.defineExtendedClass('categoryComputer.abstract');
 
 /**
  * @inheritdoc
@@ -300,7 +300,7 @@ function Useless() {
 }
 
 // Define the implemented interfaces.
-Useless.defineExtentedClass('categoryComputer.abstract');
+Useless.defineExtendedClass('categoryComputer.abstract');
 
 /**
  * @inheritdoc
@@ -311,7 +311,7 @@ Useless.prototype.computeBoost = function() {
 ```
 
 Ok, the implementation is not really interesting and does not justify an inheritance, but remember that our objective is to discover the framework.
-You can notice the method call `Dumb.defineExtentedClass('categoryComputer.abstract');`. This means that the class Dumb extend another class.
+You can notice the method call `Dumb.defineExtendedClass('categoryComputer.abstract');`. This means that the class Dumb extend another class.
 
 We are going to use a last class to retrieve all the configured questions in a flat object:
 
@@ -385,7 +385,7 @@ module.exports = {
 };
 ```
 
-This is where is defined the name of the class `categoryComputer.abstract` we used in `Dumb.defineExtentedClass('categoryComputer.abstract');`.
+This is where is defined the name of the class `categoryComputer.abstract` we used in `Dumb.defineExtendedClass('categoryComputer.abstract');`.
 
 This is done by default in the proto application (you don't have to do it) but the parameters are linked to the classes section in this manner:
 

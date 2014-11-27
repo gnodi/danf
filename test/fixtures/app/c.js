@@ -4,7 +4,7 @@ var C = function() {
     C.Parent.call(this);
 };
 
-C.defineExtentedClass('b');
+C.defineExtendedClass('b');
 
 C.prototype.c = function() {
     this._c++;

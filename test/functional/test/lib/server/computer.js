@@ -6,7 +6,7 @@ function Computer() {
     this.value = 3;
 }
 
-Computer.defineExtentedClass('abstractComputer');
+Computer.defineExtendedClass('abstractComputer');
 
 Object.defineProperty(Computer.prototype, 'value', {
     get: function() { return this._value; },

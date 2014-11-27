@@ -12,7 +12,7 @@ function Useless() {
 }
 
 // Define the implemented interfaces.
-Useless.defineExtentedClass('categoryComputer.abstract');
+Useless.defineExtendedClass('categoryComputer.abstract');
 
 /**
  * @inheritdoc

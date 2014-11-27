@@ -99,7 +99,7 @@ function SuperComputer() {
     SuperComputer.Parent.call(this);
 }
 
-SuperComputer.defineExtentedClass('computer');
+SuperComputer.defineExtendedClass('computer');
 
 // Method.
 SuperComputer.prototype.compute = function() {
@@ -107,7 +107,7 @@ SuperComputer.prototype.compute = function() {
 }
 ```
 
-You can inherit from a class using the method `defineExtentedClass` on the child class and passing the declared name of the class.
+You can inherit from a class using the method `defineExtendedClass` on the child class and passing the declared name of the class.
 It is possible to call the parent constructor using `.Parent.call(this, ...);` in the constructor of the child class.
 
 ###Use an abstract class
@@ -168,7 +168,7 @@ module.exports = MyComputer;
 function MyComputer() {
 }
 
-MyComputer.defineExtentedClass('lab:abstractComputer');
+MyComputer.defineExtendedClass('lab:abstractComputer');
 ```
 
 ###Define interfaces

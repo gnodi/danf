@@ -6,7 +6,7 @@ var Computer = function(counter) {
     Computer.Parent.call(this, null, 2);
 };
 
-Computer.defineExtentedClass('dep1:computer');
+Computer.defineExtendedClass('dep1:computer');
 Computer.defineDependency('counter', 'dep1:module10:counter');
 
 Computer.prototype.inc = function() {
