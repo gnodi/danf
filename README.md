@@ -81,7 +81,7 @@ Danf is a brand new framework. It may seem a little hard to handle at the beginn
 
 Of course, the community is still small, but it is an active community. You can post your issues on [github](https://github.com/gnodi/danf/issues) or on [stack overflow](http://stackoverflow.com/) with the tag `danf` and you will get an answer as fast as possible.
 
-> *<trailer-voice>*Have you ever wanted to participate in the early stages of a new technology? Let's try it on Danf! Join the community and contribute now.*</trailer-voice>*
+> `<trailer-voice>`Have you ever wanted to participate in the early stages of a new technology? Let's try it on Danf! Join the community and contribute now.`</trailer-voice>`
 
 Documentation
 -------------
