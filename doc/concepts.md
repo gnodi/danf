@@ -79,7 +79,7 @@ Coupling is the degree of interaction between two classes. In an inheritance rel
 Imagine, `Logger` has 30 methods. Sale handlers only need to call method `log()`. Then, a sale handler only need an object from a class implementing the interface `LoggerInterface` defining `log()`.
 
 You can easily see the resulting benefits:
-* Evolutionary: you can change the class `Logger` by another one implementing `LoggerInterface`.
+* Scalability: you can change the class `Logger` by another one implementing `LoggerInterface`.
 * Maintenability: you can understand real dependencies between classes at a glance.
 * Testability: you can mock dependencies just implementing the interfaces.
 

@@ -18,7 +18,7 @@ The main goal of this full-stack framework is to help you organize, rationalize 
 
 ###Which features of this framework can help me to realize that?
 
-Danf provides many features in order to produce an evolutionary, maintainable, testable and performant code:
+Danf provides many features in order to produce an scalable, maintainable, testable and performant code:
 * An object-oriented programming layer.
 * An inversion of control design (dependency injection via configurations files).
 * A simple system allowing to use the same code on both the client and server sides.
