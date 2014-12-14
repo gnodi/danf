@@ -5,7 +5,7 @@ require('../../lib/init');
 var assert = require('assert'),
     utils = require('../../lib/utils'),
     Interfacer = require('../../lib/object/interfacer'),
-    InterfacesIndexer = require('../../lib/object/interfaces-indexer')
+    InterfacesRegistry = require('../../lib/object/interfaces-registry')
 ;
 
 var MyClass = function() { this._value = 1 },
@@ -69,8 +69,8 @@ Object.defineProperty(C.prototype, 'c', {
     value: 'c'
 });
 
-var interfacesIndexer = new InterfacesIndexer(),
-    interfacer = new Interfacer(interfacesIndexer)
+var interfacesRegistry = new InterfacesRegistry(),
+    interfacer = new Interfacer(interfacesRegistry)
 ;
 
 var config = {
@@ -134,7 +134,7 @@ describe('Interfacer', function() {
     describe('method "addProxy" returns a proxy on the given object', function() {
         var obj = new MyClass();
 
-        interfacesIndexer.processConfiguration(config['interfaces']);
+        interfacesRegistry.processConfiguration(config['interfaces']);
 
         it('in order to expose only the given interface', function() {
             obj = interfacer.addProxy(obj, 'myInterface');

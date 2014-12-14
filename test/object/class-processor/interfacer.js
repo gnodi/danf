@@ -5,7 +5,7 @@ require('../../../lib/init');
 var assert = require('assert'),
     utils = require('../../../lib/utils'),
     Interfacer = require('../../../lib/object/class-processor/interfacer'),
-    InterfacesIndexer = require('../../../lib/object/interfaces-indexer')
+    InterfacesRegistry = require('../../../lib/object/interfaces-registry')
 ;
 
 var MyClass = function() { this._value = 1 },
@@ -68,8 +68,8 @@ Object.defineProperty(C.prototype, 'c', {
     value: 'c'
 });
 
-var interfacesIndexer = new InterfacesIndexer(),
-    interfacer = new Interfacer(interfacesIndexer)
+var interfacesRegistry = new InterfacesRegistry(),
+    interfacer = new Interfacer(interfacesRegistry)
 ;
 
 var config = {
@@ -128,7 +128,7 @@ var config = {
 
 describe('Interfacer', function() {
     describe('method "process"', function() {
-        interfacesIndexer.processConfiguration(config['interfaces']);
+        interfacesRegistry.processConfiguration(config['interfaces']);
 
         it('process a class with a defined interfaces without any error', function() {
             interfacer.process(MyClass);

@@ -69,9 +69,9 @@ describe('Danf application', function() {
     })
 
     it('should allow multilevel inheritance', function() {
-        var classesIndexer = app.servicesContainer.get('danf:object.classesIndexer'),
-            a = classesIndexer.get('main:a'),
-            b = classesIndexer.get('main:b')
+        var classesRegistry = app.servicesContainer.get('danf:object.classesRegistry'),
+            a = classesRegistry.get('main:a'),
+            b = classesRegistry.get('main:b')
         ;
 
         assert(typeof a, 'function');

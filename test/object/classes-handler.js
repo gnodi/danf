@@ -4,15 +4,15 @@ require('../../lib/init');
 
 var assert = require('assert'),
     ClassesHandler = require('../../lib/object/classes-handler'),
-    ClassesIndexer = require('../../lib/object/classes-indexer')
+    ClassesRegistry = require('../../lib/object/classes-registry')
 ;
 
 var A = function() {},
     B = function() {}
 ;
 
-var classesIndexer = new ClassesIndexer(),
-    classesHandler = new ClassesHandler(classesIndexer),
+var classesRegistry = new ClassesRegistry(),
+    classesHandler = new ClassesHandler(classesRegistry),
     ClassProcessor = function() {
     }
 ;
@@ -21,8 +21,8 @@ ClassProcessor.prototype.process = function(class_) {
     class_.a = 2;
 }
 
-classesIndexer.index('a', A);
-classesIndexer.index('b', B);
+classesRegistry.index('a', A);
+classesRegistry.index('b', B);
 
 describe('ClassesHandler', function() {
     describe('method "process"', function() {

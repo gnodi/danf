@@ -5,7 +5,7 @@ require('../../../lib/init');
 var assert = require('assert'),
     Extender = require('../../../lib/object/class-processor/extender'),
     ClassesHandler = require('../../../lib/object/classes-handler'),
-    ClassesIndexer = require('../../../lib/object/classes-indexer')
+    ClassesRegistry = require('../../../lib/object/classes-registry')
 ;
 
 var A = function() {
@@ -60,14 +60,14 @@ C.prototype.c = function() {
 
 module.exports = C;
 
-var classesIndexer = new ClassesIndexer(),
-    classesHandler = new ClassesHandler(classesIndexer),
-    extender = new Extender(classesIndexer)
+var classesRegistry = new ClassesRegistry(),
+    classesHandler = new ClassesHandler(classesRegistry),
+    extender = new Extender(classesRegistry)
 ;
 
-classesIndexer.index('a', A);
-classesIndexer.index('b', B);
-classesIndexer.index('c', C);
+classesRegistry.index('a', A);
+classesRegistry.index('b', B);
+classesRegistry.index('c', C);
 
 describe('Extender', function() {
     describe('method "process"', function() {

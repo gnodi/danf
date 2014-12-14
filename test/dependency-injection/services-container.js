@@ -16,13 +16,13 @@ var assert = require('assert'),
     AbstractBuilder = require('../../lib/dependency-injection/service-builder/abstract-service-builder'),
     ReferenceResolver = require('../../lib/manipulation/reference-resolver'),
     ReferenceType = require('../../lib/manipulation/reference-type'),
-    InterfacesIndexer = require('../../lib/object/interfaces-indexer'),
+    InterfacesRegistry = require('../../lib/object/interfaces-registry'),
     utils = require('../../lib/utils')
 ;
 
 var referenceResolver = new ReferenceResolver(),
-    interfacesIndexer = new InterfacesIndexer(),
-    servicesContainer = new ServicesContainer(referenceResolver, interfacesIndexer)
+    interfacesRegistry = new InterfacesRegistry(),
+    servicesContainer = new ServicesContainer(referenceResolver, interfacesRegistry)
 ;
 
 var parameterType = new ReferenceType();
@@ -79,7 +79,7 @@ Provider.prototype.reset = function() {
 };
 Provider.defineImplementedInterfaces(['provider']);
 
-interfacesIndexer.index(
+interfacesRegistry.index(
     'provider',
     {
         methods: {
