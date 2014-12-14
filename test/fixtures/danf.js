@@ -53,9 +53,10 @@ module.exports = {
             a: require('./app/a'),
             b: require('./app/b'),
             c: require('./app/c'),
-            computer: '%computerClass%',
-            manager: '%managerClass%',
-            trigger: '%triggerClass%'
+            computer: '%classes.computer%',
+            manager: '%classes.manager%',
+            trigger: '%classes.trigger%',
+            interfacedData: '%classes.interfacedData%'
         },
         parameters: {
             'dep1:rule': {
@@ -66,10 +67,13 @@ module.exports = {
             adapter: {
                 image: 'image'
             },
-            managerClass: Manager,
-            computerClass: require('./app/computer'),
-            triggerClass: require('./app/trigger'),
-            callbackExecutor: require('./app/callback-executor')
+            classes: {
+                manager: Manager,
+                computer: require('./app/computer'),
+                trigger: require('./app/trigger'),
+                callbackExecutor: require('./app/callback-executor'),
+                interfacedData: require('./app/interfaced-data')
+            }
         },
         interfaces: {
             ManagerInterface: {
@@ -78,6 +82,8 @@ module.exports = {
                         arguments: ['string/fileName']
                     }
                 }
+            },
+            data: {
             }
         },
         services: {
@@ -85,20 +91,20 @@ module.exports = {
                 class: require('./app/c')
             },
             trigger: {
-                class: '%triggerClass%',
+                class: '%classes.trigger%',
                 properties: {
                     eventsHandler: '#danf:event.eventsHandler#'
                 }
             },
             computer: {
-                class: '%computerClass%',
+                class: '%classes.computer%',
                 properties: {
                     counter: '#counter2#',
                     displayer: '#dep1:displayer#'
                 }
             },
             manager: {
-                class: '%managerClass%',
+                class: '%classes.manager%',
                 properties: {
                     providers: '&provider&',
                     timeOut: '$dep2:timeOut$',
@@ -184,7 +190,20 @@ module.exports = {
                 }
             },
             'danf:manipulation.callbackExecutor': {
-                class: '%callbackExecutor%'
+                class: '%classes.callbackExecutor%'
+            },
+            dataProvider: {
+                parent: 'danf:dependencyInjection.objectProvider',
+                properties: {
+                    class: '%classes.interfacedData%',
+                    interface: '[-]data'
+                }
+            },
+            currentDataProvider: {
+                parent: 'danf:dependencyInjection.contextProvider',
+                properties: {
+                    interface: '[-]data'
+                }
             }
         },
         events: {
