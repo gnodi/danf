@@ -1,7 +1,7 @@
 {
     "name": "danf",
     "description": "Javascript/Node OOP full-stack framework providing many features in order to produce an scalable, maintainable, testable and performant code",
-    "version": "0.1.6",
+    "version": "0.1.7",
     "author": "Thomas Prelot <tprelot@gmail.com>",
     "contributors": [
         {
@@ -10,12 +10,14 @@
         }
     ],
     "dependencies": {
-        "connect": "2.27.*",
         "express": "4.10.*",
         "send": "0.10.*",
         "cookie-parser": "1.3.*",
         "express-session": "1.9.*",
-        "express-error-handler": "0.5.*",
+        "express-error-handler": "1.0.*",
+        "escape-html": "1.0.*",
+        "parseurl": "1.3.*",
+        "utils-merge": "1.0.*",
         "jade": "1.8.*",
         "amdefine": "0.1.*",
         "requirejs": "2.1.*",
@@ -47,10 +49,13 @@
         "event",
         "test"
     ],
-    "repository": "git://github.com/gnodi/danf",
+    "license": "MIT",
+    "repository": {
+        "type": "git",
+        "url": "gnodi/danf"
+    },
     "main": "index",
     "scripts": {
-        "prepublish": "npm prune",
         "test": "make test"
     },
     "engines": {
