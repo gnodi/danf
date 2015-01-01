@@ -1,6 +1,8 @@
 'use strict';
 
-var request = require('supertest');
+var request = require('supertest'),
+    assert = require('assert')
+;
 
 function ForumHandler() {
         this._topics = {
@@ -148,6 +150,26 @@ SubrequestExecutor.prototype.execute = function() {
     return [];
 };
 
+function SessionTester() {
+};
+
+SessionTester.prototype.test = function(order) {console.log('-----------', order, typeof order);
+    switch (order) {
+        case '0':
+        console.log('a');console.log(this._sessionHandler);console.log(this._sessionHandler.get('a'));
+            this._sessionHandler.set('a', 1);
+            assert.equal(this._sessionHandler.get('a'), 1);
+            break;
+        case '1':
+        console.log('b');
+            assert.equal(this._sessionHandler.get('a'), 2);
+            break;
+        case '2':
+        console.log('c');
+            break;
+    }
+};
+
 module.exports = {
     config: {
         services: {
@@ -163,6 +185,12 @@ module.exports = {
                     _app: '#danf:app#',
                     _sequencerProvider: '#danf:event.sequencerProvider#',
                     _requestNotifier: '#danf:http.notifier.request#'
+                }
+            },
+            sessionTester: {
+                class: SessionTester,
+                properties: {
+                    _sessionHandler: '#danf:http.sessionHandler#'
                 }
             }
         },
@@ -234,6 +262,31 @@ module.exports = {
                     method: 'execute',
                     returns: 'text'
                 },
+            ],
+            processForum: [
+                {
+                    service: 'danf:manipulation.callbackExecutor',
+                    method: 'execute',
+                    arguments: [
+                        function(parameters, defaultPage) {
+                            var topic = parameters.topic;
+
+                            topic = topic.charAt(0).toUpperCase() + topic.slice(1);
+                            parameters.topic = topic.charAt(0) + topic.slice(1).toLowerCase();
+
+                            parameters.page = undefined !== parameters.page ? parameters.page : defaultPage;
+                        },
+                        '@.@',
+                        '$main:defaultPage$'
+                    ]
+                }
+            ],
+            testSession: [
+                {
+                    service: 'sessionTester',
+                    method: 'test',
+                    arguments: ['@order@']
+                }
             ]
         },
         events: {
@@ -311,6 +364,11 @@ module.exports = {
                 empty: {
                     path: '/empty',
                     methods: ['put']
+                },
+                session: {
+                    path: '/session/:order',
+                    methods: ['get'],
+                    sequences: ['testSession']
                 }
             }
         },
