@@ -153,19 +153,38 @@ SubrequestExecutor.prototype.execute = function() {
 function SessionTester() {
 };
 
-SessionTester.prototype.test = function(order) {console.log('-----------', order, typeof order);
+SessionTester.prototype.test = function(order) {
     switch (order) {
         case '0':
-        console.log('a');console.log(this._sessionHandler);console.log(this._sessionHandler.get('a'));
             this._sessionHandler.set('a', 1);
             assert.equal(this._sessionHandler.get('a'), 1);
+
             break;
         case '1':
-        console.log('b');
-            assert.equal(this._sessionHandler.get('a'), 2);
+            this._sessionHandler.set('b', 2);
+            assert.equal(this._sessionHandler.get('b'), 2);
+            this._sessionHandler.regenerate();
+            assert.equal(this._sessionHandler.get('b'), 2);
+
             break;
         case '2':
-        console.log('c');
+
+            break;
+    }
+};
+
+SessionTester.prototype.testAsync = function(order) {
+    switch (order) {
+        case '0':
+            assert.equal(this._sessionHandler.get('a'), 1);
+
+            break;
+        case '1':
+            assert.equal(this._sessionHandler.get('b'), undefined);
+
+            break;
+        case '2':
+
             break;
     }
 };
@@ -285,6 +304,11 @@ module.exports = {
                 {
                     service: 'sessionTester',
                     method: 'test',
+                    arguments: ['@order@']
+                },
+                {
+                    service: 'sessionTester',
+                    method: 'testAsync',
                     arguments: ['@order@']
                 }
             ]

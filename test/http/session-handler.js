@@ -13,7 +13,7 @@ describe('Request notifier', function() {
     it('should be able to process a request', function(done) {
         request(app)
             .get('/session/0')
-            .expect(200)
+            .expect(204)
             .end(function(err, res) {
                 if (err) {
                     if (res) {
@@ -33,7 +33,7 @@ describe('Request notifier', function() {
     it('should be able to process a request', function(done) {
         request(app)
             .get('/session/1')
-            .expect(200)
+            .expect(204)
             .end(function(err, res) {
                 if (err) {
                     if (res) {
@@ -53,7 +53,7 @@ describe('Request notifier', function() {
     it('should be able to process a request', function(done) {
         request(app)
             .get('/session/2')
-            .expect(200)
+            .expect(204)
             .end(function(err, res) {
                 if (err) {
                     if (res) {
