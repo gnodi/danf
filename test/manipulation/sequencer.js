@@ -3,7 +3,8 @@
 require('../../lib/init');
 
 var assert = require('assert'),
-    Sequencer = require('../../lib/manipulation/sequencer')
+    Sequencer = require('../../lib/manipulation/sequencer'),
+    SequencerStack = require('../../lib/manipulation/sequencer-stack')
 ;
 
 var sequencer = new Sequencer();
@@ -137,5 +138,85 @@ describe('Sequencer', function() {
                 }
             );
         })
+    })
+
+    describe('should evolve independently', function() {
+        var sequencer = new Sequencer(),
+            embeddedSequencer = new Sequencer(),
+            a = 3
+        ;
+
+        sequencer.pipe(function(stream) {
+            return function() {
+                setTimeout(
+                    function() {
+                        embeddedSequencer.start({}, function(stream) {
+                            assert.equal(a, 2);
+
+                            done();
+                        });
+                    },
+                    10
+                );
+
+                return stream;
+            };
+        });
+
+        assert.equal(a, 3);
+
+        sequencer.start(
+            {},
+            null,
+            function(reset) {
+                if (reset) {
+                    a = 2;
+                } else {
+                    a = 1;
+                }
+            }
+        );
+    })
+
+    describe('should be coupled when having the same senquencer stack', function() {
+        var sequencer = new Sequencer(),
+            embeddedSequencer = new Sequencer(),
+            sequencerStack = new SequencerStack(),
+            a = 3
+        ;
+
+        sequencer.sequencerStack = sequencerStack;
+        embeddedSequencer.sequencerStack = sequencerStack;
+
+        sequencer.pipe(function(stream) {
+            return function() {
+                setTimeout(
+                    function() {
+                        embeddedSequencer.start({}, function(stream) {
+                            assert.equal(a, 1);
+
+                            done();
+                        });
+                    },
+                    10
+                );
+
+                return stream;
+            };
+        });
+
+        assert.equal(a, 3);
+
+        sequencer.start(
+            {},
+            null,
+            function(reset) {
+                if (reset) {
+                    a = 2;
+                } else {
+                    a = 1;
+                }
+            }
+        );
     })
 })

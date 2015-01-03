@@ -31,7 +31,7 @@ module.exports = {
         tags: ['categoryComputer'],
         properties: {
             scoresDirectory: '$questions.directory$',
-            sequencerProvider: '#danf:event.sequencerProvider#',
+            sequencerProvider: '#danf:event.currentSequencerProvider#',
             benchmarker: '#benchmarker#'
         },
         children: {
@@ -62,7 +62,7 @@ The objects and interactions between them are the base of your architecture. Jus
 
 This config will create 5 services: `frameworkSelector`, `questionsRetriever`, `categoryComputer.dumb.mega`, `categoryComputer.dumb.hyper`, `categoryComputer.useless.super`.
 
-The service `danf:event.sequencerProvider` is injected into both `categoryComputer.dumb` and `categoryComputer.useless` in the property `sequencerProvider` thanks to the reference `#danf:event.sequencerProvider#`.
+The service `danf:event.currentSequencerProvider` is injected into both `categoryComputer.dumb` and `categoryComputer.useless` in the property `sequencerProvider` thanks to the reference `#danf:event.currentSequencerProvider#`.
 
 The services tagged `categoryComputer` (i.e. `categoryComputer.dumb` and `categoryComputer.useless`) are injected into `frameworkSelector` in the property `categoryComputers` thanks to the reference `&categoryComputer&`.
 

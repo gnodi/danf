@@ -18,7 +18,7 @@ module.exports = {
         tags: ['categoryComputer'],
         properties: {
             scoresDirectory: '$questions.directory$',
-            sequencerProvider: '#danf:event.sequencerProvider#',
+            sequencerProvider: '#danf:event.currentSequencerProvider#',
             benchmarker: '#benchmarker#'
         },
         children: {
