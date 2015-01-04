@@ -140,83 +140,79 @@ describe('Sequencer', function() {
         })
     })
 
-    describe('should evolve independently', function() {
+    describe('should evolve', function() {
         var sequencer = new Sequencer(),
             embeddedSequencer = new Sequencer(),
-            a = 3
+            a = 3,
+            b = 2
         ;
 
-        sequencer.pipe(function(stream) {
-            return function() {
-                setTimeout(
-                    function() {
-                        embeddedSequencer.start({}, function(stream) {
-                            assert.equal(a, 2);
+        embeddedSequencer.pipe(function() {
+            var taskId = embeddedSequencer.wait();
 
-                            done();
-                        });
-                    },
-                    10
-                );
-
-                return stream;
-            };
+            setTimeout(
+                function() {
+                    embeddedSequencer.end(
+                        taskId,
+                        function() {
+                            assert.equal(a, b);
+                        }
+                    );
+                },
+                10
+            );
         });
 
-        assert.equal(a, 3);
-
-        sequencer.start(
-            {},
-            null,
-            function(reset) {
-                if (reset) {
-                    a = 2;
-                } else {
-                    a = 1;
-                }
-            }
-        );
-    })
-
-    describe('should be coupled when having the same senquencer stack', function() {
-        var sequencer = new Sequencer(),
-            embeddedSequencer = new Sequencer(),
-            sequencerStack = new SequencerStack(),
-            a = 3
-        ;
-
-        sequencer.sequencerStack = sequencerStack;
-        embeddedSequencer.sequencerStack = sequencerStack;
-
-        sequencer.pipe(function(stream) {
-            return function() {
-                setTimeout(
-                    function() {
-                        embeddedSequencer.start({}, function(stream) {
-                            assert.equal(a, 1);
-
-                            done();
-                        });
-                    },
-                    10
-                );
-
-                return stream;
-            };
+        embeddedSequencer.pipe(function() {
+            assert.equal(a, b);
         });
 
-        assert.equal(a, 3);
+        it('independently without sequencer stack', function(done) {
+            assert.equal(a, 3);
 
-        sequencer.start(
-            {},
-            null,
-            function(reset) {
-                if (reset) {
-                    a = 2;
-                } else {
-                    a = 1;
+            sequencer.start(
+                {},
+                function(stream) {
+                    embeddedSequencer.start({}, function() {
+                        done();
+                    });
+                },
+                function(reset) {
+                    if (reset) {
+                        a = 2;
+                    } else {
+                        a = 1;
+                    }
                 }
-            }
-        );
+            );
+        })
+
+        it('together when having the same senquencer stack', function(done) {
+            var sequencerStack = new SequencerStack();
+
+            a = 3;
+            b = 1;
+
+            sequencer.sequencerStack = sequencerStack;
+            embeddedSequencer.sequencerStack = sequencerStack;
+
+            assert.equal(a, 3);
+
+            sequencer.start(
+                {},
+                function(stream) {
+                    embeddedSequencer.start({}, function() {
+                        done();
+                    });
+                },
+                function(reset) {
+                    if (reset) {
+                        a = 2;
+                    } else {
+                        a = 1;
+                    }
+                }
+            );
+        })
     })
 })
