@@ -168,12 +168,21 @@ SessionTester.prototype.test = function(order) {
 
             break;
         case '2':
+            this._sessionHandler.set('c', 3);
+            assert.equal(this._sessionHandler.get('c'), 3);
+            this._sessionHandler.destroy();
+
+            break;
+        case '3':
+            this._sessionHandler.set('c', 3);
+            assert.equal(this._sessionHandler.get('c'), 3);
+            this._sessionHandler.save();
 
             break;
     }
 };
 
-SessionTester.prototype.testAsync = function(order) {
+SessionTester.prototype.testAsync = function(order, bis) {
     switch (order) {
         case '0':
             assert.equal(this._sessionHandler.get('a'), 1);
@@ -184,6 +193,16 @@ SessionTester.prototype.testAsync = function(order) {
 
             break;
         case '2':
+            this._sessionHandler.get('c');
+
+            break;
+        case '3':
+            if (!bis) {
+                this._sessionHandler.set('c', 4);
+                this._sessionHandler.reload();
+            } else {
+                assert.equal(this._sessionHandler.get('c'), 3);
+            }
 
             break;
     }
@@ -310,6 +329,11 @@ module.exports = {
                     service: 'sessionTester',
                     method: 'testAsync',
                     arguments: ['@order@']
+                },
+                {
+                    service: 'sessionTester',
+                    method: 'testAsync',
+                    arguments: ['@order@', true]
                 }
             ]
         },
