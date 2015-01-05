@@ -1,6 +1,8 @@
 'use strict';
 
-var request = require('supertest');
+var request = require('supertest'),
+    assert = require('assert')
+;
 
 function ForumHandler() {
         this._topics = {
@@ -148,6 +150,75 @@ SubrequestExecutor.prototype.execute = function() {
     return [];
 };
 
+function SessionTester() {
+};
+
+SessionTester.prototype.test = function(order) {
+    switch (order) {
+        case '0':
+            this._sessionHandler.set('a', 1);
+            assert.equal(this._sessionHandler.get('a'), 1);
+
+            break;
+        case '1':
+            this._sessionHandler.set('b', 2);
+            assert.equal(this._sessionHandler.get('b'), 2);
+            this._sessionHandler.regenerate();
+            assert.equal(this._sessionHandler.get('b'), 2);
+
+            break;
+        case '2':
+            this._sessionHandler.set('c', 3);
+            assert.equal(this._sessionHandler.get('c'), 3);
+            this._sessionHandler.destroy();
+
+            break;
+        case '3':
+            this._sessionHandler.set('c', 3);
+            assert.equal(this._sessionHandler.get('c'), 3);
+            this._sessionHandler.save();
+
+            break;
+    }
+};
+
+SessionTester.prototype.testAsync = function(order, bis) {
+    switch (order) {
+        case '0':
+            assert.equal(this._sessionHandler.get('a'), 1);
+
+            break;
+        case '1':
+            assert.equal(this._sessionHandler.get('b'), undefined);
+
+            break;
+        case '2':
+            this._sessionHandler.get('c');
+
+            break;
+        case '3':
+            if (!bis) {
+                this._sessionHandler.set('c', 4);
+                this._sessionHandler.reload();
+            } else {
+                assert.equal(this._sessionHandler.get('c'), 3);
+            }
+
+            break;
+    }
+};
+
+function CookieTester() {
+};
+
+CookieTester.prototype.test = function(order) {
+    assert.equal(this._cookiesRegristry.get('foo'), undefined);
+    this._cookiesRegristry.set('foo', 'bar');
+    assert.equal(this._cookiesRegristry.get('foo'), 'bar');
+    this._cookiesRegristry.unset('foo');
+    assert.equal(this._cookiesRegristry.get('foo'), undefined);
+};
+
 module.exports = {
     config: {
         services: {
@@ -163,6 +234,18 @@ module.exports = {
                     _app: '#danf:app#',
                     _sequencerProvider: '#danf:event.currentSequencerProvider#',
                     _requestNotifier: '#danf:http.notifier.request#'
+                }
+            },
+            sessionTester: {
+                class: SessionTester,
+                properties: {
+                    _sessionHandler: '#danf:http.sessionHandler#'
+                }
+            },
+            cookieTester: {
+                class: CookieTester,
+                properties: {
+                    _cookiesRegristry: '#danf:http.cookiesRegistry#'
                 }
             }
         },
@@ -234,6 +317,47 @@ module.exports = {
                     method: 'execute',
                     returns: 'text'
                 },
+            ],
+            processForum: [
+                {
+                    service: 'danf:manipulation.callbackExecutor',
+                    method: 'execute',
+                    arguments: [
+                        function(parameters, defaultPage) {
+                            var topic = parameters.topic;
+
+                            topic = topic.charAt(0).toUpperCase() + topic.slice(1);
+                            parameters.topic = topic.charAt(0) + topic.slice(1).toLowerCase();
+
+                            parameters.page = undefined !== parameters.page ? parameters.page : defaultPage;
+                        },
+                        '@.@',
+                        '$main:defaultPage$'
+                    ]
+                }
+            ],
+            testSession: [
+                {
+                    service: 'sessionTester',
+                    method: 'test',
+                    arguments: ['@order@']
+                },
+                {
+                    service: 'sessionTester',
+                    method: 'testAsync',
+                    arguments: ['@order@']
+                },
+                {
+                    service: 'sessionTester',
+                    method: 'testAsync',
+                    arguments: ['@order@', true]
+                }
+            ],
+            testCookie: [
+                {
+                    service: 'cookieTester',
+                    method: 'test'
+                }
             ]
         },
         events: {
@@ -311,6 +435,16 @@ module.exports = {
                 empty: {
                     path: '/empty',
                     methods: ['put']
+                },
+                session: {
+                    path: '/session/:order',
+                    methods: ['get'],
+                    sequences: ['testSession']
+                },
+                cookie: {
+                    path: '/cookie',
+                    methods: ['get'],
+                    sequences: ['testCookie']
                 }
             }
         },
