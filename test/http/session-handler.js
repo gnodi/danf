@@ -9,37 +9,6 @@ var assert = require('assert'),
 
 var app = danf(require(__dirname + '/../fixtures/http/danf'), {listen: false, environment: 'test'});
 
-// Use.
-app.useBeforeRouting = function () {
-    this.use(function(req, res, next) {
-        var dom = domain.create();
-
-        domain.active = dom;
-        dom.add(req);
-        dom.add(res);
-
-        dom.on('error', function(err) {
-            req.next(err);
-        });
-        res.on('end', function() {
-           dom.dispose();
-        });
-
-        dom.run(next);
-    });
-
-    this.use(cookieParser());
-    this.use(session({
-        secret: context.secret,
-        cookie: {},
-        resave: true,
-        saveUninitialized: true,
-        genid: function() {
-            return '1';
-        }
-    }));
-};
-
 describe('SessionHandler', function() {
     it('should allow to get and set values in session', function(done) {
         request(app)
