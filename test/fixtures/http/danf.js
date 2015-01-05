@@ -208,6 +208,17 @@ SessionTester.prototype.testAsync = function(order, bis) {
     }
 };
 
+function CookieTester() {
+};
+
+CookieTester.prototype.test = function(order) {
+    assert.equal(this._cookiesRegristry.get('foo'), undefined);
+    this._cookiesRegristry.set('foo', 'bar');
+    assert.equal(this._cookiesRegristry.get('foo'), 'bar');
+    this._cookiesRegristry.unset('foo');
+    assert.equal(this._cookiesRegristry.get('foo'), undefined);
+};
+
 module.exports = {
     config: {
         services: {
@@ -229,6 +240,12 @@ module.exports = {
                 class: SessionTester,
                 properties: {
                     _sessionHandler: '#danf:http.sessionHandler#'
+                }
+            },
+            cookieTester: {
+                class: CookieTester,
+                properties: {
+                    _cookiesRegristry: '#danf:http.cookiesRegistry#'
                 }
             }
         },
@@ -335,6 +352,12 @@ module.exports = {
                     method: 'testAsync',
                     arguments: ['@order@', true]
                 }
+            ],
+            testCookie: [
+                {
+                    service: 'cookieTester',
+                    method: 'test'
+                }
             ]
         },
         events: {
@@ -417,6 +440,11 @@ module.exports = {
                     path: '/session/:order',
                     methods: ['get'],
                     sequences: ['testSession']
+                },
+                cookie: {
+                    path: '/cookie',
+                    methods: ['get'],
+                    sequences: ['testCookie']
                 }
             }
         },
