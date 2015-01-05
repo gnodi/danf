@@ -323,7 +323,7 @@ module.exports = {
     scheduler: {
         class: '%classes.scheduler%',
         properties: {
-            currentSequencerProvider: '#danf:event.sequencerProvider#'
+            currentSequencerProvider: '#danf:event.currentSequencerProvider#'
         }
     }
 };
@@ -373,7 +373,7 @@ Scheduler.prototype.start = function (value, inc, timeout) {
 }
 ```
 
-An asynchronous behaviour is simulated here with `setTimeout` to illustrate how to avoid the callback hell. The service `danf:event.sequencerProvider` allows you to retrieve the current `sequencer` that is processing the sequence. You can ask to wait for a task using the method `wait` that returns a task id. You can use this id to end the task with the method `end`. The first argument of this method is the task id and the second is a callback taking the stream (or the scoped stream if a scope of return is defined) as first argument. You can then return a value to modify the stream as in a synchronous method. In this example, you can see that you will increment the value three times: 2 asynchronous and 1 synchronous. The next operation of the sequence will not start before all tasks end. This way you have not to stack callbacks.
+An asynchronous behaviour is simulated here with `setTimeout` to illustrate how to avoid the callback hell. The service `danf:event.currentSequencerProvider` allows you to retrieve the current `sequencer` that is processing the sequence. You can ask to wait for a task using the method `wait` that returns a task id. You can use this id to end the task with the method `end`. The first argument of this method is the task id and the second is a callback taking the stream (or the scoped stream if a scope of return is defined) as first argument. You can then return a value to modify the stream as in a synchronous method. In this example, you can see that you will increment the value three times: 2 asynchronous and 1 synchronous. The next operation of the sequence will not start before all tasks end. This way you have not to stack callbacks.
 
 You can see a more functional example in the application accessible below in the navigation part.
 

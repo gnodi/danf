@@ -3,7 +3,8 @@
 require('../../lib/init');
 
 var assert = require('assert'),
-    Sequencer = require('../../lib/manipulation/sequencer')
+    Sequencer = require('../../lib/manipulation/sequencer'),
+    SequencerStack = require('../../lib/manipulation/sequencer-stack')
 ;
 
 var sequencer = new Sequencer();
@@ -134,6 +135,82 @@ describe('Sequencer', function() {
                 },
                 function() {
                     a = 3;
+                }
+            );
+        })
+    })
+
+    describe('should evolve', function() {
+        var sequencer = new Sequencer(),
+            embeddedSequencer = new Sequencer(),
+            a = 3,
+            b = 2
+        ;
+
+        embeddedSequencer.pipe(function() {
+            var taskId = embeddedSequencer.wait();
+
+            setTimeout(
+                function() {
+                    embeddedSequencer.end(
+                        taskId,
+                        function() {
+                            assert.equal(a, b);
+                        }
+                    );
+                },
+                10
+            );
+        });
+
+        embeddedSequencer.pipe(function() {
+            assert.equal(a, b);
+        });
+
+        it('independently without sequencer stack', function(done) {
+            assert.equal(a, 3);
+
+            sequencer.start(
+                {},
+                function(stream) {
+                    embeddedSequencer.start({}, function() {
+                        done();
+                    });
+                },
+                function(reset) {
+                    if (reset) {
+                        a = 2;
+                    } else {
+                        a = 1;
+                    }
+                }
+            );
+        })
+
+        it('together when having the same senquencer stack', function(done) {
+            var sequencerStack = new SequencerStack();
+
+            a = 3;
+            b = 1;
+
+            sequencer.sequencerStack = sequencerStack;
+            embeddedSequencer.sequencerStack = sequencerStack;
+
+            assert.equal(a, 3);
+
+            sequencer.start(
+                {},
+                function(stream) {
+                    embeddedSequencer.start({}, function() {
+                        done();
+                    });
+                },
+                function(reset) {
+                    if (reset) {
+                        a = 2;
+                    } else {
+                        a = 1;
+                    }
                 }
             );
         })

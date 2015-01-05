@@ -154,14 +154,14 @@ module.exports = {
             forumHandler: {
                 class: ForumHandler,
                 properties: {
-                    _sequencerProvider: '#danf:event.sequencerProvider#'
+                    _sequencerProvider: '#danf:event.currentSequencerProvider#'
                 }
             },
             subrequestExecutor: {
                 class: SubrequestExecutor,
                 properties: {
                     _app: '#danf:app#',
-                    _sequencerProvider: '#danf:event.sequencerProvider#',
+                    _sequencerProvider: '#danf:event.currentSequencerProvider#',
                     _requestNotifier: '#danf:http.notifier.request#'
                 }
             }

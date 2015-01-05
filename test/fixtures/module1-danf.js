@@ -94,7 +94,7 @@ module.exports = {
             scheduler: {
                 class: '%classes.scheduler%',
                 properties: {
-                    currentSequencerProvider: '#danf:event.sequencerProvider#'
+                    currentSequencerProvider: '#danf:event.currentSequencerProvider#'
                 }
             },
         },
