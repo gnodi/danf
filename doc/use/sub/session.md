@@ -13,30 +13,37 @@ You can use the [service](../dependency-injection.md) `danf:http.sessionHandler`
 ###API
 
 **Get a value in the session.**
-*get(key)*
+
+`get(key)`
 
 * *key (string)*: The key.
 
 **Set a value in the session.**
-*set(key, value)*
+
+`set(key, value)`
 
 * *key (string)*: The key.
 * *value (mixed)*: The value.
 
 **Regenerate the session.**
-*regenerate()*
+
+`regenerate()`
 
 **Destroy the session.**
-*destroy()*
+
+`destroy()`
 
 **Reload the session.**
-*reload()*
+
+`reload()`
 
 **Save the session.**
-*save()*
+
+`save()`
 
 **Update the max age of the session.**
-*touch()*
+
+`touch()`
 
 Navigation
 ----------

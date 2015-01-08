@@ -13,13 +13,15 @@ You can use the [service](../dependency-injection.md) `danf:http.cookiesRegistry
 ###API
 
 **Get a cookie.**
-*get(key)*
+
+` get(key) `
 
 * *key (string)*: The key.
 * *value (mixed)*: The value.
 
 **Set a cookie.**
-*set(key, value, expiresAt, path, domain, isSecude, isHttpOnly)*
+
+`set(key, value, expiresAt, path, domain, isSecude, isHttpOnly)`
 
 * *key (string)*: The key.
 * *value (string)*: The value.
@@ -30,7 +32,8 @@ You can use the [service](../dependency-injection.md) `danf:http.cookiesRegistry
 * *isHttpOnly (boolean|null)*: Whether or not this is a http only cookie.
 
 **Unset a cookie.**
-*unset(key, path, domain)*
+
+`unset(key, path, domain)`
 
 * *key (string)*: The key.
 * *value (string)*: The value.
