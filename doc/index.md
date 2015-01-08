@@ -11,6 +11,7 @@ Danf is a javascript/node full-stack framework providing many features in order 
 * An elegant solution to callback hell preserving asynchronicity.
 * A helper to develop performant ajax applications supporting deep linking.
 * A modular approach to develop and use (open source) modules.
+* Some other helpful sub features to easily manage cookies, session, ...
 
 Understand
 ----------

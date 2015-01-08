@@ -3,7 +3,7 @@ Use the Framework
 
 [←](../index.md)
 
-In this part, you have access to a documentation of the main features of the framework.
+In this part, you have access to a documentation of the core features of the framework.
 
 * [Start a new application](app.md)
 * [Define the configuration](configuration.md)
@@ -14,5 +14,10 @@ In this part, you have access to a documentation of the main features of the fra
 * [Handle assets](assets.md)
 * [Make an ajax app](ajax-app.md)
 * [Code unit tests](tests.md)
+
+You can also access a documentation of the sub features.
+
+* [Use cookies](sub/cookies.md)
+* [Handle the session](sub/session.md)
 
 [←](../index.md)
