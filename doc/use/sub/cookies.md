@@ -36,8 +36,6 @@ You can use the [service](../dependency-injection.md) `danf:http.cookiesRegistry
 `unset(key, path, domain)`
 
 * *key (string)*: The key.
-* *value (string)*: The value.
-* *expiresAt (date|null)*: The date of expiration.
 * *path (string|null)*: The optional path.
 * *domain (string|null)*: The optional domain.
 
