@@ -14,14 +14,14 @@ You can use the [service](../dependency-injection.md) `danf:http.cookiesRegistry
 
 **Get a cookie.**
 
-` get(key) `
+` .get(key) `
 
 * *key (string)*: The key.
 * *value (mixed)*: The value.
 
 **Set a cookie.**
 
-`set(key, value, expiresAt, path, domain, isSecude, isHttpOnly)`
+`.set(key, value, expiresAt, path, domain, isSecude, isHttpOnly)`
 
 * *key (string)*: The key.
 * *value (string)*: The value.
@@ -33,7 +33,7 @@ You can use the [service](../dependency-injection.md) `danf:http.cookiesRegistry
 
 **Unset a cookie.**
 
-`unset(key, path, domain)`
+`.unset(key, path, domain)`
 
 * *key (string)*: The key.
 * *path (string|null)*: The optional path.
