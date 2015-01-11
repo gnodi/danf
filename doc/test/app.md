@@ -21,6 +21,16 @@ $ node app-dev
 You should see `Hi!` at `http://localhost:3080` following by this instruction:
 `Replace "my-app" in all files by the name of your application.`. Do it.
 
+Now you have 2 choices: you can copy the code of each file explained in the next sections of this tutorial and follow the instructions or you can directly execute the code of this tutorial like the following (we assume you are in your working directory):
+
+```sh
+$ cd node_modules/danf/test/functional/tutorial
+$ npm install
+$ node app-dev
+```
+
+In all cases, take a look at further explanations!
+
 Navigation
 ----------
 
