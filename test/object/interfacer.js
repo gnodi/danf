@@ -134,7 +134,7 @@ describe('Interfacer', function() {
     describe('method "addProxy" returns a proxy on the given object', function() {
         var obj = new MyClass();
 
-        interfacesRegistry.processConfiguration(config['interfaces']);
+        interfacesRegistry.handleRegistryChange(config['interfaces']);
 
         it('in order to expose only the given interface', function() {
             obj = interfacer.addProxy(obj, 'myInterface');
