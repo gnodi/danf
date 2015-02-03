@@ -56,19 +56,19 @@ var resolveTests = [
                 f: {type: 'number_array'},
                 g: {type: 'boolean_array'},
                 h: {type: 'function_array'},
-                i: {type: 'free_array'},
+                i: {type: 'mixed_array'},
                 j: {type: 'number_array_array'},
                 k: {type: 'string_array_array'},
-                l: {type: 'free_array_array'},
+                l: {type: 'mixed_array_array'},
                 m: {type: 'string_object'},
                 n: {type: 'number_object'},
                 o: {type: 'boolean_object'},
                 p: {type: 'function_object'},
-                q: {type: 'free_object'},
+                q: {type: 'mixed_object'},
                 r: {type: 'number_array_object'},
                 s: {type: 'string_array_object'},
-                t: {type: 'free_array_object'},
-                u: {type: 'free'},
+                t: {type: 'mixed_array_object'},
+                u: {type: 'mixed'},
                 v: {type: 'number|string'},
                 w: {type: 'number|string'}
             },
@@ -445,8 +445,8 @@ var resolveErrorTests = [
         },
         {
             data: {foo: 1},
-            contract: {foo: {type: 'free_object'}},
-            expected: /The expected value for "11.foo" is an "object of free properties"; a "number" given instead./,
+            contract: {foo: {type: 'mixed_object'}},
+            expected: /The expected value for "11.foo" is an "object of mixed properties"; a "number" given instead./,
             namespace: '11'
         },
         {
@@ -463,8 +463,8 @@ var resolveErrorTests = [
         },
         {
             data: {foo: 1},
-            contract: {foo: {type: 'free_array_object'}},
-            expected: /The expected value for "14.foo" is an "object of arrays of free properties"; a "number" given instead./,
+            contract: {foo: {type: 'mixed_array_object'}},
+            expected: /The expected value for "14.foo" is an "object of arrays of mixed properties"; a "number" given instead./,
             namespace: '14'
         },
         {
