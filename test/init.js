@@ -56,6 +56,7 @@ var checkTypeTests = [
         {type: 'interface_array', data: []},
         {type: 'interface_object', data: {foo: new Class(), bar: new Class()}},
         {type: 'interface_object', data: {}},
+        {type: 'string_array', data: []},
         {type: 'number', data: '2', interpret: 2},
         {type: 'boolean_array_object', data: {foo: [2, '3', false, 0], bar: ['0']}, interpret: {foo: [true, true, false, false], bar: [false]}}
     ]
@@ -89,49 +90,49 @@ var checkTypeErrorTests = [
             data: 1,
             type: 'string_array',
             name: 'foo4',
-            expected: /The expected value for "foo4" is an "array of string values"; a "number" given instead./
+            expected: /The expected value for "foo4" is a "string_array"; a "number" given instead./
         },
         {
             data: ['foo', 'bar'],
             type: 'number_array',
             name: 'foo5',
-            expected: /The expected value for "foo5" is an "array of number values"; an "array with at least one string" given instead./
+            expected: /The expected value for "foo5" is a "number_array"; a "string_array" given instead./
         },
         {
             data: 1,
             type: 'string_object',
             name: 'foo6',
-            expected: /The expected value for "foo6" is an "object of string properties"; a "number" given instead./
+            expected: /The expected value for "foo6" is a "string_object"; a "number" given instead./
         },
         {
             data: {foo: 1},
             type: 'boolean_object',
             name: 'foo7',
-            expected: /The expected value for "foo7" is an "object of boolean properties"; an "object with at least one number property" given instead./
+            expected: /The expected value for "foo7" is a "boolean_object"; a "number_object" given instead./
         },
         {
             data: 1,
             type: 'mixed_object',
             name: 'foo8',
-            expected: /The expected value for "foo8" is an "object of mixed properties"; a "number" given instead./
+            expected: /The expected value for "foo8" is a "mixed_object"; a "number" given instead./
         },
         {
             data: {bar: 1},
             type: 'number_array_object',
             name: 'foo9',
-            expected: /The expected value for "foo9" is an "object of arrays of number properties"; an "object with at least one number property" given instead./
+            expected: /The expected value for "foo9" is a "number_array_object"; a "number_object" given instead./
         },
         {
             data: {bar: [1]},
             type: 'string_array_object',
             name: 'foo10',
-            expected: /The expected value for "foo10" is an "object of arrays of string properties"; an "object with at least one array with at least one number property" given instead./
+            expected: /The expected value for "foo10" is a "string_array_object"; a "number_array_object" given instead./
         },
         {
             data: 1,
             type: 'mixed_array_object',
             name: 'foo11',
-            expected: /The expected value for "foo11" is an "object of arrays of mixed properties"; a "number" given instead./
+            expected: /The expected value for "foo11" is a "mixed_array_object"; a "number" given instead./
         },
         {
             data: {},
@@ -179,13 +180,13 @@ var checkTypeErrorTests = [
             data: [new Class()],
             type: 'interface_object',
             name: 'foo19',
-            expected: /The expected value for "foo19" is an "object of instance of `interface` properties"; an "array" given instead./
+            expected: /The expected value for "foo19" is an "object of instance of `interface` properties"; an "object_array" given instead./
         },
         {
             data: {foo: new Class(), bar: new BadClass()},
             type: 'interface_object',
             name: 'foo20',
-            expected: /The expected value for "foo20" is an "object of instance of `interface` properties"; an "object with at least one instance of \[`badInterface`\] property" given instead./
+            expected: /The expected value for "foo20" is an "object of instance of `interface` properties"; an "object_object" given instead./
         },
         {
             data: 3,
@@ -205,6 +206,8 @@ var checkTypeErrorTests = [
 var getTypeTests = [
         {value: 1, expected: 'number'},
         {value: '2', expected: 'string'},
+        {value: null, expected: 'null'},
+        {expected: 'undefined'},
         {value: [1, 2], expected: 'number_array'},
         {value: ['2', 1], expected: 'mixed_array'},
         {value: {foo: 1, bar: 2}, expected: 'number_object'},
@@ -217,7 +220,12 @@ var getTypeTests = [
         {value: {foo: ['2'], bar: [1]}, expected: 'mixed_array_object'},
         {value: {foo: {foo: 1}, bar: {bar: 2}}, expected: 'number_object_object'},
         {value: {foo: {foo: '2'}, bar: {bar: 1}}, expected: 'mixed_object_object'},
-        {value: {foo: {foo: [1]}, bar: {bar: [2]}}, expected: 'mixed_object_object'}
+        {value: {foo: {foo: [1]}, bar: {bar: [2]}}, expected: 'mixed_object_object'},
+        {value: [], expected: 'array'},
+        {value: {}, expected: 'object'},
+        {value: {foo: [1, 3], bar: 2}, expected: 'mixed_object'},
+        {value: {foo: [1, 3], bar: ['2']}, expected: 'mixed_array_object'},
+        {value: {foo: [1, 3], bar: []}, expected: 'number_array_object'}
     ]
 ;
 
