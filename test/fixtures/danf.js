@@ -88,7 +88,7 @@ module.exports = {
         },
         services: {
             polymorphous: {
-                class: require('./app/c')
+                class: 'c'
             },
             trigger: {
                 class: '%classes.trigger%',
