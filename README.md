@@ -34,7 +34,7 @@ Object-oriented programming (OOP) is often a controversial topic in the javascri
 * - But everything is already object in javascript!
 * - Why the hell do you want to use OOP in javascript?
 
-First, that is not because all variables are objects that a langage can be considered as providing a way to make a straightforward and robust OOP. As for now, native javascript does not allow to make a reliable industrial OOP code (this will be explained in the concept section of the documentation).
+First, that is not because all variables are objects that a langage can be considered as providing a way to make a straightforward and robust OOP. As for now, native javascript does not allow to make a reliable industrial OOP code (the reasons are explained in the [concepts](doc/concepts.md) section of the documentation).
 Then, OOP is certainly not a matter of language, but rather a means of architecturing applications. So why not use OOP for a javascript application?
 
 Hello world
@@ -74,7 +74,7 @@ $ npm install -g danf
 Community
 ---------
 
-Danf is a brand new framework. It may seem a little hard to handle at the beginning but it can help you to master big projects by avoiding the divergence of the complexity as well as smaller fast and dynamic websites. Just give it a try on one of your project or by testing the tutorial accessible in the [documentation](doc/index.md). Be careful, you could see your way of coding javascript in node.js forever change (or not...).
+Danf is a brand new framework. It may seem a little hard to handle at the beginning but it can help you to master big projects by avoiding the divergence of the complexity as well as smaller fast and dynamic websites. Just give it a try on one of your project or by testing the [tutorial](doc/test/index.md). Be careful, you could see your way of coding javascript in node.js forever change (or not...).
 
 The community is still small, but it is an active community. You can post your issues on [github](https://github.com/gnodi/danf/issues) or on [stack overflow](http://stackoverflow.com/) with the tag `danf` and you will get an answer as quickly as possible.
 
