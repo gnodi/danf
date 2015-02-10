@@ -5,11 +5,11 @@
     "author": "Me <me@myhome.me>",
     "contributors": [],
     "dependencies": {
-        "danf": "0.2.0",
+        "danf": "0.2.1",
         "amdefine": "0.1.*"
     },
     "devDependencies": {
-        "mocha": "2.0.*",
+        "mocha": "2.1.*",
         "supertest": "0.15.*"
     },
     "keywords": [
