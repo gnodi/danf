@@ -80,9 +80,7 @@ The community is still small, but it is an active community. You can post your i
 
 > `<trailer-voice>`Have you ever wanted to participate in the early stages of a new technology? Let's try it on Danf! Join the community and contribute now.`</trailer-voice>`
 
-You can contribute without working on the framework itself. In Danf, all your code is always automatically part of a **danf module**. You can then easily share your modules with other people using npm.
-
-You can also contribute to improve the english level of this documentation!
+You can also contribute without working on the framework itself. In Danf, all your code is always automatically part of a **danf module**. This way you can then easily share your modules with other people using npm. You can find a list of existing **danf modules** [here](doc/modules.md).
 
 Documentation
 -------------

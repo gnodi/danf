@@ -32,7 +32,11 @@ Each section of Test has a related section in Use and each section of Customize 
 Contribute
 ----------
 
-Danf is a really young framework and may be unstable and/or incomplete. But you can help to make it better! Fork it on github and feel free to improve it or to correct this documentation (is it really English?)!
+Danf is a young framework. You can help to make it better! Fork it on github and feel free to improve it.
+
+You can also contribute without working on the framework itself. In Danf, all your code is always automatically part of a **danf module**. This way you can then easily share your modules with other people using npm. You can find a list of existing **danf modules** [here](modules.md).
+
+Another nice way to help is to correct and/or to improve this documentation (is it really English?)!
 
 [←](../README.md)
 
