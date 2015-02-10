@@ -56,19 +56,19 @@ var resolveTests = [
                 f: {type: 'number_array'},
                 g: {type: 'boolean_array'},
                 h: {type: 'function_array'},
-                i: {type: 'free_array'},
+                i: {type: 'mixed_array'},
                 j: {type: 'number_array_array'},
                 k: {type: 'string_array_array'},
-                l: {type: 'free_array_array'},
+                l: {type: 'mixed_array_array'},
                 m: {type: 'string_object'},
                 n: {type: 'number_object'},
                 o: {type: 'boolean_object'},
                 p: {type: 'function_object'},
-                q: {type: 'free_object'},
+                q: {type: 'mixed_object'},
                 r: {type: 'number_array_object'},
                 s: {type: 'string_array_object'},
-                t: {type: 'free_array_object'},
-                u: {type: 'free'},
+                t: {type: 'mixed_array_object'},
+                u: {type: 'mixed'},
                 v: {type: 'number|string'},
                 w: {type: 'number|string'}
             },
@@ -422,49 +422,49 @@ var resolveErrorTests = [
         {
             data: {foo: 1},
             contract: {foo: {type: 'string_array'}},
-            expected: /The expected value for "7.foo" is an "array of string values"; a "number" given instead./,
+            expected: /The expected value for "7.foo" is a "string_array"; a "number" given instead./,
             namespace: '7'
         },
         {
             data: {foo: ['foo', 'bar']},
             contract: {foo: {type: 'number_array'}},
-            expected: /The expected value for "8.foo" is an "array of number values"; an "array with at least one string" given instead./,
+            expected: /The expected value for "8.foo" is a "number_array"; a "string_array" given instead./,
             namespace: '8'
         },
         {
             data: {foo: 1},
             contract: {foo: {type: 'string_object'}},
-            expected: /The expected value for "9.foo" is an "object of string properties"; a "number" given instead./,
+            expected: /The expected value for "9.foo" is a "string_object"; a "number" given instead./,
             namespace: '9'
         },
         {
             data: {foo: {bar: 'bar'}},
             contract: {foo: {type: 'boolean_object'}},
-            expected: /The expected value for "10.foo" is an "object of boolean properties"; an "object with at least one string property" given instead./,
+            expected: /The expected value for "10.foo" is a "boolean_object"; a "string_object" given instead./,
             namespace: '10'
         },
         {
             data: {foo: 1},
-            contract: {foo: {type: 'free_object'}},
-            expected: /The expected value for "11.foo" is an "object of free properties"; a "number" given instead./,
+            contract: {foo: {type: 'mixed_object'}},
+            expected: /The expected value for "11.foo" is a "mixed_object"; a "number" given instead./,
             namespace: '11'
         },
         {
             data: {foo: {bar: 1}},
             contract: {foo: {type: 'number_array_object'}},
-            expected: /The expected value for "12.foo" is an "object of arrays of number properties"; an "object with at least one number property" given instead./,
+            expected: /The expected value for "12.foo" is a "number_array_object"; a "number_object" given instead./,
             namespace: '12'
         },
         {
             data: {foo: {bar: [1]}},
             contract: {foo: {type: 'string_array_object'}},
-            expected: /The expected value for "13.foo" is an "object of arrays of string properties"; an "object with at least one array with at least one number property" given instead./,
+            expected: /The expected value for "13.foo" is a "string_array_object"; a "number_array_object" given instead./,
             namespace: '13'
         },
         {
             data: {foo: 1},
-            contract: {foo: {type: 'free_array_object'}},
-            expected: /The expected value for "14.foo" is an "object of arrays of free properties"; a "number" given instead./,
+            contract: {foo: {type: 'mixed_array_object'}},
+            expected: /The expected value for "14.foo" is a "mixed_array_object"; a "number" given instead./,
             namespace: '14'
         },
         {

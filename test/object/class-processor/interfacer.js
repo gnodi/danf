@@ -128,7 +128,7 @@ var config = {
 
 describe('Interfacer', function() {
     describe('method "process"', function() {
-        interfacesRegistry.processConfiguration(config['interfaces']);
+        interfacesRegistry.handleRegistryChange(config['interfaces']);
 
         it('process a class with a defined interfaces without any error', function() {
             interfacer.process(MyClass);

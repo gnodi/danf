@@ -90,8 +90,8 @@ var failTests = [
 ];
 
 describe('Mapper', function() {
-    it('method "processConfiguration" should build a mapping from a config', function() {
-        mapper.processConfiguration(config);
+    it('method "handleRegistryChange" should build a mapping from a config', function() {
+        mapper.handleRegistryChange(config);
     })
 
     tests.forEach(function(test) {
@@ -114,7 +114,7 @@ describe('Mapper', function() {
     });
 
     it('should allow to define a default extension', function() {
-        cssMapper.processConfiguration({
+        cssMapper.handleRegistryChange({
             'danf/test': dirname + '/node-modules/test'
         });
 

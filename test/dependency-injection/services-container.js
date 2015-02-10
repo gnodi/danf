@@ -274,7 +274,8 @@ var expectedBigImagesProvider = {
 
 describe('Container', function() {
     it('method "processConfiguration" should set the definitions of the configured services', function() {
-        servicesContainer.processConfiguration(config.services, config, true);
+        servicesContainer.config = config;
+        servicesContainer.handleRegistryChange(config.services);
 
         assert(servicesContainer.hasDefinition('manager'));
         assert(servicesContainer.hasDefinition('provider'));
@@ -315,7 +316,8 @@ describe('Container', function() {
                     var badConfig = utils.clone(config);
 
                     badConfig.services.provider.declinations = '$providersTypo$';
-                    servicesContainer.processConfiguration(badConfig.services, badConfig, true);
+                    servicesContainer.config = badConfig;
+                    servicesContainer.handleRegistryChange(badConfig.services);
                 },
                 /The reference "\$providersTypo\$" in source "\$providersTypo\$" declared in the definition of the service "provider" cannot be resolved./
             );
@@ -325,7 +327,8 @@ describe('Container', function() {
                     var badConfig = utils.clone(config);
 
                     badConfig.services.provider.properties.rules = '>rule.@rulesTypo@>provider>@@rules.@rules@@@>';
-                    servicesContainer.processConfiguration(badConfig.services, badConfig, true);
+                    servicesContainer.config = badConfig;
+                    servicesContainer.handleRegistryChange(badConfig.services);
                 },
                 /One of the references "@rulesTypo@", "@rules@" in source ">rule.@rulesTypo@>provider>@@rules.@rules@@@>" declared in the definition of the service "provider.smallImages" cannot be resolved./
             );
@@ -334,15 +337,14 @@ describe('Container', function() {
         it('should fail to instantiate an abstract service', function() {
             assert.throws(
                 function() {
-                    servicesContainer.processConfiguration(
+                    servicesContainer.config = {};
+                    servicesContainer.handleRegistryChange(
                         {
                             a: {
                                 class: function() {},
                                 abstract: true
                             }
-                        },
-                        {},
-                        true
+                        }
                     );
 
                     servicesContainer.get('a');
@@ -359,14 +361,13 @@ describe('Container', function() {
                     AbstractClass.defineAsAbstract();
                     AbstractClass.__metadata.id = 'A';
 
-                    servicesContainer.processConfiguration(
+                    servicesContainer.config = {};
+                    servicesContainer.handleRegistryChange(
                         {
                             a: {
                                 class: AbstractClass
                             }
-                        },
-                        {},
-                        true
+                        }
                     );
 
                     servicesContainer.get('a');
@@ -378,7 +379,8 @@ describe('Container', function() {
         it('should fail to instantiate a service with a circular dependency', function() {
             assert.throws(
                 function() {
-                    servicesContainer.processConfiguration(
+                    servicesContainer.config = {};
+                    servicesContainer.handleRegistryChange(
                         {
                             a: {
                                 class: function() {},
@@ -398,9 +400,7 @@ describe('Container', function() {
                                     a: '#a#'
                                 }
                             }
-                        },
-                        {},
-                        true
+                        }
                     );
                 },
                 /The circular dependency \["a" -> "b" -> "c" -> "a"\] prevent to build the service "a"\./
@@ -410,7 +410,8 @@ describe('Container', function() {
 
     describe('method "set"', function() {
         it('should replace an already instanciated service', function() {
-            servicesContainer.processConfiguration(config.services, config, true);
+            servicesContainer.config = config;
+            servicesContainer.handleRegistryChange(config.services);
 
             var storage = servicesContainer.set('storage.local', { name: 'local super storage' }),
                 provider = servicesContainer.get('provider.bigImages')

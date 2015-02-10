@@ -37,7 +37,7 @@ describe('Events section configuration processor', function() {
                     embed: {
                         event: {type: 'string'},
                         sequences: {type: 'string_array', default: [], namespaces: true},
-                        contract: {type: 'free_object'}
+                        contract: {type: 'mixed_object'}
                     }
                 },
                 request: {
@@ -48,7 +48,7 @@ describe('Events section configuration processor', function() {
                         path: {type: 'string'},
                         methods: {type: 'string_array'},
                         sequences: {type: 'string_array', default: [], namespaces: true},
-                        contract: {type: 'free_object'}
+                        contract: {type: 'mixed_object'}
                     }
                 }
             }

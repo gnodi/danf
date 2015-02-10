@@ -30,7 +30,7 @@ module.exports = {
                                     type: 'string'
                                 },
                                 value: {
-                                    type: 'free'
+                                    type: 'mixed'
                                 }
                             }
                         }

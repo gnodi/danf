@@ -34,7 +34,7 @@ var contract = {
                         required: true
                     },
                     params: {
-                        type: 'free'
+                        type: 'mixed'
                     }
                 }
             }
@@ -47,7 +47,7 @@ var contract = {
         type: 'string_array'
     },
     properties: {
-        type: 'free_object'
+        type: 'mixed_object'
     },
     methods: {
         type: 'number_array_object'
