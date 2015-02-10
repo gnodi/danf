@@ -9,7 +9,7 @@ define(function(require) {
         contract: {
         },
         config: {
-            classes: require('tutorial/config/classes'),
+            classes: require('tutorial/config/client/classes'),
             events: utils.merge(
                 require('tutorial/config/events'),
                 require('tutorial/config/client/events'),

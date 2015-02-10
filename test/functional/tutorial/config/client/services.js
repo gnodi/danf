@@ -3,7 +3,7 @@
 define(function(require) {
     return {
         listDisplayer: {
-            class: '%classes.listDisplayer%',
+            class: 'listDisplayer',
             properties: {
                 measure: '%computingMeasureId%',
                 jquery: '#danf:vendor.jquery#',
