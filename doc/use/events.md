@@ -9,7 +9,7 @@ Documentation
 Danf does not forget the spirit of javascript and Node: events drive the flow. You will be able to handle all incoming events the same way. For instance, a HTTP request event will be handled as a click on an element in the browser.
 Moreover, the way the events are handled gives a pretty easy alternative to callback hell.
 
-###Trigger events
+### Trigger events
 
 Most of the time, events will be triggered by an action (a user request, a click on a DOM element, ...), but you can manually trigger an event. Let's see an example:
 
@@ -53,14 +53,12 @@ You need to inject the service `danf:event.eventsHandler` in your own service an
 Here is the associated config where you can see how to inject the service for the triggering of the events:
 
 ```javascript
-// config/server/parameters.js
+// config/server/classes.js
 
 'use strict';
 
 module.exports = {
-    classes: {
-        computer: require('../../lib/server/computer')
-    }
+    computer: require('../../lib/server/computer')
 };
 ```
 
@@ -71,7 +69,7 @@ module.exports = {
 
 module.exports = {
     computer: {
-        class: '%classes.computer%',
+        class: 'computer',
         properties: {
             eventTrigger: '#danf:event.eventsHandler#'
         }
@@ -79,7 +77,7 @@ module.exports = {
 };
 ```
 
-###Handle events
+### Handle events
 
 You should now ask you "how to link events to my code?". The response is always the same: some config!
 There are several available kinds of events which define their own description for an event but the flow is the same for all:
@@ -95,7 +93,7 @@ There are several available kinds of events which define their own description f
 
 Let's explain it in detailing the different types of events.
 
-####Event
+#### Event
 
 The type `event` is the basic type for events and is available for both the client and server sides:
 
@@ -217,7 +215,7 @@ this._eventTrigger.trigger('event', 'happenSomething', this, {i: 3, k: 3, done: 
 
 In this second case, the value of the resolved data is `{i: 3, k: 3, done: done}`. When the condition of the second operation is checked, it returns true because `stream.data.i === 4`. So, the value printed in the console by the callback (`console.log(stream.data.i);`) is `7` (3(i initial) + 2(increments) + 2(j)).
 
-####Request
+#### Request
 
 The type `request` is the type for HTTP request events and is available for the server side:
 
@@ -307,10 +305,17 @@ And the rest of the config and code for this example:
 'use strict';
 
 module.exports = {
-    timeout: 1000,
-    classes: {
-        scheduler: require('../../lib/server/scheduler')
-    }
+    timeout: 1000
+};
+```
+
+```javascript
+// config/server/classes.js
+
+'use strict';
+
+module.exports = {
+    scheduler: require('../../lib/server/scheduler')
 };
 ```
 
@@ -321,7 +326,7 @@ module.exports = {
 
 module.exports = {
     scheduler: {
-        class: '%classes.scheduler%',
+        class: 'scheduler',
         properties: {
             currentSequencerProvider: '#danf:event.currentSequencerProvider#'
         }
@@ -405,7 +410,7 @@ This will results in an error 400 (Bad request) because the parameter `value` is
 > this._eventTrigger.trigger('request', 'schedule', this, {value: 100, inc: 3});
 > ```
 
-####Dom
+#### Dom
 
 The type `dom` is the type for DOM events and is available for the client side:
 

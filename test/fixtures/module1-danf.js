@@ -38,22 +38,19 @@ module.exports = {
                     size: 'size'
                 }
             },
-            providerClass: Provider,
             classes: {
                 computer: require('./app/base-computer'),
-                trigger: require('./app/trigger1'),
-                counter: require('./app/counter'),
-                scheduler: require('./app/scheduler')
             }
         },
         classes: {
             computer: '%classes.computer%',
             provider: Provider,
+            providerClass: Provider,
             manager: Manager,
             displayer: Displayer,
-            trigger: '%classes.trigger%',
-            counter: '%classes.counter%',
-            scheduler: '%classes.scheduler%'
+            trigger: require('./app/trigger1'),
+            counter: require('./app/counter'),
+            scheduler: require('./app/scheduler')
         },
         interfaces: {
             ProviderInterface: {
@@ -83,16 +80,16 @@ module.exports = {
                 }
             },
             trigger: {
-                class: '%classes.trigger%',
+                class: 'trigger',
                 properties: {
                     eventsHandler: '#danf:event.eventsHandler#'
                 }
             },
             counter: {
-                class: '%classes.counter%'
+                class: 'counter'
             },
             scheduler: {
-                class: '%classes.scheduler%',
+                class: 'scheduler',
                 properties: {
                     currentSequencerProvider: '#danf:event.currentSequencerProvider#'
                 }

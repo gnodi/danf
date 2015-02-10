@@ -22,7 +22,7 @@ module.exports = {
             require('./config/server/assets'),
             true
         ),
-        classes: require('./config/classes'),
+        classes: require('./config/server/classes'),
         events: utils.merge(
             require('./config/events'),
             require('./config/server/events'),

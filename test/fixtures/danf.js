@@ -54,9 +54,10 @@ module.exports = {
             b: require('./app/b'),
             c: require('./app/c'),
             computer: '%classes.computer%',
-            manager: '%classes.manager%',
-            trigger: '%classes.trigger%',
-            interfacedData: '%classes.interfacedData%'
+            manager: Manager,
+            trigger: require('./app/trigger'),
+            callbackExecutor: require('./app/callback-executor'),
+            interfacedData: require('./app/interfaced-data')
         },
         parameters: {
             'dep1:rule': {
@@ -68,11 +69,7 @@ module.exports = {
                 image: 'image'
             },
             classes: {
-                manager: Manager,
-                computer: require('./app/computer'),
-                trigger: require('./app/trigger'),
-                callbackExecutor: require('./app/callback-executor'),
-                interfacedData: require('./app/interfaced-data')
+                computer: require('./app/computer')
             }
         },
         interfaces: {
@@ -88,10 +85,10 @@ module.exports = {
         },
         services: {
             polymorphous: {
-                class: require('./app/c')
+                class: 'c'
             },
             trigger: {
-                class: '%classes.trigger%',
+                class: 'trigger',
                 properties: {
                     eventsHandler: '#danf:event.eventsHandler#'
                 }
@@ -104,7 +101,7 @@ module.exports = {
                 }
             },
             manager: {
-                class: '%classes.manager%',
+                class: 'manager',
                 properties: {
                     providers: '&provider&',
                     timeOut: '$dep2:timeOut$',
@@ -112,7 +109,7 @@ module.exports = {
                 }
             },
             provider: {
-                class: '%dep1:providerClass%',
+                class: 'dep1:providerClass',
                 declinations: '$providers$',
                 properties: {
                     rules: '>rule.@rules@>provider>@@rules.@rules@@@>',
@@ -190,12 +187,12 @@ module.exports = {
                 }
             },
             'danf:manipulation.callbackExecutor': {
-                class: '%classes.callbackExecutor%'
+                class: 'callbackExecutor'
             },
             dataProvider: {
                 parent: 'danf:dependencyInjection.objectProvider',
                 properties: {
-                    class: '%classes.interfacedData%',
+                    class: '[-]interfacedData',
                     interface: '[-]data'
                 }
             },

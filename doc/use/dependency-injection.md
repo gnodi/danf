@@ -6,13 +6,13 @@ Use Dependency Injection
 Documentation
 -------------
 
-###Define a service
+### Define a service
 
 Dependency injection allows to inject dependencies in a dynamic way. It is certainly the most important concept to apply in order to realize a strong, decoupled, reusable, maintainable, testable architecture.
 
 In Danf, services are the base of the dependency injection. They are defined in the config.
 
-####Class
+#### Class
 
 The most basic definition of a concrete service only need a class:
 
@@ -66,17 +66,15 @@ Computer.prototype.compute = function() {
 }
 ```
 
-Then, set this class as a parameter:
+Then, declare this class:
 
 ```javascript
-// config/server/parameters.js
+// config/server/classes.js
 
 'use strict';
 
 module.exports = {
-    classes: {
-        computer: require('../../lib/server/computer')
-    }
+    computer: require('../../lib/server/computer')
 };
 ```
 
@@ -89,12 +87,12 @@ Finally, you can define your service like that:
 
 module.exports = {
     computer: {
-        class: '%classes.computer%'
+        class: 'computer'
     }
 };
 ```
 
-####Properties
+#### Properties
 
 You can pass some values and inject some dependencies thanks to the node `properties`:
 
@@ -105,10 +103,10 @@ You can pass some values and inject some dependencies thanks to the node `proper
 
 module.exports = {
     processor: {
-        class: '%classes.processor%'
+        class: 'processor'
     },
     computer: {
-        class: '%classes.computer%',
+        class: 'computer',
         properties: {
             host: '127.0.0.1',
             processor: '#processor#'
@@ -153,7 +151,7 @@ Computer.prototype.compute = function() {
 
 It is a really good practice to define your public properties with `Object.defineProperty` to handle the accessibility to the corresponding private `_` properties.
 
-####Abstract
+#### Abstract
 
 Sometimes, you would like to define some base for other services inside your own module or for the ones using your module. However, it is not an instantiable service because he need some more properties for instance. In that cases, you can use the node `abstract`:
 
@@ -174,7 +172,7 @@ module.exports = {
 
 Note that the class is not mandatory for that kind of service.
 
-####Parent
+#### Parent
 
 You can inherit from a parent service to override another definition:
 
@@ -191,10 +189,10 @@ module.exports = {
         }
     },
     processor: {
-        class: '%classes.processor%'
+        class: 'processor'
     },
     computer: {
-        class: '%classes.computer%',
+        class: 'computer',
         properties: {
             host: 'localhost',
             processor: '#processor#'
@@ -205,7 +203,7 @@ module.exports = {
 
 Note that the abstract is not inherited.
 
-####Children
+#### Children
 
 In some cases, you have to define some homogeneous services. The node `children` allows you to easily and visually arrange that:
 
@@ -216,10 +214,10 @@ In some cases, you have to define some homogeneous services. The node `children`
 
 module.exports = {
     processor: {
-        class: '%classes.processor%'
+        class: 'processor'
     },
     computer: {
-        class: '%classes.computer%',
+        class: 'computer',
         properties: {
             processor: '#processor#'
         },
@@ -241,7 +239,7 @@ module.exports = {
 
 This will create 3 definitions of services, 1 abstract: `computer` and 2 definitions which will result in an instanciation: `computer.local` and `computer.remote`. For each child, you can define all the nodes of a standard service (including `children` if you want to chain this structure). The relation between the parent and its children works the same as for the node `parent`.
 
-####Declinations
+#### Declinations
 
 Another way to define homogeneous services is to use the node `declinations`. Here is an equivalent of the example for the node `children` but with declinations:
 
@@ -252,10 +250,10 @@ Another way to define homogeneous services is to use the node `declinations`. He
 
 module.exports = {
     processor: {
-        class: '%classes.processor%'
+        class: 'processor'
     },
     computer: {
-        class: '%classes.computer%',
+        class: 'computer',
         declinations: {
             local: {
                 host: '127.0.0.1'
@@ -302,10 +300,10 @@ The associated contract for this config is not given here but remember that you 
 
 module.exports = {
     processor: {
-        class: '%classes.processor%'
+        class: 'processor'
     },
     computer: {
-        class: '%classes.computer%',
+        class: 'computer',
         declinations: '$computers$',
         properties: {
             host: '@host@',
@@ -321,7 +319,7 @@ This will do exactly the same as the previous example, you just set the definiti
 
 > Remember that [references can be used in a concatenation mode](configuration.md). You might want to use a form like `host: '@host@:@port@'` to add a port for instance.
 
-####Tags
+#### Tags
 
 You can tag your homogeneous services in order to inject all of them to another service:
 
@@ -332,7 +330,7 @@ You can tag your homogeneous services in order to inject all of them to another 
 
 module.exports = {
     computer: {
-        class: '%classes.computer%',
+        class: 'computer',
         tags: ['computer'],
         children: {
             local: {
@@ -348,7 +346,7 @@ module.exports = {
         }
     },
     synchronizer: {
-        class: '%classes.synchronizer%',
+        class: 'synchronizer',
         properties: {
             computers: '&computer&'
         }
@@ -382,7 +380,7 @@ Synchronizer.prototype.compute = function() {
 
 `Synchronizer.defineDependency('_computers', 'computer_array');` means that the private property `_computers` should be an array of objects whom classes implement the interface `computer`.
 
-####Factories
+#### Factories
 
 You can control the instantiation of a service injected into another. To do this, use the node `factories` and the references of type `>`:
 
@@ -393,7 +391,7 @@ You can control the instantiation of a service injected into another. To do this
 
 module.exports = {
     processor: {
-        class: '%classes.processor%',
+        class: 'processor',
         factories: {
             computer: {
                 properties: {
@@ -403,7 +401,7 @@ module.exports = {
         }
     },
     computer: {
-        class: '%classes.computer%',
+        class: 'computer',
         declinations: {
             local: {
                 host: '127.0.0.1',
@@ -433,7 +431,7 @@ There is a double interpretation of the context. That's why you must use a doubl
 
 module.exports = {
     processor: {
-        class: '%classes.processor%',
+        class: 'processor',
         factories: {
             computer: {
                 properties: {
@@ -443,7 +441,7 @@ module.exports = {
         }
     },
     computer: {
-        class: '%classes.computer%',
+        class: 'computer',
         declinations: {
             local: {
                 host: '127.0.0.1',
@@ -472,7 +470,7 @@ The first interpretation of `@@processors.@processors@@@` will lead to `[@proces
 
 You can also use the references coming from the config (`$`).
 
-####Alias
+#### Alias
 
 You can define aliases to refer to a service with a different name thanks to the node `alias`:
 
@@ -483,7 +481,7 @@ You can define aliases to refer to a service with a different name thanks to the
 
 module.exports = {
     computer: {
-        class: '%classes.computer%',
+        class: 'computer',
         children: {
             local: {
                 properties: {
@@ -505,7 +503,7 @@ module.exports = {
 
 Obviously, you cannot use anything else than the node `alias` for the definition of an aliased service.
 
-###Inject an instance of a class which is not a service
+### Inject an instance of a class which is not a service
 
 Of course, some of your classes are not instantiated as services (as data class for instance). The way to work with that kind of objects in Danf is to use providers:
 
@@ -518,12 +516,12 @@ module.exports = {
     operationProvider: {
         parent: 'danf:dependencyInjection.objectProvider',
         properties: {
-            class: '%classes.operation%',
+            class: 'operation',
             interface: 'operation'
         }
     },
     processor: {
-        class: '%classes.processor%',
+        class: 'processor',
         properties: {
             operationProvider: '#operationProvider#'
         }
@@ -531,7 +529,7 @@ module.exports = {
 }
 ```
 
-Here is the implementation of the class `%classes.operation%`:
+Here is the implementation of the class `operation`:
 
 ```javascript
 // lib/server/operation.js

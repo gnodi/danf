@@ -53,7 +53,7 @@ This way, your code is factored and your developement is rationalized.
 Composition and low coupling
 ----------------------------
 
-### Composition vs inheritance
+###  Composition vs inheritance
 
 Lots of developers use inheritance to factorize code between classes. Of course it is not a bad idea, but it should be used in a strict delimited way. Multiple inheritance has many problems (diamond, complexity, ...) which often lead to a code difficult to maintain. In Danf, single inheritance is the rule. The framework encourages to use inheritance only when the parent and the child class have the same responsability.
 
@@ -72,7 +72,7 @@ jewelSaleHandler->setLogger(logger);
 
 The responsability of a sale handler is not to log or be loggable but to handle sales. This is why composition must be used instead of inheritance. Here, the logging factored code is in the class `Logger`.
 
-### Low coupling
+###  Low coupling
 
 Coupling is the degree of interaction between two classes. In an inheritance relation, the coupling is maximum: the child is fully dependent on its parent. This kind of coupling is really hard to change. In a simple composition relation, the coupling is the same as in an inheritance. However, it is possible to reduce this dependency by defining interfaces between classes.
 

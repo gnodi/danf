@@ -6,7 +6,7 @@ Define the Configuration
 Application
 -----------
 
-###Define the configuration
+### Define the configuration
 
 There is many possible entry points in the conception of an application. Here, we are going to start from the configuration because it is a good way to understand the application we want to develop and it is the core of the framework.
 
@@ -51,7 +51,7 @@ module.exports = {
 We defined a list of available frameworks and a list of questions classified by category allowing to define a specific boost on each.
 The user must answer yes or no to each of these questions and a corresponding score will be computed for each framework.
 
-###Resolve the configuration
+### Resolve the configuration
 
 In order to avoid checking the format of this config in your code (possibly many times), you have to define a contract the config must respect.
 Here is the corresponding contract for our config:

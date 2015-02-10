@@ -2,14 +2,14 @@
 
 module.exports = {
     frameworkSelector: {
-        class: '%classes.frameworkSelector%',
+        class: 'frameworkSelector',
         properties: {
             frameworks: '$frameworks$',
             categoryComputers: '&categoryComputer&'
         }
     },
     questionsRetriever: {
-        class: '%classes.questionsRetriever%',
+        class: 'questionsRetriever',
         properties: {
             questions: '$questions$'
         }
@@ -23,7 +23,7 @@ module.exports = {
         },
         children: {
             dumb: {
-                class: '%classes.categoryComputer.dumb%',
+                class: 'categoryComputer.dumb',
                 abstract: true,
                 declinations: '$questions.dumb$',
                 properties: {
@@ -32,7 +32,7 @@ module.exports = {
                 }
             },
             useless: {
-                class: '%classes.categoryComputer.useless%',
+                class: 'categoryComputer.useless',
                 abstract: true,
                 declinations: '$questions.useless$',
                 properties: {

@@ -6,7 +6,7 @@ Master the Events
 Application
 -----------
 
-###Define events
+### Define events
 
 Ok now, we have our configuration, our classes and their derived objects injected into each other on both the client and server sides. The next step is to define events which will use these objects.
 
@@ -97,7 +97,7 @@ define(function(require) {
 
 You can notice that all kind of events can define a node `sequences` which is an array of identifier names of sequences.
 
-###Define sequences
+### Define sequences
 
 Sequences, as their name suggests it, are sequences of operations. An operation is a call to a method of a service. A stream flows in a pipe made by these operations. In the case of a HTTP request, the input stream is formed by the request parameters.
 

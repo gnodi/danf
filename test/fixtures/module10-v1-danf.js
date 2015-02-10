@@ -24,13 +24,8 @@ module.exports = {
         }
     },
     config: {
-        parameters: {
-            classes: {
-                counter: Counter
-            }
-        },
         classes: {
-            counter: '%classes.counter%'
+            counter: Counter
         },
         interfaces: {
             counter: {
@@ -48,7 +43,7 @@ module.exports = {
         },
         services: {
             counter: {
-                class: '%classes.counter%'
+                class: 'counter'
             }
         },
         this: {

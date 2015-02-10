@@ -6,7 +6,7 @@ Code Unit Tests
 Documentation
 -------------
 
-###Use the helper
+### Use the helper
 
 Danf provides an helper allowing you to easily test your classes.
 
@@ -47,15 +47,13 @@ Object.defineProperty(Computer.prototype, 'value', {
 ```
 
 ```javascript
-// config/server/parameters.js
+// config/server/classes.js
 
 'use strict';
 
 module.exports = {
-    classes: {
-        abstractComputer: require('../../lib/server/abstract-computer'),
-        computer:  require('../../lib/server/computer')
-    }
+    abstractComputer: require('../../lib/server/abstract-computer'),
+    computer:  require('../../lib/server/computer')
 };
 ```
 
@@ -66,7 +64,7 @@ module.exports = {
 
 module.exports = {
     computer: {
-        class: '%classes.computer%',
+        class: 'computer',
         properties: {
             value: 4
         }
@@ -110,7 +108,7 @@ This `testHelper` then allows you to:
 
 In most cases you will use `testHelper.getInstance('...')` because you want to test an isolated instance of your class (mock dependencies). In some cases, however, you might want to retrieve a service in order to make "more functional" tests.
 
-###Make tests with the proto application
+### Make tests with the proto application
 
 [Mocha](https://github.com/mochajs/mocha) and [Supertest](https://github.com/tj/supertest) are integrated by default in the proto application to help you quickly implement and execute your tests.
 
