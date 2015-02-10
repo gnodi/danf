@@ -4,6 +4,7 @@
 [![NPM Version][npm-image]][npm-url]
 [![NPM Downloads][downloads-image]][downloads-url]
 [![Build Status][travis-image]][travis-url]
+[![Dependency Status][versioneye-image]][versioneye-url]
 
 Introduction
 ------------
@@ -121,3 +122,5 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 [downloads-url]: https://npmjs.org/package/danf
 [travis-image]: https://img.shields.io/travis/gnodi/danf.svg?style=flat
 [travis-url]: https://travis-ci.org/gnodi/danf
+[versioneye-image]:https://www.versioneye.com/user/projects/54da27f8c1bbbd5f8200020a/badge.svg?style=flat
+[versioneye-url]:https://www.versioneye.com/user/projects/54da27f8c1bbbd5f8200020a
