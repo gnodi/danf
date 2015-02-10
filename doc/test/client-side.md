@@ -6,7 +6,7 @@ Extend to the Client Side
 Application
 -----------
 
-###Code for the client side
+### Code for the client side
 
 In Danf, you code on the client side the same way as on the server side.
 Here is a class to display the list of scores associated to each framework:
@@ -92,11 +92,20 @@ As on the server side, you can define the config related to this class:
 
 define(function(require) {
     return {
-        computingMeasureId: 'Computing',
-        classes: {
-            listDisplayer: require('tutorial/lib/client/list-displayer'),
-            benchmarker: require('tutorial/lib/common/benchmarker')
-        }
+        computingMeasureId: 'Computing'
+    }
+});
+```
+
+```javascript
+// config/client/classes.js
+
+'use strict';
+
+define(function(require) {
+    return {
+        listDisplayer: require('tutorial/lib/client/list-displayer'),
+        benchmarker: require('tutorial/lib/common/benchmarker')
     }
 });
 ```
@@ -133,7 +142,7 @@ define(function(require) {
 define(function(require) {
     return {
         listDisplayer: {
-            class: '%classes.listDisplayer%',
+            class: 'listDisplayer',
             properties: {
                 measure: '%computingMeasureId%',
                 jquery: '#danf:vendor.jquery#',
@@ -144,7 +153,7 @@ define(function(require) {
 });
 ```
 
-###Code for both the client and server side
+### Code for both the client and server side
 
 Of course, you might want to use a class on both the client and server side. You certainly see that we use a service `benchmarker` on these two sides but never defined it. Here is how it should be done:
 
@@ -240,13 +249,13 @@ var define = define ? define : require('amdefine')(module);
 define(function(require) {
     return {
         benchmarker: {
-            class: '%classes.benchmarker%'
+            class: 'benchmarker'
         }
     }
 });
 ```
 
-Note that the definition of the parameter for the classes has been done in both client and server `parameters.js` because the needed `require` is different.
+Note that the definition of the classes has been done in both client and server `classes.js` because the needed `require` is different.
 
 Navigation
 ----------

@@ -6,7 +6,7 @@ Develop with Object-Oriented Programming
 Documentation
 -------------
 
-###Define a class
+### Define a class
 
 ```javascript
 // lib/server/computer.js
@@ -34,58 +34,23 @@ Computer.prototype.compute = function() {
 The definition of a class is really easy, you just have to declare a function and return it with `module.exports` as in any other node file.
 You can, then, define some properties and some methods on this function as shown in this example.
 
-###Declare a class
+### Declare a class
 
-To make a class use all the features of the framework you have to declare it in the configuration.
-You have two choices:
-
-* You can declare it directly in the `classes` section.
+To make a class use all the features of the framework you have to declare it in the configuration:
 
 ```javascript
-// config/classes.js
-
-'use strict';
-
-var define = define ? define : require('amdefine')(module);
-
-define(function(require) {
-    return {
-        computer: require('../../lib/server/computer')
-    };
-});
-```
-
-* However, it is a good practice to declare it as a parameter. You will see why in next sections.
-
-```javascript
-// config/server/parameters.js
+// config/server/classes.js
 
 'use strict';
 
 module.exports = {
-    classes: {
-        computer: require('../../lib/server/computer')
-    }
+    computer: require('../../lib/server/computer')
 };
-```
-
-This is done by default in the proto application (you don't have to do it) but the parameters are linked to the classes section in this manner:
-
-```javascript
-// config/classes.js
-
-'use strict';
-
-var define = define ? define : require('amdefine')(module);
-
-define(function(require) {
-    return '%classes%';
-});
 ```
 
 You can notice that the name referencing your class is `computer` in both cases.
 
-###Inherit from a class
+### Inherit from a class
 
 ```javascript
 // lib/server/computer.js
@@ -110,7 +75,7 @@ SuperComputer.prototype.compute = function() {
 You can inherit from a class using the method `defineExtendedClass` on the child class and passing the declared name of the class.
 It is possible to call the parent constructor using `.Parent.call(this, ...);` in the constructor of the child class.
 
-###Use an abstract class
+### Use an abstract class
 
 You can use non-instantiable class:
 
@@ -136,7 +101,7 @@ AbstractComputer.prototype.compute = null;
 The method call `defineAsAbstract` on the class will define the class as abstract and prevent it to be instantiated.
 `Object.hasMethod(this, 'compute', true);` called in the constructor forces child classes to define the method `compute`.
 
-###Inherit from a class of a dependency
+### Inherit from a class of a dependency
 
 Imagine, you have the following configuration with a dependency on a danf module called `lab`:
 
@@ -171,7 +136,7 @@ function MyComputer() {
 MyComputer.defineExtendedClass('lab:abstractComputer');
 ```
 
-###Define interfaces
+### Define interfaces
 
 Like it is explained in the [concepts](../concepts.md), interfaces are really important in object architectures.
 
@@ -269,7 +234,7 @@ You can use this many times in the same list of arguments and at any places.
 
 This will works: `arguments: ['processor', 'string...|number...', 'number...|undefined', 'undefined|boolean']`.
 
-###Link interfaces to classes
+### Link interfaces to classes
 
 To tell that a class implements an interface you just have to call `defineImplementedInterfaces` on the class and pass it a list of the implemented interfaces. This is transitive, you do not have to call it in child classes.
 
@@ -366,7 +331,7 @@ The call of `defineDependency` on the class `Computer` is going to allow:
 
 In this example, the instance of `Processor` implements the interface `processor` (`Processor.defineImplementedInterfaces(['processor']);`) and the instance of `Computer` will be able to call `processor.compute(...)` but not `processor.wake()` or `processor.wait()` (because the interface `processor` only define the method `compute`).
 
-###Inherit from an interface
+### Inherit from an interface
 
 An interface can inherit from another:
 
@@ -392,7 +357,7 @@ module.exports = {
 };
 ```
 
-You just have to set the name of the extended interface in the `extends` parameters of the extender interface.
+You just have to set the name of the extended interface in the node `extends` of the extender interface.
 If `Object.isInstanceOf(computer, 'advancedComputer') === true` then `Object.isInstanceOf(computer, 'computer') === true`.
 
 Navigation

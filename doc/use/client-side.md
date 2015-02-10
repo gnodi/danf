@@ -6,7 +6,7 @@ Extend to the Client Side
 Documentation
 -------------
 
-###Define a class for the client side
+### Define a class for the client side
 
 Defining a class for the client side is almost the same as for the server. You just have to define your class in a [Requirejs](http://requirejs.org/docs/node.html) wrapper.
 
@@ -36,25 +36,23 @@ define(function(require) {
 });
 ```
 
-Using the good practices described in [here](object.md), we declare the class like the following:
+Here is the declaration of the class:
 
 ```javascript
-// config/client/parameters.js
+// config/client/classes.js
 
 'use strict';
 
 define(function(require) {
     return {
-        classes: {
-            computer: require('my-app/lib/client/computer')
-        }
+        computer: require('my-app/lib/client/computer')
     };
 });
 ```
 
 Where `my-app` is your application name.
 
-###Define a class for both the client and server sides
+### Define a class for both the client and server sides
 
 In some cases, you would like to use a class on both the client and server sides. As for the client side, you need a little wrapper:
 
@@ -87,37 +85,33 @@ define(function(require) {
 ```
 
 The only addition is `var define = define ? define : require('amdefine')(module);` which allows the class to be compatible for both sides.
-You then need to declare the class in the parameters for the server:
+You then need to declare the class for the server:
 
 ```javascript
-// config/server/parameters.js
+// config/server/classes.js
 
 'use strict';
 
 module.exports = {
-    classes: {
-        computer: require('../../lib/common/computer')
-    }
+    computer: require('../../lib/common/computer')
 };
 ```
 
 and the client:
 
 ```javascript
-// config/client/parameters.js
+// config/client/classes.js
 
 'use strict';
 
 define(function(require) {
     return {
-        classes: {
-            computer: require('my-app/lib/common/computer')
-        }
+        computer: require('my-app/lib/common/computer')
     };
 });
 ```
 
-###Define the config
+### Define the config
 
 If you use this pattern, the rest of the config does not need to be defined twice. You have to use the corresponding previous wrappers in your config files if you want to use them on the client or on both sides.
 

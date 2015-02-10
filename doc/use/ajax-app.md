@@ -9,7 +9,7 @@ Documentation
 As a lot of js files are requested by the browser, it is a nice idea to work in an ajax app mode to increase performances (less network bandwidth, less js interpretation time).
 Danf provides an easy way to do that while keeping deep linking and bookmarking.
 
-###Use ajax links
+### Use ajax links
 
 ```jade
 //- resources/private/view/index.jade
@@ -188,7 +188,7 @@ html
 
 You can use another template engine using the [Express'](http://expressjs.com/api.html) mechanism. For this, you can use the variable `app` in your files `app-dev.js` and `app-prod.js`.
 
-###Use ajax forms
+### Use ajax forms
 
 ```jade
 // resources/private/view/framework.jade

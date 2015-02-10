@@ -15,14 +15,14 @@ Now, it is time to define our objects (the instantiations of our classes) and th
 
 module.exports = {
     frameworkSelector: {
-        class: '%classes.frameworkSelector%',
+        class: 'frameworkSelector',
         properties: {
             frameworks: '$frameworks$',
             categoryComputers: '&categoryComputer&'
         }
     },
     questionsRetriever: {
-        class: '%classes.questionsRetriever%',
+        class: 'questionsRetriever',
         properties: {
             questions: '$questions$'
         }
@@ -36,7 +36,7 @@ module.exports = {
         },
         children: {
             dumb: {
-                class: '%classes.categoryComputer.dumb%',
+                class: 'categoryComputer.dumb',
                 abstract: true,
                 declinations: '$questions.dumb$',
                 properties: {
@@ -45,7 +45,7 @@ module.exports = {
                 }
             },
             useless: {
-                class: '%classes.categoryComputer.useless%',
+                class: 'categoryComputer.useless',
                 abstract: true,
                 declinations: '$questions.useless$',
                 properties: {
@@ -69,8 +69,6 @@ The services tagged `categoryComputer` (i.e. `categoryComputer.dumb` and `catego
 The list of configured frameworks (in `config/server/this.js`) are injected into `frameworkSelector` in the property `frameworks` thanks to the reference `$frameworks$`.
 
 A declination of service is created for each configured dumb question category (mega and hyper) and the associated configured boost and questions are injected thanks to `@boost@` and `@questions@`.
-
-The last thing to note is that the classes are defined with parameter references (`%classes.frameworkSelector%`). This allows to factorize the `require` calls and provides an easy way to override the class of a service.
 
 This topic is one of the most complicated and certainly need some practice to feel comfortable with it. Check the documentation accessible below in the navigation part to learn more about it.
 

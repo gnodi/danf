@@ -6,7 +6,7 @@ Start a New Application
 Documentation
 -------------
 
-###Use a proto application
+### Use a proto application
 
 The easiest way to start a new Danf application is to download the zip of a proto application at https://github.com/gnodi/danf-proto-app and unzip the archive to your working directory.
 
@@ -23,11 +23,11 @@ $ node app-dev
 You should see `Hi!` at `http://localhost:3080` following by this instruction:
 `Replace "my-app" in all files by the name of your application.`. Do it.
 
-###Customize the context of the application
+### Customize the context of the application
 
 At the creation of the application, a context object can be passed to modify the execution.
 
-####Environment
+#### Environment
 
 You can specify the environment and debug mode like this:
 
@@ -53,7 +53,7 @@ var danf = require('danf'),
 
 The first context is for the server and the second for the client.
 
-####Workers
+#### Workers
 
 In Danf, setting workers to use the full potentiality of your processor is just one parameter of the context:
 
@@ -80,7 +80,7 @@ You can also specify a negative number which means: `max core number - my number
 * `1` is equivalent to one of the CPU cores.
 * `undefined` is equivalent to one of the CPU cores.
 
-####Secret
+#### Secret
 
 You should define a complex secret to use as salt for encoding some of your application values.
 

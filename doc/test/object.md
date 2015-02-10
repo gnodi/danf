@@ -6,7 +6,7 @@ Develop with Object-Oriented Programming
 Application
 -----------
 
-### Define classes
+###  Define classes
 
 Let's define our first class:
 
@@ -361,47 +361,30 @@ QuestionsRetriever.prototype.retrieve = function() {
 }
 ```
 
-###Declare classes
+### Declare classes
 
-To make these classes use all the features of the framework you have to declare them in the configuration.
-You have two choices: you can declare them directly in the `classes` section, but it is a good practice to declare them as parameters. You will see why in next sections.
+To make these classes use all the features of the framework you have to declare them in the configuration:
 
 ```javascript
-// config/server/parameters.js
+// config/server/classes.js
 
 'use strict';
 
 module.exports = {
-    classes: {
-        frameworkSelector: require('../../lib/server/framework-selector'),
-        questionsRetriever: require('../../lib/server/questions-retriever'),
-        categoryComputer: {
-            abstract: require('../../lib/server/category-computer/abstract'),
-            dumb: require('../../lib/server/category-computer/dumb'),
-            useless: require('../../lib/server/category-computer/useless')
-        },
-        benchmarker: require('../../lib/common/benchmarker')
-    }
+    frameworkSelector: require('../../lib/server/framework-selector'),
+    questionsRetriever: require('../../lib/server/questions-retriever'),
+    categoryComputer: {
+        abstract: require('../../lib/server/category-computer/abstract'),
+        dumb: require('../../lib/server/category-computer/dumb'),
+        useless: require('../../lib/server/category-computer/useless')
+    },
+    benchmarker: require('../../lib/common/benchmarker')
 };
 ```
 
 This is where is defined the name of the class `categoryComputer.abstract` we used in `Dumb.defineExtendedClass('categoryComputer.abstract');`.
 
-This is done by default in the proto application (you don't have to do it) but the parameters are linked to the classes section in this manner:
-
-```javascript
-// config/classes.js
-
-'use strict';
-
-var define = define ? define : require('amdefine')(module);
-
-define(function(require) {
-    return '%classes%';
-});
-```
-
-###Define interfaces
+### Define interfaces
 
 Like it is explained in the [concepts](../concepts.md), interfaces are really important in object architectures. Danf highly encourages their use and provides an easy way to define them. Here is the definition of the interfaces we used for our classes:
 

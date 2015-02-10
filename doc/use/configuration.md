@@ -8,7 +8,7 @@ Documentation
 
 Danf provides a powerful configuration mechanism allowing to develop dynamic applications.
 
-###Use another danf module as dependency
+### Use another danf module as dependency
 
 An application build with Danf is also called "danf module". This means that you can use this application in another one just defining dependencies.
 
@@ -27,12 +27,12 @@ module.exports = {
 
 The `require` must be done on the file `danf.js` of the danf module.
 
-###Define your own config
+### Define your own config
 
 A module needs a way to define its own config in order to impact some of its behaviours dynamically.
 Danf allows you to specify a contract that the config must respect.
 
-####Introduction example
+#### Introduction example
 
 ```javascript
 // danf.js
@@ -93,7 +93,7 @@ module.exports = {
 };
 ```
 
-####Type
+#### Type
 
 There is many available types helping you to easily check the format of your config:
 * `number`: A number value.
@@ -132,7 +132,7 @@ There is many available types helping you to easily check the format of your con
 * `embedded_object`: An object of embedded object with defined names for their properties.
 * `function() {}`: An interpreted callback.
 
-#####Simple
+##### Simple
 
 ```javascript
 // danf.js
@@ -168,7 +168,7 @@ Other types with the same behaviour:
 * `null`
 * `free`
 
-#####*_array
+##### *_array
 
 ```javascript
 // danf.js
@@ -202,7 +202,7 @@ Other types with the same behaviour:
 * `error_array`
 * `free_array`
 
-#####*_object
+##### *_object
 
 ```javascript
 // danf.js
@@ -239,7 +239,7 @@ Other types with the same behaviour:
 * `error_object`
 * `free_object`
 
-#####*_array_array
+##### *_array_array
 
 ```javascript
 // danf.js
@@ -272,9 +272,12 @@ module.exports = {
 Other types with the same behaviour:
 * `string_array_array`
 * `boolean_array_array`
+* `function_array_array`
+* `date_array_array`
+* `error_array_array`
 * `free_array_array`
 
-#####*_array_object
+##### *_array_object
 
 ```javascript
 // danf.js
@@ -306,9 +309,86 @@ module.exports = {
 Other types with the same behaviour:
 * `string_array_object`
 * `boolean_array_object`
+* `function_array_object`
+* `date_array_object`
+* `error_array_object`
 * `free_array_object`
 
-#####Embedded
+##### *_object_array
+
+```javascript
+// danf.js
+
+'use strict';
+
+module.exports = {
+    contract: {
+        field: {
+            type: 'number_object_array'
+        }
+    }
+};
+```
+
+```javascript
+// config/server/this.js
+
+'use strict';
+
+module.exports = {
+    field: [
+        {foo: 2},
+        {foo: 3, bar: 10}
+    ]
+};
+```
+
+Other types with the same behaviour:
+* `string_object_array`
+* `boolean_object_array`
+* `function_object_array`
+* `date_object_array`
+* `error_object_array`
+* `free_object_array`
+
+##### *_object_object
+
+```javascript
+// danf.js
+
+'use strict';
+
+module.exports = {
+    contract: {
+        field: {
+            type: 'number_object_object'
+        }
+    }
+};
+```
+
+```javascript
+// config/server/this.js
+
+'use strict';
+
+module.exports = {
+    field: {
+        foo: {foo: 2},
+        bar: {foo: 3, bar: 10}
+    }
+};
+```
+
+Other types with the same behaviour:
+* `string_object_object`
+* `boolean_object_object`
+* `function_object_object`
+* `date_object_object`
+* `error_object_object`
+* `free_object_object`
+
+##### Embedded
 
 ```javascript
 // danf.js
@@ -345,7 +425,7 @@ module.exports = {
 };
 ```
 
-#####Embedded array
+##### Embedded array
 
 ```javascript
 // danf.js
@@ -388,7 +468,7 @@ module.exports = {
 };
 ```
 
-#####Embedded object
+##### Embedded object
 
 ```javascript
 // danf.js
@@ -431,7 +511,7 @@ module.exports = {
 };
 ```
 
-#####Callback
+##### Callback
 
 ```javascript
 // danf.js
@@ -468,7 +548,7 @@ module.exports = {
 };
 ```
 
-#####Multitypes
+##### Multitypes
 
 ```javascript
 // danf.js
@@ -504,7 +584,7 @@ module.exports = {
 };
 ```
 
-#####Interpretation
+##### Interpretation
 
 Notice that some values can be interpreted:
 
@@ -543,7 +623,7 @@ will result in:
 }
 ```
 
-####Required
+#### Required
 
 `required` forces the definition of the field:
 
@@ -564,7 +644,7 @@ module.exports = {
 
 By default `required = false`.
 
-####Default
+#### Default
 
 `default` allows to specify a default value if the field is not defined:
 
@@ -597,7 +677,7 @@ will result in:
 
 The value must be of the defined type.
 
-####Flatten
+#### Flatten
 
 Flatten allow to flatten a field:
 
@@ -647,7 +727,7 @@ will result in:
 You can specify the separator instead of `true` (`flatten: ';'`)
 The flattened value should be of the defined type.
 
-####Namespaces
+#### Namespaces
 
 Namespaces prefixes your field with the namespace of its owner module:
 
@@ -690,7 +770,7 @@ will result in:
 
 It is a good way to avoid naming collisions between danf modules.
 
-####References
+#### References
 
 References defines the references which should be prefixed with the namespace of theirs owner module:
 
@@ -733,7 +813,7 @@ will result in:
 
 References `%...%` are automaticaly prefixed.
 
-####Advanced example
+#### Advanced example
 
 ```javascript
 // danf.js
@@ -843,7 +923,7 @@ module.exports = {
 };
 ```
 
-###Override the config of dependencies
+### Override the config of dependencies
 
 You can override the config of a submodule dependency in this way:
 
@@ -900,7 +980,7 @@ The resulting config is:
 }
 ```
 
-###Force version of a dependency
+### Force version of a dependency
 
 Sometimes, you can have dependencies with an indentical dependency. You could then decide to merge this dependencies.
 It is a bit complicated, but let's see an example:
@@ -1001,7 +1081,7 @@ module.exports = {
 };
 ```
 
-###Define config for a specific environment
+### Define config for a specific environment
 
 ```javascript
 // danf.js
@@ -1027,7 +1107,7 @@ module.exports = {
 
 The config for an environment overrides the standard config. Here, in a `prod` environment, the resulting config will be `debug: false` whereas in the others it will be `debug: true`.
 
-###Factorize config
+### Factorize config
 
 You can factorize your configuration using parameters:
 
@@ -1085,7 +1165,7 @@ roles: {
 };
 ```
 
-###Use references
+### Use references
 
 References are a powerful tool used by the config. A reference works as a kind of selector on a context. There are many types of references used in Danf in many places. The parameters are one of these types. `%` is the delimiter of this type (this delimiter can change for another type) and the context is the list of configured parameters. The references of the parameters are interpreted before anything else occurs on the config. This is why you can factorize configuration with it. The interpretation of a type of references can be made at any time (even runtime) by any classes.
 
@@ -1393,7 +1473,7 @@ You can add `` in a reference to tell that it is independent of the others:
 ]
 ```
 
-###Use the config
+### Use the config
 
 You will see in the next sections how to use this config.
 

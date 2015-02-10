@@ -6,11 +6,11 @@ Handle the Session
 Documentation
 -------------
 
-###Usage
+### Usage
 
 You can use the [service](../dependency-injection.md) `danf:http.sessionHandler` to easily manage the session. In most cases you will just need to use the methods `get` and `set` to set and retrieve values in the session. This latter is started and saved for you.
 
-###API
+### API
 
 **Get a value in the session.**
 
