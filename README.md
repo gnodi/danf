@@ -393,8 +393,7 @@ define(function(require) {
                 {
                     service: 'logger',
                     method: 'log',
-                    arguments: ['Powered by Danf'],
-                    returns: 'value'
+                    arguments: ['Powered by Danf']
                 }
             ]
         }
