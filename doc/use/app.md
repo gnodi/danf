@@ -39,10 +39,12 @@ You can specify the environment and debug mode like this:
 var danf = require('danf'),
     app = danf(
         require(__dirname + '/danf'),
+        // Define server context.
         {
             environment: 'prod',
             debug: false
         },
+        // Define client context.
         {
             environment: 'prod',
             debug: false
@@ -52,6 +54,10 @@ var danf = require('danf'),
 ```
 
 The first context is for the server and the second for the client.
+
+> Note that you gain a lot of performances disabling the debug mode, but you shouldn't do this in a dev or test environment.
+
+In the proto application, you can launch an application in a prod environment using `$ node app-prod` with maximum performances.
 
 #### Workers
 

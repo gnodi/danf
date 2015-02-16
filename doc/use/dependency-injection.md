@@ -516,8 +516,8 @@ module.exports = {
     operationProvider: {
         parent: 'danf:dependencyInjection.objectProvider',
         properties: {
-            class: 'operation',
-            interface: 'operation'
+            class: '[-]operation',
+            interface: '[-]operation'
         }
     },
     processor: {
@@ -528,6 +528,8 @@ module.exports = {
     }
 }
 ```
+
+`[-]` is used to tell that the value of the property should be namespaced.
 
 Here is the implementation of the class `operation`:
 

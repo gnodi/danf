@@ -130,7 +130,7 @@ To avoid displaying the result title at the loading of the page, we add a few li
 }
 ```
 
-At this point, everything should be ok. To start your application just go in the working root directory and call `node app-dev`.
+At this point, everything should be ok. To start your application just go in the working root directory and call `node app-prod`.
 The server should start:
 
 ```sh

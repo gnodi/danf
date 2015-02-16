@@ -26,7 +26,7 @@ Now you have 2 choices: you can copy the code of each file explained in the next
 ```sh
 $ cd node_modules/danf/test/functional/tutorial
 $ npm install
-$ node app-dev
+$ node app-prod
 ```
 
 In all cases, take a look at further explanations!
