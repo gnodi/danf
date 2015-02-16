@@ -17,11 +17,13 @@ var assert = require('assert'),
     ReferenceResolver = require('../../lib/manipulation/reference-resolver'),
     ReferenceType = require('../../lib/manipulation/reference-type'),
     InterfacesRegistry = require('../../lib/object/interfaces-registry'),
+    Interfacer = require('../../lib/object/interfacer'),
     utils = require('../../lib/utils')
 ;
 
 var referenceResolver = new ReferenceResolver(),
     interfacesRegistry = new InterfacesRegistry(),
+    interfacer = new Interfacer(interfacesRegistry),
     servicesContainer = new ServicesContainer(referenceResolver, interfacesRegistry)
 ;
 
@@ -67,8 +69,8 @@ servicesContainer.addServiceBuilder(new ClassServiceBuilder(servicesContainer, r
 servicesContainer.addServiceBuilder(new DeclinationsServiceBuilder(servicesContainer, referenceResolver));
 servicesContainer.addServiceBuilder(new FactoriesServiceBuilder(servicesContainer, referenceResolver));
 servicesContainer.addServiceBuilder(new ParentServiceBuilder(servicesContainer, referenceResolver));
-servicesContainer.addServiceBuilder(new PropertiesServiceBuilder(servicesContainer, referenceResolver));
-servicesContainer.addServiceBuilder(new TagsServiceBuilder(servicesContainer, referenceResolver));
+servicesContainer.addServiceBuilder(new PropertiesServiceBuilder(servicesContainer, referenceResolver, interfacer));
+servicesContainer.addServiceBuilder(new TagsServiceBuilder(servicesContainer, referenceResolver, interfacer));
 
 var Provider = function() { this.name = 'provider'; };
 Provider.prototype.provide = function() {
@@ -86,6 +88,9 @@ interfacesRegistry.index(
             provide: {
                 arguments: []
             }
+        },
+        getters: {
+            id: 'string'
         }
     }
 );
