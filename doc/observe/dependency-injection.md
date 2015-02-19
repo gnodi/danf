@@ -359,7 +359,6 @@ p
 Navigation
 ----------
 
-[Respond to a HTTP request with a server class processing](simple.md) |
- [Inject services into each others](dependency-injection.md)
+[Use a class on both the client and server sides](client-server-class.md) |
 
 [←](index.md)
