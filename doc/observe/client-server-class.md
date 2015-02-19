@@ -1,7 +1,12 @@
 Use a class on both the client and server sides
 ===============================================
 
+[←](index.md)
+
 A functional version of the code of this example can be found [here](../../test/functional/example/client-server-class).
+
+Example
+-------
 
 Here is a class both usable in the browser and in node.js:
 
@@ -207,3 +212,10 @@ h1 Take a look at your console!
 > Test it executing: `$ node app.js`
 
 How to organise all this code? Use the available [proto application](https://github.com/gnodi/danf-proto-app) to help you start a new danf module!
+
+Navigation
+----------
+
+[Use a class on both the client and server sides](client-server-class.md) |
+
+[←](index.md)

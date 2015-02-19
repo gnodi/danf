@@ -1,7 +1,12 @@
 Respond to a HTTP request with a server class processing
 ========================================================
 
+[←](index.md)
+
 A functional version of the code of this example can be found [here](../../test/functional/example/simple).
+
+Example
+-------
 
 Here is an example of class:
 
@@ -120,3 +125,10 @@ h1
 ```
 
 > Test it executing: `$ node app.js`
+
+Navigation
+----------
+
+| [Use a class on both the client and server sides](client-server-class.md)
+
+[←](index.md)

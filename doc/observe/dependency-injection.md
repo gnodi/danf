@@ -1,7 +1,12 @@
 Inject services into each others
 ================================
 
+[←](index.md)
+
 A functional version of the code of this example can be found [here](../../test/functional/example/dependency-injection).
+
+Example
+-------
 
 Here is an example of config with effective dependency injection:
 
@@ -350,3 +355,11 @@ p
 >
 > * `http://localhost:3080/?operation=3 * 2 @ 4` // Result: 10
 > * `http://localhost:3080/?operation=3 @ 2 * 4` // Result: 20
+
+Navigation
+----------
+
+[Respond to a HTTP request with a server class processing](simple.md) |
+ [Inject services into each others](dependency-injection.md)
+
+[←](index.md)
