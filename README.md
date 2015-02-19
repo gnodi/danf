@@ -72,6 +72,8 @@ Installation
 $ npm install -g danf
 ```
 
+A better way to start a new application with Danf is to use the available [proto application](https://github.com/gnodi/danf-proto-app).
+
 Community
 ---------
 
@@ -86,7 +88,7 @@ You can also contribute without working on the framework itself. In Danf, all yo
 Code examples
 -------------
 
-### Respond to a request with a server class processing
+### Respond to a HTTP request with a server class processing
 
 Here is an example of class:
 
@@ -206,6 +208,8 @@ h1
 
 > Test it executing: `$ node app.js`
 
+Find the full example [here](doc/observe/simple.md)!
+
 ### Use a class on both the client and server sides
 
 Here is a class both usable in the browser and in node.js:
@@ -241,177 +245,7 @@ define(function(require) {
 });
 ```
 
-Here is the app file:
-
-```javascript
-// app.js
-
-'use strict';
-
-var danf = require('danf');
-
-danf(require('./danf'));
-```
-
-Here is the danf server configuration entry file:
-
-```javascript
-// danf.js
-
-'use strict';
-
-var utils = require('danf/lib/utils');
-
-module.exports = {
-    config: utils.merge(
-        // Merge common and server config.
-        require('./common-config'),
-        require('./server-config'),
-        true
-    )
-};
-```
-
-Here is the danf client configuration entry file:
-
-```javascript
-// danf-client.js
-
-'use strict';
-
-define(function(require) {
-    var utils = require('danf/utils');
-
-    return {
-        // Merge common and client config.
-        config: utils.merge(
-            require('my-app/common-config'),
-            require('my-app/client-config'),
-            true
-        )
-    };
-});
-```
-
-Here is the server config file:
-
-```javascript
-// server-config.js
-
-'use strict';
-
-module.exports = {
-    // The assets are the rules defining which files are accessible from HTTP requests.
-    assets: {
-        // Define the path for "danf-client".
-        // You always need to define this path.
-        'danf-client': __dirname + '/danf-client',
-        // Map "my-app" to the current directory.
-        // The URL path "/my-app/client-config" will give the file "client-config.js".
-        'my-app': __dirname,
-        // Forbid access to the file "server-config".
-        '!my-app/server-config': __dirname + '/server-config.js'
-    },
-    // The definition of the classes is a little bit different for the client and the server.
-    classes: {
-        logger: require('./logger')
-    },
-    // Log on the HTTP request of path "/".
-    events: {
-        request: {
-            index: {
-                path: '/',
-                methods: ['get'],
-                view: {
-                    html: {
-                        body: {
-                            file: __dirname + '/index.jade'
-                        }
-                    }
-                },
-                sequences: ['logDanf']
-            }
-        }
-    }
-};
-```
-
-Here is the client config file:
-
-```javascript
-// client-config.js
-
-'use strict';
-
-define(function(require) {
-    return {
-        classes: {
-            // You must use "my-app/logger" on the client side.
-            // "my-app" is the name you defined in the assets of your server config.
-            logger: require('my-app/logger')
-        },
-        // Log on the DOM ready event.
-        events: {
-            dom: {
-                ready: {
-                    event: 'ready',
-                    sequences: ['logDanf']
-                }
-            }
-        }
-    }
-});
-```
-
-Here is the common config file:
-
-```javascript
-// common-config.js
-
-'use strict';
-
-var define = define ? define : require('amdefine')(module);
-
-define(function(require) {
-    return {
-        interfaces: {
-            logger: {
-                methods: {
-                    log: {
-                        arguments: ['string/message']
-                    }
-                }
-            }
-        },
-        services: {
-            logger: {
-                class: 'logger'
-            }
-        },
-        sequences: {
-            logDanf: [
-                {
-                    service: 'logger',
-                    method: 'log',
-                    arguments: ['Powered by Danf']
-                }
-            ]
-        }
-    }
-});
-```
-
-Finally, here is the view:
-
-```jade
-//- index.jade
-
-h1 Take a look at your console!
-```
-
-> Test it executing: `$ node app.js`
-
-How to organise all this code? Use the available [proto application](https://github.com/gnodi/danf-proto-app) to help you start a new danf module!
+Find the full example [here](doc/observe/client-server-class.md)!
 
 ### Inject services into each others
 
@@ -429,7 +263,7 @@ danf({
         classes: {
             processor: {
                 // "adder" and "multiplier" inherit from "abstract".
-                // You can see how it works in the details of the classes below.
+                // You can see how inheritance works in the full example accessible in the link below.
                 abstract: require('./abstract-processor'),
                 adder: require('./adder'),
                 multiplier: require('./multiplier')
@@ -437,35 +271,7 @@ danf({
             parser: require('./parser'),
             computer: require('./computer')
         },
-        interfaces: {
-            computer: {
-                methods: {
-                    compute: {
-                        arguments: ['string/operation'],
-                        returns: 'string'
-                    }
-                }
-            },
-            processor: {
-                methods: {
-                    process: {
-                        arguments: ['number/operand1', 'number/operand2'],
-                        returns: 'number'
-                    }
-                },
-                getters: {
-                    operation: 'string'
-                }
-            },
-            parser: {
-                methods: {
-                    parse: {
-                        arguments: ['string/operation'],
-                        returns: 'string_array'
-                    }
-                }
-            }
-        },
+        // ...
         services: {
             processor: {
                 tags: ['processor'],
@@ -495,273 +301,12 @@ danf({
                 }
             }
         },
-        sequences: {
-            computeOperation: [
-                {
-                    service: 'computer',
-                    method: 'compute',
-                    arguments: ['@operation@'],
-                    returns: 'result'
-                }
-            ]
-        },
-        events: {
-            request: {
-                hello: {
-                    path: '/',
-                    methods: ['get'],
-                    parameters: {
-                        operation: {
-                            type: 'string',
-                            required: true
-                        }
-                    },
-                    view: {
-                        html: {
-                            body: {
-                                file: __dirname + '/index.jade'
-                            }
-                        }
-                    },
-                    sequences: ['computeOperation']
-                }
-            }
-        }
+        // ...
     }
 });
 ```
 
-Here is the related classes and view:
-
-```javascript
-// abstract-processor.js
-
-'use strict';
-
-/**
- * Expose `AbstractProcessor`.
- */
-module.exports = AbstractProcessor;
-
-/**
- * Initialize a new abstract processor.
- */
-function AbstractProcessor() {
-    Object.hasGetter(this, 'neutralElement');
-    Object.hasMethod(this, 'processOperation');
-}
-
-AbstractProcessor.defineImplementedInterfaces(['processor']);
-
-// Define the class as an abstract non instantiable class.
-AbstractProcessor.defineAsAbstract();
-
-/**
- * @interface {processor}
- */
-AbstractProcessor.prototype.process = function(operand1, operand2) {
-    if (undefined === operand2) {
-        operand2 = this.neutralElement;
-    }
-
-    return this.processOperation(operand1, operand2);
-}
-```
-
-```javascript
-// adder.js
-
-'use strict';
-
-/**
- * Expose `Adder`.
- */
-module.exports = Adder;
-
-/**
- * Initialize a new adder processor.
- */
-function Adder() {
-}
-
-Adder.defineImplementedInterfaces(['processor']);
-
-// Define the inherited class.
-Adder.defineExtendedClass('processor.abstract');
-
-/**
- * @interface {processor}
- */
-Object.defineProperty(Adder.prototype, 'operation', {
-    get: function() { return '@'; }
-});
-
-/**
- * @inheritdoc
- */
-Object.defineProperty(Adder.prototype, 'neutralElement', {
-    get: function() { return 0; }
-});
-
-/**
- * @inheritdoc
- */
-Adder.prototype.processOperation = function(operand1, operand2) {
-    return operand1 + operand2;
-}
-```
-
-```javascript
-// multiplier.js
-
-'use strict';
-
-/**
- * Expose `Multiplier`.
- */
-module.exports = Multiplier;
-
-/**
- * Initialize a new multiplier processor.
- */
-function Multiplier() {
-}
-
-Multiplier.defineImplementedInterfaces(['processor']);
-
-// Define the inherited class.
-Multiplier.defineExtendedClass('processor.abstract');
-
-/**
- * @interface {processor}
- */
-Object.defineProperty(Multiplier.prototype, 'operation', {
-    get: function() { return '*'; }
-});
-
-/**
- * @inheritdoc
- */
-Object.defineProperty(Multiplier.prototype, 'neutralElement', {
-    get: function() { return 1; }
-});
-
-/**
- * @inheritdoc
- */
-Multiplier.prototype.processOperation = function(operand1, operand2) {
-    return operand1 * operand2;
-}
-```
-
-```javascript
-// parser.js
-
-'use strict';
-
-/**
- * Expose `Parser`.
- */
-module.exports = Parser;
-
-/**
- * Initialize a new adder processor.
- */
-function Parser() {
-}
-
-Parser.defineImplementedInterfaces(['parser']);
-
-/**
- * @interface {processor}
- */
-Parser.prototype.parse = function(operation) {
-    return operation.split(' ');
-}
-```
-
-```javascript
-// computer.js
-
-'use strict';
-
-/**
- * Expose `Computer`.
- */
-module.exports = Computer;
-
-/**
- * Initialize a new adder processor.
- */
-function Computer() {
-    this._processors = {};
-    this._parser;
-}
-
-Computer.defineImplementedInterfaces(['computer']);
-
-// Define dependencies in order to check their correct injection, ensure interfaces, ...
-Computer.defineDependency('_parser', 'parser');
-Computer.defineDependency('_processors', 'processor_object');
-
-/**
- * @interface {processor}
- */
-Computer.prototype.compute = function(operation) {
-    var parsedOperation = this._parser.parse(operation),
-        result = parseInt(parsedOperation.shift(), 10)
-    ;
-
-    for (var i = 0; i < parsedOperation.length; i = i + 2) {
-        result = getProcessor.call(this, parsedOperation[i])
-            .process(result, parseInt(parsedOperation[i + 1]))
-        ;
-    }
-
-    return result;
-}
-
-Object.defineProperty(Computer.prototype, 'parser', {
-    set: function(parser) { this._parser = parser; }
-});
-
-Object.defineProperty(Computer.prototype, 'processors', {
-    set: function(processors) {
-        for (var i = 0; i < processors.length; i++) {
-            var processor = processors[i];
-
-            this._processors[processor.operation] = processor;
-        }
-    }
-});
-
-/**
- * @interface {processor}
- */
-Computer.prototype.parse = function(operation) {
-    return operation.slit(' ');
-}
-
-var getProcessor = function(operation) {
-    if (undefined === this._processors[operation]) {
-        throw new Error('No operation "{0}" found.'.format(operation));
-    }
-
-    return this._processors[operation];
-}
-```
-
-```jade
-//- index.jade
-
-p
-  = 'Result: ' + result
-```
-
-> Test it executing: `$ node app.js`
->
-> * `http://localhost:3080/?operation=3 * 2 @ 4` // Result: 10
-> * `http://localhost:3080/?operation=3 @ 2 * 4` // Result: 20
+Find the full example [here](doc/observe/dependency-injection.md)!
 
 Documentation
 -------------

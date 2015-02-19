@@ -21,9 +21,10 @@ Let's understand the main [concepts](concepts.md) that guided the developement o
 Learn
 -----
 
-You have 3 possible axes to learn more things about Danf:
+You have 4 possible axes to learn more things about Danf (the best way is certainly to follow the order if you are a beginner):
 
-* [Test the framework](test/index.md): apply a concrete example.
+* [Observe the framework](observe/index.md): take a quick look of how to code with the framework thanks to some small and uplifting examples.
+* [Test the framework](test/index.md): apply it to a concrete application.
 * [Use the framework](use/index.md): consult the use documentation.
 * [Customize the framework](customize/index.md): make your own framework.
 
