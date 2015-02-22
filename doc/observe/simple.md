@@ -121,7 +121,7 @@ And here is the view:
 //- hello.jade
 
 h1
-  = 'Hello ' + name + '!'
+    = 'Hello ' + name + '!'
 ```
 
 > Test it executing: `$ node app.js`

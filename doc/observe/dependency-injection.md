@@ -348,7 +348,7 @@ var getProcessor = function(operation) {
 //- index.jade
 
 p
-  = 'Result: ' + result
+    = 'Result: ' + result
 ```
 
 > Test it executing: `$ node app.js`
@@ -360,5 +360,6 @@ Navigation
 ----------
 
 [Use a class on both the client and server sides](client-server-class.md) |
+ [Define your own danf module config](module-config.md)
 
 [←](index.md)

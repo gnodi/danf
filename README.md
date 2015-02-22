@@ -77,13 +77,18 @@ A better way to start a new application with Danf is to use the available [proto
 Community
 ---------
 
-Danf is a brand new framework. It may seem a little hard to handle at the beginning but it can help you to master big projects by avoiding the divergence of the complexity as well as smaller fast and dynamic websites. Just give it a try on one of your project or by testing the [tutorial](doc/test/index.md). Be careful, you could see your way of coding javascript in node.js forever change (or not...).
+Danf is a brand new framework. It can help you to master big projects by avoiding the divergence of the complexity as well as smaller fast and dynamic websites. Just give it a try on one of your project or by testing the [tutorial](doc/test/index.md). Be careful, you could see your way of coding javascript in node.js forever change (or not...).
 
 The community is still small, but it is an active community. You can post your issues on [github](https://github.com/gnodi/danf/issues) or on [stack overflow](http://stackoverflow.com/) with the tag `danf` and you will get an answer as quickly as possible.
 
 > `<trailer-voice>`Have you ever wanted to participate in the early stages of a new technology? Let's try it on Danf! Join the community and contribute now.`</trailer-voice>`
 
-You can also contribute without working on the framework itself. In Danf, all your code is always automatically part of a **danf module**. This way you can then easily share your modules with other people using npm. You can find a list of existing **danf modules** [here](doc/modules.md).
+You have several ways to contribute:
+
+* Fork the project on [github](https://github.com/gnodi/danf) and improve framework's features, documentation, ...
+* Code your own module. In Danf, all your code is always automatically part of a **danf module**. This way you can easily share your modules with other people using npm. You can find a list of existing **danf modules** [here](doc/modules.md).
+* Star the project to encourage its development.
+* Participate to the community in asking questions in the issues or on stack overflow.
 
 Code examples
 -------------
@@ -307,6 +312,149 @@ danf({
 ```
 
 Find the full example [here](doc/observe/dependency-injection.md)!
+
+### Define your own danf module config
+
+Here is an example of configuration defining some module config:
+
+```javascript
+// app.js
+
+'use strict';
+
+var danf = require('danf');
+
+danf({
+    // Define the contract that the config of your danf module must respect.
+    contract: {
+        helloMessage: {
+            type: 'string',
+            default: 'world'
+        }
+    },
+    config: {
+        // Define your config.
+        this: {
+            helloMessage: 'everybody'
+        },
+        sequences: {
+            getHelloMessage: [
+                {
+                    // Danf's service allowing to execute a callback.
+                    // Just use it for tests.
+                    service: 'danf:manipulation.callbackExecutor',
+                    method: 'execute',
+                    arguments: [
+                        function(message) {
+                            return message;
+                        },
+                        // Inject the config field "helloMessage".
+                        // You can use this to do the same in a property of a service.
+                        '$helloMessage$'
+                    ],
+                    returns: 'message'
+                }
+            ]
+        },
+        // ...
+    }
+});
+```
+
+Find the full example [here](doc/observe/module-config.md)!
+
+### Override and use the config of a danf module dependency
+
+Here is the configuration of a danf module that will be used as a dependency by another one:
+
+```javascript
+// node_modules/form/danf.js
+
+'use strict';
+
+module.exports = {
+    contract: {
+        form: {
+            type: 'embedded_object',
+            embed: {
+                labels: {
+                    type: 'string_object'
+                }
+            }
+        }
+    },
+    config: {
+        this: {
+            form: {
+                login: {
+                    labels: {
+                        login: 'Login',
+                        password: 'Password'
+                    }
+                }
+            }
+        },
+        sequences: {
+            getLoginLabels: [
+                // ...
+            ]
+        }
+    }
+};
+```
+
+Here is the configuration of the main danf module using this dependency:
+
+```javascript
+'use strict';
+
+var danf = require('danf');
+
+danf({
+    // Define a dependency "form" referencing its danf configuration file.
+    dependencies: {
+        form: require('form/danf')
+    },
+    config: {
+        // Override the default config of dependency "form".
+        // This will result in:
+        // form.login.labels = {login: 'Username', password: 'Password'}
+        form: {
+            form: {
+                login: {
+                    labels: {
+                        login: 'Username'
+                    }
+                }
+            }
+        },
+        sequences: {
+            // Override the sequence "getLoginLabels" of dependency "form".
+            // You can do the same for any classes, services, interfaces, ...
+            'form:getLoginLabels': [
+                {
+                    // Danf's service allowing to execute a callback.
+                    // Just use it for tests.
+                    service: 'danf:manipulation.callbackExecutor',
+                    method: 'execute',
+                    arguments: [
+                        function(labels) {
+                            return labels;
+                        },
+                        // Inject the config field "form.login.labels" of
+                        // dependency "form".
+                        '$form:form.login.labels$'
+                    ],
+                    returns: 'form.labels'
+                }
+            ]
+        },
+        // ...
+    }
+});
+```
+
+Find the full example [here](doc/observe/dependency-config-override.md)!
 
 Documentation
 -------------
