@@ -1,7 +1,7 @@
 'use strict';
 
 var utils = require('../../../lib/utils'),
-    SectionProcessor = require('../../../lib/configuration/section-processor')
+    SectionProcessor = require('../../../lib/common/configuration/section-processor')
 ;
 
 module.exports = GlobalSectionProcessor;

@@ -2,10 +2,10 @@
 
 require('../../../lib/init');
 
-var DataResolver = require('../../../lib/manipulation/data-resolver'),
-    DefaultDataInterpreter = require('../../../lib/manipulation/data-interpreter/default'),
-    RequiredDataInterpreter = require('../../../lib/manipulation/data-interpreter/required'),
-    TypeDataInterpreter = require('../../../lib/manipulation/data-interpreter/type')
+var DataResolver = require('../../../lib/common/manipulation/data-resolver'),
+    DefaultDataInterpreter = require('../../../lib/common/manipulation/data-interpreter/default'),
+    RequiredDataInterpreter = require('../../../lib/common/manipulation/data-interpreter/required'),
+    TypeDataInterpreter = require('../../../lib/common/manipulation/data-interpreter/type')
 ;
 
 var dataResolver = new DataResolver();
