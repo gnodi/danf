@@ -60,7 +60,7 @@ Here is the danf server configuration entry file:
 
 'use strict';
 
-var utils = require('danf/lib/utils');
+var utils = require('-/danf/lib/utils');
 
 module.exports = {
     config: utils.merge(
@@ -80,7 +80,7 @@ Here is the danf client configuration entry file:
 'use strict';
 
 define(function(require) {
-    var utils = require('danf/utils');
+    var utils = require('-/danf/utils');
 
     return {
         // Merge common and client config.

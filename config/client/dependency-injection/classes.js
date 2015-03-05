@@ -11,7 +11,7 @@ define(function(require) {
             alias: require('-/danf/lib/common/dependency-injection/service-builder/alias'),
             children: require('-/danf/lib/common/dependency-injection/service-builder/children'),
             class: require('-/danf/lib/common/dependency-injection/service-builder/class'),
-            declinations: require('dan/lib/common/dependency-injection/service-builder/declinations'),
+            declinations: require('-/danf/lib/common/dependency-injection/service-builder/declinations'),
             factories: require('-/danf/lib/common/dependency-injection/service-builder/factories'),
             parent: require('-/danf/lib/common/dependency-injection/service-builder/parent'),
             properties: require('-/danf/lib/common/dependency-injection/service-builder/properties'),

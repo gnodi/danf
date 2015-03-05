@@ -1,7 +1,7 @@
 'use strict';
 
 define(function(require) {
-    var utils = require('danf/utils');
+    var utils = require('-/danf/utils');
 
     return {
         dependencies: {

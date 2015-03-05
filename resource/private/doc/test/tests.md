@@ -16,7 +16,7 @@ Here is an example of test on the `categoryComputer.dumb` class:
 'use strict';
 
 var assert = require('assert'),
-    TestHelper = require('danf/lib/test/test-helper'),
+    TestHelper = require('-/danf/lib/test/test-helper'),
     configuration = require('../../danf'),
     testHelper = new TestHelper(configuration),
     // Retrieve an instance of the class dumb.
@@ -102,7 +102,7 @@ describe('Dumb category computer', function() {
 ```
 
 There is 2 things to note here:
-* Danf provides an helper `var TestHelper = require('danf/lib/test/test-helper');` allowing to retrieve an instance of the tested class with builded inheritance `dumb = testHelper.getInstance('categoryComputer.dumb')`.
+* Danf provides an helper `var TestHelper = require('-/danf/lib/test/test-helper');` allowing to retrieve an instance of the tested class with builded inheritance `dumb = testHelper.getInstance('categoryComputer.dumb')`.
 * It is not the only way but you can see an example of how to test a class with heavy asynchronicity.
 
 To make this test works, do not forget the following fixtures:

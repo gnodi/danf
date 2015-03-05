@@ -78,7 +78,7 @@ You can retrieve an instance of the `TestHelper` class like this:
 
 'use strict';
 
-var TestHelper = require('danf/lib/test/test-helper'),
+var TestHelper = require('-/danf/lib/test/test-helper'),
     configuration = require('../danf'),
     testHelper = new TestHelper(configuration)
 ;
@@ -120,7 +120,7 @@ Let's test the previous example with mocha:
 'use strict';
 
 var assert = require('assert'),
-    TestHelper = require('danf/lib/test/test-helper'),
+    TestHelper = require('-/danf/lib/test/test-helper'),
     configuration = require('../danf'),
     testHelper = new TestHelper(configuration)
 ;

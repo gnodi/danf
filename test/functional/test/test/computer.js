@@ -1,7 +1,7 @@
 'use strict';
 
 var assert = require('assert'),
-    TestHelper = require('danf/lib/test/test-helper'),
+    TestHelper = require('-/danf/lib/test/test-helper'),
     configuration = require('../danf'),
     testHelper = new TestHelper(configuration)
 ;

@@ -2,8 +2,8 @@
 
 requirejs.config({
     map: {
-      '*': { 'jquery': 'danf/client/vendor/jquery' },
-      'danf/client/vendor/jquery': { 'jquery': 'jquery' }
+      '*': { 'jquery': '-/danf/lib/client/vendor/jquery' },
+      '-/danf/lib/client/vendor/jquery': { 'jquery': 'jquery' }
     }
 });
 

@@ -61,7 +61,7 @@ Here is the corresponding contract for our config:
 
 'use strict';
 
-var utils = require('danf/lib/utils');
+var utils = require('-/danf/lib/utils');
 
 module.exports = {
     dependencies: {
