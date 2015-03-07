@@ -15,14 +15,14 @@ Yes!
 
 ### Why?
 
-The main goal of this full-stack framework is to help you organize, rationalize and homogenize your javascript code (website, api, ...) on both the server (node.js) and client (browser) sides.
+The main goal of this full-stack framework is to help you organize, rationalize and homogenize your javascript code (website, api, ...) on both server-side (node.js) and client-side (browser).
 
 ### Which features of this framework can help me to fulfill this goal?
 
 Danf provides several features in order to produce a scalable, maintainable, testable and performant code:
 * An object-oriented programming layer (formal classes, easy inheritance, ensured interfaces).
 * An inversion of control design (dependency injection via configuration files).
-* A simple system allowing to use the same code on both the client and server sides.
+* A simple system allowing to use the same code on both client-side and server-side.
 * A homogeneous way to handle all kind of events (HTTP requests, DOM events, ...).
 * An elegant solution to callback hell preserving asynchronicity.
 * A helper to develop performant ajax applications supporting deep linking.
@@ -228,7 +228,7 @@ h1
 
 Find the full example [here](resource/private/doc/observe/simple.md)!
 
-### Use a class on both the client and server sides
+### Use a class on both client-side and server-side
 
 Here is a class both usable in the browser and in node.js:
 
@@ -240,7 +240,7 @@ Here is a class both usable in the browser and in node.js:
 // Define "define" for the client or the server.
 var define = define ? define : require('amdefine')(module);
 
-// Wrapper allowing to use the class on both the client and server sides.
+// Wrapper allowing to use the class on both client-side and server-side.
 define(function(require) {
     /**
      * Initialize a new logger.
