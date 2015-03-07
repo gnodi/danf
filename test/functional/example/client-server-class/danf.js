@@ -1,6 +1,6 @@
 'use strict';
 
-var utils = require('../../../../lib/utils');
+var utils = require('../../../../lib/common/utils');
 
 module.exports = {
     config: utils.merge(

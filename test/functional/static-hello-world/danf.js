@@ -16,9 +16,6 @@ module.exports = {
                     }
                 }
             }
-        },
-        assets: {
-            'danf-client': __dirname + '/danf-client'
         }
     }
 };
