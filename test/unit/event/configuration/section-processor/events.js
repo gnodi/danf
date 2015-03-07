@@ -1,9 +1,9 @@
 'use strict';
 
-require('../../../../lib/init');
+require('../../../../../lib/common/init');
 
 var assert = require('assert'),
-    Events = require('../../../../lib/common/event/configuration-section/events')
+    Events = require('../../../../../lib/common/event/configuration/section-processor/events')
 ;
 
 var events = new Events(),

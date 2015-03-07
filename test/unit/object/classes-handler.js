@@ -1,6 +1,6 @@
 'use strict';
 
-require('../../../lib/init');
+require('../../../lib/common/init');
 
 var assert = require('assert'),
     ClassesHandler = require('../../../lib/common/object/classes-handler'),

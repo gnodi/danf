@@ -33,17 +33,21 @@ module.exports = {
             sequencerProvider: '#danf:event.currentSequencerProvider#'
         }
     },
-    notifier: {
-        parent: 'danf:event.notifier',
+    event: {
         children: {
-            request: {
-                class: 'danf:http.notifier.request',
-                properties: {
-                    app: '#danf:app#',
-                    renderer: '#danf:rendering.renderer#',
-                    errorHandler: '#danf:http.errorHandler#',
-                    requestProvider: '#danf:http.requestProvider#',
-                    responseProvider: '#danf:http.responseProvider#'
+            notifier: {
+                parent: 'danf:event.notifier',
+                children: {
+                    request: {
+                        class: 'danf:http.event.notifier.request',
+                        properties: {
+                            app: '#danf:app#',
+                            renderer: '#danf:rendering.renderer#',
+                            errorHandler: '#danf:http.errorHandler#',
+                            requestProvider: '#danf:http.requestProvider#',
+                            responseProvider: '#danf:http.responseProvider#'
+                        }
+                    }
                 }
             }
         }

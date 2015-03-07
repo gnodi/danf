@@ -1,6 +1,6 @@
 'use strict';
 
-require('../../../lib/init');
+require('../../../lib/common/init');
 
 var DataResolver = require('../../../lib/common/manipulation/data-resolver'),
     DefaultDataInterpreter = require('../../../lib/common/manipulation/data-interpreter/default'),

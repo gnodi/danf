@@ -6,8 +6,10 @@ module.exports = {
         abstract: require('../../../lib/common/event/notifier/abstract'),
         event: require('../../../lib/common/event/notifier/event')
     },
-    configurationSection: {
-        events: require('../../../lib/common/event/configuration-section/events'),
-        sequences: require('../../../lib/common/event/configuration-section/sequences')
+    configuration: {
+        sectionProcessor: {
+            events: require('../../../lib/common/event/configuration/section-processor/events'),
+            sequences: require('../../../lib/common/event/configuration/section-processor/sequences')
+        }
     }
 };

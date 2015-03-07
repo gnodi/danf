@@ -233,7 +233,7 @@ module.exports = {
                 properties: {
                     _app: '#danf:app#',
                     _sequencerProvider: '#danf:event.currentSequencerProvider#',
-                    _requestNotifier: '#danf:http.notifier.request#'
+                    _requestNotifier: '#danf:http.event.notifier.request#'
                 }
             },
             sessionTester: {

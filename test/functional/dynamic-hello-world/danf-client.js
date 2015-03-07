@@ -3,11 +3,6 @@
 define(function(require) {
     return {
         config: {
-            parameters: {
-                classes: {
-                    displayer: require('hello-world/displayer')
-                }
-            },
             interfaces: {
                 displayer: {
                     methods: {
@@ -15,10 +10,12 @@ define(function(require) {
                     }
                 }
             },
-            classes: '%classes%',
+            classes: {
+                displayer: require('-/hello-world/displayer')
+            },
             services: {
                 displayer: {
-                    class: '%classes.displayer%',
+                    class: 'displayer',
                     properties: {
                         jquery: '#danf:vendor.jquery#'
                     }

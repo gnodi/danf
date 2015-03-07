@@ -1,6 +1,6 @@
 'use strict';
 
-require('../../../../lib/init');
+require('../../../../lib/common/init');
 
 var assert = require('assert'),
     Event = require('../../../../lib/common/event/notifier/event')

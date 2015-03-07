@@ -1,6 +1,6 @@
 'use strict';
 
-require('../../../lib/init');
+require('../../../lib/common/init');
 
 var assert = require('assert'),
     ServicesContainer = require('../../../lib/common/dependency-injection/services-container'),
@@ -18,7 +18,7 @@ var assert = require('assert'),
     ReferenceType = require('../../../lib/common/manipulation/reference-type'),
     InterfacesRegistry = require('../../../lib/common/object/interfaces-registry'),
     Interfacer = require('../../../lib/common/object/interfacer'),
-    utils = require('../../../lib/utils')
+    utils = require('../../../lib/common/utils')
 ;
 
 var referenceResolver = new ReferenceResolver(),

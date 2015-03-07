@@ -1,6 +1,6 @@
 'use strict';
 
-require('../../../lib/init');
+require('../../../lib/common/init');
 
 var assert = require('assert'),
     NotifierRegistry = require('../../../lib/common/manipulation/notifier-registry')

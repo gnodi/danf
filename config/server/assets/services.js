@@ -8,7 +8,7 @@ module.exports = {
         parent: 'danf:configuration.sectionProcessor',
         children: {
             assets: {
-                class: 'danf:assets.sectionProcessor.assets',
+                class: 'danf:assets.configuration.sectionProcessor.assets',
                 properties: {
                     name: 'assets'
                 }

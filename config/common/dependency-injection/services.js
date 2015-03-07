@@ -4,14 +4,18 @@ var define = define ? define : require('amdefine')(module);
 
 define(function(require) {
     return {
-        configurationSection: {
-            parent: 'danf:configuration.sectionProcessor',
+        configuration: {
             children: {
-                services: {
-                    class: 'danf:dependencyInjection.configurationSection.services',
-                    properties: {
-                        name: 'services',
-                        servicesContainer: '#danf:dependencyInjection.servicesContainer#'
+                sectionProcessor: {
+                    parent: 'danf:configuration.sectionProcessor',
+                    children: {
+                        services: {
+                            class: 'danf:dependencyInjection.configuration.sectionProcessor.services',
+                            properties: {
+                                name: 'services',
+                                servicesContainer: '#danf:dependencyInjection.servicesContainer#'
+                            }
+                        }
                     }
                 }
             }

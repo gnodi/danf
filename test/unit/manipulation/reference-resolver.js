@@ -1,6 +1,6 @@
 'use strict';
 
-require('../../../lib/init');
+require('../../../lib/common/init');
 
 var assert = require('assert'),
     ReferenceResolver = require('../../../lib/common/manipulation/reference-resolver'),

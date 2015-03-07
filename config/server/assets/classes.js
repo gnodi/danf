@@ -1,7 +1,9 @@
 'use strict';
 
 module.exports = {
-    sectionProcessor: {
-        assets: require('../../../lib/server/assets/configuration-section/assets')
+    configuration: {
+        sectionProcessor: {
+            assets: require('../../../lib/server/assets/configuration/section-processor/assets')
+        }
     }
 };

@@ -1,6 +1,6 @@
 'use strict';
 
-require('../../../lib/init');
+require('../../../lib/common/init');
 
 var assert = require('assert'),
     TestHelper = require('../../../lib/server/test/test-helper')

@@ -1,6 +1,6 @@
 'use strict';
 
-require('../../../../lib/init');
+require('../../../../lib/common/init');
 
 var assert = require('assert'),
     Extender = require('../../../../lib/common/object/class-processor/extender'),

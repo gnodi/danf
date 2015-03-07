@@ -44,19 +44,23 @@ define(function(require) {
                 }
             }
         },
-        configurationSection: {
-            parent: 'danf:configuration.sectionProcessor',
+        configuration: {
             children: {
-                interfaces: {
-                    class: 'danf:object.configurationSection.interfaces',
-                    properties: {
-                        name: 'interfaces'
-                    }
-                },
-                classes: {
-                    class: 'danf:object.configurationSection.classes',
-                    properties: {
-                        name: 'classes'
+                sectionProcessor: {
+                    parent: 'danf:configuration.sectionProcessor',
+                    children: {
+                        interfaces: {
+                            class: 'danf:object.configuration.sectionProcessor.interfaces',
+                            properties: {
+                                name: 'interfaces'
+                            }
+                        },
+                        classes: {
+                            class: 'danf:object.configuration.sectionProcessor.classes',
+                            properties: {
+                                name: 'classes'
+                            }
+                        }
                     }
                 }
             }

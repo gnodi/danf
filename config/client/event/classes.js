@@ -10,9 +10,11 @@ define(function(require) {
             dom: require('-/danf/lib/client/event/notifier/dom'),
             event: require('-/danf/lib/common/event/notifier/event')
         },
-        configurationSection: {
-            events: require('-/danf/lib/common/event/configuration-section/events'),
-            sequences: require('-/danf/lib/common/event/configuration-section/sequences')
+        configuration: {
+            sectionProcessor: {
+                events: require('-/danf/lib/common/event/configuration/section-processor/events'),
+                sequences: require('-/danf/lib/common/event/configuration/section-processor/sequences')
+            }
         }
     };
 });

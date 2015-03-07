@@ -1,6 +1,6 @@
 'use strict';
 
-require('-/danf/lib/init');
+require('-/danf/lib/common/init');
 
 var assert = require('assert');
 

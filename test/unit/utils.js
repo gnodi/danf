@@ -1,9 +1,9 @@
 'use strict';
 
-require('../../lib/init');
+require('../../lib/common/init');
 
 var assert = require('assert'),
-    utils = require('../../lib/utils')
+    utils = require('../../lib/common/utils')
 ;
 
 var mergeTests = [

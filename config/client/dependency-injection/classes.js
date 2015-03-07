@@ -17,8 +17,10 @@ define(function(require) {
             properties: require('-/danf/lib/common/dependency-injection/service-builder/properties'),
             tags: require('-/danf/lib/common/dependency-injection/service-builder/tags')
         },
-        configurationSection: {
-            services: require('-/danf/lib/common/dependency-injection/configuration-section/services')
+        configuration: {
+            sectionProcessor: {
+                services: require('-/danf/lib/common/dependency-injection/configuration/section-processor/services')
+            }
         }
     };
 });

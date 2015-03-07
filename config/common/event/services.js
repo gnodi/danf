@@ -54,20 +54,24 @@ define(function(require) {
                 }
             }
         },
-        configurationSection: {
-            parent: 'danf:configuration.sectionProcessor',
+        configuration: {
             children: {
-                events: {
-                    class: 'danf:event.configurationSection.events',
-                    properties: {
-                        name: 'events',
-                        notifiers: '&danf:event.notifier&'
-                    }
-                },
-                sequences: {
-                    class: 'danf:event.configurationSection.sequences',
-                    properties: {
-                        name: 'sequences'
+                sectionProcessor: {
+                    parent: 'danf:configuration.sectionProcessor',
+                    children: {
+                        events: {
+                            class: 'danf:event.configuration.sectionProcessor.events',
+                            properties: {
+                                name: 'events',
+                                notifiers: '&danf:event.notifier&'
+                            }
+                        },
+                        sequences: {
+                            class: 'danf:event.configuration.sectionProcessor.sequences',
+                            properties: {
+                                name: 'sequences'
+                            }
+                        }
                     }
                 }
             }

@@ -1,9 +1,9 @@
 'use strict';
 
-require('../../../../lib/init');
+require('../../../../lib/common/init');
 
 var assert = require('assert'),
-    danf = require('../../../../lib/app'),
+    danf = require('../../../../lib/server/app'),
     Json = require('../../../../lib/server/rendering/format-renderer/json')
 ;
 

@@ -7,13 +7,13 @@ define(function(require) {
         namespacer: require('-/danf/lib/common/configuration/namespacer'),
         processor: require('-/danf/lib/common/configuration/processor'),
         sectionProcessor: require('-/danf/lib/common/configuration/section-processor'),
-        dataInterpreter: {
-            abstractNamespacer: require('-/danf/lib/common/configuration/data-interpreter/abstract-namespacer'),
-            namespaces: require('-/danf/lib/common/configuration/data-interpreter/namespaces'),
-            references: require('-/danf/lib/common/configuration/data-interpreter/references')
+        manipulation: {
+            dataInterpreter: {
+                abstractNamespacer: require('-/danf/lib/common/configuration/manipulation/data-interpreter/abstract-namespacer'),
+                namespaces: require('-/danf/lib/common/configuration/manipulation/data-interpreter/namespaces'),
+                references: require('-/danf/lib/common/configuration/manipulation/data-interpreter/references')
+            }
         },
-        configurationSection: {
-            parameters: require('-/danf/lib/common/configuration/configuration-section/parameters')
-        }
+        "sectionProcessor.parameters": require('-/danf/lib/common/configuration/section-processor/parameters')
     };
 });

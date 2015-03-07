@@ -14,7 +14,9 @@ module.exports = {
         properties: require('../../../lib/common/dependency-injection/service-builder/properties'),
         tags: require('../../../lib/common/dependency-injection/service-builder/tags')
     },
-    configurationSection: {
-        services: require('../../../lib/common/dependency-injection/configuration-section/services')
+    configuration: {
+        sectionProcessor: {
+            services: require('../../../lib/common/dependency-injection/configuration/section-processor/services')
+        }
     }
 };

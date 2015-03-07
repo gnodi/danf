@@ -1,9 +1,9 @@
 'use strict';
 
-require('../../../lib/init');
+require('../../../lib/common/init');
 
 var assert = require('assert'),
-    utils = require('../../../lib/utils'),
+    utils = require('../../../lib/common/utils'),
     ModulesTree = require('../../../lib/common/configuration/modules-tree'),
     ReferenceResolver = require('../../../lib/common/manipulation/reference-resolver'),
     Namespacer = require('../../../lib/common/configuration/namespacer'),

@@ -1,10 +1,10 @@
 'use strict';
 
-require('../../../lib/init');
+require('../../../lib/common/init');
 
 var assert = require('assert'),
     request = require('supertest'),
-    danf = require('../../../lib/app')
+    danf = require('../../../lib/server/app')
 ;
 
 var app = danf(require(__dirname + '/../../fixtures/http/danf'), {listen: false, environment: 'test'});

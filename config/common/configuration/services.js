@@ -29,19 +29,16 @@ define(function(require) {
             lock: true
         },
         sectionProcessor: {
-            abstract: true,
+            class: 'danf:configuration.sectionProcessor',
             tags: ['danf:configuration.sectionProcessor'],
             properties: {
                 configurationResolver: '#danf:configuration.configurationResolver#',
                 referenceResolver: '#danf:manipulation.referenceResolver#',
                 namespacer: '#danf:configuration.namespacer#'
-            }
-        },
-        configurationSection: {
-            parent: 'danf:configuration.sectionProcessor',
+            },
             children: {
                 parameters: {
-                    class: 'danf:configuration.configurationSection.parameters',
+                    class: 'danf:configuration.sectionProcessor.parameters',
                     properties: {
                         name: 'parameters'
                     }
@@ -77,11 +74,11 @@ define(function(require) {
                 },
                 references: {
                     parent: 'danf:configuration.configurationInterpreter.abstractNamespacer',
-                    class: 'danf:configuration.dataInterpreter.references'
+                    class: 'danf:configuration.manipulation.dataInterpreter.references'
                 },
                 namespaces: {
                     parent: 'danf:configuration.configurationInterpreter.abstractNamespacer',
-                    class: 'danf:configuration.dataInterpreter.namespaces'
+                    class: 'danf:configuration.manipulation.dataInterpreter.namespaces'
                 }
             }
         },

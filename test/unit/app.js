@@ -1,7 +1,7 @@
 'use strict';
 
 var assert = require('assert'),
-    danf = require('../../lib/app')
+    danf = require('../../lib/server/app')
 ;
 
 var app = danf(require(__dirname + '/../fixtures/danf'), {silent: true, environment: 'test'});
