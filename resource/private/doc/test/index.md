@@ -7,7 +7,7 @@ In this part, you are going to develop a web application with Danf to help peopl
 
 The main goal is not to make the perfect architecture or a performant application but to show some of the possibilities of the framework.
 
-The code of this tutorial is available [here](../../test/functional/tutorial).
+The code of this tutorial is available [here](../../test/functional/proto/tutorial).
 
 * [Start a new application](app.md)
 * [Define the configuration](configuration.md)

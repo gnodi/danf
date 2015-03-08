@@ -24,7 +24,7 @@ You should see `Hi!` at `http://localhost:3080` following by this instruction:
 Now you have 2 choices: you can copy the code of each file explained in the next sections of this tutorial and follow the instructions or you can directly execute the code of this tutorial like the following (we assume you are in your working directory):
 
 ```sh
-$ cd node_modules/danf/test/functional/tutorial
+$ cd node_modules/danf/test/functional/proto/tutorial
 $ npm install
 $ node app-prod
 ```
