@@ -1,11 +1,11 @@
 'use strict';
 
-var DataResolver = require('../../../lib/manipulation/data-resolver'),
-    DefaultDataInterpreter = require('../../../lib/manipulation/data-interpreter/default'),
-    RequiredDataInterpreter = require('../../../lib/manipulation/data-interpreter/required'),
-    TypeDataInterpreter = require('../../../lib/manipulation/data-interpreter/type'),
-    ReferencesDataInterpreter = require('../../../lib/configuration/data-interpreter/references'),
-    NamespacesDataInterpreter = require('../../../lib/configuration/data-interpreter/namespaces')
+var DataResolver = require('../../../lib/common/manipulation/data-resolver'),
+    DefaultDataInterpreter = require('../../../lib/common/manipulation/data-interpreter/default'),
+    RequiredDataInterpreter = require('../../../lib/common/manipulation/data-interpreter/required'),
+    TypeDataInterpreter = require('../../../lib/common/manipulation/data-interpreter/type'),
+    ReferencesDataInterpreter = require('../../../lib/common/configuration/manipulation/data-interpreter/references'),
+    NamespacesDataInterpreter = require('../../../lib/common/configuration/manipulation/data-interpreter/namespaces')
 ;
 
 var configurationResolver = new DataResolver();

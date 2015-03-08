@@ -1,0 +1,19 @@
+doctype html
+html
+    head
+        title Danf application
+
+        link(rel='icon', type='image/png', href='favicon.png')
+        link(rel='stylesheet', type='text/css', href='/-/my-app/resource/public/css/style.css')
+
+        script.
+            var require = {
+                config: {
+                    app: {
+                        context: JSON.parse('!{_context}') || {}
+                    }
+                }
+            };
+        script(data-main='/app', src='/require')
+    body
+        != _view.body

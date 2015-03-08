@@ -15,14 +15,14 @@ Yes!
 
 ### Why?
 
-The main goal of this full-stack framework is to help you organize, rationalize and homogenize your javascript code (website, api, ...) on both the server (node.js) and client (browser) sides.
+The main goal of this full-stack framework is to help you organize, rationalize and homogenize your javascript code (website, api, ...) on both client-side (browser) and server-side (node.js).
 
 ### Which features of this framework can help me to fulfill this goal?
 
 Danf provides several features in order to produce a scalable, maintainable, testable and performant code:
 * An object-oriented programming layer (formal classes, easy inheritance, ensured interfaces).
 * An inversion of control design (dependency injection via configuration files).
-* A simple system allowing to use the same code on both the client and server sides.
+* An isomorphic paradigm allowing to use the same code on both client-side and server-side.
 * A homogeneous way to handle all kind of events (HTTP requests, DOM events, ...).
 * An elegant solution to callback hell preserving asynchronicity.
 * A helper to develop performant ajax applications supporting deep linking.
@@ -35,7 +35,7 @@ Object-oriented programming (OOP) is often a controversial topic in the javascri
 * - But everything is already object in javascript!
 * - Why the hell do you want to use OOP in javascript?
 
-First, that is not because all variables are objects that a langage can be considered as providing a way to make a straightforward and robust OOP. As for now, native javascript does not allow to make a reliable industrial OOP code (the reasons are explained in the [concepts](doc/concepts.md) section of the documentation).
+First, that is not because all variables are objects that a langage can be considered as providing a way to make a straightforward and robust OOP. As for now, native javascript does not allow to make a reliable industrial OOP code (the reasons are explained in the [concepts](resource/private/doc/concepts.md) section of the documentation).
 Then, OOP is certainly not a matter of language, but rather a means of architecturing applications. So why not use OOP for a javascript application?
 
 Hello world
@@ -77,7 +77,7 @@ A better way to start a new application with Danf is to use the available [proto
 Community
 ---------
 
-Danf is a brand new framework. It can help you to master big projects by avoiding the divergence of the complexity as well as smaller fast and dynamic websites. Just give it a try on one of your project or by testing the [tutorial](doc/test/index.md). Be careful, you could see your way of coding javascript in node.js forever change (or not...).
+Danf is a brand new framework. It can help you to master big projects by avoiding the divergence of the complexity as well as smaller fast and dynamic websites. Just give it a try on one of your project or by testing the [tutorial](resource/private/doc/test/index.md). Be careful, you could see your way of coding javascript in node.js forever change (or not...).
 
 The community is still small, but it is an active community. You can post your issues on [github](https://github.com/gnodi/danf/issues) or on [stack overflow](http://stackoverflow.com/) with the tag `danf` and you will get an answer as quickly as possible.
 
@@ -86,7 +86,7 @@ The community is still small, but it is an active community. You can post your i
 You have several ways to contribute:
 
 * Fork the project on [github](https://github.com/gnodi/danf) and improve framework's features, documentation, ...
-* Code your own module. In Danf, all your code is always automatically part of a **danf module**. This way you can easily share your modules with other people using npm. You can find a list of existing **danf modules** [here](doc/modules.md).
+* Code your own module. In Danf, all your code is always automatically part of a **danf module**. This way you can easily share your modules with other people using npm. You can find a list of existing **danf modules** [here](resource/private/doc/modules.md).
 * Star the project to encourage its development.
 * Participate to the community in asking questions in the issues or on stack overflow.
 
@@ -136,70 +136,83 @@ Here is an example of application using this class:
 
 var danf = require('danf');
 
-danf({
-    config: {
-        // Declaration of the class.
-        classes: {
-            uppercaser: require('./uppercaser')
-        },
-        // Definition of the interface implemented by this class.
-        interfaces: {
-            wordProcessor: {
-                methods: {
-                    process: {
-                        arguments: ['string/word'],
-                        returns: 'string'
+danf(
+    // Define danf module configuration.
+    {
+        config: {
+            // Declaration of the class.
+            classes: {
+                uppercaser: require('./uppercaser')
+            },
+            // Definition of the interface implemented by this class.
+            interfaces: {
+                wordProcessor: {
+                    methods: {
+                        process: {
+                            arguments: ['string/word'],
+                            returns: 'string'
+                        }
+                    }
+                }
+            },
+            // Definition of a service using this class.
+            services: {
+                uppercaser: {
+                    class: 'uppercaser'
+                }
+            },
+            // Definition of a sequence using this service.
+            sequences: {
+                uppercaseName: [
+                    // Pass the field "name" of the input stream as first argument
+                    // to the method "process" of the service "uppercaser".
+                    {
+                        service: 'uppercaser',
+                        method: 'process',
+                        arguments: ['@name@'],
+                        returns: 'name'
+                    }
+                ]
+            },
+            // Definition of an event of kind HTTP request using this sequence.
+            events: {
+                request: {
+                    hello: {
+                        path: '/',
+                        methods: ['get'],
+                        // Description of expected input stream coming from requests.
+                        parameters: {
+                            name: {
+                                type: 'string',
+                                default: 'world'
+                            }
+                        },
+                        // Definition of the used view.
+                        view: {
+                            html: {
+                                body: {
+                                    file: __dirname + '/hello.jade'
+                                }
+                            }
+                        },
+                        // Description of the executed sequences.
+                        sequences: ['uppercaseName']
                     }
                 }
             }
-        },
-        // Definition of a service using this class.
-        services: {
-            uppercaser: {
-                class: 'uppercaser'
-            }
-        },
-        // Definition of a sequence using this service.
-        sequences: {
-            uppercaseName: [
-                // Pass the field "name" of the input stream as first argument
-                // to the method "process" of the service "uppercaser".
-                {
-                    service: 'uppercaser',
-                    method: 'process',
-                    arguments: ['@name@'],
-                    returns: 'name'
-                }
-            ]
-        },
-        // Definition of an event of kind HTTP request using this sequence.
-        events: {
-            request: {
-                hello: {
-                    path: '/',
-                    methods: ['get'],
-                    // Description of expected input stream coming from requests.
-                    parameters: {
-                        name: {
-                            type: 'string',
-                            default: 'world'
-                        }
-                    },
-                    // Definition of the used view.
-                    view: {
-                        html: {
-                            body: {
-                                file: __dirname + '/hello.jade'
-                            }
-                        }
-                    },
-                    // Description of the executed sequences.
-                    sequences: ['uppercaseName']
-                }
-            }
         }
+    },
+    // Define server context.
+    {
+        environment: 'prod',
+        debug: false
+    },
+    // Define client context.
+    {
+        environment: 'prod',
+        debug: false
     }
-});
+);
 ```
 
 And here is the view:
@@ -213,9 +226,9 @@ h1
 
 > Test it executing: `$ node app.js`
 
-Find the full example [here](doc/observe/simple.md)!
+Find the full example [here](resource/private/doc/observe/simple.md)!
 
-### Use a class on both the client and server sides
+### Use a class on both client-side and server-side
 
 Here is a class both usable in the browser and in node.js:
 
@@ -227,7 +240,7 @@ Here is a class both usable in the browser and in node.js:
 // Define "define" for the client or the server.
 var define = define ? define : require('amdefine')(module);
 
-// Wrapper allowing to use the class on both the client and server sides.
+// Wrapper allowing to use the class on both client-side and server-side.
 define(function(require) {
     /**
      * Initialize a new logger.
@@ -250,7 +263,7 @@ define(function(require) {
 });
 ```
 
-Find the full example [here](doc/observe/client-server-class.md)!
+Find the full example [here](resource/private/doc/observe/client-server-class.md)!
 
 ### Inject services into each others
 
@@ -311,7 +324,7 @@ danf({
 });
 ```
 
-Find the full example [here](doc/observe/dependency-injection.md)!
+Find the full example [here](resource/private/doc/observe/dependency-injection.md)!
 
 ### Define your own danf module config
 
@@ -361,7 +374,7 @@ danf({
 });
 ```
 
-Find the full example [here](doc/observe/module-config.md)!
+Find the full example [here](resource/private/doc/observe/module-config.md)!
 
 ### Override and use the config of a danf module dependency
 
@@ -454,12 +467,12 @@ danf({
 });
 ```
 
-Find the full example [here](doc/observe/dependency-config-override.md)!
+Find the full example [here](resource/private/doc/observe/dependency-config-override.md)!
 
 Documentation
 -------------
 
-Learn more about the framework in the [documentation](doc/index.md).
+Learn more about the framework in the [documentation](resource/private/doc/index.md).
 
 License
 -------

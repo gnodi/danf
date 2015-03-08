@@ -1,6 +1,6 @@
 'use strict';
 
-var utils = require('../../lib/utils.js'),
+var utils = require('../../lib/common/utils.js'),
     assert = require('assert')
 ;
 

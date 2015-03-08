@@ -2,15 +2,16 @@ doctype html
 html
     head
         title Ajax App
+
         script.
             var require = {
                 config: {
-                    'main': {
+                    app: {
                         context: JSON.parse('!{_context}') || {}
                     }
                 }
             };
-        script(data-main='/main', src='/require')
+        script(data-main='/app', src='/require')
     body
         p= '--- page-id: ' + random + ' ---'
 

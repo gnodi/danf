@@ -37,8 +37,8 @@ module.exports = {
             }
         },
         assets: {
-            'danf-client': __dirname + '/danf-client',
-            'cookie-tester': __dirname + '/cookie-tester'
+            '-/danf': __dirname + '/danf-client',
+            '-/cookie-tester': __dirname + '/cookie-tester'
         },
         services: {
             cookieTester: {

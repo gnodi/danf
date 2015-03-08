@@ -1,0 +1,16 @@
+doctype html
+html
+    head
+        title Hello world!
+
+        script.
+            var require = {
+                config: {
+                    app: {
+                        context: JSON.parse('!{_context}') || {}
+                    }
+                }
+            };
+        script(data-main='/app', src='/require')
+    body
+        != _view.body

@@ -18,8 +18,8 @@ module.exports = {
             }
         },
         assets: {
-            'danf-client': __dirname + '/danf-client',
-            'hello-world': __dirname
+            '-/danf': __dirname + '/danf-client',
+            '-/hello-world': __dirname
         }
     }
 };

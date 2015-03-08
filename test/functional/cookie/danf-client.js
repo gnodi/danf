@@ -3,15 +3,12 @@
 define(function(require) {
     return {
         config: {
-            parameters: {
-                classes: {
-                    cookieTester: require('cookie-tester')
-                }
+            classes: {
+                cookieTester: require('-/cookie-tester')
             },
-            classes: '%classes%',
             services: {
                 cookieTester: {
-                    class: '%classes.cookieTester%',
+                    class: 'cookieTester',
                     parent: 'danf:ajaxApp.readyProcessor',
                     properties: {
                         _cookiesRegristry: '#danf:http.cookiesRegistry#'

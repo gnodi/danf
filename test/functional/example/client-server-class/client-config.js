@@ -5,7 +5,7 @@ define(function(require) {
         classes: {
             // You must use "my-app/logger" on the client side.
             // "my-app" is the name you defined in the assets of your server config.
-            logger: require('my-app/logger')
+            logger: require('-/my-app/logger')
         },
         // Log on the DOM ready event.
         events: {

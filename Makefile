@@ -11,7 +11,7 @@ test-utils:
 		--reporter $(REPORTER) \
 		--timeout 5000 \
 		$(MOCHA_OPTS) \
-		test/init.js test/utils.js
+		test/unit/init.js test/unit/utils.js
 
 test-manipulation:
 	# Manipulation
@@ -20,7 +20,7 @@ test-manipulation:
 		--timeout 5000 \
 		--bail \
 		$(MOCHA_OPTS) \
-		test/manipulation/*
+		test/unit/manipulation/*
 
 test-configuration:
 	# Congiguration
@@ -29,7 +29,7 @@ test-configuration:
 		--timeout 5000 \
 		--bail \
 		$(MOCHA_OPTS) \
-		test/configuration/*
+		test/unit/configuration/*
 
 test-object:
 	# Object
@@ -38,7 +38,7 @@ test-object:
 		--timeout 5000 \
 		--bail \
 		$(MOCHA_OPTS) \
-		test/object/*
+		test/unit/object/*
 
 test-dependency-injection:
 	# Dependency Injection
@@ -47,7 +47,7 @@ test-dependency-injection:
 		--timeout 5000 \
 		--bail \
 		$(MOCHA_OPTS) \
-		test/dependency-injection/*
+		test/unit/dependency-injection/*
 
 test-file-system:
 	# File System
@@ -56,7 +56,7 @@ test-file-system:
 		--timeout 5000 \
 		--bail \
 		$(MOCHA_OPTS) \
-		test/file-system/*
+		test/unit/file-system/*
 
 test-event:
 	# Event
@@ -65,7 +65,7 @@ test-event:
 		--timeout 5000 \
 		--bail \
 		$(MOCHA_OPTS) \
-		test/event/*
+		test/unit/event/*
 
 test-http:
 	# HTTP
@@ -74,7 +74,7 @@ test-http:
 		--timeout 5000 \
 		--bail \
 		$(MOCHA_OPTS) \
-		test/http/*
+		test/unit/http/*
 
 test-rendering:
 	# Rendering
@@ -83,7 +83,7 @@ test-rendering:
 		--timeout 5000 \
 		--bail \
 		$(MOCHA_OPTS) \
-		test/rendering/*
+		test/unit/rendering/*
 
 test-test:
 	# Test
@@ -92,7 +92,7 @@ test-test:
 		--timeout 5000 \
 		--bail \
 		$(MOCHA_OPTS) \
-		test/test/*
+		test/unit/test/*
 
 test-app:
 	# App
@@ -100,4 +100,4 @@ test-app:
 		--reporter $(REPORTER) \
 		--timeout 5000 \
 		$(MOCHA_OPTS) \
-		test/app.js
+		test/unit/app.js
