@@ -129,7 +129,7 @@ To execute this test, just use the command `$ make test`.
 
 This is the end of the test application. Hope you enjoyed to discover the framework with this little example.
 To deeper your understanding of the framework, let's have a look on the [documentation](../use/index.md) section!
-The code of this tutorial is available [here](../../test/functional/proto/tutorial).
+The code of this tutorial is available [here](../../../../test/functional/proto/tutorial).
 
 Navigation
 ----------
