@@ -13,27 +13,24 @@ Danf provides an easy way to do that while keeping deep linking and bookmarking.
 You saw in a previous chapter how to define an HTTP request event:
 
 ```javascript
-// config/server/events.js
+// config/server/events/request.js
 
 'use strict';
 
 module.exports = {
-    request: {
-        home: {
-            path: '/',
-            methods: ['get'],
-            view: {
-                html: {
-                    layout: {
-                        file: '%view.path%/layout.jade'
-                    },
-                    body: {
-                        file: '%view.path%/index.jade'
-                    }
+    home: {
+        path: '/',
+        methods: ['get'],
+        view: {
+            html: {
+                layout: {
+                    file: '%view.path%/layout.jade'
+                },
+                body: {
+                    file: '%view.path%/index.jade'
                 }
             }
-        },
-        // ...
+        }
     }
 };
 ```
@@ -41,24 +38,24 @@ module.exports = {
 In the view node, we used a layout file: `%view.path%/layout.jade`. This file already exists in a proto app:
 
 ```jade
-// resources/private/view/layout.jade
+// resource/private/view/layout.jade
 
 doctype html
 html
     head
         title Danf application
 
-        link(rel='stylesheet', type='text/css', href='tutorial/public/css/style.css')
+        link(rel='stylesheet', type='text/css', href='-/tutorial/resource/public/css/style.css')
 
         script.
             var require = {
                 config: {
-                    'main': {
+                    app: {
                         context: JSON.parse('!{_context}') || {}
                     }
                 }
             };
-        script(data-main='/main', src='/require')
+        script(data-main='/app', src='/require')
     body
         != _view.body
 ```
@@ -67,7 +64,7 @@ html
 The content of the body file `%view.path%/index.jade` will be injected in the body of the layout thanks to `_view.body`.
 
 ```jade
-// resources/private/view/index.jade
+// resource/private/view/index.jade
 
 h1 Hi!
 
@@ -82,7 +79,7 @@ We illustrate in our index file a simple ajax behaviour: if you set the class `a
 The related content is the questions form:
 
 ```jade
-// resources/private/view/framework.jade
+// resource/private/view/framework.jade
 
 h2 Answer the following questions to find the framework of your dream!
 
@@ -104,17 +101,14 @@ Here, you can notice the use of an ajax form `form(action='/api/frameworks/score
 This event, will then be catched in order to transform the JSON to an HTML list and display it in the `div(id='result')`:
 
 ```javascript
-// config/client/events.js
+// config/client/events/event.js
 
 'use strict';
 
 define(function(require) {
     return {
-        // ...
-        event: {
-            'danf:form.framework': {
-                sequences: ['displayComputingResult']
-            }
+        'danf:form.framework': {
+            sequences: ['displayComputingResult']
         }
     }
 });
@@ -123,7 +117,7 @@ define(function(require) {
 To avoid displaying the result title at the loading of the page, we add a few lines in our standard css file:
 
 ```css
-/* resources/public/css/style.css */
+/* resource/public/css/style.css */
 
 #result-title {
     display: none;

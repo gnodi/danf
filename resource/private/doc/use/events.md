@@ -98,7 +98,7 @@ Let's explain it in detailing the different types of events.
 The type `event` is the basic type for events and is available for both client-side and server-side:
 
 ```javascript
-// config/events.js
+// config/common/events/event.js
 
 'use strict';
 
@@ -106,22 +106,20 @@ var define = define ? define : require('amdefine')(module);
 
 define(function(require) {
     return {
-        event: {
-            happenSomething: {
-                contract: {
-                    i: {
-                        type: 'number',
-                        default: 0
-                    }
-                },
-                context: {
-                    j: 2
-                },
-                callback: function(stream) {
-                    console.log(stream.data.i);
-                },
-                sequences: ['doSomething']
-            }
+        happenSomething: {
+            contract: {
+                i: {
+                    type: 'number',
+                    default: 0
+                }
+            },
+            context: {
+                j: 2
+            },
+            callback: function(stream) {
+                console.log(stream.data.i);
+            },
+            sequences: ['doSomething']
         }
     }
 });
@@ -135,7 +133,7 @@ define(function(require) {
 Here is the definition for the sequences:
 
 ```javascript
-// config/sequences.js
+// config/common/sequences.js
 
 'use strict';
 
@@ -220,38 +218,36 @@ In this second case, the value of the resolved data is `{i: 3, k: 3, done: done}
 The type `request` is the type for HTTP request events and is available for the server side:
 
 ```javascript
-// config/server/events.js
+// config/server/events/request.js
 
 'use strict';
 
 module.exports = {
-    request: {
-        home: {
-            path: '/schedule',
-            methods: ['get'],
-            headers: {
-                'X-Powered-By': 'Danf'
+    home: {
+        path: '/schedule',
+        methods: ['get'],
+        headers: {
+            'X-Powered-By': 'Danf'
+        },
+        parameters: {
+            value: {
+                type: 'number',
+                required: true
             },
-            parameters: {
-                value: {
-                    type: 'number',
-                    required: true
-                },
-                inc: {
-                    type: 'number',
-                    default: 1
-                }
+            inc: {
+                type: 'number',
+                default: 1
+            }
+        },
+        view: {
+            text: {
+                Start in: @start@
             },
-            view: {
-                text: {
-                    Start in: @start@
-                },
-                json: {
-                    select: ['start']
-                }
-            },
-            sequences: ['schedule']
-        }
+            json: {
+                select: ['start']
+            }
+        },
+        sequences: ['schedule']
     }
 };
 ```
@@ -415,20 +411,18 @@ This will results in an error 400 (Bad request) because the parameter `value` is
 The type `dom` is the type for DOM events and is available for the client side:
 
 ```javascript
-// config/client/events.js
+// config/client/events/dom.js
 
 'use strict'
 
 define(function(require) {
     return {
-        dom: {
-            formSubmitting: {
-                selector: 'form :submit',
-                event: 'click',
-                preventDefault: true,
-                stopPropagation: true,
-                sequences: ['sequence1', 'sequence2', 'sequence3']
-            }
+        formSubmitting: {
+            selector: 'form :submit',
+            event: 'click',
+            preventDefault: true,
+            stopPropagation: true,
+            sequences: ['sequence1', 'sequence2', 'sequence3']
         }
     }
 });

@@ -13,9 +13,9 @@ There is nothing to do here because the proto application do it for you. Just fo
 
 However, it would certainly be a good idea to have a quick look at the corresponding documentation accessible below in the navigation part.
 
-Just let's define the files containing the scores of the questions for each framework. These files are in the directory `resources/private` because clients must not have direct access to it. Like said above, the proto app already defines the config to protect this directory.
+Just let's define the files containing the scores of the questions for each framework. These files are in the directory `resource/private` because clients must not have direct access to it. Like said above, the proto app already defines the config to protect this directory.
 
- * `resources/private/question-scores/choice.csv`
+ * `resource/private/question-scores/choice.csv`
 ```javascript
 danf:5
 require:5
@@ -25,7 +25,7 @@ jquery:5
 mootools:1
 ```
 
- * `resources/private/question-scores/color.csv`
+ * `resource/private/question-scores/color.csv`
 ```javascript
 danf:0
 require:6
@@ -35,7 +35,7 @@ jquery:8
 mootools:1
 ```
 
- * `resources/private/question-scores/life.csv`
+ * `resource/private/question-scores/life.csv`
 ```javascript
 danf:10
 require:0
@@ -45,7 +45,7 @@ jquery:0
 mootools:1
 ```
 
- * `resources/private/question-scores/animals.csv`
+ * `resource/private/question-scores/animals.csv`
 ```javascript
 danf:10
 require:7
@@ -55,7 +55,7 @@ jquery:5
 mootools:1
 ```
 
- * `resources/private/question-scores/nanimals.csv`
+ * `resource/private/question-scores/nanimals.csv`
 ```javascript
 danf:0
 require:3

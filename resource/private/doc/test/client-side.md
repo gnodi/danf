@@ -104,8 +104,8 @@ define(function(require) {
 
 define(function(require) {
     return {
-        listDisplayer: require('tutorial/lib/client/list-displayer'),
-        benchmarker: require('tutorial/lib/common/benchmarker')
+        listDisplayer: require('-/tutorial/lib/client/list-displayer'),
+        benchmarker: require('-/tutorial/lib/common/benchmarker')
     }
 });
 ```
@@ -207,7 +207,7 @@ The same wrapper as for the client side classes is used. Note the addition of th
 Of course, you have the associated config:
 
 ```javascript
-// config/interfaces.js
+// config/common/interfaces.js
 
 'use strict';
 
@@ -240,7 +240,7 @@ define(function(require) {
 ```
 
 ```javascript
-// config/services.js
+// config/common/services.js
 
 'use strict';
 

@@ -45,7 +45,7 @@ Here is the declaration of the class:
 
 define(function(require) {
     return {
-        computer: require('my-app/lib/client/computer')
+        computer: require('-/my-app/lib/client/computer')
     };
 });
 ```
@@ -106,7 +106,7 @@ and the client:
 
 define(function(require) {
     return {
-        computer: require('my-app/lib/common/computer')
+        computer: require('-/my-app/lib/common/computer')
     };
 });
 ```

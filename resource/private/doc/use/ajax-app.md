@@ -12,7 +12,7 @@ Danf provides an easy way to do that while keeping deep linking and bookmarking.
 ### Use ajax links
 
 ```jade
-//- resources/private/view/index.jade
+//- resource/private/view/index.jade
 
 p
     a(href='/a/1') a-1 (standard link - reload the page)
@@ -30,46 +30,44 @@ The third and fourth links will load automaticaly in the page. No history will b
 Here is the corresponding config to handle these links:
 
 ```javascript
-// config/server/events.js
+// config/server/events/request.js
 
 'use strict';
 
 module.exports = {
-    request: {
-        home: {
-            path: '',
-            methods: ['get'],
-            view: {
-                html: {
-                    layout: {
-                        file: '%view.path%/layout.jade'
-                    },
-                    body: {
-                        file: '%view.path%/index.jade'
+    home: {
+        path: '',
+        methods: ['get'],
+        view: {
+            html: {
+                layout: {
+                    file: '%view.path%/layout.jade'
+                },
+                body: {
+                    file: '%view.path%/index.jade'
+                }
+            }
+        }
+    },
+    a: {
+        path: '/a/:number',
+        methods: ['get'],
+        view: {
+            html: {
+                layout: {
+                    file: '%view.path%/layout.jade'
+                },
+                body: {
+                    file: '%view.path%/a.jade',
+                    embed: {
+                        date: {
+                            file: '%view.path%/date.jade',
+                        }
                     }
                 }
             }
         },
-        a: {
-            path: '/a/:number',
-            methods: ['get'],
-            view: {
-                html: {
-                    layout: {
-                        file: '%view.path%/layout.jade'
-                    },
-                    body: {
-                        file: '%view.path%/a.jade',
-                        embed: {
-                            date: {
-                                file: '%view.path%/date.jade',
-                            }
-                        }
-                    }
-                }
-            },
-            sequences: ['getDate']
-        }
+        sequences: ['getDate']
     }
 };
 ```
@@ -100,24 +98,24 @@ module.exports = {
 And the template files:
 
 ```jade
-//- resources/private/view/layout.jade
+//- resource/private/view/layout.jade
 
 doctype html
 html
     head
         title Danf application
 
-        link(rel='stylesheet', type='text/css', href='tutorial/public/css/style.css')
+        link(rel='stylesheet', type='text/css', href='-/tutorial/resource/public/css/style.css')
 
         script.
             var require = {
                 config: {
-                    'main': {
+                    app: {
                         context: JSON.parse('!{_context}') || {}
                     }
                 }
             };
-        script(data-main='/main', src='/require')
+        script(data-main='/app', src='/require')
     body
         != _view.body
 ```
@@ -126,7 +124,7 @@ This file is already present in the proto application.
 
 
 ```jade
-//- resources/private/view/a.jade
+//- resource/private/view/a.jade
 
 div
     a(class='ajax', href='/') index
@@ -140,7 +138,7 @@ div
 Note how the result of the interpretation of the embedded file `'%view.path%/date.jade'` is injected here thanks to `_view.date`.
 
 ```jade
-//- resources/private/view/date.jade
+//- resource/private/view/date.jade
 
 span(class='date')= '(' + date + ')'
 ```
@@ -148,7 +146,7 @@ span(class='date')= '(' + date + ')'
 Finally, You can add some CSS:
 
 ```css
-/* resources/public/css/style.css */
+/* resource/public/css/style.css */
 
 .date {
     color: grey;
@@ -160,24 +158,24 @@ Finally, You can add some CSS:
 You can use the embedded mechanism for the layout part. It is also possible to define another body location for your ajax links using the id `ajax-body` in your HTML:
 
 ```jade
-//- resources/private/view/layout.jade
+//- resource/private/view/layout.jade
 
 doctype html
 html
     head
         title Danf application
 
-        link(rel='stylesheet', type='text/css', href='tutorial/public/css/style.css')
+        link(rel='stylesheet', type='text/css', href='-/tutorial/resource/public/css/style.css')
 
         script.
             var require = {
                 config: {
-                    'main': {
+                    app: {
                         context: JSON.parse('!{_context}') || {}
                     }
                 }
             };
-        script(data-main='/main', src='/require')
+        script(data-main='/app', src='/require')
     body
         div
             != _view.menu
@@ -191,7 +189,7 @@ You can use another template engine using the [Express'](http://expressjs.com/ap
 ### Use ajax forms
 
 ```jade
-// resources/private/view/framework.jade
+// resource/private/view/framework.jade
 
 form(action='/name', id='framework-form' class='ajax', method='post')
     label(for='name')Name:
@@ -202,16 +200,14 @@ form(action='/name', id='framework-form' class='ajax', method='post')
 Here is a simple ajax form allowing to post names (not a really interesting example ok...). The server side is not explicited here but you can handle its response like the following thanks to `data-ajax='{"event": "postName"}'`:
 
 ```javascript
-// config/client/events.js
+// config/client/events/event.js
 
 'use strict';
 
 define(function(require) {
     return {
-        event: {
-            'danf:form.postName': {
-                sequences: ['postName']
-            }
+        'danf:form.postName': {
+            sequences: ['postName']
         }
     }
 });

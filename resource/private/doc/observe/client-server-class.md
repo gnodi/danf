@@ -85,8 +85,8 @@ define(function(require) {
     return {
         // Merge common and client config.
         config: utils.merge(
-            require('my-app/common-config'),
-            require('my-app/client-config'),
+            require('-/my-app/common-config'),
+            require('-/my-app/client-config'),
             true
         )
     };
@@ -105,12 +105,12 @@ module.exports = {
     assets: {
         // Define the path for "danf-client".
         // You always need to define this path.
-        'danf-client': __dirname + '/danf-client',
+        '-/danf': __dirname + '/danf-client',
         // Map "my-app" to the current directory.
-        // The URL path "/my-app/client-config" will give the file "client-config.js".
+        // The URL path "/-/my-app/client-config" will give the file "client-config.js".
         'my-app': __dirname,
         // Forbid access to the file "server-config".
-        '!my-app/server-config': __dirname + '/server-config.js'
+        '!-/my-app/server-config': __dirname + '/server-config.js'
     },
     // The definition of the classes is a little bit different for the client and the server.
     classes: {
@@ -146,9 +146,9 @@ Here is the client config file:
 define(function(require) {
     return {
         classes: {
-            // You must use "my-app/logger" on the client side.
+            // You must use "-/my-app/logger" on the client side.
             // "my-app" is the name you defined in the assets of your server config.
-            logger: require('my-app/logger')
+            logger: require('-/my-app/logger')
         },
         // Log on the DOM ready event.
         events: {

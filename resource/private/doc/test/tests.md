@@ -11,13 +11,13 @@ Unit testing is essential to have a robust code and to detect regressions. Mocha
 Here is an example of test on the `categoryComputer.dumb` class:
 
 ```javascript
-// test/category-computer/dumb.js
+// test/unit/category-computer/dumb.js
 
 'use strict';
 
 var assert = require('assert'),
-    TestHelper = require('-/danf/lib/test/test-helper'),
-    configuration = require('../../danf'),
+    TestHelper = require('danf/lib/test/test-helper'),
+    configuration = require('../../../danf'),
     testHelper = new TestHelper(configuration),
     // Retrieve an instance of the class dumb.
     dumb = testHelper.getInstance('categoryComputer.dumb'),
@@ -36,7 +36,7 @@ var assert = require('assert'),
 
 // Inject dependencies.
 dumb.boost = 2;
-dumb.scoresDirectory = __dirname + '/../fixtures/questions-scores';
+dumb.scoresDirectory = __dirname + '/../../fixtures/questions-scores';
 dumb.questions = {
     q1: 1, // danf: 4, other: 2
     q2: 2, // danf: 7, other: 1

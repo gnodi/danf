@@ -13,55 +13,53 @@ Ok now, we have our configuration, our classes and their derived objects injecte
 On the server side, we define events triggered by HTTP requests:
 
 ```javascript
-// config/server/events.js
+// config/server/events/request.js
 
 'use strict';
 
 module.exports = {
-    request: {
-        home: {
-            path: '/',
-            methods: ['get'],
-            view: {
-                html: {
-                    layout: {
-                        file: '%view.path%/layout.jade'
-                    },
-                    body: {
-                        file: '%view.path%/index.jade'
-                    }
+    home: {
+        path: '/',
+        methods: ['get'],
+        view: {
+            html: {
+                layout: {
+                    file: '%view.path%/layout.jade'
+                },
+                body: {
+                    file: '%view.path%/index.jade'
                 }
             }
-        },
-        framework: {
-            path: '/framework',
-            methods: ['get'],
-            sequences: ['buildQuestionsForm'],
-            view: {
-                html: {
-                    layout: {
-                        file: '%view.path%/layout.jade'
-                    },
-                    body: {
-                        file: '%view.path%/framework.jade'
-                    }
+        }
+    },
+    framework: {
+        path: '/framework',
+        methods: ['get'],
+        sequences: ['buildQuestionsForm'],
+        view: {
+            html: {
+                layout: {
+                    file: '%view.path%/layout.jade'
+                },
+                body: {
+                    file: '%view.path%/framework.jade'
                 }
             }
+        }
+    },
+    apiGetFrameworksScores: {
+        path: '/api/frameworks/scores',
+        methods: ['get'],
+        parameters: {
+            answers: {
+                type: 'boolean_object',
+                default: {}
+            }
         },
-        apiGetFrameworksScores: {
-            path: '/api/frameworks/scores',
-            methods: ['get'],
-            parameters: {
-                answers: {
-                    type: 'boolean_object',
-                    default: {}
-                }
-            },
-            sequences: ['computeFrameworkScores'],
-            view: {
-                json: {
-                    select: ['frameworkScores']
-                }
+        sequences: ['computeFrameworkScores'],
+        view: {
+            json: {
+                select: ['frameworkScores']
             }
         }
     }
@@ -73,23 +71,30 @@ The events from HTTP request are defined in the node `request` of the config. Th
 On the client side, we use a [JQuery](http://jquery.com/) DOM event when the user click on the submit button of the form and a custom event triggered when the ajax return of the submitted form is received (we talk more about that in a next section).
 
 ```javascript
-// config/client/events.js
+// config/client/events/dom.js
 
 'use strict';
 
 define(function(require) {
     return {
-        dom: {
-            formSubmitting: {
-                selector: '#framework-form :submit',
-                event: 'click',
-                sequences: ['startComputingMeasure']
-            }
-        },
-        event: {
-            'danf:form.framework': {
-                sequences: ['displayComputingResult']
-            }
+        formSubmitting: {
+            selector: '#framework-form :submit',
+            event: 'click',
+            sequences: ['startComputingMeasure']
+        }
+    }
+});
+```
+
+```javascript
+// config/client/events/event.js
+
+'use strict';
+
+define(function(require) {
+    return {
+        'danf:form.framework': {
+            sequences: ['displayComputingResult']
         }
     }
 });
