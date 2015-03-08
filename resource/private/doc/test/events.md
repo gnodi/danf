@@ -8,7 +8,7 @@ Application
 
 ### Define events
 
-Ok now, we have our configuration, our classes and their derived objects injected into each other on both the client and server sides. The next step is to define events which will use these objects.
+Ok now, we have our configuration, our classes and their derived objects injected into each other on both client-side and server-side. The next step is to define events which will use these objects.
 
 On the server side, we define events triggered by HTTP requests:
 

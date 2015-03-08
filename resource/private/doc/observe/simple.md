@@ -129,6 +129,6 @@ h1
 Navigation
 ----------
 
-| [Use a class on both the client and server sides](client-server-class.md)
+| [Use a class on both client-side and server-side](client-server-class.md)
 
 [←](index.md)

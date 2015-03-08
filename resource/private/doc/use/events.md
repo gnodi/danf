@@ -95,7 +95,7 @@ Let's explain it in detailing the different types of events.
 
 #### Event
 
-The type `event` is the basic type for events and is available for both the client and server sides:
+The type `event` is the basic type for events and is available for both client-side and server-side:
 
 ```javascript
 // config/events.js

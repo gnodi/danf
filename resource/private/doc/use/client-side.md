@@ -52,9 +52,9 @@ define(function(require) {
 
 Where `my-app` is your application name.
 
-### Define a class for both the client and server sides
+### Define a class for both client-side and server-side
 
-In some cases, you would like to use a class on both the client and server sides. As for the client side, you need a little wrapper:
+In some cases, you would like to use a class on both client-side and server-side. As for the client side, you need a little wrapper:
 
 ```javascript
 // lib/common/computer.js

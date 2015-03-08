@@ -8,7 +8,7 @@ Documentation
 
 ### Usage
 
-You can use the [service](../dependency-injection.md) `danf:http.cookiesRegistry` to easily manage cookies on both the server and client sides.
+You can use the [service](../dependency-injection.md) `danf:http.cookiesRegistry` to easily manage cookies on both client-side and server-side.
 
 ### API
 

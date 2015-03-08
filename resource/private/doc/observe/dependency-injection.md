@@ -359,7 +359,7 @@ p
 Navigation
 ----------
 
-[Use a class on both the client and server sides](client-server-class.md) |
+[Use a class on both client-side and server-side](client-server-class.md) |
  [Define your own danf module config](module-config.md)
 
 [←](index.md)

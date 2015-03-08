@@ -8,7 +8,7 @@ In this part, you are going to see some uplifting example to have a quick look o
 The code for all examples can be found [here](../../test/functional/example).
 
 * [Respond to a HTTP request with a server class processing](simple.md)
-* [Use a class on both the client and server sides](client-server-class.md)
+* [Use a class on both client-side and server-side](client-server-class.md)
 * [Inject services into each others](dependency-injection.md)
 
 [←](../index.md)

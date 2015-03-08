@@ -153,9 +153,9 @@ define(function(require) {
 });
 ```
 
-### Code for both the client and server side
+### Code for both client-side and server-side
 
-Of course, you might want to use a class on both the client and server side. You certainly see that we use a service `benchmarker` on these two sides but never defined it. Here is how it should be done:
+Of course, you might want to use a class on both client-side and server-side. You certainly see that we use a service `benchmarker` on these two sides but never defined it. Here is how it should be done:
 
 ```javascript
 // lib/common/benchmarker.js

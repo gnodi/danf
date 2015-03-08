@@ -15,14 +15,14 @@ Yes!
 
 ### Why?
 
-The main goal of this full-stack framework is to help you organize, rationalize and homogenize your javascript code (website, api, ...) on both server-side (node.js) and client-side (browser).
+The main goal of this full-stack framework is to help you organize, rationalize and homogenize your javascript code (website, api, ...) on both client-side (browser) and server-side (node.js).
 
 ### Which features of this framework can help me to fulfill this goal?
 
 Danf provides several features in order to produce a scalable, maintainable, testable and performant code:
 * An object-oriented programming layer (formal classes, easy inheritance, ensured interfaces).
 * An inversion of control design (dependency injection via configuration files).
-* A simple system allowing to use the same code on both client-side and server-side.
+* An isomorphic paradigm allowing to use the same code on both client-side and server-side.
 * A homogeneous way to handle all kind of events (HTTP requests, DOM events, ...).
 * An elegant solution to callback hell preserving asynchronicity.
 * A helper to develop performant ajax applications supporting deep linking.

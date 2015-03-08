@@ -1,4 +1,4 @@
-Use a class on both the client and server sides
+Use a class on both client-side and server-side
 ===============================================
 
 [←](index.md)
@@ -18,7 +18,7 @@ Here is a class both usable in the browser and in node.js:
 // Define "define" for the client or the server.
 var define = define ? define : require('amdefine')(module);
 
-// Wrapper allowing to use the class on both the client and server sides.
+// Wrapper allowing to use the class on both client-side and server-side.
 define(function(require) {
     /**
      * Initialize a new logger.
