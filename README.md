@@ -1,4 +1,4 @@
-![Danf](img/small-logo.jpg)
+![Danf](resource/public/img/small-logo.jpg)
 ===========================
 
 [![NPM Version][npm-image]][npm-url]

@@ -41,4 +41,4 @@ Another nice way to help is to correct and/or to improve this documentation (is 
 
 [←](../README.md)
 
-![powered-bis](../img/powered-bis.png) ![powered](../img/powered.png) ![powered-white](../img/powered-white.png)
+![powered-bis](../../resource/public/img/powered-bis.png) ![powered](../../resource/public/img/powered.png) ![powered-white](../../resource/public/img/powered-white.png)
