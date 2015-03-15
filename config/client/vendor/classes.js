@@ -2,6 +2,6 @@
 
 define(function(require) {
     return {
-        jquery: require('-/danf/lib/client/vendor/jquery'),
+        jquery: require('../../../lib/client/vendor/jquery'),
     };
 });

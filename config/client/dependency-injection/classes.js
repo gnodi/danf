@@ -2,24 +2,24 @@
 
 define(function(require) {
     return {
-        servicesContainer: require('-/danf/lib/common/dependency-injection/services-container'),
-        contextProvider: require('-/danf/lib/common/dependency-injection/context-provider'),
-        objectProvider: require('-/danf/lib/common/dependency-injection/object-provider'),
+        servicesContainer: require('../../../lib/common/dependency-injection/services-container'),
+        contextProvider: require('../../../lib/common/dependency-injection/context-provider'),
+        objectProvider: require('../../../lib/common/dependency-injection/object-provider'),
         serviceBuilder: {
-            abstractServiceBuilder: require('-/danf/lib/common/dependency-injection/service-builder/abstract-service-builder'),
-            abstract: require('-/danf/lib/common/dependency-injection/service-builder/abstract'),
-            alias: require('-/danf/lib/common/dependency-injection/service-builder/alias'),
-            children: require('-/danf/lib/common/dependency-injection/service-builder/children'),
-            class: require('-/danf/lib/common/dependency-injection/service-builder/class'),
-            declinations: require('-/danf/lib/common/dependency-injection/service-builder/declinations'),
-            factories: require('-/danf/lib/common/dependency-injection/service-builder/factories'),
-            parent: require('-/danf/lib/common/dependency-injection/service-builder/parent'),
-            properties: require('-/danf/lib/common/dependency-injection/service-builder/properties'),
-            tags: require('-/danf/lib/common/dependency-injection/service-builder/tags')
+            abstractServiceBuilder: require('../../../lib/common/dependency-injection/service-builder/abstract-service-builder'),
+            abstract: require('../../../lib/common/dependency-injection/service-builder/abstract'),
+            alias: require('../../../lib/common/dependency-injection/service-builder/alias'),
+            children: require('../../../lib/common/dependency-injection/service-builder/children'),
+            class: require('../../../lib/common/dependency-injection/service-builder/class'),
+            declinations: require('../../../lib/common/dependency-injection/service-builder/declinations'),
+            factories: require('../../../lib/common/dependency-injection/service-builder/factories'),
+            parent: require('../../../lib/common/dependency-injection/service-builder/parent'),
+            properties: require('../../../lib/common/dependency-injection/service-builder/properties'),
+            tags: require('../../../lib/common/dependency-injection/service-builder/tags')
         },
         configuration: {
             sectionProcessor: {
-                services: require('-/danf/lib/common/dependency-injection/configuration/section-processor/services')
+                services: require('../../../lib/common/dependency-injection/configuration/section-processor/services')
             }
         }
     };

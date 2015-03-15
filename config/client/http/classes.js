@@ -2,7 +2,7 @@
 
 define(function(require) {
     return {
-        abstractCookiesRegistry: require('-/danf/lib/common/http/abstract-cookies-registry'),
-        cookiesRegistry: require('-/danf/lib/client/http/cookies-registry')
+        abstractCookiesRegistry: require('../../../lib/common/http/abstract-cookies-registry'),
+        cookiesRegistry: require('../../../lib/client/http/cookies-registry')
     };
 });
