@@ -1,16 +1,7 @@
 'use strict';
 
-requirejs.config({
-    map: {
-      '*': { 'jquery': '../../../lib/client/vendor/jquery' },
-      '../../../lib/client/vendor/jquery': { 'jquery': 'jquery' }
+module.exports = {
+    jquery: {
+        class: 'danf:vendor.jquery'
     }
-});
-
-define(function(require) {
-    return {
-        jquery: {
-            class: require('jquery')
-        }
-    };
-})
+};

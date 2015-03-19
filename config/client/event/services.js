@@ -1,7 +1,6 @@
 'use strict';
 
-define(function(require) {
-    return {
+    module.exports = {
         notifier: {
             children: {
                 dom: {
@@ -13,4 +12,3 @@ define(function(require) {
             }
         }
     };
-});
