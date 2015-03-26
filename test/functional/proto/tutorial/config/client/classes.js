@@ -1,8 +1,6 @@
 'use strict';
 
-define(function(require) {
-    return {
-        listDisplayer: require('-/tutorial/lib/client/list-displayer'),
-        benchmarker: require('-/tutorial/lib/common/benchmarker')
-    };
-});
+module.exports = {
+    listDisplayer: require('../../lib/client/list-displayer'),
+    benchmarker: require('../../lib/common/benchmarker')
+};

@@ -1,15 +1,13 @@
 'use strict';
 
-define(function(require) {
-    return {
-        dependencies: {
-            // ...
-        },
-        contract: {
-            // ...
-        },
-        config: {
-            // ...
-        }
-    };
-});
+module.exports = {
+    dependencies: {
+        // ...
+    },
+    contract: {
+        // ...
+    },
+    config: {
+        // ...
+    }
+};

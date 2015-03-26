@@ -15,10 +15,6 @@ module.exports = {
         assets: utils.merge(
             {
                 '-/danf': __dirname + '/danf-client',
-                '-/tutorial/config': __dirname + '/config',
-                '!-/tutorial/config/server': __dirname + '/config/server',
-                '-/tutorial/lib': __dirname + '/lib',
-                '!-/tutorial/lib/server': __dirname + '/lib/server',
                 '-/tutorial/resource': __dirname + '/resource',
                 '!-/tutorial/resource/private': __dirname + '/resource/private'
             },
