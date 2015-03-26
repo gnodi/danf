@@ -1,12 +1,12 @@
 ({
     baseUrl: '.',
-    name: 'lib/client/main.js',
+    name: 'lib/client/main',
     out: 'main-built.js',
     optimize: 'none',
     absolutise: true,
     cjsTranslate: true,
     paths: {
-        'jquery': 'node_modules/jquery/dist/jquery'
+        'jquery': 'jquery/dist/jquery'
     },
     map: {
         // Use no conflict jQuery.
