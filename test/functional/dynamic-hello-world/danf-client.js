@@ -11,7 +11,7 @@ define(function(require) {
                 }
             },
             classes: {
-                displayer: require('-/hello-world/displayer')
+                displayer: require('./displayer')
             },
             services: {
                 displayer: {

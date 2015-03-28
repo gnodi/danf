@@ -1,7 +1,7 @@
-({
+module.exports = ({
     baseUrl: '.',
     name: 'lib/client/main',
-    out: 'main-built.js',
+    out: '.bin/main.js',
     optimize: 'none',
     absolutise: true,
     cjsTranslate: true,
@@ -13,4 +13,4 @@
         '*': { 'jquery': 'lib/client/vendor/jquery' },
         'lib/client/vendor/jquery': { 'jquery': 'jquery' }
     }
-})
+});
