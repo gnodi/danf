@@ -7,7 +7,7 @@ var assert = require('assert'),
     danf = require('../../../../../lib/server/app')
 ;
 
-var app = danf(require(__dirname + '/../../../../fixtures/http/danf'), {listen: false, environment: 'test'});
+var app = danf(require(__dirname + '/../../../../fixtures/http/danf'), '', {listen: false, environment: 'test'});
 
 var expectedContent = '<!DOCTYPE html><html><head><title>3 messages (3/7kB) in the topic &quot;The third world peace is near.&quot;</title></head><body><p>OMG! I can\'t believe it!,Make bombs not peace!,???</p></body></html>';
 

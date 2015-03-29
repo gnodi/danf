@@ -9,7 +9,7 @@ var assert = require('assert'),
     Text = require('../../../../lib/server/rendering/format-renderer/text')
 ;
 
-var app = danf(require(__dirname + '/../../../fixtures/rendering/danf'), {listen: false, environment: 'test'}),
+var app = danf(require(__dirname + '/../../../fixtures/rendering/danf'), '', {listen: false, environment: 'test'}),
     referenceType = new ReferenceType(),
     referenceResolver = new ReferenceResolver(),
     text = new Text(),
