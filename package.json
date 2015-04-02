@@ -20,6 +20,7 @@
         "jade": "1.9.*",
         "amdefine": "0.1.*",
         "requirejs": "2.1.*",
+        "gnucki-r": "1.0.*",
         "jquery": "2.1.*"
     },
     "devDependencies": {
