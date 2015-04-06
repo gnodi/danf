@@ -1,3 +1,5 @@
+'use strict';
+
 module.exports = {
     sequencerProvider: require('../../../lib/common/event/sequencer-provider'),
     sequenceBuilder: require('../../../lib/common/event/sequence-builder'),

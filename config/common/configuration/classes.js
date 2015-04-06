@@ -13,5 +13,5 @@ module.exports = {
             references: require('../../../lib/common/configuration/manipulation/data-interpreter/references')
         }
     },
-    "sectionProcessor.parameters": require('../../../lib/common/configuration/section-processor/parameters')
+    'sectionProcessor.parameters': require('../../../lib/common/configuration/section-processor/parameters')
 };
