@@ -4,7 +4,7 @@ define(function(require) {
     return {
         config: {
             classes: {
-                cookieTester: require('-/cookie-tester')
+                cookieTester: require('./cookie-tester')
             },
             services: {
                 cookieTester: {

@@ -129,9 +129,6 @@ module.exports = {
                     returns: 'random'
                 }
             ]
-        },
-        assets: {
-            '-/danf': __dirname + '/danf-client'
         }
     }
 };

@@ -36,10 +36,6 @@ module.exports = {
                 }
             }
         },
-        assets: {
-            '-/danf': __dirname + '/danf-client',
-            '-/cookie-tester': __dirname + '/cookie-tester'
-        },
         services: {
             cookieTester: {
                 class: CookieTester,

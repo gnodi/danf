@@ -19,6 +19,7 @@ var danf = require('../../../index'),
                 }
             }
         },
+        null,
         {
             workers: -1
         }
