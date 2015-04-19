@@ -11,4 +11,4 @@ test-app:
 		--reporter $(REPORTER) \
 		--timeout 5000 \
 		$(MOCHA_OPTS) \
-		test/*
+		test/unit/*

@@ -1,6 +1,6 @@
 'use strict';
 
-var utils = require('danf/lib/common/utils'),
+var utils = require('./utils'),
     config = utils.merge(
         require('./config/common/this'),
         require('./config/server/this'),
@@ -12,15 +12,10 @@ module.exports = {
     dependencies: config.dependencies,
     contract: config.contract,
     config: {
-        assets: utils.merge(
-            {
-                '-/danf': __dirname + '/danf-client',
-                '-/tutorial/resource': __dirname + '/resource',
-                '!-/tutorial/resource/private': __dirname + '/resource/private'
-            },
-            require('./config/server/assets'),
-            true
-        ),
+        assets: {
+            '-/tutorial/resource': __dirname + '/resource',
+            '!-/tutorial/resource/private': __dirname + '/resource/private'
+        },
         classes: require('./config/server/classes'),
         events: require('./config/server/events'),
         interfaces: utils.merge(

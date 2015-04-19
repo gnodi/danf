@@ -1,8 +1,9 @@
 'use strict';
 
+/* // Use (https://github.com/gnodi/danf/blob/master/resource/private/doc/use/tests.md):
 var assert = require('assert'),
     TestHelper = require('danf/lib/server/test/test-helper'),
-    configuration = require('../danf'),
+    configuration = require('../danf-server'),
     testHelper = new TestHelper(configuration)
 ;
 
@@ -19,5 +20,14 @@ describe('Computer', function() {
         var computer = testHelper.getService('computer')
 
         assert.equal(computer.compute(), 8);
+    })
+})
+*/
+
+var assert = require('assert');
+
+describe('This test', function() {
+    it('should be ok', function() {
+        assert(true);
     })
 })

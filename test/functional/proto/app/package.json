@@ -1,5 +1,5 @@
 {
-    "name": "my-app",
+    "name": "tutorial",
     "description": "My Danf application",
     "version": "0.0.0",
     "author": "Me <me@myhome.me>",
@@ -13,10 +13,10 @@
         "supertest": "0.15.*"
     },
     "keywords": [
-        "my-app",
+        "tutorial",
         "danf"
     ],
-    "repository": "git://github.com/me/my-app",
+    "repository": "git://github.com/me/tutorial",
     "main": "app",
     "scripts": {
         "test": "make test"

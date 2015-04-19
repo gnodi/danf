@@ -1,10 +1,10 @@
 'use strict';
 
 define(function(require) {
-    var utils = require('-/danf/lib/common/utils'),
+    var utils = require('./utils'),
         config = utils.merge(
-            require('-/my-app/config/common/this'),
-            require('-/my-app/config/client/this'),
+            require('./config/common/this'),
+            require('./config/client/this'),
             true
         )
     ;
@@ -13,26 +13,26 @@ define(function(require) {
         dependencies: config.dependencies || {},
         contract: config.contract || {},
         config: {
-            classes: require('-/my-app/config/client/classes'),
-            events: require('-/my-app/config/client/events'),
+            classes: require('./config/client/classes'),
+            events: require('./config/client/events'),
             interfaces: utils.merge(
-                require('-/my-app/config/common/interfaces'),
-                require('-/my-app/config/client/interfaces'),
+                require('./config/common/interfaces'),
+                require('./config/client/interfaces'),
                 true
             ),
             parameters: utils.merge(
-                require('-/my-app/config/common/parameters'),
-                require('-/my-app/config/client/parameters'),
+                require('./config/common/parameters'),
+                require('./config/client/parameters'),
                 true
             ),
             sequences: utils.merge(
-                require('-/my-app/config/common/sequences'),
-                require('-/my-app/config/client/sequences'),
+                require('./config/common/sequences'),
+                require('./config/client/sequences'),
                 true
             ),
             services: utils.merge(
-                require('-/my-app/config/common/services'),
-                require('-/my-app/config/client/services'),
+                require('./config/common/services'),
+                require('./config/client/services'),
                 true
             ),
             this: config.config || {}

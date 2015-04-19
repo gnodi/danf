@@ -1,6 +1,6 @@
 'use strict';
 
-var utils = require('danf/lib/common/utils');
+var utils = require('../../utils');
 
 module.exports = {
     dom: require('./events/dom'),

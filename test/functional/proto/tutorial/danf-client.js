@@ -1,7 +1,7 @@
 'use strict';
 
 define(function(require) {
-    var utils = require('danf/lib/common/utils'),
+    var utils = require('./utils'),
         config = utils.merge(
             require('./config/common/this'),
             require('./config/client/this'),
