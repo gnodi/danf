@@ -122,7 +122,7 @@ var prefixReferencesTests = [
     ]
 ;
 
-modulesTree.build(require('../../fixtures/configuration/danf'));
+modulesTree.build(require('../../fixture/configuration/danf'));
 
 describe('Namespacer', function() {
     prefixTests.forEach(function(test) {

@@ -7,7 +7,7 @@ var assert = require('assert'),
 ;
 
 var eventNotifier = new Event(),
-    dataResolver = require('../../../fixtures/manipulation/data-resolver'),
+    dataResolver = require('../../../fixture/manipulation/data-resolver'),
     sequencer = {
         start: function(stream, callback) {
             stream.data.bar = 'foo';

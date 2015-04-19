@@ -10,13 +10,13 @@ var testHelper = TestHelper(
         {
             config: {
                 classes: {
-                    a: require('../../fixtures/app/a'),
-                    b: require('../../fixtures/app/b'),
-                    c: require('../../fixtures/app/c')
+                    a: require('../../fixture/app/a'),
+                    b: require('../../fixture/app/b'),
+                    c: require('../../fixture/app/c')
                 },
                 services: {
                     a: {
-                        class: require('../../fixtures/app/a')
+                        class: require('../../fixture/app/a')
                     }
                 }
             }

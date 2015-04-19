@@ -4,7 +4,7 @@ var assert = require('assert'),
     danf = require('../../lib/server/app')
 ;
 
-var app = danf(require(__dirname + '/../fixtures/danf'), '', {silent: true, environment: 'test'});
+var app = danf(require(__dirname + '/../fixture/danf'), '', {silent: true, environment: 'test'});
 
 describe('Danf application', function() {
     it('should provide a "container" accessible property', function() {

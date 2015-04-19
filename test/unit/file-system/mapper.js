@@ -9,7 +9,7 @@ var assert = require('assert'),
 
 var mapper = new Mapper(),
     cssMapper = new Mapper('css'),
-    dirname = fs.realpathSync(__dirname + '/../../fixtures/file-system').replace(/\\/g, '/')
+    dirname = fs.realpathSync(__dirname + '/../../fixture/file-system').replace(/\\/g, '/')
 ;
 
 var config = {

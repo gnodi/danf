@@ -11,7 +11,7 @@ var modulesTree = new ModulesTree('app');
 describe('ModulesTree', function() {
     describe('"build" method', function() {
         it('should build a tree of modules with a level of definition', function() {
-            modulesTree.build(require('../../fixtures/configuration/danf'));
+            modulesTree.build(require('../../fixture/configuration/danf'));
 
             var modules = modulesTree.getLevel(1);
             assert.equal(modules[0].id, 'app:module1');

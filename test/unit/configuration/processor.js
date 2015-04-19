@@ -7,11 +7,11 @@ var assert = require('assert'),
     ReferenceResolver = require('../../../lib/common/manipulation/reference-resolver'),
     Namespacer = require('../../../lib/common/configuration/namespacer'),
     Processor = require('../../../lib/common/configuration/processor'),
-    GlobalSectionProcessor = require('../../fixtures/configuration/section-processor')
+    GlobalSectionProcessor = require('../../fixture/configuration/section-processor')
 ;
 
 var modulesTree = new ModulesTree('main'),
-    configurationResolver = require('../../fixtures/configuration/configuration-resolver'),
+    configurationResolver = require('../../fixture/configuration/configuration-resolver'),
     referenceResolver = new ReferenceResolver(),
     namespacer = new Namespacer(),
     processor = new Processor(configurationResolver, referenceResolver, namespacer, 'test'),
@@ -43,7 +43,7 @@ var expectedConfig = {
     }
 ;
 
-modulesTree.build(require('../../fixtures/configuration/danf'));
+modulesTree.build(require('../../fixture/configuration/danf'));
 processor.addSectionProcessor(globalSectionProcessor);
 
 describe('Processor', function() {
