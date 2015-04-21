@@ -14,7 +14,7 @@ var mapper = new Mapper(),
 
 var config = {
     'danf/test': dirname + '/node-modules/test',
-    'danf/bin': dirname + '/.bin',
+    'danf/ban': dirname + '/.ban',
     'danf/public': dirname + '/public',
     'danf/test/file': dirname + '/node-modules/test/directory/file.js',
     'danf/test/js.js': dirname + '/node-modules/test/js.js',
@@ -62,8 +62,8 @@ var tests = [
         expected: dirname + '/node-modules/index.js'
     },
     {
-        path: 'danf/bin/main',
-        expected: dirname + '/.bin/main.js'
+        path: 'danf/ban/main',
+        expected: dirname + '/.ban/main.js'
     }
 ];
 
