@@ -1,5 +1,5 @@
 'use strict';
 
-var danf = require('../../../index'),
+var danf = require('../../../..'),
     app = danf(__dirname + '/danf-server.js')
 ;

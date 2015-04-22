@@ -1,4 +1,4 @@
-tutorial
+my-app
 ======
 
 This is a prototype of a Danf application helping you to create your own.
@@ -15,4 +15,4 @@ $ node app-dev
 ```
 
 You should see `Hi!` at `http://localhost:3080` following by this instruction:
-`Replace "tutorial" in all files by the name of your application.`. Do it.
+`Replace "my-app" in all files by the name of your application.`. Do it.

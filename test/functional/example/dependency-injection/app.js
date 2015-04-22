@@ -108,6 +108,7 @@ danf(
             }
         }
     },
+    null,
     {
         environment: 'prod',
         debug: false
@@ -117,3 +118,6 @@ danf(
         debug: false
     }
 );
+
+// [http://localhost:3080?operation=3 * 2 @ 4] => Result: 10
+// [http://localhost:3080?operation=3 @ 2 * 4] => Result: 20

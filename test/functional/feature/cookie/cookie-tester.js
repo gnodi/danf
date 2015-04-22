@@ -1,22 +1,20 @@
 'use strict';
 
-define(function(require) {
-    function CookieTester() {
-    };
+module.exports = CookieTester;
 
-    CookieTester.defineImplementedInterfaces(['danf:ajaxApp.processor']);
+function CookieTester() {
+};
 
-    CookieTester.prototype.process = function() {
-        var foo = this._cookiesRegristry.get('foo');
+CookieTester.defineImplementedInterfaces(['danf:ajaxApp.processor']);
 
-        if (foo === 'bar') {
-            document.write('--- SUCCESS ---');
-        } else if (foo) {
-            document.write('--- ERROR ---');
-        }
+CookieTester.prototype.process = function() {
+    var foo = this._cookiesRegristry.get('foo');
 
-        this._cookiesRegristry.unset('foo');
-    };
+    if (foo === 'bar') {
+        document.write('--- SUCCESS ---');
+    } else if (foo) {
+        document.write('--- ERROR ---');
+    }
 
-    return CookieTester;
-});
+    this._cookiesRegristry.unset('foo');
+};

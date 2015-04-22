@@ -13,8 +13,7 @@ module.exports = {
     contract: config.contract,
     config: {
         assets: {
-            '-/tutorial/resource': __dirname + '/resource',
-            '!-/tutorial/resource/private': __dirname + '/resource/private'
+            '-/tutorial': __dirname + '/resource/public'
         },
         classes: require('./config/server/classes'),
         events: require('./config/server/events'),

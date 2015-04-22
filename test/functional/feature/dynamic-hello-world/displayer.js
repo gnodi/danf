@@ -1,37 +1,35 @@
 'use strict';
 
-define(function(require) {
-    /**
-     * Initialize a new displayer.
-     */
-    function Displayer() {}
+/**
+ * Expose `Displayer`.
+ */
+module.exports = Displayer;
 
-    Displayer.defineImplementedInterfaces(['displayer']);
+/**
+ * Initialize a new displayer.
+ */
+function Displayer() {}
 
-    Displayer.defineDependency('_jquery', 'function');
+Displayer.defineImplementedInterfaces(['displayer']);
 
-    /**
-     * Set jquery.
-     *
-     * @param {object}
-     * @api public
-     */
-    Object.defineProperty(Displayer.prototype, 'jquery', {
-        set: function(jquery) { this._jquery = jquery; }
-    });
+Displayer.defineDependency('_jquery', 'function');
 
-    /**
-     * @interface {displayer}
-     */
-    Displayer.prototype.display = function() {
-        var $ = this._jquery;
-
-        $('title').text('Hello World!');
-        $('body').html('<p>Hello World!</p>');
-    }
-
-    /**
-     * Expose `Displayer`.
-     */
-    return Displayer;
+/**
+ * Set jquery.
+ *
+ * @param {object}
+ * @api public
+ */
+Object.defineProperty(Displayer.prototype, 'jquery', {
+    set: function(jquery) { this._jquery = jquery; }
 });
+
+/**
+ * @interface {displayer}
+ */
+Displayer.prototype.display = function() {
+    var $ = this._jquery;
+
+    $('title').text('Hello World!');
+    $('body').html('<p>Hello World!</p>');
+}

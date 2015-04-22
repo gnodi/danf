@@ -1,6 +1,6 @@
 'use strict';
 
-var danf = require('../../../index');
+var danf = require('../../../..');
 
 danf({
     config: {
