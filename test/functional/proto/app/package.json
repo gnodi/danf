@@ -2,7 +2,7 @@
     "name": "my-app",
     "description": "My Danf application",
     "version": "0.0.0",
-    "author": "Me <me@myhome.me>",
+    "author": "Me <me@mydomain.me>",
     "contributors": [],
     "dependencies": {
         "danf": "0.2.3",

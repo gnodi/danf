@@ -1,14 +1,12 @@
 'use strict';
 
-define(function(require) {
-    var utils = require('-/danf/lib/common/utils');
+var utils = require('../../utils');
 
-    return {
-        dom: require('-/tutorial/config/client/events/dom'),
-        event: utils.merge(
-            require('-/tutorial/config/common/events/event'),
-            require('-/tutorial/config/client/events/event'),
-            true
-        )
-    };
-});
+module.exports = {
+    dom: require('./events/dom'),
+    event: utils.merge(
+        require('../common/events/event'),
+        require('./events/event'),
+        true
+    )
+};

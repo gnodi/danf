@@ -3,7 +3,7 @@
 require('../../../lib/common/init');
 
 var assert = require('assert'),
-    dataResolver = require('../../fixtures/manipulation/data-resolver'),
+    dataResolver = require('../../fixture/manipulation/data-resolver'),
     func = function() { return; }
 ;
 

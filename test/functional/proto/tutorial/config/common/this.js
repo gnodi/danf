@@ -1,17 +1,13 @@
 'use strict';
 
-var define = define ? define : require('amdefine')(module);
-
-define(function(require) {
-    return {
-        dependencies: {
-            // ...
-        },
-        contract: {
-            // ...
-        },
-        config: {
-            // ...
-        }
-    };
-});
+module.exports = {
+    dependencies: {
+        // ...
+    },
+    contract: {
+        // ...
+    },
+    config: {
+        // ...
+    }
+};

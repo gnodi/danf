@@ -16,3 +16,5 @@ build/Release
 node_modules
 
 .lock-wscript
+
+.bin

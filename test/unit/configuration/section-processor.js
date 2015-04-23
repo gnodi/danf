@@ -10,7 +10,7 @@ var assert = require('assert'),
     SectionProcessor = require('../../../lib/common/configuration/section-processor')
 ;
 
-var configurationResolver = require('../../fixtures/configuration/configuration-resolver'),
+var configurationResolver = require('../../fixture/configuration/configuration-resolver'),
     referenceResolver = new ReferenceResolver(),
     namespacer = new Namespacer()
 ;

@@ -9,11 +9,12 @@ var assert = require('assert'),
 
 var mapper = new Mapper(),
     cssMapper = new Mapper('css'),
-    dirname = fs.realpathSync(__dirname + '/../../fixtures/file-system').replace(/\\/g, '/')
+    dirname = fs.realpathSync(__dirname + '/../../fixture/file-system').replace(/\\/g, '/')
 ;
 
 var config = {
     'danf/test': dirname + '/node-modules/test',
+    'danf/ban': dirname + '/.ban',
     'danf/public': dirname + '/public',
     'danf/test/file': dirname + '/node-modules/test/directory/file.js',
     'danf/test/js.js': dirname + '/node-modules/test/js.js',
@@ -59,6 +60,10 @@ var tests = [
     {
         path: 'danf/root/index',
         expected: dirname + '/node-modules/index.js'
+    },
+    {
+        path: 'danf/ban/main',
+        expected: dirname + '/.ban/main.js'
     }
 ];
 

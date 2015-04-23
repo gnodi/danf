@@ -7,7 +7,7 @@ var assert = require('assert'),
     danf = require('../../../lib/server/app')
 ;
 
-var app = danf(require(__dirname + '/../../fixtures/http/danf'), {listen: false, environment: 'test'});
+var app = danf(require(__dirname + '/../../fixture/http/danf'), '', {listen: false, environment: 'test'});
 
 describe('SessionHandler', function() {
     it('should allow to get and set values in session', function(done) {

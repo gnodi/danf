@@ -4,7 +4,7 @@ var assert = require('assert'),
     danf = require('../../lib/server/app')
 ;
 
-var app = danf(require(__dirname + '/../fixtures/danf'), {silent: true, environment: 'test'});
+var app = danf(require(__dirname + '/../fixture/danf'), '', {silent: true, environment: 'test'});
 
 describe('Danf application', function() {
     it('should provide a "container" accessible property', function() {
@@ -74,9 +74,9 @@ describe('Danf application', function() {
             b = classesRegistry.get('main:b')
         ;
 
-        assert(typeof a, 'function');
-        assert(typeof b, 'function');
-        assert(b.Parent, a);
+        assert.equal(typeof a, 'function');
+        assert.equal(typeof b, 'function');
+        assert.equal(b.Parent, a);
 
         var polymorphous = app.servicesContainer.get('main:polymorphous');
 
@@ -135,5 +135,19 @@ describe('Danf application', function() {
         ;
 
         trigger.trigger('event', 'happenSomething', computer, {k: 0, done: done});
+    })
+
+    it('should provide a service with utils', function() {
+        var utils = app.servicesContainer.get('danf:utils'),
+            a = {a: 1},
+            b = {b: 2}
+        ;
+
+        assert.notEqual(utils, undefined);
+
+        assert.deepEqual(
+            utils.merge(a, b),
+            {a:1, b:2}
+        );
     })
 })

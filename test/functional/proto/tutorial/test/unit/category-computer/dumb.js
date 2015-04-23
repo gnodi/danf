@@ -2,7 +2,7 @@
 
 var assert = require('assert'),
     TestHelper = require('danf/lib/server/test/test-helper'),
-    configuration = require('../../../danf'),
+    configuration = require('../../../danf-server'),
     testHelper = new TestHelper(configuration),
     // Retrieve an instance of the class dumb.
     dumb = testHelper.getInstance('categoryComputer.dumb'),
@@ -21,7 +21,7 @@ var assert = require('assert'),
 
 // Inject dependencies.
 dumb.boost = 2;
-dumb.scoresDirectory = __dirname + '/../../fixtures/questions-scores';
+dumb.scoresDirectory = __dirname + '/../../fixture/questions-scores';
 dumb.questions = {
     q1: 1, // danf: 4, other: 2
     q2: 2, // danf: 7, other: 1

@@ -61,6 +61,7 @@ danf(
             }
         }
     },
+    null,
     {
         environment: 'prod',
         debug: false

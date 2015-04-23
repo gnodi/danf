@@ -7,7 +7,7 @@ var assert = require('assert'),
     Json = require('../../../../lib/server/rendering/format-renderer/json')
 ;
 
-var app = danf(require(__dirname + '/../../../fixtures/rendering/danf'), {listen: false, environment: 'test'}),
+var app = danf(require(__dirname + '/../../../fixture/rendering/danf'), '', {listen: false, environment: 'test'}),
     json = new Json(),
     response = app.response
 ;

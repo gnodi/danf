@@ -68,6 +68,7 @@ danf(
             }
         }
     },
+    null,
     // Define server context.
     {
         environment: 'prod',
@@ -79,3 +80,6 @@ danf(
         debug: false
     }
 );
+
+// [http://localhost:3080]             => Result: Hello WORLD!
+// [http://localhost:3080?name=gnucki] => Result: Hello GNUCKI!

@@ -1,14 +1,12 @@
 'use strict';
 
-define(function(require) {
-    var utils = require('-/danf/lib/common/utils');
+var utils = require('../../../../lib/common/utils');
 
-    return {
+module.exports = {
+    config: utils.merge(
         // Merge common and client config.
-        config: utils.merge(
-            require('-/my-app/common-config'),
-            require('-/my-app/client-config'),
-            true
-        )
-    };
-});
+        require('./common-config'),
+        require('./client-config'),
+        true
+    )
+};

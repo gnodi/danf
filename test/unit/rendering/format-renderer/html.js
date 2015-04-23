@@ -7,10 +7,10 @@ var assert = require('assert'),
     Html = require('../../../../lib/server/rendering/format-renderer/html')
 ;
 
-var app = danf(require(__dirname + '/../../../fixtures/rendering/danf'), {listen: false, environment: 'test'}),
+var app = danf(require(__dirname + '/../../../fixture/rendering/danf'), '', {listen: false, environment: 'test'}),
     html = new Html(),
     response = app.response,
-    dirname = __dirname + '/../../../fixtures/rendering/'
+    dirname = __dirname + '/../../../fixture/rendering/'
 ;
 
 html.requestProvider = {

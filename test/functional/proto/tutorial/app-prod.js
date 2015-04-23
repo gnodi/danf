@@ -2,7 +2,8 @@
 
 var danf = require('danf'),
     app = danf(
-        require(__dirname + '/danf'),
+        __dirname + '/danf-server.js',
+        __dirname + '/danf-client.js',
         {
             environment: 'prod',
             debug: false,

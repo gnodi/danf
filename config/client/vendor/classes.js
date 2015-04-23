@@ -1,7 +1,5 @@
 'use strict';
 
-define(function(require) {
-    return {
-        jquery: require('-/danf/lib/client/vendor/jquery'),
-    };
-});
+module.exports = {
+    jquery: require('../../../lib/client/vendor/jquery')
+};

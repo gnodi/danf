@@ -1,11 +1,7 @@
 'use strict';
 
-var define = define ? define : require('amdefine')(module);
-
-define(function(require) {
-    return {
-        benchmarker: {
-            class: 'benchmarker'
-        }
-    };
-});
+module.exports = {
+    benchmarker: {
+        class: 'benchmarker'
+    }
+};
