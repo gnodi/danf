@@ -508,5 +508,331 @@ module.exports = {
                 ]
             }
         }
+    },
+    flowDriver: {
+        methods: {
+            /**
+             * Proxy to async collections method each.
+             * (https://github.com/caolan/async#each)
+             */
+            each: {
+                arguments: ['mixed_array/arr', 'function/iterator', 'function/callback']
+            },
+            /**
+             * Proxy to async collections method eachSeries.
+             * (https://github.com/caolan/async#eachSeries)
+             */
+            eachSeries: {
+                arguments: ['mixed_array/arr', 'function/iterator', 'function/callback']
+            },
+            /**
+             * Proxy to async collections method eachLimit.
+             * (https://github.com/caolan/async#eachLimit)
+             */
+            eachLimit: {
+                arguments: ['mixed_array/arr', 'number/limit', 'function/iterator', 'function/callback']
+            },
+            /**
+             * Proxy to async collections method map.
+             * (https://github.com/caolan/async#map)
+             */
+            map: {
+                arguments: ['mixed_array/arr', 'function/iterator', 'function/callback']
+            },
+            /**
+             * Proxy to async collections method mapSeries.
+             * (https://github.com/caolan/async#mapSeries)
+             */
+            mapSeries: {
+                arguments: ['mixed_array/arr', 'function/iterator', 'function/callback']
+            },
+            /**
+             * Proxy to async collections method mapLimit.
+             * (https://github.com/caolan/async#mapLimit)
+             */
+            mapLimit: {
+                arguments: ['mixed_array/arr', 'number/limit', 'function/iterator', 'function/callback']
+            },
+            /**
+             * Proxy to async collections method filter.
+             * (https://github.com/caolan/async#filter)
+             */
+            filter: {
+                arguments: ['mixed_array/arr', 'function/iterator', 'function/callback']
+            },
+            /**
+             * Proxy to async collections method filterSeries.
+             * (https://github.com/caolan/async#filterSeries)
+             */
+            filterSeries: {
+                arguments: ['mixed_array/arr', 'function/iterator', 'function/callback']
+            },
+            /**
+             * Proxy to async collections method reject.
+             * (https://github.com/caolan/async#reject)
+             */
+            reject: {
+                arguments: ['mixed_array/arr', 'function/iterator', 'function/callback']
+            },
+            /**
+             * Proxy to async collections method rejectSeries.
+             * (https://github.com/caolan/async#rejectSeries)
+             */
+            rejectSeries: {
+                arguments: ['mixed_array/arr', 'function/iterator', 'function/callback']
+            },
+            /**
+             * Proxy to async collections method reduce.
+             * (https://github.com/caolan/async#reduce)
+             */
+            reduce: {
+                arguments: ['mixed_array/arr', 'mixed/memo', 'function/iterator', 'function/callback']
+            },
+            /**
+             * Proxy to async collections method reduceRight.
+             * (https://github.com/caolan/async#reduceRight)
+             */
+            reduceRight: {
+                arguments: ['mixed_array/arr', 'mixed/memo', 'function/iterator', 'function/callback']
+            },
+            /**
+             * Proxy to async collections method detect.
+             * (https://github.com/caolan/async#detect)
+             */
+            detect: {
+                arguments: ['mixed_array/arr', 'function/iterator', 'function/callback']
+            },
+            /**
+             * Proxy to async collections method detectSeries.
+             * (https://github.com/caolan/async#detectSeries)
+             */
+            detectSeries: {
+                arguments: ['mixed_array/arr', 'function/iterator', 'function/callback']
+            },
+            /**
+             * Proxy to async collections method some.
+             * (https://github.com/caolan/async#some)
+             */
+            some: {
+                arguments: ['mixed_array/arr', 'function/iterator', 'function/callback']
+            },
+            /**
+             * Proxy to async collections method every.
+             * (https://github.com/caolan/async#every)
+             */
+            every: {
+                arguments: ['mixed_array/arr', 'function/iterator', 'function/callback']
+            },
+            /**
+             * Proxy to async collections method concat.
+             * (https://github.com/caolan/async#concat)
+             */
+            concat: {
+                arguments: ['mixed_array/arr', 'function/iterator', 'function/callback']
+            },
+            /**
+             * Proxy to async collections method concatSeries.
+             * (https://github.com/caolan/async#concatSeries)
+             */
+            concatSeries: {
+                arguments: ['mixed_array/arr', 'function/iterator', 'function/callback']
+            },
+            /**
+             * Proxy to async control flow method series.
+             * (https://github.com/caolan/async#series)
+             */
+            series: {
+                arguments: ['function_array|function_object/tasks', 'function|null/callback']
+            },
+            /**
+             * Proxy to async control flow method parallel.
+             * (https://github.com/caolan/async#parallel)
+             */
+            parallel: {
+                arguments: ['function_array|function_object/tasks', 'function|null/callback']
+            },
+            /**
+             * Proxy to async control flow method parallelLimit.
+             * (https://github.com/caolan/async#parallelLimit)
+             */
+            parallelLimit: {
+                arguments: ['function_array|function_object/tasks', 'number/limit', 'function|null/callback']
+            },
+            /**
+             * Proxy to async control flow method whilst.
+             * (https://github.com/caolan/async#whilst)
+             */
+            whilst: {
+                arguments: ['function/test', 'function/fn', 'function/callback']
+            },
+            /**
+             * Proxy to async control flow method doWhilst.
+             * (https://github.com/caolan/async#doWhilst)
+             */
+            doWhilst: {
+                arguments: ['function/fn', 'function/test', 'function/callback']
+            },
+            /**
+             * Proxy to async control flow method until.
+             * (https://github.com/caolan/async#until)
+             */
+            until: {
+                arguments: ['function/test', 'function/fn', 'function/callback']
+            },
+            /**
+             * Proxy to async control flow method doUntil.
+             * (https://github.com/caolan/async#doUntil)
+             */
+            doUntil: {
+                arguments: ['function/fn', 'function/test', 'function/callback']
+            },
+            /**
+             * Proxy to async control flow method forever.
+             * (https://github.com/caolan/async#forever)
+             */
+            forever: {
+                arguments: ['function/fn', 'function/errback']
+            },
+            /**
+             * Proxy to async control flow method compose.
+             * (https://github.com/caolan/async#compose)
+             */
+            compose: {
+                arguments: ['function.../fnN'],
+                returns: 'function'
+            },
+            /**
+             * Proxy to async control flow method seq.
+             * (https://github.com/caolan/async#seq)
+             */
+            seq: {
+                arguments: ['function.../fnN'],
+                returns: 'function'
+            },
+            /**
+             * Proxy to async control flow method applyEach.
+             * (https://github.com/caolan/async#applyEach)
+             */
+            applyEach: {
+                arguments: ['function_array|function_object/fns', 'mixed...|function/args|callback', 'function/callback']
+            },
+            /**
+             * Proxy to async control flow method applyEachSeries.
+             * (https://github.com/caolan/async#applyEachSeries)
+             */
+            applyEachSeries: {
+                arguments: ['function_array|function_object/fns', 'mixed...|function/args|callback', 'function/callback']
+            },
+            /**
+             * Proxy to async control flow method queue.
+             * (https://github.com/caolan/async#queue)
+             */
+            queue: {
+                arguments: ['function/worker', 'concurrency/number'],
+                returns: 'object'
+            },
+            /**
+             * Proxy to async control flow method priorityQueue.
+             * (https://github.com/caolan/async#priorityQueue)
+             */
+            priorityQueue: {
+                arguments: ['function/worker', 'concurrency/number']
+            },
+            /**
+             * Proxy to async control flow method cargo.
+             * (https://github.com/caolan/async#cargo)
+             */
+            cargo: {
+                arguments: ['function/worker', 'concurrency|null/payload'],
+                returns: 'object'
+            },
+            /**
+             * Proxy to async control flow method auto.
+             * (https://github.com/caolan/async#auto)
+             */
+            auto: {
+                arguments: ['function_array|function_object/tasks', 'function|null/callback']
+            },
+            /**
+             * Proxy to async control flow method retry.
+             * (https://github.com/caolan/async#retry)
+             */
+            retry: {
+                arguments: ['number|function/times|task', 'function|null/task|callback', 'function|null/callback']
+            },
+            /**
+             * Proxy to async control flow method iterator.
+             * (https://github.com/caolan/async#iterator)
+             */
+            iterator: {
+                arguments: ['function_array|function_object/tasks'],
+                returns: 'function'
+            },
+            /**
+             * Proxy to async control flow method apply.
+             * (https://github.com/caolan/async#apply)
+             */
+            apply: {
+                arguments: ['function/fn', 'mixed...|null/args'],
+                returns: 'function'
+            },
+            /**
+             * Proxy to async control flow method nextTick.
+             * (https://github.com/caolan/async#nextTick)
+             */
+            nextTick: {
+                arguments: ['function/callback']
+            },
+            /**
+             * Proxy to async control flow method nextTick.
+             * (https://github.com/caolan/async#nextTick)
+             */
+            setImmediate: {
+                arguments: ['function/callback']
+            },
+            /**
+             * Proxy to async control flow method times.
+             * (https://github.com/caolan/async#times)
+             */
+            times: {
+                arguments: ['number/n', 'function/callback']
+            },
+            /**
+             * Proxy to async control flow method timesSeries.
+             * (https://github.com/caolan/async#timesSeries)
+             */
+            timesSeries: {
+                arguments: ['number/n', 'function/callback']
+            },
+            /**
+             * Proxy to async utils method memoize.
+             * (https://github.com/caolan/async#memoize)
+             */
+            memoize: {
+                arguments: ['function/fn', 'function|null/hasher'],
+                returns: 'function'
+            },
+            /**
+             * Proxy to async utils method unmemoize.
+             * (https://github.com/caolan/async#unmemoize)
+             */
+            unmemoize: {
+                arguments: ['function/fn', 'function|null/hasher']
+            },
+            /**
+             * Proxy to async utils method log.
+             * (https://github.com/caolan/async#log)
+             */
+            log: {
+                arguments: ['function/fn', 'mixed...|null/args']
+            },
+            /**
+             * Proxy to async utils method dir.
+             * (https://github.com/caolan/async#dir)
+             */
+            dir: {
+                arguments: ['function/fn', 'mixed...|null/args']
+            }
+        }
     }
 };

@@ -57,5 +57,11 @@ module.exports = {
             class: 'danf:manipulation.sequencer',
             interface: 'danf:manipulation.sequencer'
         }
+    },
+    flowDriver: {
+        class: 'danf:manipulation.flowDriver',
+        properties: {
+            async: '#danf:vendor.async#'
+        }
     }
 };
