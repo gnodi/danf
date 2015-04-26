@@ -44,8 +44,6 @@ B.prototype.c = function() {
     return B.Parent.prototype.c.call(this);
 };
 
-module.exports = B;
-
 var C = function() {
     C.Parent.call(this);
 };
@@ -57,8 +55,6 @@ C.prototype.c = function() {
 
     return C.Parent.prototype.c.call(this);
 };
-
-module.exports = C;
 
 var classesRegistry = new ClassesRegistry(),
     classesHandler = new ClassesHandler(classesRegistry),
