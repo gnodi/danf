@@ -9,11 +9,12 @@ var assert = require('assert'),
 var AsynchronousClass = function() {
 };
 
-AsynchronousClass.prototype.asynchronousMethod = function() {
+AsynchronousClass.prototype.doAsynchronous = function() {
     this.__async();
+    console.log('plap');
 };
 
-AsynchronousClass.prototype.synchronousMethod = function() {
+AsynchronousClass.prototype.doSynchronous = function() {
 };
 
 var asynchronizer = new Asynchronizer();
@@ -22,6 +23,8 @@ describe('Asynchronizer', function() {
     describe('method "process"', function() {
         it('should build defined inheritance between classes', function() {
             asynchronizer.process(AsynchronousClass);
+            var a = new AsynchronousClass();
+            a.doAsynchronous();
         })
     })
 })
