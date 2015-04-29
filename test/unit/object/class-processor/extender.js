@@ -58,9 +58,10 @@ C.prototype.c = function() {
 
 var classesRegistry = new ClassesRegistry(),
     classesHandler = new ClassesHandler(classesRegistry),
-    extender = new Extender(classesRegistry)
+    extender = new Extender(classesRegistry, 'baseClass')
 ;
 
+classesRegistry.index('baseClass', function() {});
 classesRegistry.index('a', A);
 classesRegistry.index('b', B);
 classesRegistry.index('c', C);

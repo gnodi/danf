@@ -489,24 +489,42 @@ module.exports = {
              * Execute a callback.
              *
              * @param {function} callback The callback.
-             * @param {mixed} paramN The N-th argument to pass to the callback.
+             * @param {mixed} argN The N-th argument to pass to the callback.
              * @return {mixed} The return of the callback.
              */
             execute: {
-                arguments: [
-                    'function/callback',
-                    'arg0/mixed',
-                    'arg1/mixed',
-                    'arg2/mixed',
-                    'arg3/mixed',
-                    'arg4/mixed',
-                    'arg5/mixed',
-                    'arg6/mixed',
-                    'arg7/mixed',
-                    'arg8/mixed',
-                    'arg9/mixed'
-                ]
+                arguments: ['function/callback', 'mixed.../argN']
             }
+        }
+    },
+    flow: {
+        methods: {
+            /**
+             * Wait for a task to execute.
+             *
+             * @return {number} The id of the task.
+             */
+            wait: {
+                arguments: [],
+                returns: 'number'
+            },
+            /**
+             * End a task.
+             *
+             * @param {number} task The id of the task.
+             * @param {mixed} returnedValue The value returned by the task.
+             */
+            end: {
+                arguments: ['number/task', 'mixed/returnedValue']
+            }
+        },
+        getters: {
+            /**
+             * The stream.
+             *
+             * @return {object} The stream.
+             */
+            stream: 'object'
         }
     },
     flowDriver: {

@@ -6,6 +6,7 @@ module.exports = ({
     absolutise: true,
     cjsTranslate: true,
     paths: {
+        'async': 'async/lib/async',
         'jquery': 'jquery/dist/jquery'
     },
     map: {

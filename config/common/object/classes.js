@@ -1,6 +1,7 @@
 'use strict';
 
 module.exports = {
+    class: require('../../../lib/common/object/class'),
     classesHandler: require('../../../lib/common/object/classes-handler'),
     classesRegistry: require('../../../lib/common/object/classes-registry'),
     interfacesRegistry: require('../../../lib/common/object/interfaces-registry'),

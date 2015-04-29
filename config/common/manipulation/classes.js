@@ -9,6 +9,7 @@ module.exports = {
     registry: require('../../../lib/common/manipulation/registry'),
     notifierRegistry: require('../../../lib/common/manipulation/notifier-registry'),
     callbackExecutor: require('../../../lib/common/manipulation/callback-executor'),
+    flow: require('../../../lib/common/manipulation/flow'),
     flowDriver: require('../../../lib/common/manipulation/flow-driver'),
     dataInterpreter: {
         abstract: require('../../../lib/common/manipulation/data-interpreter/abstract'),

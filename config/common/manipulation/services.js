@@ -63,5 +63,12 @@ module.exports = {
         properties: {
             async: '#danf:vendor.async#'
         }
+    },
+    flowProvider: {
+        parent: 'danf:dependencyInjection.objectProvider',
+        properties: {
+            class: 'danf:manipulation.flow',
+            interface: 'danf:manipulation.flow'
+        }
     }
 };
