@@ -37,7 +37,7 @@ A.prototype.g = function() {
                             return stream + i;
                         });
                     },
-                    20
+                    40 - (i * 10)
                 );
             });
         })(i);
@@ -59,14 +59,24 @@ B.prototype.v = function(keys) {
 B.prototype.w = function() {
     this._a.g.__asyncCall(this._a, 'bar');
 }
+B.prototype.x = function(key) {
+    this._a.f.__asyncCall(this._a, key, 1, 2);
+}
+
+function C(b) {
+    this._b = b;
+}
+utils.extend(Class, C);
+C.prototype.m = function(keys) {
+    this._b.u.__asyncCall(this._b, 'main', keys);
+    this._b.v.__asyncCall(this._b, 'app', keys);
+}
 
 describe('Inheriting from Class should allow', function() {
     it('to process asynchrone tasks', function(done) {
-        var flow = new Flow({}, null, function(err, result) {
-                assert.deepEqual(
-                    result,
-                    {foo: 5}
-                );
+        var expected = {foo: 5},
+            flow = new Flow({}, null, function(err, result) {
+                assert.deepEqual(result, expected);
                 done();
             }),
             a = new A(),
@@ -125,5 +135,113 @@ describe('Inheriting from Class should allow', function() {
         a.__asyncFlow = flow;
 
         b.w();
+    })
+
+    it('to process asynchrone tasks', function(done) {
+        var expected = {
+                foo: {
+                    main: {
+                        foo: 5
+                    },
+                    app: {
+                        foo: 0,
+                        bar: 1,
+                        foobar: 2
+                    }
+                }
+            },
+            flow = new Flow({}, 'foo', function(err, result) {
+                assert.deepEqual(result, expected);
+                done();
+            }),
+            a = new A(),
+            b = new B(a),
+            c = new C(b)
+        ;
+
+        a.__asyncFlow = flow;
+
+        c.m(Object.keys(expected.foo.app));
+    })
+
+    it('to process asynchrone tasks', function(done) {
+        var expected = {
+                foo: {
+                    main: {
+                        foo: 5
+                    },
+                    app: {
+                        foo: 0,
+                        bar: 1,
+                        foobar: 2
+                    },
+                    bar: 2
+                }
+            },
+            flow = new Flow({foo: {bar: 2}}, 'foo', function(err, result) {
+                assert.deepEqual(result, expected);
+                done();
+            }),
+            a = new A(),
+            b = new B(a),
+            c = new C(b)
+        ;
+
+        a.__asyncFlow = flow;
+
+        c.m(Object.keys(expected.foo.app));
+    })
+
+    it('to process asynchrone tasks', function(done) {
+        var expected = {foo: {bar: 3}},
+            flow = new Flow({}, null, function(err, result) {
+                assert.deepEqual(result, expected);
+                done();
+            }),
+            a = new A(),
+            b = new B(a)
+        ;
+
+        a.__asyncFlow = flow;
+
+        b.x('foo.bar');
+    })
+
+    it('to process asynchrone tasks', function(done) {
+        var expected = {'foo.bar': 3},
+            flow = new Flow({}, null, function(err, result) {
+                assert.deepEqual(result, expected);
+                done();
+            }),
+            a = new A(),
+            b = new B(a)
+        ;
+
+        a.__asyncFlow = flow;
+
+        b.x('`foo.bar`');
+    })
+
+    it('to process asynchrone tasks', function(done) {
+        var expected = {
+                foo: {
+                    'foo.bar': {
+                        main: {
+                            'bar.foo': 3
+                        }
+                    }
+                }
+            },
+            flow = new Flow({}, 'foo', function(err, result) {
+                assert.deepEqual(result, expected);
+                done();
+            }),
+            a = new A(),
+            b = new B(a)
+        ;
+
+        a.__asyncFlow = flow;
+
+        b.x('`foo.bar`.main.`bar.foo`');
     })
 })

@@ -516,6 +516,32 @@ module.exports = {
              */
             end: {
                 arguments: ['number/task', 'mixed/returnedValue']
+            },
+            /**
+             * Add a tributary and set the context as this tributary.
+             *
+             * @param {string} scope The scope.
+             * @return {number} The id of the tributary.
+             */
+            addTributary: {
+                arguments: ['string/scope']
+            },
+            /**
+             * Set an already added tributary as context.
+             *
+             * @param {number} tributary The id of the tributary.
+             */
+            setTributary: {
+                arguments: ['number/tributary']
+            },
+            /**
+             * Merge tributary and set the context as its parent if the current
+             * one was the merged tributary.
+             *
+             * @param {number} tributary The id of the tributary.
+             */
+            mergeTributary: {
+                arguments: ['number/tributary']
             }
         },
         getters: {
