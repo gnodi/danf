@@ -24,7 +24,7 @@ var assert = require('assert'),
 var referenceResolver = new ReferenceResolver(),
     interfacesRegistry = new InterfacesRegistry(),
     interfacer = new Interfacer(interfacesRegistry),
-    servicesContainer = new ServicesContainer(referenceResolver, interfacesRegistry)
+    servicesContainer = new ServicesContainer()
 ;
 
 var parameterType = new ReferenceType();
@@ -249,7 +249,7 @@ var config = {
         }
     },
     timeOut: 2000
-}
+};
 
 var expectedBigImagesProvider = {
     id: 'bigImages',
@@ -277,8 +277,8 @@ var expectedBigImagesProvider = {
     adapter: {name: 'adapter image'}
 };
 
-describe('Container', function() {
-    it('method "processConfiguration" should set the definitions of the configured services', function() {
+describe('ServicesContainer', function() {
+    it('method "handleRegistryChange" should set the definitions of the configured services', function() {
         servicesContainer.config = config;
         servicesContainer.handleRegistryChange(config.services);
 
