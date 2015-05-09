@@ -11,6 +11,7 @@ var assert = require('assert'),
     ParentsSequenceInterpreter = require('../../../lib/common/event/sequence-interpreter/parents'),
     ReferenceResolver = require('../../../lib/common/manipulation/reference-resolver'),
     ReferenceType = require('../../../lib/common/manipulation/reference-type'),
+    Flow = require('../../../lib/common/manipulation/flow'),
     FlowDriver = require('../../../lib/common/manipulation/flow-driver'),
     ServicesContainer = require('../../../lib/common/dependency-injection/services-container'),
     utils = require('../../../lib/common/utils'),
@@ -48,40 +49,37 @@ referenceResolver.addReferenceType(sequenceTagType);
 
 sequencesContainer.addSequenceInterpreter(new AliasSequenceInterpreter(sequencesContainer, referenceResolver));
 sequencesContainer.addSequenceInterpreter(new ChildrenSequenceInterpreter(sequencesContainer, referenceResolver));
-sequencesContainer.addSequenceInterpreter(new OperationsSequenceInterpreter(sequencesContainer, referenceResolver));
+sequencesContainer.addSequenceInterpreter(new OperationsSequenceInterpreter(sequencesContainer, referenceResolver, servicesContainer));
 sequencesContainer.addSequenceInterpreter(new InputSequenceInterpreter(sequencesContainer, referenceResolver));
 sequencesContainer.addSequenceInterpreter(new ParentsSequenceInterpreter(sequencesContainer, referenceResolver));
 
-var Provider = function() { this.name = 'provider'; };
-Provider.prototype.provide = function() {
-    return this.name;
+var Computer = function() { this.name = 'provider'; };
+Computer.prototype.add = function(a, b) {console.log('ploppp');
+    return a + b;
 };
-Provider.prototype.reset = function() {
-    this.name = '';
+Computer.prototype.substract = function(a, b) {
+    return a - b;
 };
-servicesContainer.set('provider', Provider);
-
-var Manager = function() { this.name = 'manager'; };
-Manager.defineDependency('providers', 'provider_object');
-Object.defineProperty(Manager.prototype, 'providers', {
-    get: function() {
-        return this._providers;
-    },
-    set: function(providers) {
-        this._providers = {};
-
-        for (var i = 0; i < providers.length; i++) {
-            var provider = providers[i];
-
-            this._providers[provider.id] = provider;
-        }
-    }
-});
-servicesContainer.set('manager', Manager);
+Computer.prototype.multiply = function(a, b) {
+    return a * b;
+};
+Computer.prototype.divide = function(a, b) {
+    return a / b;
+};
+servicesContainer.set('computer', new Computer());
 
 var config = {
     sequences: {
         a: {
+            operations: [
+                {
+                    order: 0,
+                    service: 'computer',
+                    method: 'add',
+                    arguments: [2, 3],
+                    scope: 'result'
+                }
+            ]
         },
         b: {
         }
@@ -97,16 +95,26 @@ describe('SequencesContainer', function() {
         assert(sequencesContainer.hasDefinition('b'));
     })
 
-    /*describe('method "get"', function() {
-        var provider;
+    describe('method "get"', function() {
+        it('should allow to retrieve a built sequence', function(done) {
+            var sequence = sequencesContainer.get('a'),
+                end = function(err, results) {
+                    assert.deepEqual(
+                        flow.stream,
+                        {
+                            result: 5
+                        }
+                    );
 
-        it('should instanciate the definition of the sequences', function() {
-            provider = sequencesContainer.get('provider.bigImages');
+                    done();
+                },
+                flow = new Flow({}, null, end)
+            ;
 
-            assert(provider instanceof Provider);
+            sequence(flow, end);
         })
 
-        it('should resolve and inject the dependencies of the sequences', function() {
+        /*it('should resolve and inject the dependencies of the sequences', function() {
             assert.deepEqual(expectedBigImagesProvider, utils.clean(provider));
         })
 
@@ -220,10 +228,10 @@ describe('SequencesContainer', function() {
                 },
                 /The circular dependency \["a" -> "b" -> "c" -> "a"\] prevent to build the sequence "a"\./
             );
-        })
+        })*/
     })
 
-    describe('method "set"', function() {
+    /*describe('method "set"', function() {
         it('should replace an already instanciated sequence', function() {
             sequencesContainer.config = config;
             sequencesContainer.handleRegistryChange(config.sequences);
