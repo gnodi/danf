@@ -14,6 +14,7 @@ var assert = require('assert'),
     Flow = require('../../../lib/common/manipulation/flow'),
     FlowDriver = require('../../../lib/common/manipulation/flow-driver'),
     ServicesContainer = require('../../../lib/common/dependency-injection/services-container'),
+    Class = require('../../../lib/common/object/class'),
     utils = require('../../../lib/common/utils'),
     async = require('async')
 ;
@@ -53,8 +54,9 @@ sequencesContainer.addSequenceInterpreter(new OperationsSequenceInterpreter(sequ
 sequencesContainer.addSequenceInterpreter(new InputSequenceInterpreter(sequencesContainer, referenceResolver));
 sequencesContainer.addSequenceInterpreter(new ParentsSequenceInterpreter(sequencesContainer, referenceResolver));
 
-var Computer = function() { this.name = 'provider'; };
-Computer.prototype.add = function(a, b) {console.log('ploppp');
+var Computer = function() {};
+utils.extend(Class, Computer);
+Computer.prototype.add = function(a, b) {
     return a + b;
 };
 Computer.prototype.substract = function(a, b) {
@@ -67,6 +69,51 @@ Computer.prototype.divide = function(a, b) {
     return a / b;
 };
 servicesContainer.set('computer', new Computer());
+
+var AsyncComputer = function() {};
+utils.extend(Class, AsyncComputer);
+AsyncComputer.prototype.add = function(a, b, delay) {
+    this.__asyncProcess(function(returnAsync) {
+        setTimeout(
+            function() {console.log(a, b, a + b);
+                returnAsync(a + b);
+            },
+            delay
+        );
+    });
+};
+AsyncComputer.prototype.substract = function(a, b, delay) {
+    this.__asyncProcess(function(returnAsync) {
+        setTimeout(
+            function() {
+                returnAsync(a - b);
+            },
+            delay
+        );
+    });
+};
+AsyncComputer.prototype.multiply = function(a, b, delay) {
+    this.__asyncProcess(function(returnAsync) {
+        setTimeout(
+            function() {
+                console.log(a, b, a * b);
+                returnAsync(a * b);
+            },
+            delay
+        );
+    });
+};
+AsyncComputer.prototype.divide = function(a, b, delay) {
+    this.__asyncProcess(function(returnAsync) {
+        setTimeout(
+            function() {
+                returnAsync(a / b);
+            },
+            delay
+        );
+    });
+};
+servicesContainer.set('asyncComputer', new AsyncComputer());
 
 var config = {
     sequences: {
@@ -82,6 +129,40 @@ var config = {
             ]
         },
         b: {
+            operations: [
+                {
+                    order: 0,
+                    service: 'asyncComputer',
+                    method: 'add',
+                    arguments: [2, 3, 40],
+                    scope: 'result'
+                },
+                {
+                    order: 0,
+                    service: 'asyncComputer',
+                    method: 'multiply',
+                    arguments: [2, 3, 10],
+                    scope: 'result'
+                }
+            ]
+        },
+        c: {
+            operations: [
+                {
+                    order: 0,
+                    service: 'asyncComputer',
+                    method: 'add',
+                    arguments: ['@result@', 3, 40],
+                    scope: 'result'
+                },
+                {
+                    order: 0,
+                    service: 'asyncComputer',
+                    method: 'multiply',
+                    arguments: ['@result@', 3, 10],
+                    scope: 'result'
+                }
+            ]
         }
     }
 };
@@ -109,6 +190,24 @@ describe('SequencesContainer', function() {
                     done();
                 },
                 flow = new Flow({}, null, end)
+            ;
+
+            sequence(flow, end);
+        })
+
+        it('should allow to retrieve a built sequence', function(done) {
+            var sequence = sequencesContainer.get('b'),
+                end = function(err, results) {
+                    assert.deepEqual(
+                        flow.stream,
+                        {
+                            result: 6
+                        }
+                    );
+
+                    done();
+                },
+                flow = new Flow({result: 1}, null, end)
             ;
 
             sequence(flow, end);

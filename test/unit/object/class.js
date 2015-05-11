@@ -43,6 +43,9 @@ A.prototype.g = function() {
         })(i);
     }
 }
+A.prototype.h = function(i, j) {
+    return i + j;
+}
 
 function B(a) {
     this._a = a;
@@ -61,6 +64,9 @@ B.prototype.w = function() {
 }
 B.prototype.x = function(key) {
     this._a.f.__asyncCall(this._a, key, 1, 2);
+}
+B.prototype.y = function() {
+    this._a.h.__asyncCall(this._a, null, 3, 2);
 }
 
 function C(b) {
@@ -244,4 +250,20 @@ describe('Inheriting from Class should allow', function() {
 
         b.x('`foo.bar`.main.`bar.foo`');
     })
+
+    it('to process asynchrone tasks', function(done) {
+        var expected = 5,
+            flow = new Flow({}, null, function(err, result) {
+                assert.deepEqual(result, expected);
+                done();
+            }),
+            a = new A(),
+            b = new B(a)
+        ;
+
+        a.__asyncFlow = flow;
+
+        b.y();
+    })
+
 })
