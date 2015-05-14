@@ -75,7 +75,7 @@ utils.extend(Class, AsyncComputer);
 AsyncComputer.prototype.add = function(a, b, delay) {
     this.__asyncProcess(function(returnAsync) {
         setTimeout(
-            function() {console.log(a, b, a + b);
+            function() {
                 returnAsync(a + b);
             },
             delay
@@ -96,7 +96,6 @@ AsyncComputer.prototype.multiply = function(a, b, delay) {
     this.__asyncProcess(function(returnAsync) {
         setTimeout(
             function() {
-                console.log(a, b, a * b);
                 returnAsync(a * b);
             },
             delay
@@ -134,14 +133,14 @@ var config = {
                     order: 0,
                     service: 'asyncComputer',
                     method: 'add',
-                    arguments: [2, 3, 40],
+                    arguments: ['@result@', 3, 40],
                     scope: 'result'
                 },
                 {
                     order: 0,
                     service: 'asyncComputer',
                     method: 'multiply',
-                    arguments: [2, 3, 10],
+                    arguments: ['@result@', 3, 10],
                     scope: 'result'
                 }
             ]
@@ -156,7 +155,7 @@ var config = {
                     scope: 'result'
                 },
                 {
-                    order: 0,
+                    order: 1,
                     service: 'asyncComputer',
                     method: 'multiply',
                     arguments: ['@result@', 3, 10],
@@ -179,7 +178,7 @@ describe('SequencesContainer', function() {
     describe('method "get"', function() {
         it('should allow to retrieve a built sequence', function(done) {
             var sequence = sequencesContainer.get('a'),
-                end = function(err, results) {
+                end = function() {
                     assert.deepEqual(
                         flow.stream,
                         {
@@ -188,20 +187,22 @@ describe('SequencesContainer', function() {
                     );
 
                     done();
+
                 },
                 flow = new Flow({}, null, end)
             ;
 
-            sequence(flow, end);
+            sequence(flow);
         })
+
 
         it('should allow to retrieve a built sequence', function(done) {
             var sequence = sequencesContainer.get('b'),
-                end = function(err, results) {
+                end = function() {
                     assert.deepEqual(
                         flow.stream,
                         {
-                            result: 6
+                            result: 4
                         }
                     );
 
@@ -210,7 +211,25 @@ describe('SequencesContainer', function() {
                 flow = new Flow({result: 1}, null, end)
             ;
 
-            sequence(flow, end);
+            sequence(flow);
+        })
+
+        it('should allow to retrieve a built sequence', function(done) {
+            var sequence = sequencesContainer.get('c'),
+                end = function() {
+                    assert.deepEqual(
+                        flow.stream,
+                        {
+                            result: 12
+                        }
+                    );
+
+                    done();
+                },
+                flow = new Flow({result: 1}, null, end)
+            ;
+
+            sequence(flow);
         })
 
         /*it('should resolve and inject the dependencies of the sequences', function() {
