@@ -162,6 +162,23 @@ var config = {
                     scope: 'result'
                 }
             ]
+        },
+        d: {
+            operations: [
+                {
+                    order: 0,
+                    service: 'computer',
+                    method: 'add',
+                    arguments: [1, 3],
+                    scope: 'result'
+                }
+            ],
+            children: [
+                {
+                    order: 1,
+                    name: 'c'
+                }
+            ]
         }
     }
 };
@@ -221,6 +238,24 @@ describe('SequencesContainer', function() {
                         flow.stream,
                         {
                             result: 12
+                        }
+                    );
+
+                    done();
+                },
+                flow = new Flow({result: 1}, null, end)
+            ;
+
+            sequence(flow);
+        })
+
+        it('should allow to retrieve a built sequence', function(done) {
+            var sequence = sequencesContainer.get('d'),
+                end = function() {
+                    assert.deepEqual(
+                        flow.stream,
+                        {
+                            result: 21
                         }
                     );
 
