@@ -176,7 +176,13 @@ var config = {
             children: [
                 {
                     order: 1,
-                    name: 'c'
+                    name: 'c',
+                    input: {
+                        result: '@result@'
+                    },
+                    output: {
+                        result: '@result@'
+                    }
                 }
             ]
         }
@@ -261,7 +267,7 @@ describe('SequencesContainer', function() {
 
                     done();
                 },
-                flow = new Flow({result: 1}, null, end)
+                flow = new Flow({}, null, end)
             ;
 
             sequence(flow);
