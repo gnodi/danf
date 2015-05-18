@@ -161,6 +161,18 @@ var config = {
                     arguments: ['@result@', 3, 10],
                     scope: 'result'
                 }
+            ],
+            parents: [
+                {
+                    order: 1,
+                    name: 'e',
+                    input: {
+                        result: '@result@'
+                    },
+                    output: {
+                        result: '@result@'
+                    }
+                }
             ]
         },
         d: {
@@ -183,6 +195,37 @@ var config = {
                     output: {
                         result: '@result@'
                     }
+                }
+            ],
+            parents: [
+                {
+                    order: -1,
+                    name: 'f',
+                    output: {
+                        result: '@result@'
+                    }
+                }
+            ]
+        },
+        e: {
+            operations: [
+                {
+                    order: 0,
+                    service: 'computer',
+                    method: 'add',
+                    arguments: [1, 2],
+                    scope: 'result'
+                }
+            ]
+        },
+        f: {
+            operations: [
+                {
+                    order: 0,
+                    service: 'computer',
+                    method: 'add',
+                    arguments: ['@result@', 2],
+                    scope: 'result'
                 }
             ]
         }
@@ -262,6 +305,42 @@ describe('SequencesContainer', function() {
                         flow.stream,
                         {
                             result: 21
+                        }
+                    );
+
+                    done();
+                },
+                flow = new Flow({}, null, end)
+            ;
+
+            sequence(flow);
+        })
+
+        it('should allow to retrieve a built sequence', function(done) {
+            var sequence = sequencesContainer.get('e'),
+                end = function() {
+                    assert.deepEqual(
+                        flow.stream,
+                        {
+                            result: 18
+                        }
+                    );
+
+                    done();
+                },
+                flow = new Flow({}, null, end)
+            ;
+
+            sequence(flow);
+        })
+
+        it('should allow to retrieve a built sequence', function(done) {
+            var sequence = sequencesContainer.get('f'),
+                end = function() {
+                    assert.deepEqual(
+                        flow.stream,
+                        {
+                            result: 23
                         }
                     );
 
