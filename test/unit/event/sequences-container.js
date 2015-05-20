@@ -213,7 +213,7 @@ var config = {
                     order: 0,
                     service: 'computer',
                     method: 'add',
-                    arguments: [1, 2],
+                    arguments: ['@result@', 2],
                     scope: 'result'
                 }
             ]
@@ -228,9 +228,87 @@ var config = {
                     scope: 'result'
                 }
             ]
+        },
+        g: {
+            operations: [
+                {
+                    order: 0,
+                    service: 'computer',
+                    method: 'add',
+                    arguments: ['@x@', 2],
+                    scope: 'x'
+                },
+                {
+                    order: 2,
+                    service: 'computer',
+                    method: 'substract',
+                    arguments: ['@x@', '@y@'],
+                    scope: 'result'
+                }
+            ],
+            children: [
+                {
+                    order: 1,
+                    name: 'c',
+                    input: {
+                        result: '@x@'
+                    },
+                    output: {
+                        x: '@result@'
+                    }
+                },
+                {
+                    order: -1,
+                    name: 'e',
+                    input: {
+                        result: '@y@'
+                    },
+                    output: {
+                        y: '@result@'
+                    }
+                }
+            ]
         }
     }
 };
+
+var sequenceTests = [
+    {
+        name: 'a',
+        input: {},
+        expected: {result: 5}
+    },
+    {
+        name: 'b',
+        input: {result: 1},
+        expected: {result: 4}
+    },
+    {
+        name: 'c',
+        input: {result: 1},
+        expected: {result: 12}
+    },
+    {
+        name: 'd',
+        input: {},
+        expected: {result: 21}
+    },
+    {
+        name: 'e',
+        input: {result: 1},
+        expected: {result: 18}
+    },
+    {
+        name: 'f',
+        input: {},
+        expected: {result: 23}
+    },
+    {
+        name: 'g',
+        input: {x: 1, y: 3},
+        expected: {x: 18, y: 24, result: -6}
+    }
+];
 
 describe('SequencesContainer', function() {
     it('method "handleRegistryChange" should set the definitions of the configured sequences', function() {
@@ -242,202 +320,25 @@ describe('SequencesContainer', function() {
     })
 
     describe('method "get"', function() {
-        it('should allow to retrieve a built sequence', function(done) {
-            var sequence = sequencesContainer.get('a'),
-                end = function() {
-                    assert.deepEqual(
-                        flow.stream,
-                        {
-                            result: 5
-                        }
-                    );
+        sequenceTests.forEach(function(test) {
+            it('should allow to retrieve a built sequence', function(done) {
+                var sequence = sequencesContainer.get(test.name),
+                    end = function() {
+                        assert.deepEqual(
+                            flow.stream,
+                            test.expected
+                        );
 
-                    done();
+                        done();
+                    },
+                    flow = new Flow(test.input, null, end)
+                ;
 
-                },
-                flow = new Flow({}, null, end)
-            ;
-
-            sequence(flow);
+                sequence(flow);
+            })
         })
 
-
-        it('should allow to retrieve a built sequence', function(done) {
-            var sequence = sequencesContainer.get('b'),
-                end = function() {
-                    assert.deepEqual(
-                        flow.stream,
-                        {
-                            result: 4
-                        }
-                    );
-
-                    done();
-                },
-                flow = new Flow({result: 1}, null, end)
-            ;
-
-            sequence(flow);
-        })
-
-        it('should allow to retrieve a built sequence', function(done) {
-            var sequence = sequencesContainer.get('c'),
-                end = function() {
-                    assert.deepEqual(
-                        flow.stream,
-                        {
-                            result: 12
-                        }
-                    );
-
-                    done();
-                },
-                flow = new Flow({result: 1}, null, end)
-            ;
-
-            sequence(flow);
-        })
-
-        it('should allow to retrieve a built sequence', function(done) {
-            var sequence = sequencesContainer.get('d'),
-                end = function() {
-                    assert.deepEqual(
-                        flow.stream,
-                        {
-                            result: 21
-                        }
-                    );
-
-                    done();
-                },
-                flow = new Flow({}, null, end)
-            ;
-
-            sequence(flow);
-        })
-
-        it('should allow to retrieve a built sequence', function(done) {
-            var sequence = sequencesContainer.get('e'),
-                end = function() {
-                    assert.deepEqual(
-                        flow.stream,
-                        {
-                            result: 18
-                        }
-                    );
-
-                    done();
-                },
-                flow = new Flow({}, null, end)
-            ;
-
-            sequence(flow);
-        })
-
-        it('should allow to retrieve a built sequence', function(done) {
-            var sequence = sequencesContainer.get('f'),
-                end = function() {
-                    assert.deepEqual(
-                        flow.stream,
-                        {
-                            result: 23
-                        }
-                    );
-
-                    done();
-                },
-                flow = new Flow({}, null, end)
-            ;
-
-            sequence(flow);
-        })
-
-        /*it('should resolve and inject the dependencies of the sequences', function() {
-            assert.deepEqual(expectedBigImagesProvider, utils.clean(provider));
-        })
-
-        it('should resolve the tags', function() {
-            var manager = sequencesContainer.get('manager');
-
-            assert.notEqual(manager.providers.bigImages, undefined);
-            assert.equal(manager.storages.length, 2);
-        })
-
-        it('should add proxies to the properties of the sequences', function() {
-            var manager = sequencesContainer.get('manager'),
-                provider = manager.providers.bigImages
-            ;
-
-            assert.equal(provider.provide(), 'provider');
-        })
-
-        it('should fail to resolve a non-existent reference', function() {
-            assert.throws(
-                function() {
-                    var badConfig = utils.clone(config);
-
-                    badConfig.sequences.provider.declinations = '$providersTypo$';
-                    sequencesContainer.config = badConfig;
-                    sequencesContainer.handleRegistryChange(badConfig.sequences);
-                },
-                /The reference "\$providersTypo\$" in source "\$providersTypo\$" declared in the definition of the sequence "provider" cannot be resolved./
-            );
-
-            assert.throws(
-                function() {
-                    var badConfig = utils.clone(config);
-
-                    badConfig.sequences.provider.properties.rules = '>rule.@rulesTypo@>provider>@@rules.@rules@@@>';
-                    sequencesContainer.config = badConfig;
-                    sequencesContainer.handleRegistryChange(badConfig.sequences);
-                },
-                /One of the references "@rulesTypo@", "@rules@" in source ">rule.@rulesTypo@>provider>@@rules.@rules@@@>" declared in the definition of the sequence "provider.smallImages" cannot be resolved./
-            );
-        })
-
-        it('should fail to instantiate an abstract sequence', function() {
-            assert.throws(
-                function() {
-                    sequencesContainer.config = {};
-                    sequencesContainer.handleRegistryChange(
-                        {
-                            a: {
-                                class: function() {},
-                                abstract: true
-                            }
-                        }
-                    );
-
-                    sequencesContainer.get('a');
-                },
-                /The sequence of id "a" is an abstract sequence and cannot be instantiated\./
-            );
-        })
-
-        it('should fail to instantiate a sequence defined on an abstract class', function() {
-            assert.throws(
-                function() {
-                    var AbstractClass = function() {};
-
-                    AbstractClass.defineAsAbstract();
-                    AbstractClass.__metadata.id = 'A';
-
-                    sequencesContainer.config = {};
-                    sequencesContainer.handleRegistryChange(
-                        {
-                            a: {
-                                class: AbstractClass
-                            }
-                        }
-                    );
-
-                    sequencesContainer.get('a');
-                },
-                /The sequence "a" could not be instantiated because its class "A" is an abstract class\./
-            );
-        })
-
-        it('should fail to instantiate a sequence with a circular dependency', function() {
+        /*it('should fail to instantiate a sequence with a circular dependency', function() {
             assert.throws(
                 function() {
                     sequencesContainer.config = {};
