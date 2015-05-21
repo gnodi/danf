@@ -22,7 +22,8 @@ var assert = require('assert'),
 var referenceResolver = new ReferenceResolver(),
     servicesContainer = new ServicesContainer(),
     flowDriver = new FlowDriver(async),
-    sequencesContainer = new SequencesContainer(flowDriver)
+    sequencesContainer = new SequencesContainer(flowDriver),
+    dataResolver = require('../../fixture/manipulation/data-resolver')
 ;
 
 var contextType = new ReferenceType();
@@ -51,7 +52,7 @@ referenceResolver.addReferenceType(sequenceTagType);
 sequencesContainer.addSequenceInterpreter(new AliasSequenceInterpreter(sequencesContainer, referenceResolver));
 sequencesContainer.addSequenceInterpreter(new ChildrenSequenceInterpreter(sequencesContainer, referenceResolver));
 sequencesContainer.addSequenceInterpreter(new OperationsSequenceInterpreter(sequencesContainer, referenceResolver, servicesContainer));
-sequencesContainer.addSequenceInterpreter(new InputSequenceInterpreter(sequencesContainer, referenceResolver));
+sequencesContainer.addSequenceInterpreter(new InputSequenceInterpreter(sequencesContainer, referenceResolver, dataResolver));
 sequencesContainer.addSequenceInterpreter(new ParentsSequenceInterpreter(sequencesContainer, referenceResolver));
 
 var Computer = function() {};
@@ -268,7 +269,28 @@ var config = {
                     }
                 }
             ]
-        }
+        },
+        h: {
+            input: {
+                x: {
+                    type: 'number',
+                    default: 2
+                },
+                y: {
+                    type: 'number',
+                    required: true
+                }
+            },
+            operations: [
+                {
+                    order: 0,
+                    service: 'computer',
+                    method: 'add',
+                    arguments: ['@x@', '@y@'],
+                    scope: 'result'
+                }
+            ]
+        },
     }
 };
 
@@ -307,6 +329,11 @@ var sequenceTests = [
         name: 'g',
         input: {x: 1, y: 3},
         expected: {x: 18, y: 24, result: -6}
+    },
+    {
+        name: 'h',
+        input: {y: 5},
+        expected: {x: 2, y: 5, result: 7}
     }
 ];
 
