@@ -337,13 +337,35 @@ var sequenceTests = [
     }
 ];
 
-describe('SequencesContainer', function() {
-    it('method "handleRegistryChange" should set the definitions of the configured sequences', function() {
-        sequencesContainer.config = config;
-        sequencesContainer.handleRegistryChange(config.sequences);
+var rebuildSequenceTests = [
+    {
+        name: 'c',
+        input: {result: 1},
+        expected: {result: 15}
+    },
+    {
+        name: 'd',
+        input: {},
+        expected: {result: 24}
+    },
+    {
+        name: 'f',
+        input: {result: 1},
+        expected: {result: 26}
+    }
+];
 
+describe('SequencesContainer', function() {
+    sequencesContainer.config = config;
+    sequencesContainer.handleRegistryChange(config.sequences);
+
+    it('method "handleRegistryChange" should set the definitions of the configured sequences and build them', function() {
         assert(sequencesContainer.hasDefinition('a'));
         assert(sequencesContainer.hasDefinition('b'));
+        assert(sequencesContainer.hasInterpretation('a'));
+        assert(sequencesContainer.hasInterpretation('b'));
+        assert(sequencesContainer.has('a'));
+        assert(sequencesContainer.has('b'));
     })
 
     describe('method "get"', function() {
@@ -365,56 +387,96 @@ describe('SequencesContainer', function() {
             })
         })
 
-        /*it('should fail to instantiate a sequence with a circular dependency', function() {
+        it('should retrieve a sequence that fails to execute with a bad input', function() {
             assert.throws(
                 function() {
-                    sequencesContainer.config = {};
-                    sequencesContainer.handleRegistryChange(
-                        {
-                            a: {
-                                class: function() {},
-                                properties: {
-                                    b: '#b#'
-                                }
+                    var sequence = sequencesContainer.get('h'),
+                        end = function() {},
+                        flow = new Flow({x: 0}, null, end)
+                    ;
+
+                    sequence(flow);
+                },
+                /The value is required for the field "sequence\[h\].y"\./
+            );
+        })
+    })
+
+    describe('method "setDefinition"', function() {
+        rebuildSequenceTests.forEach(function(test) {
+            it('should allow to replace an already instanciated sequence and rebuild all sequences', function(done) {
+                sequencesContainer.setDefinition(
+                    'c',
+                    {
+                        operations: [
+                            {
+                                order: 0,
+                                service: 'asyncComputer',
+                                method: 'add',
+                                arguments: ['@result@', 4, 40],
+                                scope: 'result'
                             },
-                            b: {
-                                class: function() {},
-                                properties: {
-                                    c: '#c#'
-                                }
-                            },
-                            c: {
-                                class: function() {},
-                                properties: {
-                                    a: '#a#'
+                            {
+                                order: 1,
+                                service: 'asyncComputer',
+                                method: 'multiply',
+                                arguments: ['@result@', 3, 10],
+                                scope: 'result'
+                            }
+                        ],
+                        parents: [
+                            {
+                                order: 1,
+                                name: 'e',
+                                input: {
+                                    result: '@result@'
+                                },
+                                output: {
+                                    result: '@result@'
                                 }
                             }
-                        }
-                    );
-                },
-                /The circular dependency \["a" -> "b" -> "c" -> "a"\] prevent to build the sequence "a"\./
-            );
-        })*/
+                        ]
+                    }
+                );
+
+                var sequence = sequencesContainer.get(test.name),
+                    end = function() {
+                        assert.deepEqual(
+                            flow.stream,
+                            test.expected
+                        );
+
+                        done();
+                    },
+                    flow = new Flow(test.input, null, end)
+                ;
+
+                sequence(flow);
+            })
+        })
     })
 
-    /*describe('method "set"', function() {
-        it('should replace an already instanciated sequence', function() {
-            sequencesContainer.config = config;
-            sequencesContainer.handleRegistryChange(config.sequences);
+    describe('method "setAlias"', function() {
+        it('should set an aliased sequence', function(done) {
+            sequencesContainer.setAlias('z', 'a');
 
-            var storage = sequencesContainer.set('storage.local', { name: 'local super storage' }),
-                provider = sequencesContainer.get('provider.bigImages')
+            assert(sequencesContainer.hasDefinition('z'));
+            assert(sequencesContainer.hasInterpretation('z'));
+            assert(sequencesContainer.has('z'));
+
+            var sequence = sequencesContainer.get('z'),
+                end = function() {
+                    assert.deepEqual(
+                        flow.stream,
+                        {result: 5}
+                    );
+
+                    done();
+                },
+                flow = new Flow({}, null, end)
             ;
 
-            assert.equal('local super storage', provider.storages[0].name);
+            sequence(flow);
         })
     })
-
-    describe('method "unset"', function() {
-        it('should unset an instanciated sequence', function() {
-            assert(sequencesContainer.has('storage.local'));
-            sequencesContainer.unset('storage.local');
-            assert(!sequencesContainer.has('storage.local'));
-        })
-    })*/
 })
