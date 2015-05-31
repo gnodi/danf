@@ -51,7 +51,7 @@ referenceResolver.addReferenceType(sequenceTagType);
 
 sequencesContainer.addSequenceInterpreter(new AliasSequenceInterpreter(sequencesContainer, referenceResolver));
 sequencesContainer.addSequenceInterpreter(new ChildrenSequenceInterpreter(sequencesContainer, referenceResolver));
-sequencesContainer.addSequenceInterpreter(new OperationsSequenceInterpreter(sequencesContainer, referenceResolver, servicesContainer));
+sequencesContainer.addSequenceInterpreter(new OperationsSequenceInterpreter(sequencesContainer, referenceResolver, servicesContainer, flowDriver));
 sequencesContainer.addSequenceInterpreter(new InputSequenceInterpreter(sequencesContainer, referenceResolver, dataResolver));
 sequencesContainer.addSequenceInterpreter(new ParentsSequenceInterpreter(sequencesContainer, referenceResolver));
 
@@ -291,6 +291,89 @@ var config = {
                 }
             ]
         },
+        i: {
+            operations: [
+                {
+                    order: 0,
+                    service: 'asyncComputer',
+                    method: 'add',
+                    arguments: ['@result@', '@@.@@'],
+                    collection: {
+                        input: [1, 2, 4],
+                        method: 'forEachOf'
+                    },
+                    scope: 'result'
+                }
+            ]
+        },
+        j: {
+            operations: [
+                {
+                    order: 0,
+                    service: 'asyncComputer',
+                    method: 'add',
+                    arguments: ['@result@', '@@.@@'],
+                    collection: {
+                        input: [1, 2, 4],
+                        method: 'eachSeries'
+                    },
+                    scope: 'result'
+                }
+            ]
+        },
+        k: {
+            operations: [
+                {
+                    order: 0,
+                    service: 'asyncComputer',
+                    method: 'add',
+                    arguments: ['@result@', '@@.@@'],
+                    collection: {
+                        input: {a: 1, b: 2, c: 4}
+                    },
+                    scope: 'result'
+                }
+            ]
+        },
+        l: {
+            operations: [
+                {
+                    order: 0,
+                    service: 'asyncComputer',
+                    method: 'add',
+                    arguments: ['@result@', '@@.@@'],
+                    collection: {
+                        input: [1, 2, 4],
+                        method: 'eachSeries',
+                        aggregate: true
+                    },
+                    scope: 'result'
+                }
+            ]
+        },
+        m: {
+            operations: [
+                {
+                    order: 0,
+                    service: 'asyncComputer',
+                    method: 'add',
+                    arguments: ['@result@', '@@.@@'],
+                    collection: {
+                        input: [1, 2, 4],
+                        aggregate: function(results) {
+                            var result = 0;
+
+                            for (var i = 0; i < results.length; i++) {
+                                result *= results[i];
+                            }
+
+                            return result;
+                        }
+                    },
+                    scope: 'result'
+                }
+            ]
+        }
     }
 };
 
@@ -334,6 +417,31 @@ var sequenceTests = [
         name: 'h',
         input: {y: 5},
         expected: {x: 2, y: 5, result: 7}
+    },
+    {
+        name: 'i',
+        input: {result: 1},
+        expected: {result: [2, 3, 4]}
+    },
+    {
+        name: 'j',
+        input: {result: 1},
+        expected: {result: [2, 4, 8]}
+    },
+    {
+        name: 'k',
+        input: {result: 1},
+        expected: {result: {a: 2, b: 3, c: 4}}
+    },
+    {
+        name: 'l',
+        input: {result: 1},
+        expected: {result: 8}
+    },
+    {
+        name: 'm',
+        input: {result: 1},
+        expected: {result: 30}
     }
 ];
 
