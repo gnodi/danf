@@ -577,6 +577,27 @@ module.exports = {
                 arguments: ['mixed_array/arr', 'number/limit', 'function/iterator', 'function/callback']
             },
             /**
+             * Proxy to async collections method each.
+             * (https://github.com/caolan/forEachOf#each)
+             */
+            forEachOf: {
+                arguments: ['mixed_array|mixed_object/arr', 'function/iterator', 'function/callback']
+            },
+            /**
+             * Proxy to async collections method eachSeries.
+             * (https://github.com/caolan/async#forEachOfSeries)
+             */
+            forEachOfSeries: {
+                arguments: ['mixed_array|mixed_object/arr', 'function/iterator', 'function/callback']
+            },
+            /**
+             * Proxy to async collections method forEachOfLimit.
+             * (https://github.com/caolan/async#eachLimit)
+             */
+            forEachOfLimit: {
+                arguments: ['mixed_array|mixed_object/arr', 'number/limit', 'function/iterator', 'function/callback']
+            },
+            /**
              * Proxy to async collections method map.
              * (https://github.com/caolan/async#map)
              */
