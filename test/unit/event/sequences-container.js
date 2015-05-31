@@ -300,7 +300,8 @@ var config = {
                     arguments: ['@result@', '@@.@@'],
                     collection: {
                         input: [1, 2, 4],
-                        method: 'forEachOf'
+                        method: 'forEachOf',
+                        aggregate: false
                     },
                     scope: 'result'
                 }
@@ -314,28 +315,15 @@ var config = {
                     method: 'add',
                     arguments: ['@result@', '@@.@@'],
                     collection: {
-                        input: [1, 2, 4],
-                        method: 'eachSeries'
+                        input: {a: 1, b: 2, c: 4},
+                        method: 'forEachOf',
+                        aggregate: false
                     },
                     scope: 'result'
                 }
             ]
         },
         k: {
-            operations: [
-                {
-                    order: 0,
-                    service: 'asyncComputer',
-                    method: 'add',
-                    arguments: ['@result@', '@@.@@'],
-                    collection: {
-                        input: {a: 1, b: 2, c: 4}
-                    },
-                    scope: 'result'
-                }
-            ]
-        },
-        l: {
             operations: [
                 {
                     order: 0,
@@ -351,7 +339,7 @@ var config = {
                 }
             ]
         },
-        m: {
+        l: {
             operations: [
                 {
                     order: 0,
@@ -360,9 +348,10 @@ var config = {
                     arguments: ['@result@', '@@.@@'],
                     collection: {
                         input: [1, 2, 4],
+                        method: 'forEachOf',
                         aggregate: function(results) {
-                            var result = 0;
-
+                            var result = 1;
+console.log(results);
                             for (var i = 0; i < results.length; i++) {
                                 result *= results[i];
                             }
@@ -421,25 +410,20 @@ var sequenceTests = [
     {
         name: 'i',
         input: {result: 1},
-        expected: {result: [2, 3, 4]}
+        expected: {result: [2, 3, 5]}
     },
     {
         name: 'j',
         input: {result: 1},
-        expected: {result: [2, 4, 8]}
+        expected: {result: {a: 2, b: 3, c: 5}}
     },
     {
         name: 'k',
         input: {result: 1},
-        expected: {result: {a: 2, b: 3, c: 4}}
-    },
-    {
-        name: 'l',
-        input: {result: 1},
         expected: {result: 8}
     },
     {
-        name: 'm',
+        name: 'l',
         input: {result: 1},
         expected: {result: 30}
     }
@@ -490,7 +474,7 @@ describe('SequencesContainer', function() {
                     },
                     flow = new Flow(test.input, null, end)
                 ;
-
+console.log('((((((((((');
                 sequence(flow);
             })
         })
