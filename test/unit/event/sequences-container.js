@@ -332,7 +332,7 @@ var config = {
                     arguments: ['@result@', '@@.@@'],
                     collection: {
                         input: [1, 2, 4],
-                        method: 'eachSeries',
+                        method: 'forEachOfSeries',
                         aggregate: true
                     },
                     scope: 'result'
@@ -351,7 +351,7 @@ var config = {
                         method: 'forEachOf',
                         aggregate: function(results) {
                             var result = 1;
-console.log(results);
+
                             for (var i = 0; i < results.length; i++) {
                                 result *= results[i];
                             }
@@ -474,7 +474,7 @@ describe('SequencesContainer', function() {
                     },
                     flow = new Flow(test.input, null, end)
                 ;
-console.log('((((((((((');
+
                 sequence(flow);
             })
         })
