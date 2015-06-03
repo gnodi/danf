@@ -362,6 +362,97 @@ var config = {
                     scope: 'result'
                 }
             ]
+        },
+        m: {
+            operations: [
+                {
+                    order: 1,
+                    service: 'asyncComputer',
+                    method: 'multiply',
+                    arguments: ['@result@', 2],
+                    scope: 'result'
+                }
+            ],
+            children: [
+                {
+                    order: 0,
+                    name: 'k',
+                    input: {
+                        result: '@result@'
+                    },
+                    output: {
+                        result: '@result@'
+                    }
+                }
+            ]
+        },
+        n: {
+            operations: [
+                {
+                    order: 0,
+                    service: 'asyncComputer',
+                    method: 'add',
+                    arguments: ['@result@', '@@value@@'],
+                    collection: {
+                        input: {a: {value: 1}, b: {value: 2}, c: {value: 4}},
+                        method: 'forEachOf',
+                        aggregate: false
+                    },
+                    scope: 'result'
+                }
+            ]
+        },
+        o: {
+            operations: [
+                {
+                    order: 0,
+                    service: 'asyncComputer',
+                    method: 'add',
+                    arguments: ['@result@', '@@value@@'],
+                    collection: {
+                        input: {a: {value: 1, foo: 'bar'}, b: {value: 2}, c: {value: 4}},
+                        method: 'forEachOf',
+                        aggregate: false,
+                        scope: 'value'
+                    },
+                    scope: 'result'
+                }
+            ]
+        },
+        p: {
+            operations: [
+                {
+                    order: 0,
+                    service: 'asyncComputer',
+                    method: 'add',
+                    arguments: ['@@a@@', '@@b@@'],
+                    collection: {
+                        input: '@result@',
+                        method: 'forEachOf',
+                        aggregate: false
+                    },
+                    scope: 'result'
+                }
+            ]
+        },
+        q: {
+            children: [
+                {
+                    order: 0,
+                    name: 'b',
+                    input: {
+                        result: '@@.@@'
+                    },
+                    collection: {
+                        input: [1, 2],
+                        method: 'forEachOfSeries',
+                        aggregate: true
+                    },
+                    output: {
+                        result: '@result@'
+                    }
+                }
+            ]
         }
     }
 };
@@ -426,6 +517,26 @@ var sequenceTests = [
         name: 'l',
         input: {result: 1},
         expected: {result: 30}
+    },
+    {
+        name: 'm',
+        input: {result: 1},
+        expected: {result: 16}
+    },
+    {
+        name: 'n',
+        input: {result: 2},
+        expected: {result: {a: 3, b: 4, c: 6}}
+    },
+    {
+        name: 'o',
+        input: {result: 3},
+        expected: {result: {a: {value: 4, foo: 'bar'}, b: {value: 5}, c: {value: 7}}}
+    },
+    {
+        name: 'p',
+        input: {result: [{a: 1, b: 2}, {a: 2, b: 3}]},
+        expected: {result: [3, 5]}
     }
 ];
 
