@@ -436,10 +436,30 @@ var config = {
             ]
         },
         q: {
+            operations: [
+                {
+                    order: 1,
+                    service: 'asyncComputer',
+                    method: 'add',
+                    arguments: ['@result@', 1],
+                    scope: 'result'
+                }
+            ],
             children: [
                 {
                     order: 0,
-                    name: 'b',
+                    name: 'd',
+                    output: {
+                        result: '@result@'
+                    }
+                }
+            ]
+        },
+        r: {
+            children: [
+                {
+                    order: 0,
+                    name: 'd',
                     input: {
                         result: '@@.@@'
                     },
@@ -537,6 +557,11 @@ var sequenceTests = [
         name: 'p',
         input: {result: [{a: 1, b: 2}, {a: 2, b: 3}]},
         expected: {result: [3, 5]}
+    },
+    {
+        name: 'q',
+        input: {},
+        expected: {result: 22}
     }
 ];
 
