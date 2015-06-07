@@ -50,7 +50,7 @@ referenceResolver.addReferenceType(sequenceType);
 referenceResolver.addReferenceType(sequenceTagType);
 
 sequencesContainer.addSequenceInterpreter(new AliasSequenceInterpreter(sequencesContainer, referenceResolver));
-sequencesContainer.addSequenceInterpreter(new ChildrenSequenceInterpreter(sequencesContainer, referenceResolver));
+sequencesContainer.addSequenceInterpreter(new ChildrenSequenceInterpreter(sequencesContainer, referenceResolver, flowDriver));
 sequencesContainer.addSequenceInterpreter(new OperationsSequenceInterpreter(sequencesContainer, referenceResolver, servicesContainer, flowDriver));
 sequencesContainer.addSequenceInterpreter(new InputSequenceInterpreter(sequencesContainer, referenceResolver, dataResolver));
 sequencesContainer.addSequenceInterpreter(new ParentsSequenceInterpreter(sequencesContainer, referenceResolver));
@@ -459,12 +459,32 @@ var config = {
             children: [
                 {
                     order: 0,
-                    name: 'd',
+                    name: 'c',
                     input: {
                         result: '@@.@@'
                     },
                     collection: {
                         input: [1, 2],
+                        method: 'forEachOfSeries',
+                        aggregate: false
+                    },
+                    output: {
+                        result: '@result@'
+                    }
+                }
+            ]
+        },
+        s: {
+            children: [
+                {
+                    order: 0,
+                    name: 'g',
+                    input: {
+                        x: '@result@',
+                        y: '@@.@@'
+                    },
+                    collection: {
+                        input: [3, 1],
                         method: 'forEachOfSeries',
                         aggregate: true
                     },
@@ -562,6 +582,16 @@ var sequenceTests = [
         name: 'q',
         input: {},
         expected: {result: 22}
+    },
+    {
+        name: 'r',
+        input: {},
+        expected: {result: [12, 15]}
+    },
+    {
+        name: 's',
+        input: {result: 1},
+        expected: {result: -21}
     }
 ];
 
