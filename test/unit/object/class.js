@@ -66,6 +66,9 @@ B.prototype.x = function(key) {
     this._a.f.__asyncCall(this._a, key, 1, 2);
 }
 B.prototype.y = function() {
+    this._a.h.__asyncCall(this._a, '.', 3, 2);
+}
+B.prototype.z = function() {
     this._a.h.__asyncCall(this._a, null, 3, 2);
 }
 
@@ -266,4 +269,18 @@ describe('Inheriting from Class should allow', function() {
         b.y();
     })
 
+    it('to process asynchrone tasks', function(done) {
+        var expected = null,
+            flow = new Flow(null, null, function(err, result) {
+                assert.deepEqual(result, expected);
+                done();
+            }),
+            a = new A(),
+            b = new B(a)
+        ;
+
+        a.__asyncFlow = flow;
+
+        b.z();
+    })
 })
