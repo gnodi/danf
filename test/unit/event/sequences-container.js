@@ -53,7 +53,7 @@ sequencesContainer.addSequenceInterpreter(new AliasSequenceInterpreter(sequences
 sequencesContainer.addSequenceInterpreter(new ChildrenSequenceInterpreter(sequencesContainer, referenceResolver, flowDriver));
 sequencesContainer.addSequenceInterpreter(new OperationsSequenceInterpreter(sequencesContainer, referenceResolver, servicesContainer, flowDriver));
 sequencesContainer.addSequenceInterpreter(new InputSequenceInterpreter(sequencesContainer, referenceResolver, dataResolver));
-sequencesContainer.addSequenceInterpreter(new ParentsSequenceInterpreter(sequencesContainer, referenceResolver));
+sequencesContainer.addSequenceInterpreter(new ParentsSequenceInterpreter(sequencesContainer, referenceResolver, flowDriver));
 
 var Computer = function() {};
 utils.extend(Class, Computer);
@@ -492,7 +492,26 @@ var config = {
                         result: '@result@'
                     }
                 }
+            ],
+            parents: [
+                {
+                    order: 0,
+                    name: 't',
+                    input: {
+                        result: '@@result@@'
+                    },
+                    collection: {
+                        input: [{result: 2}, {result: 1}],
+                        method: 'forEachOfSeries',
+                        aggregate: true
+                    },
+                    output: {
+                        result: '@result@'
+                    }
+                }
             ]
+        },
+        t: {
         }
     }
 };
@@ -590,6 +609,11 @@ var sequenceTests = [
     },
     {
         name: 's',
+        input: {result: 1},
+        expected: {result: -21}
+    },
+    {
+        name: 't',
         input: {result: 1},
         expected: {result: -21}
     }
