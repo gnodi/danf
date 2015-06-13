@@ -501,9 +501,17 @@ var config = {
                         result: '@@result@@'
                     },
                     collection: {
-                        input: [{result: 2}, {result: 1}],
+                        input: [{result: 3}, {result: 4}],
                         method: 'forEachOfSeries',
-                        aggregate: true
+                        aggregate: function(stream) {
+                            var result = 0;
+
+                            for (var i = 0; i < stream.length; i++) {
+                                result += stream[i].result;
+                            }
+
+                            return {result: result};
+                        }
                     },
                     output: {
                         result: '@result@'
@@ -614,8 +622,8 @@ var sequenceTests = [
     },
     {
         name: 't',
-        input: {result: 1},
-        expected: {result: -21}
+        input: {result: 2},
+        expected: {result: 3}
     }
 ];
 
