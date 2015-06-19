@@ -22,6 +22,7 @@ var assert = require('assert'),
 var referenceResolver = new ReferenceResolver(),
     servicesContainer = new ServicesContainer(),
     flowDriver = new FlowDriver(async),
+    asynchronousCollectionsRegistry = require('../../fixture/manipulation/asynchronous-collections-registry'),
     sequencesContainer = new SequencesContainer(flowDriver),
     dataResolver = require('../../fixture/manipulation/data-resolver')
 ;
@@ -51,7 +52,7 @@ referenceResolver.addReferenceType(sequenceTagType);
 
 sequencesContainer.addSequenceInterpreter(new AliasSequenceInterpreter(sequencesContainer, referenceResolver));
 sequencesContainer.addSequenceInterpreter(new ChildrenSequenceInterpreter(sequencesContainer, referenceResolver, flowDriver));
-sequencesContainer.addSequenceInterpreter(new OperationsSequenceInterpreter(sequencesContainer, referenceResolver, servicesContainer, flowDriver));
+sequencesContainer.addSequenceInterpreter(new OperationsSequenceInterpreter(sequencesContainer, referenceResolver, servicesContainer, flowDriver, asynchronousCollectionsRegistry));
 sequencesContainer.addSequenceInterpreter(new InputSequenceInterpreter(sequencesContainer, referenceResolver, dataResolver));
 sequencesContainer.addSequenceInterpreter(new ParentsSequenceInterpreter(sequencesContainer, referenceResolver, flowDriver));
 
@@ -291,7 +292,7 @@ var config = {
                 }
             ]
         },
-        i: {
+        i: {
             operations: [
                 {
                     order: 0,
@@ -307,7 +308,7 @@ var config = {
                 }
             ]
         },
-        j: {
+        j: {
             operations: [
                 {
                     order: 0,
@@ -323,7 +324,7 @@ var config = {
                 }
             ]
         },
-        k: {
+        k: {
             operations: [
                 {
                     order: 0,
@@ -339,7 +340,7 @@ var config = {
                 }
             ]
         },
-        l: {
+        l: {
             operations: [
                 {
                     order: 0,
@@ -363,7 +364,7 @@ var config = {
                 }
             ]
         },
-        m: {
+        m: {
             operations: [
                 {
                     order: 1,
@@ -386,7 +387,7 @@ var config = {
                 }
             ]
         },
-        n: {
+        n: {
             operations: [
                 {
                     order: 0,
@@ -402,7 +403,7 @@ var config = {
                 }
             ]
         },
-        o: {
+        o: {
             operations: [
                 {
                     order: 0,
@@ -419,7 +420,7 @@ var config = {
                 }
             ]
         },
-        p: {
+        p: {
             operations: [
                 {
                     order: 0,
@@ -435,7 +436,7 @@ var config = {
                 }
             ]
         },
-        q: {
+        q: {
             operations: [
                 {
                     order: 1,
@@ -455,7 +456,7 @@ var config = {
                 }
             ]
         },
-        r: {
+        r: {
             children: [
                 {
                     order: 0,
@@ -474,7 +475,7 @@ var config = {
                 }
             ]
         },
-        s: {
+        s: {
             children: [
                 {
                     order: 0,
@@ -519,7 +520,134 @@ var config = {
                 }
             ]
         },
-        t: {
+        t: {
+        },
+        each: {
+            operations: [
+                {
+                    order: 0,
+                    service: 'asyncComputer',
+                    method: 'add',
+                    arguments: ['@@.@@', 1],
+                    collection: {
+                        input: '@.@',
+                        method: 'each',
+                        aggregate: false
+                    },
+                    scope: '.'
+                }
+            ]
+        },
+        eachSeries: {
+            operations: [
+                {
+                    order: 0,
+                    service: 'asyncComputer',
+                    method: 'add',
+                    arguments: ['@@.@@', 1],
+                    collection: {
+                        input: '@.@',
+                        method: 'eachSeries'
+                    },
+                    scope: '.'
+                }
+            ]
+        },
+        eachLimit: {
+            operations: [
+                {
+                    order: 0,
+                    service: 'asyncComputer',
+                    method: 'add',
+                    arguments: ['@@.@@', 1],
+                    collection: {
+                        input: '@.@',
+                        method: 'eachLimit',
+                        arguments: [2]
+                    },
+                    scope: '.'
+                }
+            ]
+        },
+        forEachOf: {
+            operations: [
+                {
+                    order: 0,
+                    service: 'asyncComputer',
+                    method: 'add',
+                    arguments: ['@@.@@', 1],
+                    collection: {
+                        input: '@.@',
+                        method: 'forEachOf',
+                        aggregate: false
+                    },
+                    scope: '.'
+                }
+            ]
+        },
+        forEachOfSeries: {
+            operations: [
+                {
+                    order: 0,
+                    service: 'asyncComputer',
+                    method: 'add',
+                    arguments: ['@@.@@', '@result@'],
+                    collection: {
+                        input: '@input@',
+                        method: 'forEachOfSeries',
+                        aggregate: true
+                    },
+                    scope: 'result'
+                }
+            ]
+        },
+        forEachOfLimit: {
+            operations: [
+                {
+                    order: 0,
+                    service: 'asyncComputer',
+                    method: 'add',
+                    arguments: ['@@.@@', 1],
+                    collection: {
+                        input: '@.@',
+                        method: 'forEachOfLimit',
+                        aggregate: false,
+                        arguments: [2]
+                    },
+                    scope: '.'
+                }
+            ]
+        },
+        map: {
+            operations: [
+                {
+                    order: 0,
+                    service: 'asyncComputer',
+                    method: 'add',
+                    arguments: ['@@.@@', 1],
+                    collection: {
+                        input: '@.@',
+                        method: 'map'
+                    },
+                    scope: '.'
+                }
+            ]
+        },
+        mapSeries: {
+            operations: [
+                {
+                    order: 0,
+                    service: 'asyncComputer',
+                    method: 'add',
+                    arguments: ['@@.@@', '@result@'],
+                    collection: {
+                        input: '@input@',
+                        method: 'mapSeries',
+                        aggregate: true
+                    },
+                    scope: 'result'
+                }
+            ]
         }
     }
 };
@@ -627,6 +755,132 @@ var sequenceTests = [
     }
 ];
 
+var sequenceCollectionTests = [
+    {
+        name: 'each',
+        input: [1, 4, 2],
+        expected: [1, 4, 2]
+    },
+    {
+        name: 'eachSeries',
+        input: [2, 5, 3],
+        expected: [2, 5, 3]
+    },
+    {
+        name: 'eachLimit',
+        input: [3, 4, 1],
+        expected: [3, 4, 1]
+    },
+    {
+        name: 'forEachOf',
+        input: [1, 4, 4],
+        expected: [2, 5, 5]
+    },
+    {
+        name: 'forEachOfSeries',
+        input: {
+            input: [3, 5, 7],
+            result: 1
+        },
+        expected: {
+            input: [3, 5, 7],
+            result: 16
+        }
+    },
+    {
+        name: 'forEachOfLimit',
+        input: [6, 2, 2],
+        expected: [7, 3, 3]
+    },
+    {
+        name: 'map',
+        input: [4, 3, 2],
+        expected: [5, 4, 3]
+    },
+    {
+        name: 'mapSeries',
+        input: {
+            input: [4, 4, 2],
+            operand: 2
+        },
+        expected: {
+            input: [4, 4, 2],
+            result: [6, 6, 4],
+            operand: 2
+        }
+    }/*,
+    {
+        name: 'mapLimit',
+        input: [1, 4, 2],
+        expected: {result: [2, 3, 5]}
+    },
+    {
+        name: 'filter',
+        input: [1, 4, 2],
+        expected: {result: {a: 2, b: 3, c: 5}}
+    },
+    {
+        name: 'filterSeries',
+        input: [1, 4, 2],
+        expected: {result: 8}
+    },
+    {
+        name: 'reject',
+        input: [1, 4, 2],
+        expected: {result: 30}
+    },
+    {
+        name: 'rejectSeries',
+        input: [1, 4, 2],
+        expected: {result: 16}
+    },
+    {
+        name: 'reduce',
+        input: [1, 4, 2],
+        expected: {result: {a: 3, b: 4, c: 6}}
+    },
+    {
+        name: 'reduceRight',
+        input: [1, 4, 2],
+        expected: {result: {a: {value: 4, foo: 'bar'}, b: {value: 5}, c: {value: 7}}}
+    },
+    {
+        name: 'detect',
+        input: [1, 4, 2],
+        expected: {result: [3, 5]}
+    },
+    {
+        name: 'detectSeries',
+        input: [1, 4, 2],
+        expected: {result: 22}
+    },
+    {
+        name: 'sortBy',
+        input: [1, 4, 2],
+        expected: {result: [12, 15]}
+    },
+    {
+        name: 'some',
+        input: [1, 4, 2],
+        expected: {result: -21}
+    },
+    {
+        name: 'every',
+        input: [1, 4, 2],
+        expected: {result: 3}
+    },
+    {
+        name: 'concat',
+        input: [1, 4, 2],
+        expected: {result: 3}
+    },
+    {
+        name: 'concatSeries',
+        input: [1, 4, 2],
+        expected: {result: 3}
+    }*/
+];
+
 var rebuildSequenceTests = [
     {
         name: 'c',
@@ -661,6 +915,24 @@ describe('SequencesContainer', function() {
     describe('method "get"', function() {
         sequenceTests.forEach(function(test) {
             it('should allow to retrieve a built sequence', function(done) {
+                var sequence = sequencesContainer.get(test.name),
+                    end = function() {
+                        assert.deepEqual(
+                            flow.stream,
+                            test.expected
+                        );
+
+                        done();
+                    },
+                    flow = new Flow(test.input, null, end)
+                ;
+
+                sequence(flow);
+            })
+        })
+
+        sequenceCollectionTests.forEach(function(test) {
+            it('should allow to retrieve a built sequence with operations on collections', function(done) {
                 var sequence = sequencesContainer.get(test.name),
                     end = function() {
                         assert.deepEqual(

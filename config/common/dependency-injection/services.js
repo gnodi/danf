@@ -59,5 +59,12 @@ module.exports = {
             classesRegistry: '#danf:object.classesRegistry#'
         },
         abstract: true
+    },
+    registry: {
+        class: 'danf:dependencyInjection.registry',
+        properties: {
+            interfacer: '#danf:object.interfacer#'
+        },
+        abstract: true
     }
 };

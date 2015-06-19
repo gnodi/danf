@@ -4,6 +4,7 @@ module.exports = {
     servicesContainer: require('../../../lib/common/dependency-injection/services-container'),
     contextProvider: require('../../../lib/common/dependency-injection/context-provider'),
     objectProvider: require('../../../lib/common/dependency-injection/object-provider'),
+    registry: require('../../../lib/common/dependency-injection/registry'),
     serviceBuilder: {
         abstractServiceBuilder: require('../../../lib/common/dependency-injection/service-builder/abstract-service-builder'),
         abstract: require('../../../lib/common/dependency-injection/service-builder/abstract'),
