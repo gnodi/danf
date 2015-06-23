@@ -114,6 +114,16 @@ AsyncComputer.prototype.divide = function(a, b, delay) {
         );
     });
 };
+AsyncComputer.prototype.isGreaterThan = function(a, b, delay) {
+    this.__asyncProcess(function(returnAsync) {
+        setTimeout(
+            function() {
+                returnAsync(a > b);
+            },
+            delay
+        );
+    });
+};
 servicesContainer.set('asyncComputer', new AsyncComputer());
 
 var config = {
@@ -639,13 +649,44 @@ var config = {
                     order: 0,
                     service: 'asyncComputer',
                     method: 'add',
-                    arguments: ['@@.@@', '@result@'],
+                    arguments: ['@@.@@', '@operand@'],
                     collection: {
                         input: '@input@',
                         method: 'mapSeries',
                         aggregate: true
                     },
                     scope: 'result'
+                }
+            ]
+        },
+        mapLimit: {
+            operations: [
+                {
+                    order: 0,
+                    service: 'asyncComputer',
+                    method: 'add',
+                    arguments: ['@@.@@', 1],
+                    collection: {
+                        input: '@.@',
+                        method: 'mapLimit',
+                        arguments: [2]
+                    },
+                    scope: '.'
+                }
+            ]
+        },
+        filter: {
+            operations: [
+                {
+                    order: 0,
+                    service: 'asyncComputer',
+                    method: 'isGreaterThan',
+                    arguments: ['@@.@@', 4],
+                    collection: {
+                        input: '@.@',
+                        method: 'filter'
+                    },
+                    scope: '.'
                 }
             ]
         }
@@ -808,17 +849,17 @@ var sequenceCollectionTests = [
             result: [6, 6, 4],
             operand: 2
         }
-    }/*,
+    },
     {
         name: 'mapLimit',
-        input: [1, 4, 2],
-        expected: {result: [2, 3, 5]}
+        input: [1, 9, 7],
+        expected: [2, 10, 8]
     },
     {
         name: 'filter',
-        input: [1, 4, 2],
-        expected: {result: {a: 2, b: 3, c: 5}}
-    },
+        input: [3, 4, 7],
+        expected: [7],
+    }/*,
     {
         name: 'filterSeries',
         input: [1, 4, 2],
@@ -833,7 +874,7 @@ var sequenceCollectionTests = [
         name: 'rejectSeries',
         input: [1, 4, 2],
         expected: {result: 16}
-    },
+    }/*,
     {
         name: 'reduce',
         input: [1, 4, 2],

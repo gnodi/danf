@@ -61,6 +61,13 @@ var collections = {
             iterator: collectionAsynchronousIterator,
             callback: errorResultAsynchronousCallback
         },
+        mapLimit: {
+            iterator: collectionAsynchronousIterator,
+            callback: errorResultAsynchronousCallback,
+            parameters: {
+                limit: 1
+            }
+        },
         filter: {
             iterator: collectionAsynchronousIterator,
             callback: resultAsynchronousCallback
