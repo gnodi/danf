@@ -573,7 +573,9 @@ var config = {
                     collection: {
                         input: '@.@',
                         method: 'eachLimit',
-                        arguments: [2]
+                        parameters: {
+                            limit: 2
+                        }
                     },
                     scope: '.'
                 }
@@ -622,7 +624,9 @@ var config = {
                         input: '@.@',
                         method: 'forEachOfLimit',
                         aggregate: false,
-                        arguments: [2]
+                        parameters: {
+                            limit: 2
+                        }
                     },
                     scope: '.'
                 }
@@ -669,7 +673,9 @@ var config = {
                     collection: {
                         input: '@.@',
                         method: 'mapLimit',
-                        arguments: [2]
+                        parameters: {
+                            limit: 2
+                        }
                     },
                     scope: '.'
                 }
@@ -685,6 +691,67 @@ var config = {
                     collection: {
                         input: '@.@',
                         method: 'filter'
+                    },
+                    scope: '.'
+                }
+            ]
+        },
+        filterSeries: {
+            operations: [
+                {
+                    order: 0,
+                    service: 'asyncComputer',
+                    method: 'isGreaterThan',
+                    arguments: ['@@.@@', 4],
+                    collection: {
+                        input: '@.@',
+                        method: 'filterSeries'
+                    },
+                    scope: '.'
+                }
+            ]
+        },
+        reject: {
+            operations: [
+                {
+                    order: 0,
+                    service: 'asyncComputer',
+                    method: 'isGreaterThan',
+                    arguments: ['@@.@@', 4],
+                    collection: {
+                        input: '@.@',
+                        method: 'reject'
+                    },
+                    scope: '.'
+                }
+            ]
+        },
+        rejectSeries: {
+            operations: [
+                {
+                    order: 0,
+                    service: 'asyncComputer',
+                    method: 'isGreaterThan',
+                    arguments: ['@@.@@', 4],
+                    collection: {
+                        input: '@.@',
+                        method: 'rejectSeries'
+                    },
+                    scope: '.'
+                }
+            ]
+        },
+        _mapLimit: {
+            operations: [
+                {
+                    order: 0,
+                    service: 'asyncComputer',
+                    method: 'add',
+                    arguments: ['@@.@@', 1],
+                    collection: {
+                        input: '@.@',
+                        method: 'mapLimit',
+                        parameters: {}
                     },
                     scope: '.'
                 }
@@ -858,22 +925,22 @@ var sequenceCollectionTests = [
     {
         name: 'filter',
         input: [3, 4, 7],
-        expected: [7],
-    }/*,
+        expected: [7]
+    },
     {
         name: 'filterSeries',
-        input: [1, 4, 2],
-        expected: {result: 8}
+        input: [3, 5, 7],
+        expected: [5, 7]
     },
     {
         name: 'reject',
-        input: [1, 4, 2],
-        expected: {result: 30}
+        input: [2, 4, 7],
+        expected: [2, 4]
     },
     {
         name: 'rejectSeries',
-        input: [1, 4, 2],
-        expected: {result: 16}
+        input: [2, 5, 7],
+        expected: [2]
     }/*,
     {
         name: 'reduce',
@@ -1001,6 +1068,20 @@ describe('SequencesContainer', function() {
                     sequence(flow);
                 },
                 /The value is required for the field "sequence\[h\].y"\./
+            );
+        })
+
+        it('should retrieve a sequence that fails to execute with missing parameter for a collection', function() {
+            assert.throws(
+                function() {
+                    var sequence = sequencesContainer.get('_mapLimit'),
+                        end = function() {},
+                        flow = new Flow({}, null, end)
+                    ;
+
+                    sequence(flow);
+                },
+                /The parameter "limit" must be defined for the collection method "mapLimit"\./
             );
         })
     })
