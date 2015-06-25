@@ -9,6 +9,7 @@ var assert = require('assert'),
     OperationsSequenceInterpreter = require('../../../lib/common/event/sequence-interpreter/operations'),
     InputSequenceInterpreter = require('../../../lib/common/event/sequence-interpreter/input'),
     ParentsSequenceInterpreter = require('../../../lib/common/event/sequence-interpreter/parents'),
+    CollectionInterpreter = require('../../../lib/common/event/collection-interpreter'),
     ReferenceResolver = require('../../../lib/common/manipulation/reference-resolver'),
     ReferenceType = require('../../../lib/common/manipulation/reference-type'),
     Flow = require('../../../lib/common/manipulation/flow'),
@@ -23,6 +24,7 @@ var referenceResolver = new ReferenceResolver(),
     servicesContainer = new ServicesContainer(),
     flowDriver = new FlowDriver(async),
     asynchronousCollectionsRegistry = require('../../fixture/manipulation/asynchronous-collections-registry'),
+    collectionInterpreter = new CollectionInterpreter(referenceResolver, flowDriver, asynchronousCollectionsRegistry),
     sequencesContainer = new SequencesContainer(flowDriver),
     dataResolver = require('../../fixture/manipulation/data-resolver')
 ;
@@ -51,10 +53,10 @@ referenceResolver.addReferenceType(sequenceType);
 referenceResolver.addReferenceType(sequenceTagType);
 
 sequencesContainer.addSequenceInterpreter(new AliasSequenceInterpreter(sequencesContainer, referenceResolver));
-sequencesContainer.addSequenceInterpreter(new ChildrenSequenceInterpreter(sequencesContainer, referenceResolver, flowDriver));
-sequencesContainer.addSequenceInterpreter(new OperationsSequenceInterpreter(sequencesContainer, referenceResolver, servicesContainer, flowDriver, asynchronousCollectionsRegistry));
+sequencesContainer.addSequenceInterpreter(new ChildrenSequenceInterpreter(sequencesContainer, referenceResolver, collectionInterpreter));
+sequencesContainer.addSequenceInterpreter(new OperationsSequenceInterpreter(sequencesContainer, referenceResolver, servicesContainer, collectionInterpreter, asynchronousCollectionsRegistry));
 sequencesContainer.addSequenceInterpreter(new InputSequenceInterpreter(sequencesContainer, referenceResolver, dataResolver));
-sequencesContainer.addSequenceInterpreter(new ParentsSequenceInterpreter(sequencesContainer, referenceResolver, flowDriver));
+sequencesContainer.addSequenceInterpreter(new ParentsSequenceInterpreter(sequencesContainer, referenceResolver, collectionInterpreter));
 
 var Computer = function() {};
 utils.extend(Class, Computer);
