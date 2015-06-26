@@ -743,6 +743,81 @@ var config = {
                 }
             ]
         },
+        detect: {
+            operations: [
+                {
+                    order: 0,
+                    service: 'asyncComputer',
+                    method: 'isGreaterThan',
+                    arguments: ['@@.@@', 4],
+                    collection: {
+                        input: '@input@',
+                        method: 'detect'
+                    },
+                    scope: 'result'
+                }
+            ]
+        },
+        detectSeries: {
+            operations: [
+                {
+                    order: 0,
+                    service: 'asyncComputer',
+                    method: 'isGreaterThan',
+                    arguments: ['@@.@@', 4],
+                    collection: {
+                        input: '@input@',
+                        method: 'detectSeries'
+                    },
+                    scope: 'result'
+                }
+            ]
+        },
+        sortBy: {
+            operations: [
+                {
+                    order: 0,
+                    service: 'asyncComputer',
+                    method: 'multiply',
+                    arguments: ['@@.@@', -1],
+                    collection: {
+                        input: '@.@',
+                        method: 'sortBy'
+                    },
+                    scope: '.'
+                }
+            ]
+        },
+        some: {
+            operations: [
+                {
+                    order: 0,
+                    service: 'asyncComputer',
+                    method: 'isGreaterThan',
+                    arguments: ['@@.@@', 4],
+                    collection: {
+                        input: '@input@',
+                        method: 'some'
+                    },
+                    scope: 'result'
+                }
+            ]
+        },
+        every: {
+            operations: [
+                {
+                    order: 0,
+                    service: 'asyncComputer',
+                    method: 'isGreaterThan',
+                    arguments: ['@@.@@', 4],
+                    collection: {
+                        input: '@input@',
+                        method: 'every'
+                    },
+                    scope: 'result'
+                }
+            ]
+        },
         _mapLimit: {
             operations: [
                 {
@@ -953,32 +1028,42 @@ var sequenceCollectionTests = [
         name: 'reduceRight',
         input: [1, 4, 2],
         expected: {result: {a: {value: 4, foo: 'bar'}, b: {value: 5}, c: {value: 7}}}
-    },
+    }*/,
     {
         name: 'detect',
-        input: [1, 4, 2],
-        expected: {result: [3, 5]}
+        input: {input: [1, 3, 2]},
+        expected: {input: [1, 3, 2], result: []}
     },
     {
         name: 'detectSeries',
-        input: [1, 4, 2],
-        expected: {result: 22}
+        input: {input: [2, 5, 1]},
+        expected: {input: [2, 5, 1], result: 5}
     },
     {
         name: 'sortBy',
-        input: [1, 4, 2],
-        expected: {result: [12, 15]}
+        input: [8, 3, 6],
+        expected: [8, 6, 3]
     },
     {
         name: 'some',
-        input: [1, 4, 2],
-        expected: {result: -21}
+        input: {input: [2, 5, 2]},
+        expected: {input: [2, 5, 2], result: true}
+    },
+    {
+        name: 'some',
+        input: {input: [2, 3, 2]},
+        expected: {input: [2, 3, 2], result: false}
     },
     {
         name: 'every',
-        input: [1, 4, 2],
-        expected: {result: 3}
+        input: {input: [5, 5, 7]},
+        expected: {input: [5, 5, 7], result: true}
     },
+    {
+        name: 'every',
+        input: {input: [5, 5, 3]},
+        expected: {input: [5, 5, 3], result: false}
+    }/*,
     {
         name: 'concat',
         input: [1, 4, 2],
