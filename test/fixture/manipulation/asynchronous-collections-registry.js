@@ -145,18 +145,12 @@ var collections = {
         concat: {
             input: arrayAsynchronousInput,
             iterator: collectionAsynchronousIterator,
-            callback: errorResultAsynchronousCallback,
-            parameters: {
-                memo: 1
-            }
+            callback: errorResultAsynchronousCallback
         },
-        concatRight: {
+        concatSeries: {
             input: arrayAsynchronousInput,
             iterator: collectionAsynchronousIterator,
-            callback: errorResultAsynchronousCallback,
-            parameters: {
-                memo: 1
-            }
+            callback: errorResultAsynchronousCallback
         }
     }
 ;

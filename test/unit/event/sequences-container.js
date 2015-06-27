@@ -77,6 +77,8 @@ servicesContainer.set('computer', new Computer());
 var AsyncComputer = function() {};
 utils.extend(Class, AsyncComputer);
 AsyncComputer.prototype.add = function(a, b, delay) {
+    delay = delay ? delay : 10;
+
     this.__asyncProcess(function(returnAsync) {
         setTimeout(
             function() {
@@ -87,6 +89,8 @@ AsyncComputer.prototype.add = function(a, b, delay) {
     });
 };
 AsyncComputer.prototype.substract = function(a, b, delay) {
+    delay = delay ? delay : 10;
+
     this.__asyncProcess(function(returnAsync) {
         setTimeout(
             function() {
@@ -97,6 +101,8 @@ AsyncComputer.prototype.substract = function(a, b, delay) {
     });
 };
 AsyncComputer.prototype.multiply = function(a, b, delay) {
+    delay = delay ? delay : 10;
+
     this.__asyncProcess(function(returnAsync) {
         setTimeout(
             function() {
@@ -107,6 +113,8 @@ AsyncComputer.prototype.multiply = function(a, b, delay) {
     });
 };
 AsyncComputer.prototype.divide = function(a, b, delay) {
+    delay = delay ? delay : 10;
+
     this.__asyncProcess(function(returnAsync) {
         setTimeout(
             function() {
@@ -117,10 +125,24 @@ AsyncComputer.prototype.divide = function(a, b, delay) {
     });
 };
 AsyncComputer.prototype.isGreaterThan = function(a, b, delay) {
+    delay = delay ? delay : 10;
+
     this.__asyncProcess(function(returnAsync) {
         setTimeout(
             function() {
                 returnAsync(a > b);
+            },
+            delay
+        );
+    });
+};
+AsyncComputer.prototype.getAdjacentNumbers = function(a, delay) {
+    delay = delay ? delay : 10;
+
+    this.__asyncProcess(function(returnAsync) {
+        setTimeout(
+            function() {
+                returnAsync([a - 1, a, a + 1]);
             },
             delay
         );
@@ -818,6 +840,36 @@ var config = {
                 }
             ]
         },
+        concat: {
+            operations: [
+                {
+                    order: 0,
+                    service: 'asyncComputer',
+                    method: 'getAdjacentNumbers',
+                    arguments: ['@@value@@', '@@delay@@'],
+                    collection: {
+                        input: '@.@',
+                        method: 'concat'
+                    },
+                    scope: '.'
+                }
+            ]
+        },
+        concatSeries: {
+            operations: [
+                {
+                    order: 0,
+                    service: 'asyncComputer',
+                    method: 'getAdjacentNumbers',
+                    arguments: ['@@value@@', '@@delay@@'],
+                    collection: {
+                        input: '@.@',
+                        method: 'concatSeries'
+                    },
+                    scope: 'result'
+                }
+            ]
+        },
         _mapLimit: {
             operations: [
                 {
@@ -1063,17 +1115,25 @@ var sequenceCollectionTests = [
         name: 'every',
         input: {input: [5, 5, 3]},
         expected: {input: [5, 5, 3], result: false}
-    }/*,
+    },
     {
         name: 'concat',
-        input: [1, 4, 2],
-        expected: {result: 3}
+        input: [
+            {value: 8, delay: 40},
+            {value: 5, delay: 25},
+            {value: 2, delay: 10}
+        ],
+        expected: [1, 2, 3, 4, 5, 6, 7, 8, 9]
     },
     {
         name: 'concatSeries',
-        input: [1, 4, 2],
-        expected: {result: 3}
-    }*/
+        input: [
+            {value: 8, delay: 40},
+            {value: 5, delay: 25},
+            {value: 2, delay: 10}
+        ],
+        expected: {result: [7, 8, 9, 4, 5, 6, 1, 2, 3]}
+    }
 ];
 
 var rebuildSequenceTests = [
@@ -1119,7 +1179,7 @@ describe('SequencesContainer', function() {
 
                         done();
                     },
-                    flow = new Flow(test.input, null, end)
+                    flow = new Flow(test.input, '.', end)
                 ;
 
                 sequence(flow);
@@ -1137,7 +1197,7 @@ describe('SequencesContainer', function() {
 
                         done();
                     },
-                    flow = new Flow(test.input, null, end)
+                    flow = new Flow(test.input, '.', end)
                 ;
 
                 sequence(flow);
@@ -1149,7 +1209,7 @@ describe('SequencesContainer', function() {
                 function() {
                     var sequence = sequencesContainer.get('h'),
                         end = function() {},
-                        flow = new Flow({x: 0}, null, end)
+                        flow = new Flow({x: 0}, '.', end)
                     ;
 
                     sequence(flow);
@@ -1163,7 +1223,7 @@ describe('SequencesContainer', function() {
                 function() {
                     var sequence = sequencesContainer.get('_mapLimit'),
                         end = function() {},
-                        flow = new Flow({}, null, end)
+                        flow = new Flow({}, '.', end)
                     ;
 
                     sequence(flow);
