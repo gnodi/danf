@@ -33,6 +33,10 @@ var contextType = new ReferenceType();
 contextType.name = '@';
 contextType.delimiter = '@';
 
+var memoryType = new ReferenceType();
+memoryType.name = '~';
+memoryType.delimiter = '~';
+
 var configType = new ReferenceType();
 configType.name = '$';
 configType.delimiter = '$';
@@ -48,6 +52,7 @@ sequenceTagType.delimiter = '&';
 sequenceTagType.allowsConcatenation = false;
 
 referenceResolver.addReferenceType(contextType);
+referenceResolver.addReferenceType(memoryType);
 referenceResolver.addReferenceType(configType);
 referenceResolver.addReferenceType(sequenceType);
 referenceResolver.addReferenceType(sequenceTagType);
@@ -762,6 +767,42 @@ var config = {
                         method: 'rejectSeries'
                     },
                     scope: '.'
+                }
+            ]
+        },
+        reduce: {
+            operations: [
+                {
+                    order: 0,
+                    service: 'asyncComputer',
+                    method: 'addSubstract',
+                    arguments: ['@@.@@', '~0~'],
+                    collection: {
+                        input: '@.@',
+                        method: 'reduce',
+                        parameters: {
+                            memo: [1]
+                        }
+                    },
+                    scope: '.'
+                }
+            ]
+        },
+        reduceRight: {
+            operations: [
+                {
+                    order: 0,
+                    service: 'asyncComputer',
+                    method: 'add',
+                    arguments: ['@@.@@', '~.~'],
+                    collection: {
+                        input: '@input@',
+                        method: 'reduceRight',
+                        parameters: {
+                            memo: '$memo$'
+                        }
+                    },
+                    scope: 'result'
                 }
             ]
         },
