@@ -11,6 +11,7 @@ var assert = require('assert'),
     ParentsSequenceInterpreter = require('../../../lib/common/event/sequence-interpreter/parents'),
     CollectionInterpreter = require('../../../lib/common/event/collection-interpreter'),
     ReferenceResolver = require('../../../lib/common/manipulation/reference-resolver'),
+    ReferencesResolver = require('../../../lib/common/event/references-resolver'),
     ReferenceType = require('../../../lib/common/manipulation/reference-type'),
     Flow = require('../../../lib/common/manipulation/flow'),
     FlowDriver = require('../../../lib/common/manipulation/flow-driver'),
@@ -21,10 +22,11 @@ var assert = require('assert'),
 ;
 
 var referenceResolver = new ReferenceResolver(),
+    referencesResolver = new ReferencesResolver(referenceResolver, {memo: 2}),
     servicesContainer = new ServicesContainer(),
     flowDriver = new FlowDriver(async),
     asynchronousCollectionsRegistry = require('../../fixture/manipulation/asynchronous-collections-registry'),
-    collectionInterpreter = new CollectionInterpreter(referenceResolver, flowDriver, asynchronousCollectionsRegistry),
+    collectionInterpreter = new CollectionInterpreter(referencesResolver, flowDriver, asynchronousCollectionsRegistry),
     sequencesContainer = new SequencesContainer(flowDriver),
     dataResolver = require('../../fixture/manipulation/data-resolver')
 ;
@@ -57,11 +59,11 @@ referenceResolver.addReferenceType(configType);
 referenceResolver.addReferenceType(sequenceType);
 referenceResolver.addReferenceType(sequenceTagType);
 
-sequencesContainer.addSequenceInterpreter(new AliasSequenceInterpreter(sequencesContainer, referenceResolver));
-sequencesContainer.addSequenceInterpreter(new ChildrenSequenceInterpreter(sequencesContainer, referenceResolver, collectionInterpreter));
-sequencesContainer.addSequenceInterpreter(new OperationsSequenceInterpreter(sequencesContainer, referenceResolver, servicesContainer, collectionInterpreter, asynchronousCollectionsRegistry));
-sequencesContainer.addSequenceInterpreter(new InputSequenceInterpreter(sequencesContainer, referenceResolver, dataResolver));
-sequencesContainer.addSequenceInterpreter(new ParentsSequenceInterpreter(sequencesContainer, referenceResolver, collectionInterpreter));
+sequencesContainer.addSequenceInterpreter(new AliasSequenceInterpreter(sequencesContainer));
+sequencesContainer.addSequenceInterpreter(new ChildrenSequenceInterpreter(sequencesContainer, referencesResolver, collectionInterpreter));
+sequencesContainer.addSequenceInterpreter(new OperationsSequenceInterpreter(sequencesContainer, referencesResolver, servicesContainer, collectionInterpreter, asynchronousCollectionsRegistry));
+sequencesContainer.addSequenceInterpreter(new InputSequenceInterpreter(sequencesContainer, dataResolver));
+sequencesContainer.addSequenceInterpreter(new ParentsSequenceInterpreter(sequencesContainer, referencesResolver, collectionInterpreter));
 
 var Computer = function() {};
 utils.extend(Class, Computer);
@@ -136,6 +138,18 @@ AsyncComputer.prototype.isGreaterThan = function(a, b, delay) {
         setTimeout(
             function() {
                 returnAsync(a > b);
+            },
+            delay
+        );
+    });
+};
+AsyncComputer.prototype.addSubstract = function(a, b, delay) {
+    delay = delay ? delay : 10;
+
+    this.__asyncProcess(function(returnAsync) {
+        setTimeout(
+            function() {
+                returnAsync([a + b, a - b]);
             },
             delay
         );
@@ -1111,17 +1125,17 @@ var sequenceCollectionTests = [
         name: 'rejectSeries',
         input: [2, 5, 7],
         expected: [2]
-    }/*,
+    },
     {
         name: 'reduce',
-        input: [1, 4, 2],
-        expected: {result: {a: 3, b: 4, c: 6}}
+        input: [4, 5, 4],
+        expected: [14, -6]
     },
     {
         name: 'reduceRight',
-        input: [1, 4, 2],
-        expected: {result: {a: {value: 4, foo: 'bar'}, b: {value: 5}, c: {value: 7}}}
-    }*/,
+        input: {input: [5, 4, 4]},
+        expected: {input: [5, 4, 4], result: 15}
+    },
     {
         name: 'detect',
         input: {input: [1, 3, 2]},
