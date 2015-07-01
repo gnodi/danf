@@ -6,6 +6,7 @@ var assert = require('assert'),
     SequencesContainer = require('../../../lib/common/event/sequences-container'),
     AliasSequenceInterpreter = require('../../../lib/common/event/sequence-interpreter/alias'),
     ChildrenSequenceInterpreter = require('../../../lib/common/event/sequence-interpreter/children'),
+    CollectionsSequenceInterpreter = require('../../../lib/common/event/sequence-interpreter/collections'),
     OperationsSequenceInterpreter = require('../../../lib/common/event/sequence-interpreter/operations'),
     InputSequenceInterpreter = require('../../../lib/common/event/sequence-interpreter/input'),
     ParentsSequenceInterpreter = require('../../../lib/common/event/sequence-interpreter/parents'),
@@ -61,6 +62,7 @@ referenceResolver.addReferenceType(sequenceTagType);
 
 sequencesContainer.addSequenceInterpreter(new AliasSequenceInterpreter(sequencesContainer));
 sequencesContainer.addSequenceInterpreter(new ChildrenSequenceInterpreter(sequencesContainer, referencesResolver, collectionInterpreter));
+sequencesContainer.addSequenceInterpreter(new CollectionsSequenceInterpreter(sequencesContainer));
 sequencesContainer.addSequenceInterpreter(new OperationsSequenceInterpreter(sequencesContainer, referencesResolver, servicesContainer, collectionInterpreter, asynchronousCollectionsRegistry));
 sequencesContainer.addSequenceInterpreter(new InputSequenceInterpreter(sequencesContainer, dataResolver));
 sequencesContainer.addSequenceInterpreter(new ParentsSequenceInterpreter(sequencesContainer, referencesResolver, collectionInterpreter));
@@ -938,6 +940,77 @@ var config = {
                         parameters: {}
                     },
                     scope: '.'
+                }
+            ]
+        },
+        collectionsA: {
+            operations: [
+                {
+                    order: 0,
+                    service: 'asyncComputer',
+                    method: 'add',
+                    arguments: [49, 51],
+                    scope: 'result'
+                }
+            ],
+            collections: ['foo']
+        },
+        collectionsB: {
+            operations: [
+                {
+                    order: 0,
+                    service: 'asyncComputer',
+                    method: 'add',
+                    arguments: [49, 51],
+                    scope: 'result'
+                }
+            ],
+            collections: ['bar']
+        },
+        collectionsC: {
+            operations: [
+                {
+                    order: 0,
+                    service: 'asyncComputer',
+                    method: 'add',
+                    arguments: [49, 51],
+                    scope: 'result'
+                }
+            ],
+            collections: ['foo', 'bar']
+        },
+        collectionsD: {
+            operations: [
+                {
+                    order: 0,
+                    service: 'asyncComputer',
+                    method: 'add',
+                    arguments: ['@result@', '@input@'],
+                    scope: 'result'
+                }
+            ],
+            parents: [
+                {
+                    order: 1,
+                    name: '&foo&',
+                    input: {
+                        input: 1,
+                        result: '@result@'
+                    },
+                    output: {
+                        result: '@result@'
+                    }
+                },
+                {
+                    order: 1,
+                    name: '&bar&',
+                    input: {
+                        input: 2,
+                        result: '@result@'
+                    },
+                    output: {
+                        result: '@result@'
+                    }
                 }
             ]
         }
