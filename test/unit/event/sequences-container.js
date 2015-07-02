@@ -222,7 +222,7 @@ var config = {
             parents: [
                 {
                     order: 1,
-                    name: 'e',
+                    target: 'e',
                     input: {
                         result: '@result@'
                     },
@@ -245,7 +245,7 @@ var config = {
             children: [
                 {
                     order: 1,
-                    name: 'c',
+                    target: 'c',
                     input: {
                         result: '@result@'
                     },
@@ -257,7 +257,7 @@ var config = {
             parents: [
                 {
                     order: -1,
-                    name: 'f',
+                    target: 'f',
                     output: {
                         result: '@result@'
                     }
@@ -306,7 +306,7 @@ var config = {
             children: [
                 {
                     order: 1,
-                    name: 'c',
+                    target: 'c',
                     input: {
                         result: '@x@'
                     },
@@ -316,7 +316,7 @@ var config = {
                 },
                 {
                     order: -1,
-                    name: 'e',
+                    target: 'e',
                     input: {
                         result: '@y@'
                     },
@@ -432,7 +432,7 @@ var config = {
             children: [
                 {
                     order: 0,
-                    name: 'k',
+                    target: 'k',
                     input: {
                         result: '@result@'
                     },
@@ -504,7 +504,7 @@ var config = {
             children: [
                 {
                     order: 0,
-                    name: 'd',
+                    target: 'd',
                     output: {
                         result: '@result@'
                     }
@@ -515,7 +515,7 @@ var config = {
             children: [
                 {
                     order: 0,
-                    name: 'c',
+                    target: 'c',
                     input: {
                         result: '@@.@@'
                     },
@@ -534,7 +534,7 @@ var config = {
             children: [
                 {
                     order: 0,
-                    name: 'g',
+                    target: 'g',
                     input: {
                         x: '@result@',
                         y: '@@.@@'
@@ -552,7 +552,7 @@ var config = {
             parents: [
                 {
                     order: 0,
-                    name: 't',
+                    target: 't',
                     input: {
                         result: '@@result@@'
                     },
@@ -992,7 +992,7 @@ var config = {
             parents: [
                 {
                     order: 1,
-                    name: '&foo&',
+                    target: '&foo&',
                     input: {
                         input: 1,
                         result: '@result@'
@@ -1002,8 +1002,8 @@ var config = {
                     }
                 },
                 {
-                    order: 1,
-                    name: '&bar&',
+                    order: 2,
+                    target: '&bar&',
                     input: {
                         input: 2,
                         result: '@result@'
@@ -1120,7 +1120,7 @@ var sequenceTests = [
     }
 ];
 
-var sequenceCollectionTests = [
+var sequenceOperationCollectionTests = [
     {
         name: 'each',
         input: [1, 4, 2],
@@ -1264,6 +1264,29 @@ var sequenceCollectionTests = [
     }
 ];
 
+var sequenceCollectionsTests = [
+    {
+        name: 'collectionsA',
+        input: {},
+        expected: {result: 101}
+    },
+    {
+        name: 'collectionsB',
+        input: {},
+        expected: {result: 102}
+    },
+    {
+        name: 'collectionsC',
+        input: {},
+        expected: {result: 103}
+    },
+    {
+        name: 'collectionsD',
+        input: {input: 1, result: 1},
+        expected: {input: 1, result: 2}
+    }
+];
+
 var rebuildSequenceTests = [
     {
         name: 'c',
@@ -1314,8 +1337,26 @@ describe('SequencesContainer', function() {
             })
         })
 
-        sequenceCollectionTests.forEach(function(test) {
+        sequenceOperationCollectionTests.forEach(function(test) {
             it('should allow to retrieve a built sequence with operations on collections', function(done) {
+                var sequence = sequencesContainer.get(test.name),
+                    end = function() {
+                        assert.deepEqual(
+                            flow.stream,
+                            test.expected
+                        );
+
+                        done();
+                    },
+                    flow = new Flow(test.input, '.', end)
+                ;
+
+                sequence(flow);
+            })
+        })
+
+        sequenceCollectionsTests.forEach(function(test) {
+            it('should allow to retrieve a built sequence with parent on sequence collection', function(done) {
                 var sequence = sequencesContainer.get(test.name),
                     end = function() {
                         assert.deepEqual(
@@ -1386,7 +1427,7 @@ describe('SequencesContainer', function() {
                         parents: [
                             {
                                 order: 1,
-                                name: 'e',
+                                target: 'e',
                                 input: {
                                     result: '@result@'
                                 },
