@@ -586,8 +586,7 @@ var config = {
                     arguments: ['@@.@@', 1],
                     collection: {
                         input: '@.@',
-                        method: 'each',
-                        aggregate: false
+                        method: 'each'
                     },
                     scope: '.'
                 }
@@ -701,8 +700,7 @@ var config = {
                     arguments: ['@@.@@', '@operand@'],
                     collection: {
                         input: '@input@',
-                        method: 'mapSeries',
-                        aggregate: true
+                        method: 'mapSeries'
                     },
                     scope: 'result'
                 }
@@ -720,6 +718,15 @@ var config = {
                         method: 'mapLimit',
                         parameters: {
                             limit: 2
+                        },
+                        aggregate: function(stream) {
+                            var result = 1;
+
+                            for (var i = 0; i < stream.length; i++) {
+                                result *= stream[i];
+                            }
+
+                            return result;
                         }
                     },
                     scope: '.'
@@ -831,7 +838,8 @@ var config = {
                     arguments: ['@@.@@', 4],
                     collection: {
                         input: '@input@',
-                        method: 'detect'
+                        method: 'detect',
+                        aggregate: true
                     },
                     scope: 'result'
                 }
@@ -1177,7 +1185,7 @@ var sequenceOperationCollectionTests = [
     {
         name: 'mapLimit',
         input: [1, 9, 7],
-        expected: [2, 10, 8]
+        expected: 160
     },
     {
         name: 'filter',
@@ -1212,7 +1220,7 @@ var sequenceOperationCollectionTests = [
     {
         name: 'detect',
         input: {input: [1, 3, 2]},
-        expected: {input: [1, 3, 2], result: []}
+        expected: {input: [1, 3, 2], result: null}
     },
     {
         name: 'detectSeries',
