@@ -16,11 +16,22 @@ var assert = require('assert'),
     ReferenceType = require('../../../lib/common/manipulation/reference-type'),
     Flow = require('../../../lib/common/manipulation/flow'),
     FlowDriver = require('../../../lib/common/manipulation/flow-driver'),
+    Sequence = require('../../../lib/common/event/sequence'),
     ServicesContainer = require('../../../lib/common/dependency-injection/services-container'),
     Class = require('../../../lib/common/object/class'),
     utils = require('../../../lib/common/utils'),
     async = require('async')
 ;
+
+var FlowProvider = function() {};
+FlowProvider.prototype.provide = function(input, scope, callback) {
+    return new Flow(input, scope, callback);
+}
+
+var SequenceProvider = function(flowProvider) { this.flowProvider = flowProvider };
+SequenceProvider.prototype.provide = function(operation) {
+    return new Sequence(operation, this.flowProvider);
+}
 
 var referenceResolver = new ReferenceResolver(),
     referencesResolver = new ReferencesResolver(referenceResolver, {memo: 2}),
@@ -28,7 +39,9 @@ var referenceResolver = new ReferenceResolver(),
     flowDriver = new FlowDriver(async),
     asynchronousCollectionsRegistry = require('../../fixture/manipulation/asynchronous-collections-registry'),
     collectionInterpreter = new CollectionInterpreter(referencesResolver, flowDriver, asynchronousCollectionsRegistry),
-    sequencesContainer = new SequencesContainer(flowDriver),
+    flowProvider = new FlowProvider(),
+    sequenceProvider = new SequenceProvider(flowProvider),
+    sequencesContainer = new SequencesContainer(flowDriver, sequenceProvider),
     dataResolver = require('../../fixture/manipulation/data-resolver')
 ;
 
@@ -1330,54 +1343,51 @@ describe('SequencesContainer', function() {
         sequenceTests.forEach(function(test) {
             it('should allow to retrieve a built sequence', function(done) {
                 var sequence = sequencesContainer.get(test.name),
-                    end = function() {
+                    end = function(error, result) {
                         assert.deepEqual(
-                            flow.stream,
+                            result,
                             test.expected
                         );
 
                         done();
-                    },
-                    flow = new Flow(test.input, '.', end)
+                    }
                 ;
 
-                sequence(flow);
+                sequence.execute(test.input, '.', end);
             })
         })
 
         sequenceOperationCollectionTests.forEach(function(test) {
             it('should allow to retrieve a built sequence with operations on collections', function(done) {
                 var sequence = sequencesContainer.get(test.name),
-                    end = function() {
+                    end = function(error, result) {
                         assert.deepEqual(
-                            flow.stream,
+                            result,
                             test.expected
                         );
 
                         done();
-                    },
-                    flow = new Flow(test.input, '.', end)
+                    }
                 ;
 
-                sequence(flow);
+                sequence.execute(test.input, '.', end);
             })
         })
 
         sequenceCollectionsTests.forEach(function(test) {
             it('should allow to retrieve a built sequence with parent on sequence collection', function(done) {
                 var sequence = sequencesContainer.get(test.name),
-                    end = function() {
+                    end = function(error, result) {
                         assert.deepEqual(
-                            flow.stream,
+                            result,
                             test.expected
                         );
 
                         done();
-                    },
-                    flow = new Flow(test.input, '.', end)
+                    }
                 ;
 
-                sequence(flow);
+                sequence.execute(test.input, '.', end);
             })
         })
 
@@ -1385,11 +1395,10 @@ describe('SequencesContainer', function() {
             assert.throws(
                 function() {
                     var sequence = sequencesContainer.get('h'),
-                        end = function() {},
-                        flow = new Flow({x: 0}, '.', end)
+                        end = function() {}
                     ;
 
-                    sequence(flow);
+                    sequence.execute({x: 0}, '.', end);
                 },
                 /The value is required for the field "sequence\[h\].y"\./
             );
@@ -1399,11 +1408,10 @@ describe('SequencesContainer', function() {
             assert.throws(
                 function() {
                     var sequence = sequencesContainer.get('_mapLimit'),
-                        end = function() {},
-                        flow = new Flow({}, '.', end)
+                        end = function() {}
                     ;
 
-                    sequence(flow);
+                    sequence.execute({}, '.', end);
                 },
                 /The parameter "limit" must be defined for the collection method "mapLimit"\./
             );
@@ -1448,18 +1456,17 @@ describe('SequencesContainer', function() {
                 );
 
                 var sequence = sequencesContainer.get(test.name),
-                    end = function() {
+                    end = function(error, result) {
                         assert.deepEqual(
-                            flow.stream,
+                            result,
                             test.expected
                         );
 
                         done();
-                    },
-                    flow = new Flow(test.input, null, end)
+                    }
                 ;
 
-                sequence(flow);
+                sequence.execute(test.input, null, end);
             })
         })
     })
@@ -1473,18 +1480,17 @@ describe('SequencesContainer', function() {
             assert(sequencesContainer.has('z'));
 
             var sequence = sequencesContainer.get('z'),
-                end = function() {
+                end = function(error, result) {
                     assert.deepEqual(
-                        flow.stream,
+                        result,
                         {result: 5}
                     );
 
                     done();
-                },
-                flow = new Flow({}, null, end)
+                }
             ;
 
-            sequence(flow);
+            sequence.execute({}, null, end);
         })
     })
 })
