@@ -258,7 +258,7 @@ var config = {
             children: [
                 {
                     order: 1,
-                    target: 'c',
+                    name: 'c',
                     input: {
                         result: '@result@'
                     },
@@ -319,7 +319,7 @@ var config = {
             children: [
                 {
                     order: 1,
-                    target: 'c',
+                    name: 'c',
                     input: {
                         result: '@x@'
                     },
@@ -329,7 +329,7 @@ var config = {
                 },
                 {
                     order: -1,
-                    target: 'e',
+                    name: 'e',
                     input: {
                         result: '@y@'
                     },
@@ -445,7 +445,7 @@ var config = {
             children: [
                 {
                     order: 0,
-                    target: 'k',
+                    name: 'k',
                     input: {
                         result: '@result@'
                     },
@@ -517,7 +517,7 @@ var config = {
             children: [
                 {
                     order: 0,
-                    target: 'd',
+                    name: 'd',
                     output: {
                         result: '@result@'
                     }
@@ -528,7 +528,7 @@ var config = {
             children: [
                 {
                     order: 0,
-                    target: 'c',
+                    name: 'c',
                     input: {
                         result: '@@.@@'
                     },
@@ -547,7 +547,7 @@ var config = {
             children: [
                 {
                     order: 0,
-                    target: 'g',
+                    name: 'g',
                     input: {
                         x: '@result@',
                         y: '@@.@@'
