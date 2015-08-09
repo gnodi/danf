@@ -37,6 +37,14 @@ module.exports = {
             notifiers: '&danf:event.notifier&'
         }
     },
+    /*eventsContainer: {
+        class: 'danf:event.eventsHandler',
+        properties: {
+            servicesContainer: '#danf:dependencyInjection.servicesContainer#',
+            eventProvider: '#danf:event.eventProvider#',
+            notifiers: '&danf:event.notifier&'
+        }
+    },*/
     notifier: {
         tags: ['danf:event.notifier'],
         properties: {
@@ -60,6 +68,7 @@ module.exports = {
                         class: 'danf:event.configuration.sectionProcessor.events',
                         properties: {
                             name: 'events',
+                            //collectionInterpreter: '#danf:event.collectionInterpreter#',
                             notifiers: '&danf:event.notifier&'
                         }
                     },
