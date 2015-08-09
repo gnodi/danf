@@ -73,9 +73,9 @@ module.exports = {
                 parent: 'danf:configuration.configurationInterpreter.abstractNamespacer',
                 class: 'danf:configuration.manipulation.dataInterpreter.references'
             },
-            namespaces: {
+            namespace: {
                 parent: 'danf:configuration.configurationInterpreter.abstractNamespacer',
-                class: 'danf:configuration.manipulation.dataInterpreter.namespaces'
+                class: 'danf:configuration.manipulation.dataInterpreter.namespace'
             }
         }
     },

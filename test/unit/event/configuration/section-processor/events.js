@@ -32,22 +32,22 @@ describe('Events section configuration processor', function() {
             {
                 event: {
                     type: 'embedded_object',
-                    namespaces: true,
+                    namespace: true,
                     references: ['$'],
                     embed: {
                         event: {type: 'string'},
-                        sequences: {type: 'string_array', default: [], namespaces: true},
+                        sequences: {type: 'string_array', default: [], namespace: true},
                         contract: {type: 'mixed_object'}
                     }
                 },
                 request: {
                     type: 'embedded_object',
-                    namespaces: true,
+                    namespace: true,
                     references: ['$'],
                     embed: {
                         path: {type: 'string'},
                         methods: {type: 'string_array'},
-                        sequences: {type: 'string_array', default: [], namespaces: true},
+                        sequences: {type: 'string_array', default: [], namespace: true},
                         contract: {type: 'mixed_object'}
                     }
                 }

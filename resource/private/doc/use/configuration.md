@@ -727,9 +727,9 @@ will result in:
 You can specify the separator instead of `true` (`flatten: ';'`)
 The flattened value should be of the defined type.
 
-#### Namespaces
+#### Namespace
 
-Namespaces prefixes your field with the namespace of its owner module:
+Namespace prefixes your field with the namespace of its owner module:
 
 ```javascript
 // danf.js
@@ -740,7 +740,7 @@ module.exports = {
     contract: {
         field: {
             type: 'number_object',
-            namespaces: true
+            namespace: true
         }
     }
 };

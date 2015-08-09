@@ -20,7 +20,7 @@ referenceType.delimiter = '%';
 sizeReferenceType.name = 'size';
 sizeReferenceType.delimiter = '$';
 sizeReferenceType.size = 5;
-sizeReferenceType.namespaces = [1, 3];
+sizeReferenceType.namespace = [1, 3];
 
 namespacer.addReferenceType(referenceType);
 namespacer.addReferenceType(sizeReferenceType);

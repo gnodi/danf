@@ -129,11 +129,11 @@ module.exports = {
             /**
              * The indexes of the reference which should be namespaced when asked.
              *
-             * if size = 4 & delimiter = > & namespaces = [0, 2] => >prefix:ref>is>prefix:like>that>
+             * if size = 4 & delimiter = > & namespace = [0, 2] => >prefix:ref>is>prefix:like>that>
              *
              * @return {number_array} The namespaced indexes.
              */
-            namespaces: 'number_array',
+            namespace: 'number_array',
             /**
              * Whether or not the type allow the concatenation.
              *
