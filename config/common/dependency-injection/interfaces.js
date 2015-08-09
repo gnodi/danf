@@ -61,6 +61,12 @@ module.exports = {
                 arguments: ['boolean/reset']
             },
             /**
+             * Finalize the building of the services.
+             */
+            finalize: {
+                arguments: []
+            },
+            /**
              * Get the instantiation of a service (lazy instantiation).
              *
              * @param {string} id The id of the service.
@@ -171,6 +177,17 @@ module.exports = {
             instantiate: {
                 arguments: ['object|null/instance', 'object/definition'],
                 returns: 'object|null'
+            },
+            /**
+             * Finalize a service.
+             *
+             * @param {object} instance The service instance.
+             * @param {object} service The service definition.
+             * @return {object} The handled instance.
+             */
+            finalize: {
+                arguments: ['object|null/instance', 'object/definition'],
+                returns: 'object'
             },
             /**
              * Update a service.

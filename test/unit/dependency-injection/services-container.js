@@ -13,17 +13,21 @@ var assert = require('assert'),
     ParentServiceBuilder = require('../../../lib/common/dependency-injection/service-builder/parent'),
     PropertiesServiceBuilder = require('../../../lib/common/dependency-injection/service-builder/properties'),
     TagsServiceBuilder = require('../../../lib/common/dependency-injection/service-builder/tags'),
+    RegistryServiceBuilder = require('../../../lib/common/dependency-injection/service-builder/registry'),
     AbstractBuilder = require('../../../lib/common/dependency-injection/service-builder/abstract-service-builder'),
     ReferenceResolver = require('../../../lib/common/manipulation/reference-resolver'),
     ReferenceType = require('../../../lib/common/manipulation/reference-type'),
     InterfacesRegistry = require('../../../lib/common/object/interfaces-registry'),
     Interfacer = require('../../../lib/common/object/interfacer'),
+    Namespacer = require('../../../lib/common/configuration/namespacer'),
     utils = require('../../../lib/common/utils')
 ;
 
 var referenceResolver = new ReferenceResolver(),
     interfacesRegistry = new InterfacesRegistry(),
     interfacer = new Interfacer(interfacesRegistry),
+    modulesTree = require('../../fixture/configuration/modules-tree'),
+    namespacer = new Namespacer(),
     servicesContainer = new ServicesContainer()
 ;
 
@@ -71,6 +75,7 @@ servicesContainer.addServiceBuilder(new FactoriesServiceBuilder(servicesContaine
 servicesContainer.addServiceBuilder(new ParentServiceBuilder(servicesContainer, referenceResolver));
 servicesContainer.addServiceBuilder(new PropertiesServiceBuilder(servicesContainer, referenceResolver, interfacer));
 servicesContainer.addServiceBuilder(new TagsServiceBuilder(servicesContainer, referenceResolver, interfacer));
+servicesContainer.addServiceBuilder(new RegistryServiceBuilder(servicesContainer, referenceResolver, interfacer, modulesTree, namespacer));
 
 var Provider = function() { this.name = 'provider'; };
 Provider.prototype.provide = function() {
@@ -112,6 +117,17 @@ Object.defineProperty(Manager.prototype, 'providers', {
     }
 });
 
+var Registry = function() {
+    this.items = {
+        a: 1,
+        b: 2,
+        c: 3
+    };
+};
+Registry.prototype.get = function(name) {
+    return this.items[name];
+};
+
 var config = {
     services: {
         manager: {
@@ -129,7 +145,8 @@ var config = {
                 id: '@_@',
                 rules: '>rule.@rules@>provider>@@rules.@rules@@@>',
                 storages: '#storage.@storages@#',
-                adapter: '#@adapter@#'
+                adapter: '#@adapter@#',
+                item: '#registry[b]#'
             },
             tags: ['provider']
         },
@@ -202,6 +219,12 @@ var config = {
                     class: function() { this.name = 'remote storage'; }
                 }
             }
+        },
+        registry: {
+            class: Registry,
+            registry: {
+                method: 'get'
+            }
         }
     },
     providers: {
@@ -254,6 +277,7 @@ var config = {
 var expectedBigImagesProvider = {
     id: 'bigImages',
     name: 'provider',
+    item: 2,
     rules: [
         {
             name: 'rule minSize',
@@ -285,6 +309,8 @@ describe('ServicesContainer', function() {
         assert(servicesContainer.hasDefinition('manager'));
         assert(servicesContainer.hasDefinition('provider'));
         assert(servicesContainer.hasDefinition('provider.bigImages'));
+
+        servicesContainer.finalize();
     })
 
     describe('method "get"', function() {
@@ -298,6 +324,12 @@ describe('ServicesContainer', function() {
 
         it('should resolve and inject the dependencies of the services', function() {
             assert.deepEqual(expectedBigImagesProvider, utils.clean(provider));
+        })
+
+        it('should resolve and inject registry dependencies of the services', function() {
+            var provider = servicesContainer.get('provider.bigImages');
+
+            assert.equal(provider.item, 2);
         })
 
         it('should resolve the tags', function() {
@@ -409,6 +441,25 @@ describe('ServicesContainer', function() {
                     );
                 },
                 /The circular dependency \["a" -> "b" -> "c" -> "a"\] prevent to build the service "a"\./
+            );
+        })
+
+        it('should fail to instantiate a registry service with no retrieving implemented method', function() {
+            assert.throws(
+                function() {
+                    servicesContainer.config = {};
+                    servicesContainer.handleRegistryChange(
+                        {
+                            a: {
+                                class: Registry,
+                                registry: {
+                                    method: 'retrieve'
+                                }
+                            }
+                        }
+                    );
+                },
+                /The service of id "a" should define the registry method "retrieve"\./
             );
         })
     })
