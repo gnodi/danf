@@ -128,6 +128,24 @@ Registry.prototype.get = function(name) {
     return this.items[name];
 };
 
+var DeepRegistry = function() {
+    this.items = {
+        a: {
+            i: 5
+        },
+        b: {
+            i: 3,
+            j: 6
+        },
+        c: {
+            j: 7
+        }
+    };
+};
+DeepRegistry.prototype.retrieve = function(i, j) {
+    return this.items[i][j];
+};
+
 var config = {
     services: {
         manager: {
@@ -146,7 +164,8 @@ var config = {
                 rules: '>rule.@rules@>provider>@@rules.@rules@@@>',
                 storages: '#storage.@storages@#',
                 adapter: '#@adapter@#',
-                item: '#registry[b]#'
+                item: '#registry[b]#',
+                deepItem: '#deepRegistry[b][j]#'
             },
             tags: ['provider']
         },
@@ -225,6 +244,12 @@ var config = {
             registry: {
                 method: 'get'
             }
+        },
+        deepRegistry: {
+            class: DeepRegistry,
+            registry: {
+                method: 'retrieve'
+            }
         }
     },
     providers: {
@@ -278,6 +303,7 @@ var expectedBigImagesProvider = {
     id: 'bigImages',
     name: 'provider',
     item: 2,
+    deepItem: 6,
     rules: [
         {
             name: 'rule minSize',
@@ -330,6 +356,7 @@ describe('ServicesContainer', function() {
             var provider = servicesContainer.get('provider.bigImages');
 
             assert.equal(provider.item, 2);
+            assert.equal(provider.deepItem, 6);
         })
 
         it('should resolve the tags', function() {
