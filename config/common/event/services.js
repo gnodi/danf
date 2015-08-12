@@ -37,14 +37,87 @@ module.exports = {
             notifiers: '&danf:event.notifier&'
         }
     },
-    /*eventsContainer: {
-        class: 'danf:event.eventsHandler',
+    sequenceProvider: {
+        parent: 'danf:dependencyInjection.objectProvider',
+        properties: {
+            class: 'danf:event.sequence',
+            interface: 'danf:event.sequence'
+        }
+    },
+    eventProvider: {
+        parent: 'danf:dependencyInjection.objectProvider',
+        properties: {
+            class: 'danf:event.event',
+            interface: 'danf:event.event'
+        }
+    },
+    sequencesContainer: {
+        class: 'danf:event.sequencesContainer',
+        properties: {
+            flowDriver: '#danf:manipulation.flowDriver#',
+            sequenceProvider: '#danf:event.sequenceProvider#',
+            sequenceInterpreters: '&danf:event.sequenceInterpreter&'
+        }
+    },
+    eventsContainer: {
+        class: 'danf:event.eventsContainer',
         properties: {
             servicesContainer: '#danf:dependencyInjection.servicesContainer#',
+            sequencesContainer: '#danf:event.sequencesContainer#',
             eventProvider: '#danf:event.eventProvider#',
             notifiers: '&danf:event.notifier&'
         }
-    },*/
+    },
+    collectionInterpreter: {
+        class: 'danf:event.collectionInterpreter',
+        properties: {
+            referenceResolver: '#danf:manipulation.referenceResolver#',
+            flowDriver: '#danf:manipulation.flowDriver#',
+            asynchronousCollections: '&danf:manipulation.asynchronousCollection&'
+        }
+    },
+    sequenceInterpreter: {
+        tags: ['danf:event.sequenceInterpreter'],
+        children: {
+            abstract: {
+                abstract: true
+            },
+            alias: {
+                class: 'danf:event.sequenceInterpreter.alias'
+            },
+            children: {
+                class: 'danf:event.sequenceInterpreter.children',
+                properties: {
+                    referenceResolver: '#danf:manipulation.referenceResolver#',
+                    collectionInterpreter: '#danf:event.collectionInterpreter#'
+                }
+            },
+            collections: {
+                class: 'danf:event.sequenceInterpreter.collections'
+            },
+            input: {
+                class: 'danf:event.sequenceInterpreter.input',
+                properties: {
+                    dataResolver: '#danf:manipulation.dataResolver#'
+                }
+            },
+            operations: {
+                class: 'danf:event.sequenceInterpreter.operations',
+                properties: {
+                    referenceResolver: '#danf:manipulation.referenceResolver#',
+                    servicesContainer: '#danf:dependencyInjection.servicesContainer#',
+                    collectionInterpreter: '#danf:event.collectionInterpreter#'
+                }
+            },
+            parents: {
+                class: 'danf:event.sequenceInterpreter.parents',
+                properties: {
+                    referenceResolver: '#danf:manipulation.referenceResolver#',
+                    collectionInterpreter: '#danf:event.collectionInterpreter#'
+                }
+            }
+        }
+    },
     notifier: {
         tags: ['danf:event.notifier'],
         properties: {
@@ -68,7 +141,7 @@ module.exports = {
                         class: 'danf:event.configuration.sectionProcessor.events',
                         properties: {
                             name: 'events',
-                            //collectionInterpreter: '#danf:event.collectionInterpreter#',
+                            collectionInterpreter: '#danf:event.collectionInterpreter#',
                             notifiers: '&danf:event.notifier&'
                         }
                     },

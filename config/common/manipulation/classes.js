@@ -17,5 +17,20 @@ module.exports = {
         default: require('../../../lib/common/manipulation/data-interpreter/default'),
         required: require('../../../lib/common/manipulation/data-interpreter/required'),
         type: require('../../../lib/common/manipulation/data-interpreter/type')
-    }
+    },
+    asynchronousCallback: {
+        error: require('../../../lib/common/manipulation/asynchronous-callback/error'),
+        errorResult: require('../../../lib/common/manipulation/asynchronous-callback/error-result'),
+        result: require('../../../lib/common/manipulation/asynchronous-callback/result')
+    },
+    asynchronousInput: {
+        array: require('../../../lib/common/manipulation/asynchronous-input/array'),
+        object: require('../../../lib/common/manipulation/asynchronous-input/object')
+    },
+    asynchronousIterator: {
+        collection: require('../../../lib/common/manipulation/asynchronous-iterator/collection'),
+        key: require('../../../lib/common/manipulation/asynchronous-iterator/key'),
+        memo: require('../../../lib/common/manipulation/asynchronous-iterator/memo')
+    },
+    asynchronousCollection: require('../../../lib/common/manipulation/asynchronous-collection')
 };

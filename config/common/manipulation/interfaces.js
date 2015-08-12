@@ -899,5 +899,95 @@ module.exports = {
                 arguments: ['function/fn', 'mixed...|null/args']
             }
         }
+    },
+    asynchronousCallback: {
+        methods: {
+            /**
+             * Adapt asynchronous callback execution.
+             *
+             * @param {function} callback The callback.
+             * @param {error} error The optional error.
+             * @param {mixed} result The result.
+             */
+            execute: {
+                arguments: ['function/callback', 'error|null/error', 'mixed/result']
+            },
+            /**
+             * Adapt asynchronous callback.
+             *
+             * @param {function} callback The callback.
+             * @return {function} The adapted callback.
+             */
+            wrap: {
+                arguments: ['function/callback']
+            }
+        }
+    },
+    asynchronousInput: {
+        methods: {
+            /**
+             * Format the input of a collection.
+             *
+             * @param {mixed} input The input.
+             * @return {mixed} The formatted input.
+             */
+            format: {
+                arguments: ['mixed/input']
+            }
+        }
+    },
+    asynchronousIterator: {
+        methods: {
+            /**
+             * Adapt asynchronous iterator.
+             *
+             * @param {function} iterator The iterator.
+             * @return {function} The adapted iterator.
+             */
+            wrap: {
+                arguments: ['function/iterator']
+            }
+        }
+    },
+    asynchronousCollection: {
+        methods: {
+            /**
+             * Format the input of a collection.
+             *
+             * @param {mixed} input The input.
+             * @return {mixed} The formatted input.
+             */
+            formatInput: {
+                arguments: ['mixed/input']
+            },
+            /**
+             * Adapt asynchronous iterator.
+             *
+             * @param {function} iterator The iterator.
+             * @return {function} The adapted iterator.
+             */
+            wrapIterator: {
+                arguments: ['function/iterator']
+            },
+            /**
+             * Adapt asynchronous callback execution.
+             *
+             * @param {function} callback The callback.
+             * @param {error} error The optional error.
+             * @param {mixed} result The result.
+             */
+            executeIteratorCallback: {
+                arguments: ['function/callback', 'error|null/error', 'mixed/result']
+            },
+            /**
+             * Adapt asynchronous callback.
+             *
+             * @param {function} callback The callback.
+             * @return {function} The adapted callback.
+             */
+            wrapCallback: {
+                arguments: ['function/callback']
+            }
+        }
     }
 };
