@@ -62,7 +62,6 @@ module.exports = {
     eventsContainer: {
         class: 'danf:event.eventsContainer',
         properties: {
-            servicesContainer: '#danf:dependencyInjection.servicesContainer#',
             sequencesContainer: '#danf:event.sequencesContainer#',
             eventProvider: '#danf:event.eventProvider#',
             notifiers: '&danf:event.notifier&'
