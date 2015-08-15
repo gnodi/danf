@@ -38,8 +38,8 @@ objectProvider.class = Class;
 
 describe('ObjectProvider', function() {
     it('method "provide" should provide a new object of the given class', function() {
-        var obj1 = objectProvider.provide(2, 3),
-            obj2 = objectProvider.provide(1, 4)
+        var obj1 = objectProvider.provide({foo: 2, bar: 3}),
+            obj2 = objectProvider.provide({foo: 1, bar: 4})
         ;
 
         assert.equal(obj1.foo, 2);
@@ -52,6 +52,8 @@ describe('ObjectProvider', function() {
         assert.throws(
             function() {
                 objectProvider.interface = 'notImplementedInterface';
+
+                objectProvider.__init();
             },
             /The provided object should be an "instance of `notImplementedInterface`"; an "instance of \[`interface`\]" given instead./
         );

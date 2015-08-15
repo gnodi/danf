@@ -228,11 +228,11 @@ module.exports = {
             /**
              * Provide an object.
              *
-             * @param {mixed} argument1...N Some optional arguments.
-             * @return {object} An object.
+             * @param {mixed_object} properties The properties to inject to the provided object.
+             * @return {object} The object.
              */
             provide: {
-                arguments: ['mixed.../argument1...N'],
+                arguments: ['mixed_object/properties'],
                 returns: 'object'
             }
         },
@@ -260,17 +260,6 @@ module.exports = {
              * Unset the context.
              */
             unset: {}
-        }
-    },
-    objectProvider: {
-        extends: 'danf:dependencyInjection.provider',
-        setters: {
-            /**
-             * The class of the provided objects.
-             *
-             * @param function The class.
-             */
-            class: 'function'
         }
     }
 };

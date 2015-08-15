@@ -56,7 +56,8 @@ module.exports = {
         class: 'danf:dependencyInjection.objectProvider',
         properties: {
             interfacer: '#danf:object.interfacer#',
-            classesRegistry: '#danf:object.classesRegistry#'
+            classesRegistry: '#danf:object.classesRegistry#',
+            debug: '%danf:context.debug%'
         },
         abstract: true
     },
