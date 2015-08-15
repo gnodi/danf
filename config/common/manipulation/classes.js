@@ -6,6 +6,7 @@ module.exports = {
     dataResolver: require('../../../lib/common/manipulation/data-resolver'),
     sequencer: require('../../../lib/common/manipulation/sequencer'),
     sequencerStack: require('../../../lib/common/manipulation/sequencer-stack'),
+    map: require('../../../lib/common/manipulation/map'),
     registry: require('../../../lib/common/manipulation/registry'),
     notifierRegistry: require('../../../lib/common/manipulation/notifier-registry'),
     callbackExecutor: require('../../../lib/common/manipulation/callback-executor'),

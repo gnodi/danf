@@ -374,6 +374,62 @@ module.exports = {
             }
         }
     },
+    map: {
+        methods: {
+            /**
+             * Set an item.
+             *
+             * @param {string|number} key The key.
+             * @param {mixed} value The value.
+             */
+            set: {
+                arguments: ['string|number/key', 'mixed/value']
+            },
+            /**
+             * Unset an item.
+             *
+             * @param {string|number} key The key.
+             */
+            unset: {
+                arguments: ['string|number/key']
+            },
+            /**
+             * Clear all items.
+             */
+            clear: {
+                arguments: []
+            },
+            /**
+             * Whether or not a key exists.
+             *
+             * @param {string|number} key The key.
+             * @return {boolean} True if the key exists, false otherwise.
+             */
+            has: {
+                arguments: ['string|number/key'],
+                returns: 'boolean'
+            },
+            /**
+             * Get an item.
+             *
+             * @param {string|number} key The key.
+             * @return {mixed} The value.
+             * @throw {error} If the key does not exist.
+             */
+            get: {
+                arguments: ['string|number/key'],
+                returns: 'mixed'
+            },
+            /**
+             * Get all the items.
+             *
+             * @return {object} The items.
+             */
+            getAll: {
+                returns: 'object'
+            }
+        }
+    },
     registry: {
         methods: {
             /**
@@ -408,7 +464,7 @@ module.exports = {
                 arguments: []
             },
             /**
-             * Whether or not the item has been registered.
+             * Whether or not an item has been registered.
              *
              * @param {string} name The identifier name of the item.
              * @return {boolean} True if the item has been registered, false otherwise.
@@ -521,10 +577,13 @@ module.exports = {
              * Add a tributary and set the context as this tributary.
              *
              * @param {string} scope The scope.
+             * @param {function|null} format The optional function allowing to format the result.
+             * @param {function|null} format The optional final callback.
              * @return {number} The id of the tributary.
              */
             addTributary: {
-                arguments: ['string/scope']
+                arguments: ['string/scope', 'function|null/format', 'function|null/callback'],
+                returns: 'number'
             },
             /**
              * Set an already added tributary as context.
@@ -546,11 +605,35 @@ module.exports = {
         },
         getters: {
             /**
+             * The context of execution of the flow.
+             *
+             * @return {danf:manipulation.map} The context.
+             */
+            context: 'danf:manipulation.map',
+            /**
              * The stream.
              *
              * @return {object} The stream.
              */
-            stream: 'object'
+            stream: 'object',
+            /**
+             * The current stream.
+             *
+             * @return {object} The stream.
+             */
+            currentStream: 'object',
+            /**
+             * The parent stream of the current one.
+             *
+             * @return {object} The stream.
+             */
+            parentStream: 'object',
+            /**
+             * The current tributary.
+             *
+             * @return {string} The identifier of the tributary.
+             */
+            currentTributary: 'string'
         }
     },
     flowDriver: {
@@ -919,7 +1002,8 @@ module.exports = {
              * @return {function} The adapted callback.
              */
             wrap: {
-                arguments: ['function/callback']
+                arguments: ['function/callback'],
+                returns: 'function'
             }
         }
     },
@@ -932,7 +1016,8 @@ module.exports = {
              * @return {mixed} The formatted input.
              */
             format: {
-                arguments: ['mixed/input']
+                arguments: ['mixed/input'],
+                returns: 'mixed'
             }
         }
     },
@@ -945,7 +1030,8 @@ module.exports = {
              * @return {function} The adapted iterator.
              */
             wrap: {
-                arguments: ['function/iterator']
+                arguments: ['function/iterator'],
+                returns: 'function'
             }
         }
     },
@@ -958,7 +1044,8 @@ module.exports = {
              * @return {mixed} The formatted input.
              */
             formatInput: {
-                arguments: ['mixed/input']
+                arguments: ['mixed/input'],
+                returns: 'mixed'
             },
             /**
              * Adapt asynchronous iterator.
@@ -967,7 +1054,8 @@ module.exports = {
              * @return {function} The adapted iterator.
              */
             wrapIterator: {
-                arguments: ['function/iterator']
+                arguments: ['function/iterator'],
+                returns: 'function'
             },
             /**
              * Adapt asynchronous callback execution.
@@ -986,7 +1074,8 @@ module.exports = {
              * @return {function} The adapted callback.
              */
             wrapCallback: {
-                arguments: ['function/callback']
+                arguments: ['function/callback'],
+                returns: 'function'
             }
         }
     }

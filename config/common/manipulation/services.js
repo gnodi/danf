@@ -51,6 +51,13 @@ module.exports = {
     callbackExecutor: {
         class: 'danf:manipulation.callbackExecutor'
     },
+    mapProvider: {
+        parent: 'danf:dependencyInjection.objectProvider',
+        properties: {
+            class: 'danf:manipulation.map',
+            interface: 'danf:manipulation.map'
+        }
+    },
     sequencerProvider: {
         parent: 'danf:dependencyInjection.objectProvider',
         properties: {

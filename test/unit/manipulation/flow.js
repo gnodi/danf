@@ -6,6 +6,8 @@ var assert = require('assert'),
     Flow = require('../../../lib/common/manipulation/flow')
 ;
 
+var mapProvider = require('../../fixture/manipulation/map-provider');
+
 var flowTests = [
     {
         scope: '.',
@@ -13,6 +15,7 @@ var flowTests = [
         expected: 16
     },
     {
+        scope: null,
         input: 10,
         expected: 10
     },
@@ -51,7 +54,7 @@ var flowTests = [
 describe('Flow', function() {
     flowTests.forEach(function(test) {
         it('should allow to wait for asynchrone tasks to process', function(done) {
-            var flow = new Flow(test.input, test.scope, function(err, result) {
+            var flow = new Flow(test.input, test.scope, mapProvider.provide(), function(err, result) {
                     assert.deepEqual(result, test.expected);
                     done();
                 })
@@ -79,7 +82,7 @@ describe('Flow', function() {
     })
 
     it('should allow to wait for tributary asynchrone tasks to process', function(done) {
-        var flow = new Flow({}, 'foo', function(err, result) {
+        var flow = new Flow({}, 'foo', mapProvider.provide(), function(err, result) {
                 assert.deepEqual(
                     result,
                     {

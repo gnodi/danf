@@ -8,6 +8,8 @@ var assert = require('assert'),
     Class = require('../../../lib/common/object/class')
 ;
 
+var mapProvider = require('../../fixture/manipulation/map-provider');
+
 function A() {
 }
 utils.extend(Class, A);
@@ -84,7 +86,7 @@ C.prototype.m = function(keys) {
 describe('Inheriting from Class should allow', function() {
     it('to process asynchrone tasks', function(done) {
         var expected = {foo: 5},
-            flow = new Flow({}, null, function(err, result) {
+            flow = new Flow({}, null, mapProvider.provide(), function(err, result) {
                 assert.deepEqual(result, expected);
                 done();
             }),
@@ -103,7 +105,7 @@ describe('Inheriting from Class should allow', function() {
                 bar: 1,
                 foobar: 2
             },
-            flow = new Flow({}, null, function(err, result) {
+            flow = new Flow({}, null, mapProvider.provide(), function(err, result) {
                 assert.deepEqual(result, expected);
                 done();
             }),
@@ -118,7 +120,7 @@ describe('Inheriting from Class should allow', function() {
 
     it('to process asynchrone tasks', function(done) {
         var expected = {foo: {bar: 6}},
-            flow = new Flow({}, 'foo', function(err, result) {
+            flow = new Flow({}, 'foo', mapProvider.provide(), function(err, result) {
                 assert.deepEqual(result, expected);
                 done();
             }),
@@ -133,7 +135,7 @@ describe('Inheriting from Class should allow', function() {
 
     it('to process asynchrone tasks', function(done) {
         var expected = {foo: {bar: 8}},
-            flow = new Flow({foo: {bar: 2}}, 'foo', function(err, result) {
+            flow = new Flow({foo: {bar: 2}}, 'foo', mapProvider.provide(), function(err, result) {
                 assert.deepEqual(result, expected);
                 done();
             }),
@@ -159,7 +161,7 @@ describe('Inheriting from Class should allow', function() {
                     }
                 }
             },
-            flow = new Flow({}, 'foo', function(err, result) {
+            flow = new Flow({}, 'foo', mapProvider.provide(), function(err, result) {
                 assert.deepEqual(result, expected);
                 done();
             }),
@@ -187,7 +189,7 @@ describe('Inheriting from Class should allow', function() {
                     bar: 2
                 }
             },
-            flow = new Flow({foo: {bar: 2}}, 'foo', function(err, result) {
+            flow = new Flow({foo: {bar: 2}}, 'foo', mapProvider.provide(), function(err, result) {
                 assert.deepEqual(result, expected);
                 done();
             }),
@@ -203,7 +205,7 @@ describe('Inheriting from Class should allow', function() {
 
     it('to process asynchrone tasks', function(done) {
         var expected = {foo: {bar: 3}},
-            flow = new Flow({}, null, function(err, result) {
+            flow = new Flow({}, null, mapProvider.provide(), function(err, result) {
                 assert.deepEqual(result, expected);
                 done();
             }),
@@ -218,7 +220,7 @@ describe('Inheriting from Class should allow', function() {
 
     it('to process asynchrone tasks', function(done) {
         var expected = {'foo.bar': 3},
-            flow = new Flow({}, null, function(err, result) {
+            flow = new Flow({}, null, mapProvider.provide(), function(err, result) {
                 assert.deepEqual(result, expected);
                 done();
             }),
@@ -241,7 +243,7 @@ describe('Inheriting from Class should allow', function() {
                     }
                 }
             },
-            flow = new Flow({}, 'foo', function(err, result) {
+            flow = new Flow({}, 'foo', mapProvider.provide(), function(err, result) {
                 assert.deepEqual(result, expected);
                 done();
             }),
@@ -256,7 +258,7 @@ describe('Inheriting from Class should allow', function() {
 
     it('to process asynchrone tasks', function(done) {
         var expected = 5,
-            flow = new Flow({}, null, function(err, result) {
+            flow = new Flow({}, null, mapProvider.provide(), function(err, result) {
                 assert.deepEqual(result, expected);
                 done();
             }),
@@ -271,7 +273,7 @@ describe('Inheriting from Class should allow', function() {
 
     it('to process asynchrone tasks', function(done) {
         var expected = null,
-            flow = new Flow(null, null, function(err, result) {
+            flow = new Flow(null, null, mapProvider.provide(), function(err, result) {
                 assert.deepEqual(result, expected);
                 done();
             }),

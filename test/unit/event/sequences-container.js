@@ -23,14 +23,15 @@ var assert = require('assert'),
     async = require('async')
 ;
 
+var mapProvider = require('../../fixture/manipulation/map-provider');
 var FlowProvider = function() {};
-FlowProvider.prototype.provide = function(input, scope, callback) {
-    return new Flow(input, scope, callback);
+FlowProvider.prototype.provide = function(properties) {
+    return new Flow(properties.stream, properties.scope, mapProvider.provide(), properties.callback);
 }
 
 var SequenceProvider = function(flowProvider) { this.flowProvider = flowProvider };
-SequenceProvider.prototype.provide = function(operation) {
-    return new Sequence(operation, this.flowProvider);
+SequenceProvider.prototype.provide = function(properties) {
+    return new Sequence(properties.operation, this.flowProvider, mapProvider);
 }
 
 var referenceResolver = new ReferenceResolver(),
