@@ -87,16 +87,10 @@ module.exports = {
             /**
              * Add an event listener.
              *
-             * @param {string} name The name of the event.
-             * @param {object} event The description of the event.
-             * @param {danf:manipulation.sequencer} sequencer The sequencer to process on event triggering.
+             * @param {danf:manipulation.event} event The event.
              */
             addListener: {
-                arguments: [
-                    'string/name',
-                    'object/event',
-                    'danf:manipulation.sequencer/sequencer'
-                ]
+                arguments: ['danf:manipulation.event/event']
             },
             /**
              * Refresh listeners if needed.
@@ -109,11 +103,11 @@ module.exports = {
             /**
              * Notify an event triggering.
              *
-             * @param {string} name The name of the event.
+             * @param {danf:manipulation.event} event The event.
              * @param {mixed} data The data associated with the triggered event.
              */
             notify: {
-                arguments: ['string/name', 'mixed/data']
+                arguments: ['danf:manipulation.event/event', 'mixed/data']
             }
         },
         getters: {
