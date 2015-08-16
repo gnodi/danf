@@ -37,6 +37,12 @@ module.exports = {
             notifiers: '&danf:event.notifier&'
         }
     },
+    referencesResolver: {
+        class: 'danf:event.referencesResolver',
+        properties: {
+            referenceResolver: '#danf:manipulation.referenceResolver#'
+        }
+    },
     sequenceProvider: {
         parent: 'danf:dependencyInjection.objectProvider',
         properties: {
@@ -70,7 +76,7 @@ module.exports = {
     collectionInterpreter: {
         class: 'danf:event.collectionInterpreter',
         properties: {
-            referenceResolver: '#danf:manipulation.referenceResolver#',
+            referencesResolver: '#danf:event.referencesResolver#',
             flowDriver: '#danf:manipulation.flowDriver#',
             asynchronousCollections: '&danf:manipulation.asynchronousCollection&'
         }
@@ -103,7 +109,7 @@ module.exports = {
             operations: {
                 class: 'danf:event.sequenceInterpreter.operations',
                 properties: {
-                    referenceResolver: '#danf:manipulation.referenceResolver#',
+                    referencesResolver: '#danf:event.referencesResolver#',
                     servicesContainer: '#danf:dependencyInjection.servicesContainer#',
                     collectionInterpreter: '#danf:event.collectionInterpreter#'
                 }
@@ -147,7 +153,8 @@ module.exports = {
                     sequences: {
                         class: 'danf:event.configuration.sectionProcessor.sequences',
                         properties: {
-                            name: 'sequences'
+                            name: 'sequences',
+                            sequenceInterpreters: '&danf:event.sequenceInterpreter&'
                         }
                     }
                 }
