@@ -250,115 +250,132 @@ module.exports = {
             }
         },
         sequences: {
-            getForum: [
-                {
-                    service: 'danf:manipulation.callbackExecutor',
-                    method: 'execute',
-                    arguments: [
-                        function(parameters, defaultPage) {
-                            var topic = parameters.topic;
+            getForum: {
+                operations: [
+                    {
+                        order: 0,
+                        service: 'danf:manipulation.callbackExecutor',
+                        method: 'execute',
+                        arguments: [
+                            function(parameters, defaultPage) {
+                                var topic = parameters.topic;
 
-                            topic = topic.charAt(0).toUpperCase() + topic.slice(1);
-                            parameters.topic = topic.charAt(0) + topic.slice(1).toLowerCase();
+                                topic = topic.charAt(0).toUpperCase() + topic.slice(1);
+                                parameters.topic = topic.charAt(0) + topic.slice(1).toLowerCase();
 
-                            parameters.page = undefined !== parameters.page ? parameters.page : defaultPage;
-                        },
-                        '@.@',
-                        '$main:defaultPage$'
-                    ]
-                },
-                {
-                    service: 'main:forumHandler',
-                    method: 'getTopics',
-                    arguments: ['@topic@'],
-                    returns: 'topics'
-                },
-                {
-                    service: 'main:forumHandler',
-                    method: 'getMessages',
-                    arguments: ['@topics.1@', '@page@'],
-                    returns: 'messages'
-                },
-                {
-                    service: 'main:forumHandler',
-                    method: 'computeForumSize',
-                    arguments: ['@topics@', '@messages@'],
-                    returns: 'size'
-                },
-                {
-                    service: 'danf:manipulation.callbackExecutor',
-                    method: 'execute',
-                    arguments: [
-                        function(parameters, title) {
-                            parameters.count = parameters.messages.length;
-                            parameters.title = title;
-                        },
-                        '@.@',
-                        '$main:title$'
-                    ]
-                }
-            ],
-            increment: [
-                {
-                    service: 'danf:manipulation.callbackExecutor',
-                    method: 'execute',
-                    arguments: [
-                        function(value) {
-                            return value + 1;
-                        },
-                        '@number@'
-                    ],
-                    returns: 'number'
-                },
-            ],
-            executeSubrequest: [
-                {
-                    service: 'main:subrequestExecutor',
-                    method: 'execute',
-                    returns: 'text'
-                },
-            ],
-            processForum: [
-                {
-                    service: 'danf:manipulation.callbackExecutor',
-                    method: 'execute',
-                    arguments: [
-                        function(parameters, defaultPage) {
-                            var topic = parameters.topic;
+                                parameters.page = undefined !== parameters.page ? parameters.page : defaultPage;
+                            },
+                            '@.@',
+                            '$main:defaultPage$'
+                        ]
+                    },
+                    {
+                        order: 1,
+                        service: 'main:forumHandler',
+                        method: 'getTopics',
+                        arguments: ['@topic@'],
+                        scope: 'topics'
+                    },
+                    {
+                        order: 2,
+                        service: 'main:forumHandler',
+                        method: 'getMessages',
+                        arguments: ['@topics.1@', '@page@'],
+                        scope: 'messages'
+                    },
+                    {
+                        order: 3,
+                        service: 'main:forumHandler',
+                        method: 'computeForumSize',
+                        arguments: ['@topics@', '@messages@'],
+                        scope: 'size'
+                    },
+                    {
+                        order: 4,
+                        service: 'danf:manipulation.callbackExecutor',
+                        method: 'execute',
+                        arguments: [
+                            function(parameters, title) {
+                                parameters.count = parameters.messages.length;
+                                parameters.title = title;
+                            },
+                            '@.@',
+                            '$main:title$'
+                        ]
+                    }
+                ]
+            },
+            increment: {
+                operations: [
+                    {
+                        service: 'danf:manipulation.callbackExecutor',
+                        method: 'execute',
+                        arguments: [
+                            function(value) {
+                                return value + 1;
+                            },
+                            '@number@'
+                        ],
+                        scope: 'number'
+                    }
+                ]
+            },
+            executeSubrequest: {
+                operations: [
+                    {
+                        service: 'main:subrequestExecutor',
+                        method: 'execute',
+                        scope: 'text'
+                    }
+                ]
+            },
+            processForum: {
+                operations: [
+                    {
+                        service: 'danf:manipulation.callbackExecutor',
+                        method: 'execute',
+                        arguments: [
+                            function(parameters, defaultPage) {
+                                var topic = parameters.topic;
 
-                            topic = topic.charAt(0).toUpperCase() + topic.slice(1);
-                            parameters.topic = topic.charAt(0) + topic.slice(1).toLowerCase();
+                                topic = topic.charAt(0).toUpperCase() + topic.slice(1);
+                                parameters.topic = topic.charAt(0) + topic.slice(1).toLowerCase();
 
-                            parameters.page = undefined !== parameters.page ? parameters.page : defaultPage;
-                        },
-                        '@.@',
-                        '$main:defaultPage$'
-                    ]
-                }
-            ],
-            testSession: [
-                {
-                    service: 'sessionTester',
-                    method: 'test',
-                    arguments: ['@order@']
-                },
-                {
-                    service: 'sessionTester',
-                    method: 'testAsync',
-                    arguments: ['@order@']
-                },
-                {
-                    service: 'sessionTester',
-                    method: 'testAsync',
-                    arguments: ['@order@', true]
-                }
-            ],
-            testCookie: [
-                {
-                    service: 'cookieTester',
-                    method: 'test'
-                }
-            ]
+                                parameters.page = undefined !== parameters.page ? parameters.page : defaultPage;
+                            },
+                            '@.@',
+                            '$main:defaultPage$'
+                        ]
+                    }
+                ]
+            },
+            testSession: {
+                operations: [
+                    {
+                        service: 'sessionTester',
+                        method: 'test',
+                        arguments: ['@order@']
+                    },
+                    {
+                        service: 'sessionTester',
+                        method: 'testAsync',
+                        arguments: ['@order@']
+                    },
+                    {
+                        service: 'sessionTester',
+                        method: 'testAsync',
+                        arguments: ['@order@', true]
+                    }
+                ]
+            },
+            testCookie: {
+                operations: [
+                    {
+                        service: 'cookieTester',
+                        method: 'test'
+                    }
+                ]
+            }
         },
         events: {
             request: {
@@ -381,7 +398,15 @@ module.exports = {
                             select: ['messages']
                         }
                     },
-                    sequences: ['getForum']
+                    sequences: [
+                        {
+                            name: 'getForum',
+                            input: {
+                                page: '@page@',
+                                topic: '@topic@'
+                            }
+                        }
+                    ]
                 },
                 param: {
                     path: '/param',
@@ -396,7 +421,14 @@ module.exports = {
                             select: ['number']
                         }
                     },
-                    sequences: ['increment']
+                    sequences: [
+                        {
+                            name: 'increment',
+                            input: {
+                                number: '@number@'
+                            }
+                        }
+                    ]
                 },
                 stringParam: {
                     path: '/string-param',
@@ -411,7 +443,14 @@ module.exports = {
                             select: ['number']
                         }
                     },
-                    sequences: ['increment']
+                    sequences: [
+                        {
+                            name: 'increment',
+                            input: {
+                                number: '@number@'
+                            }
+                        }
+                    ]
                 },
                 main: {
                     path: '/main',
@@ -421,7 +460,11 @@ module.exports = {
                             select: ['text']
                         }
                     },
-                    sequences: ['executeSubrequest']
+                    sequences: [
+                        {
+                            name: 'executeSubrequest'
+                        }
+                    ]
                 },
                 sub: {
                     path: '/sub',
@@ -439,12 +482,27 @@ module.exports = {
                 session: {
                     path: '/session/:order',
                     methods: ['get'],
-                    sequences: ['testSession']
+                    sequences: [
+                        {
+                            name: 'testSession',
+                            input: {
+                                order: '@order@'
+                            }
+                        }
+                    ]
                 },
                 cookie: {
                     path: '/cookie',
                     methods: ['get'],
-                    sequences: ['testCookie']
+                    sequences: [
+                        {
+                            name: 'testCookie',
+                            input: {
+                                page: '@page@',
+                                topic: '@topic@'
+                            }
+                        }
+                    ]
                 }
             }
         },
