@@ -87,10 +87,10 @@ module.exports = {
             /**
              * Add an event listener.
              *
-             * @param {danf:manipulation.event} event The event.
+             * @param {danf:event.event} event The event.
              */
             addListener: {
-                arguments: ['danf:manipulation.event/event']
+                arguments: ['danf:event.event/event']
             },
             /**
              * Refresh listeners if needed.
@@ -103,11 +103,11 @@ module.exports = {
             /**
              * Notify an event triggering.
              *
-             * @param {danf:manipulation.event} event The event.
+             * @param {danf:event.event} event The event.
              * @param {mixed} data The data associated with the triggered event.
              */
             notify: {
-                arguments: ['danf:manipulation.event/event', 'mixed/data']
+                arguments: ['danf:event.event/event', 'mixed/data']
             }
         },
         getters: {
@@ -123,6 +123,29 @@ module.exports = {
              * @return {object} The contract.
              */
             contract: 'object'
+        }
+    },
+    referencesResolver: {
+        methods: {
+            /**
+             * Resolve references.
+             *
+             * @param {string} source The source of references.
+             * @param {object} context The resolving context.
+             */
+            resolve: {
+                arguments: ['string/source', 'object/context']
+            },
+            /**
+             * Resolve references of a specific type.
+             *
+             * @param {string} source The source of references.
+             * @param {string} type The identifier of a reference type.
+             * @param {object} context The resolving context.
+             */
+            resolveSpecific: {
+                arguments: ['string/source', 'type/string', 'object/context']
+            }
         }
     },
     sequence: {
@@ -166,6 +189,26 @@ module.exports = {
             trigger: {
                 arguments: ['mixed/data']
             }
+        },
+        getters: {
+            /**
+             * The identifier name.
+             *
+             * @return {danf:event.notifier} The name.
+             */
+            name: 'string',
+            /**
+             * The parameters.
+             *
+             * @return {mixed_object} The parameters.
+             */
+            parameters: 'mixed_object',
+            /**
+             * The sequence.
+             *
+             * @return {danf:event.sequence} The sequence.
+             */
+            sequence: 'danf:event.sequence'
         },
         setters: {
             /**
@@ -416,7 +459,21 @@ module.exports = {
              *
              * @return {object} The contract.
              */
-            contract: 'object'
+            contract: 'object',
+            /**
+             * The order of interpretation.
+             *
+             * @return {number} The order.
+             */
+            order: 'number'
+        },
+        setters: {
+            /**
+             * The sequences container.
+             *
+             * @param {danf:event.sequencesContainer} The sequences container.
+             */
+            sequencesContainer: 'danf:event.sequencesContainer'
         }
     }
 };
