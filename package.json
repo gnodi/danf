@@ -1,7 +1,7 @@
 {
     "name": "danf",
     "description": "Danf is a javascript/node.js full-stack OOP framework allowing to code the same way on both the server (node.js) and client (browser) sides. It provides many features in order to help producing scalable, maintainable, testable and performant applications.",
-    "version": "0.2.5",
+    "version": "0.2.6",
     "author": "Thomas Prelot <tprelot@gmail.com>",
     "contributors": [
         {
