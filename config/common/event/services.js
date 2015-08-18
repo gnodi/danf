@@ -47,7 +47,11 @@ module.exports = {
         parent: 'danf:dependencyInjection.objectProvider',
         properties: {
             class: 'danf:event.sequence',
-            interface: 'danf:event.sequence'
+            interface: 'danf:event.sequence',
+            properties: {
+                mapProvider: '#danf:manipulation.mapProvider#',
+                flowProvider: '#danf:manipulation.flowProvider#'
+            }
         }
     },
     eventProvider: {
@@ -93,7 +97,7 @@ module.exports = {
             children: {
                 class: 'danf:event.sequenceInterpreter.children',
                 properties: {
-                    referenceResolver: '#danf:manipulation.referenceResolver#',
+                    referencesResolver: '#danf:event.referencesResolver#',
                     collectionInterpreter: '#danf:event.collectionInterpreter#'
                 }
             },
@@ -117,7 +121,7 @@ module.exports = {
             parents: {
                 class: 'danf:event.sequenceInterpreter.parents',
                 properties: {
-                    referenceResolver: '#danf:manipulation.referenceResolver#',
+                    referencesResolver: '#danf:event.referencesResolver#',
                     collectionInterpreter: '#danf:event.collectionInterpreter#'
                 }
             }
