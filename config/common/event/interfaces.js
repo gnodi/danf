@@ -159,9 +159,9 @@ module.exports = {
              */
             execute: {
                 arguments: [
-                    'string/name',
-                    'string/event',
-                    'danf:manipulation.sequencer/sequencer'
+                    'object/input',
+                    'string/scope',
+                    'function|null/callback'
                 ]
             },
             /**
@@ -172,9 +172,8 @@ module.exports = {
              */
             forward: {
                 arguments: [
-                    'string/name',
-                    'string/event',
-                    'danf:manipulation.sequencer/sequencer'
+                    'danf:manipulation.flow/flow',
+                    'function|null/callback'
                 ]
             }
         }
