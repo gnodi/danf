@@ -123,6 +123,7 @@ module.exports = {
         children: {
             each: {
                 properties: {
+                    method: 'each',
                     input: '#danf:manipulation.asynchronousInput.array#',
                     iterator: '#danf:manipulation.asynchronousIterator.collection#',
                     callback: '#danf:manipulation.asynchronousCallback.error#'
@@ -130,6 +131,7 @@ module.exports = {
             },
             eachSeries: {
                 properties: {
+                    method: 'eachSeries',
                     input: '#danf:manipulation.asynchronousInput.array#',
                     iterator: '#danf:manipulation.asynchronousIterator.collection#',
                     callback: '#danf:manipulation.asynchronousCallback.error#'
@@ -137,6 +139,7 @@ module.exports = {
             },
             eachLimit: {
                 properties: {
+                    method: 'eachLimit',
                     input: '#danf:manipulation.asynchronousInput.array#',
                     iterator: '#danf:manipulation.asynchronousIterator.collection#',
                     callback: '#danf:manipulation.asynchronousCallback.error#',
@@ -147,6 +150,7 @@ module.exports = {
             },
             forEachOf: {
                 properties: {
+                    method: 'forEachOf',
                     input: '#danf:manipulation.asynchronousInput.object#',
                     iterator: '#danf:manipulation.asynchronousIterator.key#',
                     callback: '#danf:manipulation.asynchronousCallback.error#'
@@ -154,6 +158,7 @@ module.exports = {
             },
             forEachOfSeries: {
                 properties: {
+                    method: 'forEachOfSeries',
                     input: '#danf:manipulation.asynchronousInput.object#',
                     iterator: '#danf:manipulation.asynchronousIterator.key#',
                     callback: '#danf:manipulation.asynchronousCallback.error#'
@@ -161,6 +166,7 @@ module.exports = {
             },
             forEachOfLimit: {
                 properties: {
+                    method: 'forEachOfLimit',
                     input: '#danf:manipulation.asynchronousInput.object#',
                     iterator: '#danf:manipulation.asynchronousIterator.key#',
                     callback: '#danf:manipulation.asynchronousCallback.error#',
@@ -171,6 +177,7 @@ module.exports = {
             },
             map: {
                 properties: {
+                    method: 'map',
                     input: '#danf:manipulation.asynchronousInput.array#',
                     iterator: '#danf:manipulation.asynchronousIterator.collection#',
                     callback: '#danf:manipulation.asynchronousCallback.errorResult#'
@@ -178,6 +185,7 @@ module.exports = {
             },
             mapSeries: {
                 properties: {
+                    method: 'mapSeries',
                     input: '#danf:manipulation.asynchronousInput.array#',
                     iterator: '#danf:manipulation.asynchronousIterator.collection#',
                     callback: '#danf:manipulation.asynchronousCallback.errorResult#'
@@ -185,6 +193,7 @@ module.exports = {
             },
             mapLimit: {
                 properties: {
+                    method: 'mapLimit',
                     input: '#danf:manipulation.asynchronousInput.array#',
                     iterator: '#danf:manipulation.asynchronousIterator.collection#',
                     callback: '#danf:manipulation.asynchronousCallback.errorResult#',
@@ -195,6 +204,7 @@ module.exports = {
             },
             filter: {
                 properties: {
+                    method: 'filter',
                     input: '#danf:manipulation.asynchronousInput.array#',
                     iterator: '#danf:manipulation.asynchronousIterator.collection#',
                     callback: '#danf:manipulation.asynchronousCallback.result#'
@@ -202,6 +212,7 @@ module.exports = {
             },
             filterSeries: {
                 properties: {
+                    method: 'filterSeries',
                     input: '#danf:manipulation.asynchronousInput.array#',
                     iterator: '#danf:manipulation.asynchronousIterator.collection#',
                     callback: '#danf:manipulation.asynchronousCallback.result#'
@@ -209,6 +220,7 @@ module.exports = {
             },
             reject: {
                 properties: {
+                    method: 'reject',
                     input: '#danf:manipulation.asynchronousInput.array#',
                     iterator: '#danf:manipulation.asynchronousIterator.collection#',
                     callback: '#danf:manipulation.asynchronousCallback.result#'
@@ -216,6 +228,7 @@ module.exports = {
             },
             rejectSeries: {
                 properties: {
+                    method: 'rejectSeries',
                     input: '#danf:manipulation.asynchronousInput.array#',
                     iterator: '#danf:manipulation.asynchronousIterator.collection#',
                     callback: '#danf:manipulation.asynchronousCallback.result#'
@@ -223,6 +236,7 @@ module.exports = {
             },
             reduce: {
                 properties: {
+                    method: 'reduce',
                     input: '#danf:manipulation.asynchronousInput.array#',
                     iterator: '#danf:manipulation.asynchronousIterator.memo#',
                     callback: '#danf:manipulation.asynchronousCallback.errorResult#',
@@ -233,6 +247,7 @@ module.exports = {
             },
             reduceRight: {
                 properties: {
+                    method: 'reduceRight',
                     input: '#danf:manipulation.asynchronousInput.array#',
                     iterator: '#danf:manipulation.asynchronousIterator.memo#',
                     callback: '#danf:manipulation.asynchronousCallback.errorResult#',
@@ -243,6 +258,7 @@ module.exports = {
             },
             detect: {
                 properties: {
+                    method: 'detect',
                     input: '#danf:manipulation.asynchronousInput.array#',
                     iterator: '#danf:manipulation.asynchronousIterator.collection#',
                     callback: '#danf:manipulation.asynchronousCallback.result#'
@@ -250,6 +266,7 @@ module.exports = {
             },
             detectSeries: {
                 properties: {
+                    method: 'detectSeries',
                     input: '#danf:manipulation.asynchronousInput.array#',
                     iterator: '#danf:manipulation.asynchronousIterator.collection#',
                     callback: '#danf:manipulation.asynchronousCallback.result#'
@@ -257,6 +274,7 @@ module.exports = {
             },
             sortBy: {
                 properties: {
+                    method: 'sortBy',
                     input: '#danf:manipulation.asynchronousInput.array#',
                     iterator: '#danf:manipulation.asynchronousIterator.collection#',
                     callback: '#danf:manipulation.asynchronousCallback.errorResult#'
@@ -264,6 +282,7 @@ module.exports = {
             },
             some: {
                 properties: {
+                    method: 'some',
                     input: '#danf:manipulation.asynchronousInput.array#',
                     iterator: '#danf:manipulation.asynchronousIterator.collection#',
                     callback: '#danf:manipulation.asynchronousCallback.result#'
@@ -271,6 +290,7 @@ module.exports = {
             },
             every: {
                 properties: {
+                    method: 'every',
                     input: '#danf:manipulation.asynchronousInput.array#',
                     iterator: '#danf:manipulation.asynchronousIterator.collection#',
                     callback: '#danf:manipulation.asynchronousCallback.result#'
@@ -278,6 +298,7 @@ module.exports = {
             },
             concat: {
                 properties: {
+                    method: 'concat',
                     input: '#danf:manipulation.asynchronousInput.array#',
                     iterator: '#danf:manipulation.asynchronousIterator.collection#',
                     callback: '#danf:manipulation.asynchronousCallback.errorResult#'
@@ -285,6 +306,7 @@ module.exports = {
             },
             concatSeries: {
                 properties: {
+                    method: 'concatSeries',
                     input: '#danf:manipulation.asynchronousInput.array#',
                     iterator: '#danf:manipulation.asynchronousIterator.collection#',
                     callback: '#danf:manipulation.asynchronousCallback.errorResult#'

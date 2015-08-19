@@ -18,7 +18,6 @@ var assert = require('assert'),
     FlowDriver = require('../../../lib/common/manipulation/flow-driver'),
     Sequence = require('../../../lib/common/event/sequence'),
     ServicesContainer = require('../../../lib/common/dependency-injection/services-container'),
-    Class = require('../../../lib/common/object/class'),
     utils = require('../../../lib/common/utils'),
     async = require('async')
 ;
@@ -38,13 +37,15 @@ var referenceResolver = new ReferenceResolver(),
     referencesResolver = new ReferencesResolver(referenceResolver, {memo: 2}),
     servicesContainer = new ServicesContainer(),
     flowDriver = new FlowDriver(async),
-    asynchronousCollectionsRegistry = require('../../fixture/manipulation/asynchronous-collections-registry'),
-    collectionInterpreter = new CollectionInterpreter(referencesResolver, flowDriver, asynchronousCollectionsRegistry),
+    asynchronousCollections = require('../../fixture/manipulation/asynchronous-collections'),
+    collectionInterpreter = new CollectionInterpreter(referencesResolver, flowDriver),
     flowProvider = new FlowProvider(),
     sequenceProvider = new SequenceProvider(flowProvider),
     sequencesContainer = new SequencesContainer(flowDriver, sequenceProvider),
     dataResolver = require('../../fixture/manipulation/data-resolver')
 ;
+
+collectionInterpreter.asynchronousCollections = asynchronousCollections;
 
 var contextType = new ReferenceType();
 contextType.name = '@';
@@ -77,12 +78,11 @@ referenceResolver.addReferenceType(sequenceTagType);
 sequencesContainer.addSequenceInterpreter(new AliasSequenceInterpreter(sequencesContainer));
 sequencesContainer.addSequenceInterpreter(new ChildrenSequenceInterpreter(sequencesContainer, referencesResolver, collectionInterpreter));
 sequencesContainer.addSequenceInterpreter(new CollectionsSequenceInterpreter(sequencesContainer));
-sequencesContainer.addSequenceInterpreter(new OperationsSequenceInterpreter(sequencesContainer, referencesResolver, servicesContainer, collectionInterpreter, asynchronousCollectionsRegistry));
+sequencesContainer.addSequenceInterpreter(new OperationsSequenceInterpreter(sequencesContainer, referencesResolver, servicesContainer, collectionInterpreter));
 sequencesContainer.addSequenceInterpreter(new InputSequenceInterpreter(sequencesContainer, dataResolver));
 sequencesContainer.addSequenceInterpreter(new ParentsSequenceInterpreter(sequencesContainer, referencesResolver, collectionInterpreter));
 
 var Computer = function() {};
-utils.extend(Class, Computer);
 Computer.prototype.add = function(a, b) {
     return a + b;
 };
@@ -98,7 +98,6 @@ Computer.prototype.divide = function(a, b) {
 servicesContainer.set('computer', new Computer());
 
 var AsyncComputer = function() {};
-utils.extend(Class, AsyncComputer);
 AsyncComputer.prototype.add = function(a, b, delay) {
     delay = delay ? delay : 10;
 
@@ -1354,7 +1353,7 @@ describe('SequencesContainer', function() {
                     }
                 ;
 
-                sequence.execute(test.input, '.', end);
+                sequence.execute(test.input, {}, '.', end);
             })
         })
 
@@ -1371,7 +1370,7 @@ describe('SequencesContainer', function() {
                     }
                 ;
 
-                sequence.execute(test.input, '.', end);
+                sequence.execute(test.input, {}, '.', end);
             })
         })
 
@@ -1388,7 +1387,7 @@ describe('SequencesContainer', function() {
                     }
                 ;
 
-                sequence.execute(test.input, '.', end);
+                sequence.execute(test.input, {}, '.', end);
             })
         })
 
@@ -1399,7 +1398,7 @@ describe('SequencesContainer', function() {
                         end = function() {}
                     ;
 
-                    sequence.execute({x: 0}, '.', end);
+                    sequence.execute({x: 0}, {}, '.', end);
                 },
                 /The value is required for the field "sequence\[h\].y"\./
             );
@@ -1412,7 +1411,7 @@ describe('SequencesContainer', function() {
                         end = function() {}
                     ;
 
-                    sequence.execute({}, '.', end);
+                    sequence.execute({}, {}, '.', end);
                 },
                 /The parameter "limit" must be defined for the collection method "mapLimit"\./
             );
@@ -1467,7 +1466,7 @@ describe('SequencesContainer', function() {
                     }
                 ;
 
-                sequence.execute(test.input, null, end);
+                sequence.execute(test.input, {}, null, end);
             })
         })
     })
@@ -1491,7 +1490,7 @@ describe('SequencesContainer', function() {
                 }
             ;
 
-            sequence.execute({}, null, end);
+            sequence.execute({}, {}, null, end);
         })
     })
 })

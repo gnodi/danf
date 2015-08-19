@@ -153,13 +153,15 @@ module.exports = {
             /**
              * Execute the sequence.
              *
-             * @param {mixed} input The input of the sequence.
+             * @param {mixed_object} input The input of the sequence.
+             * @param {mixed_object} context The context of execution.
              * @param {string} scope The scope of execution in the stream.
              * @param {function|null} callback The optional callback.
              */
             execute: {
                 arguments: [
-                    'object/input',
+                    'mixed_object/input',
+                    'mixed_object/context',
                     'string/scope',
                     'function|null/callback'
                 ]
@@ -474,5 +476,8 @@ module.exports = {
              */
             sequencesContainer: 'danf:event.sequencesContainer'
         }
+    },
+    flowContext: {
+        extends: 'danf:manipulation.map'
     }
 };

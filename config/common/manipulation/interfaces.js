@@ -568,21 +568,21 @@ module.exports = {
              * End a task.
              *
              * @param {number} task The id of the task.
-             * @param {mixed} returnedValue The value returned by the task.
+             * @param {mixed|undefined} returnedValue The optional value returned by the task.
              */
             end: {
-                arguments: ['number/task', 'mixed/returnedValue']
+                arguments: ['number/task', 'mixed|undefined/returnedValue']
             },
             /**
              * Add a tributary and set the context as this tributary.
              *
-             * @param {string} scope The scope.
+             * @param {string|null} scope The optional scope.
              * @param {function|null} format The optional function allowing to format the result.
              * @param {function|null} format The optional final callback.
              * @return {number} The id of the tributary.
              */
             addTributary: {
-                arguments: ['string/scope', 'function|null/format', 'function|null/callback'],
+                arguments: ['string|null/scope', 'function|null/format', 'function|null/callback'],
                 returns: 'number'
             },
             /**
@@ -1077,6 +1077,20 @@ module.exports = {
                 arguments: ['function/callback'],
                 returns: 'function'
             }
+        },
+        getters: {
+            /**
+             * The async method name.
+             *
+             * @return {string} The method name.
+             */
+            method: 'string',
+            /**
+             * The parameters.
+             *
+             * @return {mixed_object} The parameters.
+             */
+            parameters: 'mixed_object'
         }
     }
 };

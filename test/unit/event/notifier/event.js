@@ -10,23 +10,28 @@ var assert = require('assert'),
 var eventNotifier = new EventNotifier(),
     dataResolver = require('../../../fixture/manipulation/data-resolver'),
     sequence = {
-        execute: function(input, scope, callback) {
+        execute: function(input, context, scope, callback) {
             input.bar = 'foo';
+            input.a = context.a;
         }
     },
     event = new Event(
         'update',
         {
+            context: {
+                a: 1
+            },
             callback: function(stream) {
                 assert.deepEqual(
                     stream,
                     {
                         foo: 'bar',
-                        bar: 'foo'
+                        bar: 'foo',
+                        a: 1
                     }
                 );
             },
-            contract: {
+            parameters: {
                 foo: {type: 'string'}
             }
         },

@@ -35,29 +35,27 @@ ForumHandler.prototype.getMessages = function(topicName, page) {
 };
 
 ForumHandler.prototype.computeForumSize = function(topics, messages) {
-    var sequencer = this._sequencerProvider.provide();
+    this.__asyncProcess(function(returnAsync) {
+        setTimeout(
+            function() {
+                returnAsync(function(count) {
+                    return count + topics.length;
+                });
+            },
+            20
+        );
+    })
 
-    var topicsTask = sequencer.wait();
-
-    setTimeout(
-        function() {
-            sequencer.end(topicsTask, function(count) {
-                return count + topics.length;
-            });
-        },
-        20
-    );
-
-    var messagesTask = sequencer.wait();
-
-    setTimeout(
-        function() {
-            sequencer.end(messagesTask, function(count) {
-                return count + messages.length;
-            });
-        },
-        10
-    );
+    this.__asyncProcess(function(returnAsync) {
+        setTimeout(
+            function() {
+                returnAsync(function(count) {
+                    return count + messages.length;
+                });
+            },
+            20
+        );
+    })
 
     return 2;
 };
@@ -86,9 +84,6 @@ function SubrequestExecutor() {
 
 SubrequestExecutor.prototype.execute = function() {
     var self = this,
-        sequencer = this._sequencerProvider.provide(),
-        subrequestTaskA = sequencer.wait(),
-        subrequestTaskB = sequencer.wait(),
         requestWrapper = function(options, callback) {
             request(self._app)
                 .get(options.path)
@@ -109,43 +104,47 @@ SubrequestExecutor.prototype.execute = function() {
         }
     ;
 
-    this._requestNotifier.notify(
-        'main:sub',
-        {
-            query: {
-                text: 'a'
-            },
-            callback: function(content) {
-                sequencer.end(subrequestTaskA, function(stream) {
-                    var response = JSON.parse(content);
+    this.__asyncProcess(function(returnAsync) {
+        self._requestNotifier.notify(
+            self._subRequest,
+            {
+                query: {
+                    text: 'a'
+                },
+                callback: function(content) {
+                    returnAsync(function(stream) {
+                        var response = JSON.parse(content);
 
-                    stream.unshift(response.text);
+                        stream.unshift(response.text);
 
-                    return stream;
-                });
-            },
-            _requestWrapper: requestWrapper
-        }
-    );
+                        return stream;
+                    });
+                },
+                _requestWrapper: requestWrapper
+            }
+        );
+    });
 
-    this._requestNotifier.notify(
-        'main:sub',
-        {
-            query: {
-                text: 'b'
-            },
-            callback: function(content) {
-                sequencer.end(subrequestTaskB, function(stream) {
-                    var response = JSON.parse(content);
+    this.__asyncProcess(function(returnAsync) {
+        self._requestNotifier.notify(
+            self._subRequest,
+            {
+                query: {
+                    text: 'b'
+                },
+                callback: function(content) {
+                    returnAsync(function(stream) {
+                        var response = JSON.parse(content);
 
-                    stream.push(response.text);
+                        stream.push(response.text);
 
-                    return stream;
-                });
-            },
-            _requestWrapper: requestWrapper
-        }
-    );
+                        return stream;
+                    });
+                },
+                _requestWrapper: requestWrapper
+            }
+        );
+    });
 
     return [];
 };
@@ -221,18 +220,18 @@ CookieTester.prototype.test = function(order) {
 
 module.exports = {
     config: {
+        classes: {
+            subrequestExecutor: SubrequestExecutor
+        },
         services: {
             forumHandler: {
-                class: ForumHandler,
-                properties: {
-                    _sequencerProvider: '#danf:event.currentSequencerProvider#'
-                }
+                class: ForumHandler
             },
             subrequestExecutor: {
-                class: SubrequestExecutor,
+                class: 'subrequestExecutor',
                 properties: {
                     _app: '#danf:app#',
-                    _sequencerProvider: '#danf:event.currentSequencerProvider#',
+                    _subRequest: '#danf:event.eventsContainer[request][sub]#',
                     _requestNotifier: '#danf:http.event.notifier.request#'
                 }
             },
@@ -352,16 +351,19 @@ module.exports = {
             testSession: {
                 operations: [
                     {
+                        order: 0,
                         service: 'sessionTester',
                         method: 'test',
                         arguments: ['@order@']
                     },
                     {
+                        order: 1,
                         service: 'sessionTester',
                         method: 'testAsync',
                         arguments: ['@order@']
                     },
                     {
+                        order: 2,
                         service: 'sessionTester',
                         method: 'testAsync',
                         arguments: ['@order@', true]
@@ -385,6 +387,15 @@ module.exports = {
                         'X-Custom': 'ok'
                     },
                     methods: ['get', 'post'],
+                    parameters: {
+                        page: {
+                            type: 'number',
+                            default: 1
+                        },
+                        topic: {
+                            type: 'string'
+                        }
+                    },
                     view: {
                         html: {
                             layout: {
@@ -404,6 +415,13 @@ module.exports = {
                             input: {
                                 page: '@page@',
                                 topic: '@topic@'
+                            },
+                            output: {
+                                title: '@title@',
+                                size: '@size@',
+                                count: '@count@',
+                                topics: '@topics@',
+                                messages: '@messages@'
                             }
                         }
                     ]
@@ -425,6 +443,9 @@ module.exports = {
                         {
                             name: 'increment',
                             input: {
+                                number: '@number@'
+                            },
+                            output: {
                                 number: '@number@'
                             }
                         }
@@ -448,6 +469,9 @@ module.exports = {
                             name: 'increment',
                             input: {
                                 number: '@number@'
+                            },
+                            output: {
+                                number: '@number@'
                             }
                         }
                     ]
@@ -462,7 +486,10 @@ module.exports = {
                     },
                     sequences: [
                         {
-                            name: 'executeSubrequest'
+                            name: 'executeSubrequest',
+                            output: {
+                                text: '@text@'
+                            }
                         }
                     ]
                 },
@@ -496,11 +523,7 @@ module.exports = {
                     methods: ['get'],
                     sequences: [
                         {
-                            name: 'testCookie',
-                            input: {
-                                page: '@page@',
-                                topic: '@topic@'
-                            }
+                            name: 'testCookie'
                         }
                     ]
                 }

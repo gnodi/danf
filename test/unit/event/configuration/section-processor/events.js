@@ -22,8 +22,12 @@ var events = new Events(),
     }
 ;
 
+events.collectionInterpreter = {
+    contract: 'plop'
+};
 events.addNotifier(eventNotifier);
 events.addNotifier(requestNotifier);
+
 
 describe('Events section configuration processor', function() {
     it('should aggregate the contracts of notifiers', function() {
@@ -36,8 +40,36 @@ describe('Events section configuration processor', function() {
                     references: ['$'],
                     embed: {
                         event: {type: 'string'},
-                        sequences: {type: 'string_array', default: [], namespace: true},
-                        contract: {type: 'mixed_object'}
+                        sequences: {
+                            type: 'embedded_array',
+                            embed: {
+                                name: {
+                                    type: 'string',
+                                    required: true,
+                                    namespace: true
+                                },
+                                condition: {
+                                    type: 'function'
+                                },
+                                order: {
+                                    type: 'number',
+                                    default: 0
+                                },
+                                collection: {
+                                    type: 'embedded',
+                                    embed: 'plop'
+                                },
+                                input: {
+                                    type: 'mixed_object',
+                                    default: {}
+                                },
+                                output: {
+                                    type: 'mixed_object',
+                                    default: {}
+                                }
+                            }
+                        },
+                        parameters: {type: 'mixed_object'}
                     }
                 },
                 request: {
@@ -47,8 +79,36 @@ describe('Events section configuration processor', function() {
                     embed: {
                         path: {type: 'string'},
                         methods: {type: 'string_array'},
-                        sequences: {type: 'string_array', default: [], namespace: true},
-                        contract: {type: 'mixed_object'}
+                        sequences: {
+                            type: 'embedded_array',
+                            embed: {
+                                name: {
+                                    type: 'string',
+                                    required: true,
+                                    namespace: true
+                                },
+                                condition: {
+                                    type: 'function'
+                                },
+                                order: {
+                                    type: 'number',
+                                    default: 0
+                                },
+                                collection: {
+                                    type: 'embedded',
+                                    embed: 'plop'
+                                },
+                                input: {
+                                    type: 'mixed_object',
+                                    default: {}
+                                },
+                                output: {
+                                    type: 'mixed_object',
+                                    default: {}
+                                }
+                            }
+                        },
+                        parameters: {type: 'mixed_object'}
                     }
                 }
             }
