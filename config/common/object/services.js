@@ -30,8 +30,7 @@ module.exports = {
             extender: {
                 class: 'danf:object.classProcessor.extender',
                 properties: {
-                    classesRegistry: '#danf:object.classesRegistry#',
-                    baseClassName: 'danf:object.class'
+                    classesRegistry: '#danf:object.classesRegistry#'
                 }
             },
             interfacer: {

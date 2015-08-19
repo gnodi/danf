@@ -1,42 +1,6 @@
 'use strict';
 
 module.exports = {
-    currentSequencerProvider: {
-        parent: 'danf:dependencyInjection.contextProvider',
-        properties: {
-            interface: 'danf:manipulation.sequencer'
-        }
-    },
-    sequencerProvider: {
-        parent: 'danf:dependencyInjection.objectProvider',
-        class: 'danf:event.sequencerProvider',
-        properties: {
-            class: 'danf:manipulation.sequencer',
-            interface: 'danf:manipulation.sequencer',
-            sequencerStack: '#danf:event.sequencerStack#'
-        }
-    },
-    sequenceBuilder: {
-        class: 'danf:event.sequenceBuilder',
-        properties: {
-            referenceResolver: '#danf:manipulation.referenceResolver#',
-            servicesContainer: '#danf:dependencyInjection.servicesContainer#',
-            newSequencerProvider: '#danf:event.sequencerProvider#',
-            currentSequencerProvider: '#danf:event.currentSequencerProvider#'
-        }
-    },
-    sequencerStack: {
-        class: 'danf:manipulation.sequencerStack'
-    },
-    eventsHandler: {
-        class: 'danf:event.eventsHandler',
-        properties: {
-            sequenceBuilder: '#danf:event.sequenceBuilder#',
-            modulesTree: '#danf:configuration.modulesTree#',
-            namespacer: '#danf:configuration.namespacer#',
-            notifiers: '&danf:event.notifier&'
-        }
-    },
     referencesResolver: {
         class: 'danf:event.referencesResolver',
         properties: {
@@ -75,6 +39,10 @@ module.exports = {
             sequencesContainer: '#danf:event.sequencesContainer#',
             eventProvider: '#danf:event.eventProvider#',
             notifiers: '&danf:event.notifier&'
+        },
+        registry: {
+            method: 'get',
+            namespace: [1]
         }
     },
     collectionInterpreter: {
@@ -140,6 +108,9 @@ module.exports = {
                 class: 'danf:event.notifier.event'
             }
         }
+    },
+    flowContext: {
+        class: 'danf:event.flowContext'
     },
     configuration: {
         children: {
