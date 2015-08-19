@@ -244,22 +244,5 @@ module.exports = {
              */
             providedType: 'string'
         }
-    },
-    contextProvider: {
-        extends: 'danf:dependencyInjection.provider',
-        methods: {
-            /**
-             * Set the context.
-             *
-             * @return {mixed} The context.
-             */
-            set: {
-                arguments: ['mixed/context']
-            },
-            /**
-             * Unset the context.
-             */
-            unset: {}
-        }
     }
 };

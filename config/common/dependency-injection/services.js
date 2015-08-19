@@ -45,13 +45,6 @@ module.exports = {
             }
         }
     },
-    contextProvider: {
-        class: 'danf:dependencyInjection.contextProvider',
-        properties: {
-            interfacer: '#danf:object.interfacer#'
-        },
-        abstract: true
-    },
     objectProvider: {
         class: 'danf:dependencyInjection.objectProvider',
         properties: {
