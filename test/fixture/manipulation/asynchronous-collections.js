@@ -10,8 +10,7 @@ var AsynchronousCollection = require('../../../lib/common/manipulation/asynchron
     KeyAsynchronousIterator = require('../../../lib/common/manipulation/asynchronous-iterator/key'),
     MemoAsynchronousIterator = require('../../../lib/common/manipulation/asynchronous-iterator/memo'),
     ArrayAsynchronousInput = require('../../../lib/common/manipulation/asynchronous-input/array'),
-    ObjectAsynchronousInput = require('../../../lib/common/manipulation/asynchronous-input/object'),
-    Registry = require('../../../lib/common/manipulation/registry')
+    ObjectAsynchronousInput = require('../../../lib/common/manipulation/asynchronous-input/object')
 ;
 
 var asynchronousCollection = new AsynchronousCollection(),
@@ -23,7 +22,7 @@ var asynchronousCollection = new AsynchronousCollection(),
     memoAsynchronousIterator = new MemoAsynchronousIterator(),
     arrayAsynchronousInput = new ArrayAsynchronousInput(),
     objectAsynchronousInput = new ObjectAsynchronousInput(),
-    registry = new Registry()
+    asynchronousCollections = {}
 ;
 
 var collections = {
@@ -160,12 +159,13 @@ for (var method in collections) {
         asynchronousCollection = new AsynchronousCollection()
     ;
 
+    asynchronousCollection.method = method;
     asynchronousCollection.input = collection.input;
     asynchronousCollection.iterator = collection.iterator;
     asynchronousCollection.callback = collection.callback;
     asynchronousCollection.parameters = collection.parameters;
 
-    registry.register(method, asynchronousCollection);
+    asynchronousCollections[method] = asynchronousCollection;
 }
 
-module.exports = registry;
+module.exports = asynchronousCollections;
