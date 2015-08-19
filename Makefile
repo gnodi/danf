@@ -19,6 +19,7 @@ test-manipulation:
 		--reporter $(REPORTER) \
 		--timeout 5000 \
 		--bail \
+		--recursive \
 		$(MOCHA_OPTS) \
 		test/unit/manipulation/*
 
@@ -28,6 +29,7 @@ test-configuration:
 		--reporter $(REPORTER) \
 		--timeout 5000 \
 		--bail \
+		--recursive \
 		$(MOCHA_OPTS) \
 		test/unit/configuration/*
 
@@ -37,6 +39,7 @@ test-object:
 		--reporter $(REPORTER) \
 		--timeout 5000 \
 		--bail \
+		--recursive \
 		$(MOCHA_OPTS) \
 		test/unit/object/*
 
@@ -46,6 +49,7 @@ test-dependency-injection:
 		--reporter $(REPORTER) \
 		--timeout 5000 \
 		--bail \
+		--recursive \
 		$(MOCHA_OPTS) \
 		test/unit/dependency-injection/*
 
@@ -55,6 +59,7 @@ test-file-system:
 		--reporter $(REPORTER) \
 		--timeout 5000 \
 		--bail \
+		--recursive \
 		$(MOCHA_OPTS) \
 		test/unit/file-system/*
 
@@ -64,6 +69,7 @@ test-event:
 		--reporter $(REPORTER) \
 		--timeout 5000 \
 		--bail \
+		--recursive \
 		$(MOCHA_OPTS) \
 		test/unit/event/*
 
@@ -73,6 +79,7 @@ test-http:
 		--reporter $(REPORTER) \
 		--timeout 5000 \
 		--bail \
+		--recursive \
 		$(MOCHA_OPTS) \
 		test/unit/http/*
 
@@ -82,6 +89,7 @@ test-rendering:
 		--reporter $(REPORTER) \
 		--timeout 5000 \
 		--bail \
+		--recursive \
 		$(MOCHA_OPTS) \
 		test/unit/rendering/*
 
@@ -91,6 +99,7 @@ test-test:
 		--reporter $(REPORTER) \
 		--timeout 5000 \
 		--bail \
+		--recursive \
 		$(MOCHA_OPTS) \
 		test/unit/test/*
 
