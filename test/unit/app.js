@@ -121,22 +121,6 @@ describe('Danf application', function() {
         assert.equal(callbackExecutor.executeCallback(function() { return 3; }), 3);
     })
 
-    it('should process basic events', function(done) {
-        var trigger = app.servicesContainer.get('danf:event.eventsHandler'),
-            computer = app.servicesContainer.get('main:computer')
-        ;
-
-        trigger.trigger('event', 'happenSomething', computer, {i: 3, k: 3, done: done});
-    })
-
-    it('should process basic events', function(done) {
-        var trigger = app.servicesContainer.get('danf:event.eventsHandler'),
-            computer = app.servicesContainer.get('main:computer')
-        ;
-
-        trigger.trigger('event', 'happenSomething', computer, {k: 0, done: done});
-    })
-
     it('should provide a service with utils', function() {
         var utils = app.servicesContainer.get('danf:utils'),
             a = {a: 1},
