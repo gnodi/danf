@@ -185,10 +185,10 @@ module.exports = {
             /**
              * Trigger the execution of the event.
              *
-             * @param {mixed} data The data related to the event.
+             * @param {mixed_object|null} data The optional data related to the event.
              */
             trigger: {
-                arguments: ['mixed/data']
+                arguments: ['mixed_object|null/data']
             }
         },
         getters: {
