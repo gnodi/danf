@@ -4,8 +4,6 @@ module.exports = {
     referenceResolver: require('../../../lib/common/manipulation/reference-resolver'),
     referenceType: require('../../../lib/common/manipulation/reference-type'),
     dataResolver: require('../../../lib/common/manipulation/data-resolver'),
-    sequencer: require('../../../lib/common/manipulation/sequencer'),
-    sequencerStack: require('../../../lib/common/manipulation/sequencer-stack'),
     map: require('../../../lib/common/manipulation/map'),
     registry: require('../../../lib/common/manipulation/registry'),
     notifierRegistry: require('../../../lib/common/manipulation/notifier-registry'),

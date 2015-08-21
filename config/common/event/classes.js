@@ -1,9 +1,6 @@
 'use strict';
 
 module.exports = {
-    sequencerProvider: require('../../../lib/common/event/sequencer-provider'),
-    sequenceBuilder: require('../../../lib/common/event/sequence-builder'),
-    eventsHandler: require('../../../lib/common/event/events-handler'),
     referencesResolver: require('../../../lib/common/event/references-resolver'),
     sequence: require('../../../lib/common/event/sequence'),
     event: require('../../../lib/common/event/event'),

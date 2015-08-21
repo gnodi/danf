@@ -58,13 +58,6 @@ module.exports = {
             interface: 'danf:manipulation.map'
         }
     },
-    sequencerProvider: {
-        parent: 'danf:dependencyInjection.objectProvider',
-        properties: {
-            class: 'danf:manipulation.sequencer',
-            interface: 'danf:manipulation.sequencer'
-        }
-    },
     flowDriver: {
         class: 'danf:manipulation.flowDriver',
         properties: {
