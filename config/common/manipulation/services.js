@@ -22,6 +22,18 @@ module.exports = {
                     name: '@',
                     delimiter: '@'
                 }
+            },
+            globalContext: {
+                properties: {
+                    name: '!',
+                    delimiter: '!'
+                }
+            },
+            memory: {
+                properties: {
+                    name: '~',
+                    delimiter: '~'
+                }
             }
         }
     },

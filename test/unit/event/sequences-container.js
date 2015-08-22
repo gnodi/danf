@@ -12,6 +12,7 @@ var assert = require('assert'),
     ParentsSequenceInterpreter = require('../../../lib/common/event/sequence-interpreter/parents'),
     CollectionInterpreter = require('../../../lib/common/event/collection-interpreter'),
     ReferenceResolver = require('../../../lib/common/manipulation/reference-resolver'),
+    FlowContext = require('../../../lib/common/event/flow-context'),
     ReferencesResolver = require('../../../lib/common/event/references-resolver'),
     ReferenceType = require('../../../lib/common/manipulation/reference-type'),
     Flow = require('../../../lib/common/manipulation/flow'),
@@ -25,7 +26,7 @@ var assert = require('assert'),
 var mapProvider = require('../../fixture/manipulation/map-provider');
 var FlowProvider = function() {};
 FlowProvider.prototype.provide = function(properties) {
-    return new Flow(properties.stream, properties.scope, mapProvider.provide(), properties.callback);
+    return new Flow(properties.stream, properties.scope, properties.context, properties.callback);
 }
 
 var SequenceProvider = function(flowProvider) { this.flowProvider = flowProvider };
@@ -34,7 +35,8 @@ SequenceProvider.prototype.provide = function(properties) {
 }
 
 var referenceResolver = new ReferenceResolver(),
-    referencesResolver = new ReferencesResolver(referenceResolver, {memo: 2}),
+    flowContext = new FlowContext(),
+    referencesResolver = new ReferencesResolver(referenceResolver, flowContext, {memo: 2}),
     servicesContainer = new ServicesContainer(),
     flowDriver = new FlowDriver(async),
     asynchronousCollections = require('../../fixture/manipulation/asynchronous-collections'),
@@ -50,6 +52,10 @@ collectionInterpreter.asynchronousCollections = asynchronousCollections;
 var contextType = new ReferenceType();
 contextType.name = '@';
 contextType.delimiter = '@';
+
+var globalContextType = new ReferenceType();
+globalContextType.name = '!';
+globalContextType.delimiter = '!';
 
 var memoryType = new ReferenceType();
 memoryType.name = '~';
@@ -70,6 +76,7 @@ sequenceTagType.delimiter = '&';
 sequenceTagType.allowsConcatenation = false;
 
 referenceResolver.addReferenceType(contextType);
+referenceResolver.addReferenceType(globalContextType);
 referenceResolver.addReferenceType(memoryType);
 referenceResolver.addReferenceType(configType);
 referenceResolver.addReferenceType(sequenceType);
@@ -589,6 +596,17 @@ var config = {
             ]
         },
         t: {
+        },
+        u: {
+            operations: [
+                {
+                    order: 0,
+                    service: 'computer',
+                    method: 'add',
+                    arguments: ['@a@', '!b!', 40],
+                    scope: 'a'
+                }
+            ]
         },
         each: {
             operations: [
@@ -1138,6 +1156,12 @@ var sequenceTests = [
         name: 't',
         input: {result: 2},
         expected: {result: 3}
+    },
+    {
+        name: 'u',
+        input: {a: 11},
+        context: {b: 22},
+        expected: {a: 33}
     }
 ];
 
@@ -1353,7 +1377,7 @@ describe('SequencesContainer', function() {
                     }
                 ;
 
-                sequence.execute(test.input, {}, '.', end);
+                sequence.execute(test.input, test.context || {}, '.', end);
             })
         })
 

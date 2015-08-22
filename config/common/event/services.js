@@ -1,10 +1,14 @@
 'use strict';
 
 module.exports = {
+    flowContext: {
+        class: 'danf:event.flowContext'
+    },
     referencesResolver: {
         class: 'danf:event.referencesResolver',
         properties: {
-            referenceResolver: '#danf:manipulation.referenceResolver#'
+            referenceResolver: '#danf:manipulation.referenceResolver#',
+            flowContext: '#danf:event.flowContext#',
         }
     },
     sequenceProvider: {
@@ -108,9 +112,6 @@ module.exports = {
                 class: 'danf:event.notifier.event'
             }
         }
-    },
-    flowContext: {
-        class: 'danf:event.flowContext'
     },
     configuration: {
         children: {

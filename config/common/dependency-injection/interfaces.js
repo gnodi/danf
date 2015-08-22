@@ -232,7 +232,7 @@ module.exports = {
              * @return {object} The object.
              */
             provide: {
-                arguments: ['mixed_object/properties'],
+                arguments: ['mixed_object|null/properties'],
                 returns: 'object'
             }
         },
