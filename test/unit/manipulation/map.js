@@ -9,7 +9,7 @@ var assert = require('assert'),
 var map = new Map();
 
 describe('Map', function() {
-    it('method "set and get" should allow to set and retrieve value from map', function() {
+    it('method "set and get" should allow to set and retrieve value from the map', function() {
         map.set('foo', 1);
         map.set('bar', 3);
 
@@ -17,12 +17,12 @@ describe('Map', function() {
         assert.equal(map.get('bar'), 3);
     })
 
-    it('method "has" should check the existence of a seted value', function() {
+    it('method "has" should check the existence of a setted value', function() {
         assert.equal(map.has('foo'), true);
         assert.equal(map.has('dumb'), false);
     })
 
-    it('method "getAll" should retrieve all the seted values', function() {
+    it('method "getAll" should retrieve all the setted values', function() {
         assert.deepEqual(
             map.getAll(),
             {
@@ -32,7 +32,7 @@ describe('Map', function() {
         );
     })
 
-    it('method "unset" should unset a specific seted value', function() {
+    it('method "unset" should unset a specific setted value', function() {
         map.unset('foo');
 
         assert.equal(map.has('a'), false);
@@ -44,7 +44,7 @@ describe('Map', function() {
         );
     })
 
-    it('method "clear" should unset all seted values', function() {
+    it('method "clear" should unset all setted values', function() {
         map.clear();
 
         assert.equal(map.has('bar'), false);
@@ -54,13 +54,13 @@ describe('Map', function() {
         );
     })
 
-    it('method "get" should fail to retrieve a not seted value', function() {
+    it('method "get" should fail to retrieve a not setted value', function() {
         assert.throws(
             function() {
                 map.name = 'values';
                 map.get('foo');
             },
-            'The item "foo" has not been seted in the list of "values"\.'
+            'The item "foo" has not been setted in the list of "values"\.'
         );
     })
 })
