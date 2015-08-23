@@ -1074,8 +1074,8 @@ var sequenceTests = [
     },
     {
         name: 'd',
-        input: {},
-        expected: {result: 21}
+        input: {foo: 'bar'},
+        expected: {result: 21, foo: 'bar'}
     },
     {
         name: 'e',
@@ -1251,8 +1251,8 @@ var sequenceOperationCollectionTests = [
     },
     {
         name: 'reduceRight',
-        input: {input: [5, 4, 4]},
-        expected: {input: [5, 4, 4], result: 15}
+        input: {input: [5, 4, 4], foo: 'bar'},
+        expected: {input: [5, 4, 4], result: 15, foo: 'bar'}
     },
     {
         name: 'detect',
