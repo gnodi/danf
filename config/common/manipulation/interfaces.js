@@ -522,6 +522,14 @@ module.exports = {
              * @return {string} The identifier of the tributary.
              */
             currentTributary: 'string'
+        },
+        setters: {
+            /**
+             * The current stream.
+             *
+             * @param {object}
+             */
+            currentStream: 'object'
         }
     },
     flowDriver: {
@@ -970,13 +978,19 @@ module.exports = {
             /**
              * The async method name.
              *
-             * @return {string} The method name.
+             * @return {string}
              */
             method: 'string',
             /**
+             * The optional alias name.
+             *
+             * @return {string}
+             */
+            alias: 'string|null',
+            /**
              * The parameters.
              *
-             * @return {mixed_object} The parameters.
+             * @return {mixed_object}
              */
             parameters: 'mixed_object'
         }

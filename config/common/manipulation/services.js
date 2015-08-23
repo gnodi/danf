@@ -156,6 +156,7 @@ module.exports = {
             forEachOf: {
                 properties: {
                     method: 'forEachOf',
+                    alias: '||',
                     input: '#danf:manipulation.asynchronousInput.object#',
                     iterator: '#danf:manipulation.asynchronousIterator.key#',
                     callback: '#danf:manipulation.asynchronousCallback.error#'
@@ -164,6 +165,7 @@ module.exports = {
             forEachOfSeries: {
                 properties: {
                     method: 'forEachOfSeries',
+                    alias: '--',
                     input: '#danf:manipulation.asynchronousInput.object#',
                     iterator: '#danf:manipulation.asynchronousIterator.key#',
                     callback: '#danf:manipulation.asynchronousCallback.error#'
@@ -172,6 +174,7 @@ module.exports = {
             forEachOfLimit: {
                 properties: {
                     method: 'forEachOfLimit',
+                    alias: '|-',
                     input: '#danf:manipulation.asynchronousInput.object#',
                     iterator: '#danf:manipulation.asynchronousIterator.key#',
                     callback: '#danf:manipulation.asynchronousCallback.error#',
