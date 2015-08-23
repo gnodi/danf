@@ -107,6 +107,14 @@ describe('Danf application', function() {
         trigger.trigger(done);
     })
 
+    it('should allow cross danf modules inheritance', function(done) {
+        var eventsContainer = app.servicesContainer.get('danf:event.eventsContainer'),
+            event = eventsContainer.get('event', 'main:dep3:parallelComputing');
+        ;
+
+        event.trigger({input: [1, 2, 3, 4, 5], done: done});
+    })
+
     it('should handle environment configurations', function() {
         var timer = app.servicesContainer.get('main:timer');
 
