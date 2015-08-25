@@ -1,5 +1,7 @@
 'use strict';
 
+var assert = require('assert');
+
 function Computer() {}
 
 Computer.prototype.inc = function (value, inc) {
@@ -37,13 +39,16 @@ module.exports = {
                 input: {
                     value: {
                         type: 'number'
+                    },
+                    inc: {
+                        type: 'number'
                     }
                 },
                 operations: [
                     {
                         service: 'computer',
                         method: 'inc',
-                        arguments: ['@value@'],
+                        arguments: ['@value@', '@inc@'],
                         scope: 'value'
                     }
                 ]
@@ -52,17 +57,81 @@ module.exports = {
                 input: {
                     input: {
                         type: 'number_array'
+                    },
+                    result: {
+                        type: 'number',
+                        default: 0
                     }
                 },
                 children: [
                     {
                         name: 'inc',
                         input: {
-                            value: '@@.@@'
+                            value: '@@.@@',
+                            inc: '@result@'
                         },
                         collection: {
                             input: '@input@',
                             method: '||',
+                            aggregate: true
+                        },
+                        output: {
+                            result: '@value@'
+                        }
+                    }
+                ]
+            },
+            incSeries: {
+                input: {
+                    input: {
+                        type: 'number_array'
+                    },
+                    result: {
+                        type: 'number',
+                        default: 0
+                    }
+                },
+                children: [
+                    {
+                        name: 'inc',
+                        input: {
+                            value: '@@.@@',
+                            inc: '@result@'
+                        },
+                        collection: {
+                            input: '@input@',
+                            method: '--',
+                            aggregate: true
+                        },
+                        output: {
+                            result: '@value@'
+                        }
+                    }
+                ]
+            },
+            incParallelLimit: {
+                input: {
+                    input: {
+                        type: 'number_array'
+                    },
+                    result: {
+                        type: 'number',
+                        default: 0
+                    }
+                },
+                children: [
+                    {
+                        name: 'inc',
+                        input: {
+                            value: '@@.@@',
+                            inc: '@result@'
+                        },
+                        collection: {
+                            input: '@input@',
+                            method: '|-',
+                            parameters: {
+                                limit: 2
+                            },
                             aggregate: true
                         },
                         output: {
@@ -79,6 +148,9 @@ module.exports = {
                         input: {
                             type: 'number_array'
                         },
+                        expected: {
+                            type: 'number',
+                        },
                         done: {
                             type: 'function'
                         }
@@ -94,8 +166,68 @@ module.exports = {
                             }
                         }
                     ],
-                    callback: function(stream) {
-                        console.log(stream);
+                    callback: function(error, stream) {
+                        assert.equal(stream.result, stream.expected);
+
+                        stream.done();
+                    }
+                },
+                seriesComputing: {
+                    parameters: {
+                        input: {
+                            type: 'number_array'
+                        },
+                        expected: {
+                            type: 'number',
+                        },
+                        done: {
+                            type: 'function'
+                        }
+                    },
+                    sequences: [
+                        {
+                            name: 'incSeries',
+                            input: {
+                                input: '@input@'
+                            },
+                            output: {
+                                result: '@result@'
+                            }
+                        }
+                    ],
+                    callback: function(error, stream) {
+                        assert.equal(stream.result, stream.expected);
+
+                        stream.done();
+                    }
+                },
+                parallelLimitComputing: {
+                    parameters: {
+                        input: {
+                            type: 'number_array'
+                        },
+                        expected: {
+                            type: 'number',
+                        },
+                        done: {
+                            type: 'function'
+                        }
+                    },
+                    sequences: [
+                        {
+                            name: 'incParallelLimit',
+                            input: {
+                                input: '@input@'
+                            },
+                            output: {
+                                result: '@result@'
+                            }
+                        }
+                    ],
+                    callback: function(error, stream) {
+                        assert.equal(stream.result, stream.expected);
+
+                        stream.done();
                     }
                 }
             }

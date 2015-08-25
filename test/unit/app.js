@@ -107,12 +107,28 @@ describe('Danf application', function() {
         trigger.trigger(done);
     })
 
-    it('should allow cross danf modules inheritance', function(done) {
+    it('should allow to manage asynchronous flow', function(done) {
         var eventsContainer = app.servicesContainer.get('danf:event.eventsContainer'),
             event = eventsContainer.get('event', 'main:dep3:parallelComputing');
         ;
 
-        event.trigger({input: [1, 2, 3, 4, 5], done: done});
+        event.trigger({input: [1, 2, 3, 4, 5], expected: 5, done: done});
+    })
+
+    it('should allow to manage asynchronous flow', function(done) {
+        var eventsContainer = app.servicesContainer.get('danf:event.eventsContainer'),
+            event = eventsContainer.get('event', 'main:dep3:seriesComputing');
+        ;
+
+        event.trigger({input: [1, 2, 3, 4, 5], expected: 15, done: done});
+    })
+
+    it('should allow to manage asynchronous flow', function(done) {
+        var eventsContainer = app.servicesContainer.get('danf:event.eventsContainer'),
+            event = eventsContainer.get('event', 'main:dep3:parallelLimitComputing');
+        ;
+
+        event.trigger({input: [1, 2, 3, 4, 5], expected: 9, done: done}); // 1 unlock 3 unlock 5
     })
 
     it('should handle environment configurations', function() {
