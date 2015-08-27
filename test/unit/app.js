@@ -1,10 +1,11 @@
 'use strict';
 
 var assert = require('assert'),
+    request = require('supertest'),
     danf = require('../../lib/server/app')
 ;
 
-var app = danf(require(__dirname + '/../fixture/danf'), '', {silent: true, environment: 'test'});
+var app = danf(require(__dirname + '/../fixture/danf'), '', {listen: false, silent: true, environment: 'test'});
 
 describe('Danf application', function() {
     it('should provide a "container" accessible property', function() {
@@ -131,6 +132,14 @@ describe('Danf application', function() {
         event.trigger({input: [1, 2, 3, 4, 5], expected: 9, done: done}); // 1 unlock 3 unlock 5
     })
 
+    it('should allow to manage asynchronous flow', function(done) {
+        var eventsContainer = app.servicesContainer.get('danf:event.eventsContainer'),
+            event = eventsContainer.get('event', 'main:dep3:compute');
+        ;
+
+        event.trigger({expected: 51, done: done});
+    })
+
     it('should handle environment configurations', function() {
         var timer = app.servicesContainer.get('main:timer');
 
@@ -157,5 +166,27 @@ describe('Danf application', function() {
             utils.merge(a, b),
             {a:1, b:2}
         );
+    })
+
+    it('should process requests', function(done) {
+        request(app)
+            .get('/computing?val=1')
+            .set('Accept', 'application/json')
+            .expect(200, JSON.stringify({result: 69}))
+            .expect('Content-Type', 'application/json; charset=utf-8')
+            .end(function(err, res) {
+                if (err) {
+                    if (res) {
+                        console.log(res.text);
+                    } else {
+                        console.log(err);
+                    }
+
+                    throw err;
+                }
+
+                done();
+            })
+        ;
     })
 })
