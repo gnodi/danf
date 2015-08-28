@@ -28,6 +28,7 @@ module.exports = {
                         class: 'danf:http.event.notifier.request',
                         properties: {
                             app: '#danf:app#',
+                            escaper: '#danf:manipulation.escaper#',
                             renderer: '#danf:rendering.renderer#',
                             errorHandler: '#danf:http.errorHandler#'
                         }

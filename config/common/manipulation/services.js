@@ -1,6 +1,9 @@
 'use strict';
 
 module.exports = {
+    escaper: {
+        class: 'danf:manipulation.escaper'
+    },
     referenceResolver: {
         class: 'danf:manipulation.referenceResolver',
         properties: {

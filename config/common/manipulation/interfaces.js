@@ -1,6 +1,40 @@
 'use strict';
 
 module.exports = {
+    escaper: {
+        methods: {
+            /**
+             * Escape strings.
+             *
+             * @param {mixed} source The source to look for the strings.
+             * @param {string_array} strings The strings.
+             *
+             * @return {string} The escaped source.
+             */
+            escape: {
+                arguments: [
+                    'mixed/source',
+                    'string_array/strings'
+                ],
+                returns: 'string'
+            },
+            /**
+             * Unescape strings.
+             *
+             * @param {mixed} source The source to look for the strings.
+             * @param {string_array} strings The strings.
+             *
+             * @return {string} The unescaped source.
+             */
+            unescape: {
+                arguments: [
+                    'mixed/source',
+                    'string_array/strings'
+                ],
+                returns: 'string'
+            }
+        }
+    },
     referenceResolver: {
         methods: {
             /**

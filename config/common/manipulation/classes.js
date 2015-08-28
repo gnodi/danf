@@ -1,6 +1,7 @@
 'use strict';
 
 module.exports = {
+    escaper: require('../../../lib/common/manipulation/escaper'),
     referenceResolver: require('../../../lib/common/manipulation/reference-resolver'),
     referenceType: require('../../../lib/common/manipulation/reference-type'),
     dataResolver: require('../../../lib/common/manipulation/data-resolver'),

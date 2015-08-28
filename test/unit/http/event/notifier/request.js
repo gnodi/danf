@@ -191,4 +191,27 @@ describe('Request notifier', function() {
             })
         ;
     })
+
+    it('should prevent parameters injection', function(done) {
+        request(app)
+            .get('/injection?a=b&b=@a@')
+            .set('Accept', '*/*')
+            .expect(200, JSON.stringify({
+                c: 'b@a@'
+            }))
+            .end(function(err, res) {
+                if (err) {
+                    if (res) {
+                        console.log(res.text);
+                    } else {
+                        console.log(err);
+                    }
+
+                    throw err;
+                }
+
+                done();
+            })
+        ;
+    })
 })

@@ -377,6 +377,22 @@ module.exports = {
                         method: 'test'
                     }
                 ]
+            },
+            testInjection: {
+                operations: [
+                    {
+                        service: 'danf:manipulation.callbackExecutor',
+                        method: 'execute',
+                        arguments: [
+                            function(a, b) {
+                                return a + b;
+                            },
+                            '@a@',
+                            '@b@'
+                        ],
+                        scope: 'c'
+                    }
+                ]
             }
         },
         events: {
@@ -526,6 +542,37 @@ module.exports = {
                             name: 'testCookie'
                         }
                     ]
+                },
+                injection: {
+                    path: '/injection',
+                    methods: ['get'],
+                    parameters: {
+                        a: {
+                            type: 'string',
+                            required: true
+                        },
+                        b: {
+                            type: 'string',
+                            required: true
+                        }
+                    },
+                    sequences: [
+                        {
+                            name: 'testInjection',
+                            input: {
+                                a: '@a@',
+                                b: '@b@'
+                            },
+                            output: {
+                                c: '@c@'
+                            }
+                        }
+                    ],
+                    view: {
+                        json: {
+                            select: ['c']
+                        }
+                    }
                 }
             }
         },
