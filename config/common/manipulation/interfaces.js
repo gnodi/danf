@@ -42,14 +42,14 @@ module.exports = {
              *
              * @param {string} source The string where the reference occurred.
              * @param {string} type The type of the reference.
-             * @param {string|undefined} inText An optionnal text specifying where the reference is declared (errors).
+             * @param {string|null} inText An optionnal text specifying where the reference is declared (errors).
              * @return {string_array|null} The existing reference or null.
              */
             extract: {
                 arguments: [
                     'string/source',
                     'string/type',
-                    'string|undefined/inText'
+                    'string|null/inText'
                 ],
                 returns: 'string_array|null'
             },
@@ -123,7 +123,7 @@ module.exports = {
              * @param {string} source The string where the reference occurred.
              * @param {string} type The type of the reference.
              * @param {mixed} context The context allowing to resolve the reference.
-             * @param {string|undefined} inText An optionnal text specifying where the reference is declared (errors).
+             * @param {string|null} inText An optionnal text specifying where the reference is declared (errors).
              * @return {mixed} The resolved references.
              */
             resolve: {
@@ -131,7 +131,7 @@ module.exports = {
                     'string/source',
                     'string/type',
                     'mixed/context',
-                    'string|undefined/inText'
+                    'string|null/inText'
                 ],
                 returns: 'mixed'
             }

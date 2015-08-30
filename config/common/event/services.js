@@ -59,6 +59,9 @@ module.exports = {
     },
     sequenceInterpreter: {
         tags: ['danf:event.sequenceInterpreter'],
+        properties: {
+            logger: '#danf:logging.logger#'
+        },
         children: {
             abstract: {
                 abstract: true

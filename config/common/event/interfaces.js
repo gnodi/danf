@@ -51,9 +51,16 @@ module.exports = {
              *
              * @param {string} source The source of references.
              * @param {object} context The resolving context.
+             * @param {string|null} inText An optionnal text specifying where the reference is declared (errors).
+             * @return {mixed} The resolved references.
              */
             resolve: {
-                arguments: ['string/source', 'object/context']
+                arguments: [
+                    'string/source',
+                    'object/context',
+                    'string|null/inText'
+                ],
+                returns: 'mixed'
             },
             /**
              * Resolve references of a specific type.
@@ -61,9 +68,17 @@ module.exports = {
              * @param {string} source The source of references.
              * @param {string} type The identifier of a reference type.
              * @param {object} context The resolving context.
+             * @param {string|null} inText An optionnal text specifying where the reference is declared (errors).
+             * @return {mixed} The resolved references.
              */
             resolveSpecific: {
-                arguments: ['string/source', 'type/string', 'object/context']
+                arguments: [
+                    'string/source',
+                    'type/string',
+                    'object/context',
+                    'string|null/inText'
+                ],
+                returns: 'mixed'
             }
         }
     },
