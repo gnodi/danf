@@ -93,6 +93,16 @@ test-rendering:
 		$(MOCHA_OPTS) \
 		test/unit/rendering/*
 
+test-logging:
+	# Logging
+	@NODE_ENV=test ./node_modules/.bin/mocha \
+		--reporter $(REPORTER) \
+		--timeout 5000 \
+		--bail \
+		--recursive \
+		$(MOCHA_OPTS) \
+		test/unit/logging/*
+
 test-test:
 	# Test
 	@NODE_ENV=test ./node_modules/.bin/mocha \
