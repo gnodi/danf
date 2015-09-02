@@ -8,6 +8,7 @@ module.exports = {
     eventsContainer: require('../../../lib/common/event/events-container'),
     collectionInterpreter: require('../../../lib/common/event/collection-interpreter'),
     flowContext: require('../../../lib/common/event/flow-context'),
+    logger: require('../../../lib/common/event/logger'),
     sequenceInterpreter: {
         abstract: require('../../../lib/common/event/sequence-interpreter/abstract'),
         alias: require('../../../lib/common/event/sequence-interpreter/alias'),

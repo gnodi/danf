@@ -1,6 +1,12 @@
 'use strict';
 
 module.exports = {
+    logger: {
+        class: 'danf:event.logger',
+        properties: {
+            logger: '#danf:logging.logger#'
+        }
+    },
     flowContext: {
         class: 'danf:event.flowContext'
     },
@@ -60,7 +66,7 @@ module.exports = {
     sequenceInterpreter: {
         tags: ['danf:event.sequenceInterpreter'],
         properties: {
-            logger: '#danf:logging.logger#'
+            logger: '#danf:event.logger#'
         },
         children: {
             abstract: {

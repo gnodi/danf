@@ -555,7 +555,7 @@ module.exports = {
              *
              * @return {string} The identifier of the tributary.
              */
-            currentTributary: 'string'
+            currentTributary: 'number'
         },
         setters: {
             /**

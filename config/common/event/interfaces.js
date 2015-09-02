@@ -413,5 +413,25 @@ module.exports = {
     },
     flowContext: {
         extends: 'danf:manipulation.map'
+    },
+    logger: {
+        methods: {
+            /**
+             * Log a message.
+             *
+             * @param {string} message The message.
+             * @param {number} verbosity The verbosity level.
+             * @param {number} indentation The indentation level.
+             * @param {number|string} item The item identifier.
+             */
+            log: {
+                arguments: [
+                    'string/message',
+                    'number/verbosity',
+                    'number/indentation',
+                    'number|string/item'
+                ]
+            }
+        }
     }
 };
