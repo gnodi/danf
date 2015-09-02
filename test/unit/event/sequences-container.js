@@ -34,6 +34,10 @@ SequenceProvider.prototype.provide = function(properties) {
     return new Sequence(properties.operation, this.flowProvider, mapProvider);
 }
 
+var Logger = function() {};
+Logger.prototype.log = function() {
+}
+
 var referenceResolver = new ReferenceResolver(),
     flowContext = new FlowContext(),
     referencesResolver = new ReferencesResolver(referenceResolver, flowContext, {memo: 2}),
@@ -44,7 +48,8 @@ var referenceResolver = new ReferenceResolver(),
     flowProvider = new FlowProvider(),
     sequenceProvider = new SequenceProvider(flowProvider),
     sequencesContainer = new SequencesContainer(flowDriver, sequenceProvider),
-    dataResolver = require('../../fixture/manipulation/data-resolver')
+    dataResolver = require('../../fixture/manipulation/data-resolver'),
+    logger = new Logger()
 ;
 
 collectionInterpreter.asynchronousCollections = asynchronousCollections;
@@ -82,12 +87,27 @@ referenceResolver.addReferenceType(configType);
 referenceResolver.addReferenceType(sequenceType);
 referenceResolver.addReferenceType(sequenceTagType);
 
-sequencesContainer.addSequenceInterpreter(new AliasSequenceInterpreter(sequencesContainer));
-sequencesContainer.addSequenceInterpreter(new ChildrenSequenceInterpreter(sequencesContainer, referencesResolver, collectionInterpreter));
-sequencesContainer.addSequenceInterpreter(new CollectionsSequenceInterpreter(sequencesContainer));
-sequencesContainer.addSequenceInterpreter(new OperationsSequenceInterpreter(sequencesContainer, referencesResolver, servicesContainer, collectionInterpreter));
-sequencesContainer.addSequenceInterpreter(new InputSequenceInterpreter(sequencesContainer, dataResolver));
-sequencesContainer.addSequenceInterpreter(new ParentsSequenceInterpreter(sequencesContainer, referencesResolver, collectionInterpreter));
+var aliasSequenceInterpreter = new AliasSequenceInterpreter(sequencesContainer),
+    childrenSequenceInterpreter = new ChildrenSequenceInterpreter(sequencesContainer, referencesResolver, collectionInterpreter),
+    collectionsSequenceInterpreter = new CollectionsSequenceInterpreter(sequencesContainer),
+    operationsSequenceInterpreter = new OperationsSequenceInterpreter(sequencesContainer, referencesResolver, servicesContainer, collectionInterpreter),
+    inputSequenceInterpreter = new InputSequenceInterpreter(sequencesContainer, dataResolver),
+    parentsSequenceInterpreter = new ParentsSequenceInterpreter(sequencesContainer, referencesResolver, collectionInterpreter)
+;
+
+aliasSequenceInterpreter.logger = logger;
+childrenSequenceInterpreter.logger = logger;
+collectionsSequenceInterpreter.logger = logger;
+operationsSequenceInterpreter.logger = logger;
+inputSequenceInterpreter.logger = logger;
+parentsSequenceInterpreter.logger = logger;
+
+sequencesContainer.addSequenceInterpreter(aliasSequenceInterpreter);
+sequencesContainer.addSequenceInterpreter(childrenSequenceInterpreter);
+sequencesContainer.addSequenceInterpreter(collectionsSequenceInterpreter);
+sequencesContainer.addSequenceInterpreter(operationsSequenceInterpreter);
+sequencesContainer.addSequenceInterpreter(inputSequenceInterpreter);
+sequencesContainer.addSequenceInterpreter(parentsSequenceInterpreter);
 
 var Computer = function() {};
 Computer.prototype.add = function(a, b) {

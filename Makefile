@@ -3,7 +3,7 @@ REPORTER = dot
 
 check: test
 
-test: test-utils test-manipulation test-configuration test-object test-dependency-injection test-file-system test-event test-http test-rendering test-test test-app
+test: test-utils test-manipulation test-configuration test-object test-dependency-injection test-file-system test-event test-http test-rendering test-logging test-test test-app
 
 test-utils:
 	# Utils
