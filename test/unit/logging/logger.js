@@ -8,8 +8,12 @@ var logger = new Logger(),
     chalk = require('chalk')
 ;
 
-logger.chalk = chalk;
 logger.verbosity = 2;
+logger.styles = {
+    warning: 'bold-yellow',
+    error: 'red'
+};
+logger.chalk = chalk;
 
 var tests = [
     {
@@ -49,6 +53,10 @@ var tests = [
         message: 'I am <<green>><<green>>green<</green>> and <<yellow>>yellow<</green>><</yellow>>',
         verbosity: 0,
         indentation: 0
+    },
+    {
+        message: '<<warning>>I am a warning<</warning>> and <<bold-error>>an error',
+        verbosity: 0
     },
     {
         message: '<<grey>>------------------------------------<</grey>>',
