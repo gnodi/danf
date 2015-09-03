@@ -9,14 +9,14 @@ module.exports = {
              * @param {mixed} source The source to look for the strings.
              * @param {string_array} strings The strings.
              *
-             * @return {string} The escaped source.
+             * @return {mixed} The escaped source.
              */
             escape: {
                 arguments: [
                     'mixed/source',
                     'string_array/strings'
                 ],
-                returns: 'string'
+                returns: 'mixed'
             },
             /**
              * Unescape strings.
@@ -31,7 +31,7 @@ module.exports = {
                     'mixed/source',
                     'string_array/strings'
                 ],
-                returns: 'string'
+                returns: 'mixed'
             }
         }
     },

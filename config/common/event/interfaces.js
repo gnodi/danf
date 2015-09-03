@@ -49,15 +49,15 @@ module.exports = {
             /**
              * Resolve references.
              *
-             * @param {string} source The source of references.
-             * @param {object} context The resolving context.
+             * @param {mixed} source The source of references.
+             * @param {mixed} context The resolving context.
              * @param {string|null} inText An optionnal text specifying where the reference is declared (errors).
              * @return {mixed} The resolved references.
              */
             resolve: {
                 arguments: [
-                    'string/source',
-                    'object/context',
+                    'mixed/source',
+                    'mixed/context',
                     'string|null/inText'
                 ],
                 returns: 'mixed'
@@ -67,15 +67,15 @@ module.exports = {
              *
              * @param {string} source The source of references.
              * @param {string} type The identifier of a reference type.
-             * @param {object} context The resolving context.
+             * @param {mixed} context The resolving context.
              * @param {string|null} inText An optionnal text specifying where the reference is declared (errors).
              * @return {mixed} The resolved references.
              */
             resolveSpecific: {
                 arguments: [
                     'string/source',
-                    'type/string',
-                    'object/context',
+                    'string/type',
+                    'mixed/context',
                     'string|null/inText'
                 ],
                 returns: 'mixed'
@@ -357,6 +357,14 @@ module.exports = {
                     'function/endOperation'
                 ]
             }
+        },
+        getters: {
+            /**
+             * The contract that a collection should respect in the configuration.
+             *
+             * @return {object} The contract.
+             */
+            contract: 'object'
         }
     },
     sequenceInterpreter: {
