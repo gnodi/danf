@@ -55,7 +55,7 @@ var tests = [
         indentation: 0
     },
     {
-        message: '<<warning>>I am a warning<</warning>> and <<bold-error>>an error',
+        message: 'I am <<warning>>a warning<</warning>> and <<bold-error>>an error',
         verbosity: 0
     },
     {
