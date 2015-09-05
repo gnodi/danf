@@ -6,7 +6,7 @@ var assert = require('assert'),
     TestHelper = require('../../../lib/server/test/test-helper')
 ;
 
-var testHelper = TestHelper(
+var testHelper = new TestHelper(
         {
             config: {
                 classes: {
