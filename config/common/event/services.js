@@ -24,7 +24,8 @@ module.exports = {
             interface: 'danf:event.sequence',
             properties: {
                 mapProvider: '#danf:manipulation.mapProvider#',
-                flowProvider: '#danf:manipulation.flowProvider#'
+                flowProvider: '#danf:manipulation.flowProvider#',
+                uniqueIdGenerator: '#danf:manipulation.uniqueIdGenerator#'
             }
         }
     },

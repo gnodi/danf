@@ -11,6 +11,7 @@ var assert = require('assert'),
     InputSequenceInterpreter = require('../../../lib/common/event/sequence-interpreter/input'),
     ParentsSequenceInterpreter = require('../../../lib/common/event/sequence-interpreter/parents'),
     CollectionInterpreter = require('../../../lib/common/event/collection-interpreter'),
+    UniqueIdGenerator = require('../../../lib/common/manipulation/unique-id-generator'),
     ReferenceResolver = require('../../../lib/common/manipulation/reference-resolver'),
     FlowContext = require('../../../lib/common/event/flow-context'),
     ReferencesResolver = require('../../../lib/common/event/references-resolver'),
@@ -29,9 +30,13 @@ FlowProvider.prototype.provide = function(properties) {
     return new Flow(properties.stream, properties.scope, properties.context, properties.callback);
 }
 
-var SequenceProvider = function(flowProvider) { this.flowProvider = flowProvider };
+var SequenceProvider = function(flowProvider, uniqueIdGenerator) { this.flowProvider = flowProvider };
 SequenceProvider.prototype.provide = function(properties) {
-    return new Sequence(properties.operation, this.flowProvider, mapProvider);
+    var sequence = new Sequence(properties.operation, this.flowProvider, mapProvider);
+
+    sequence.uniqueIdGenerator = uniqueIdGenerator;
+
+    return sequence;
 }
 
 var Logger = function() {};
@@ -47,7 +52,7 @@ var uniqueIdGenerator = new UniqueIdGenerator(),
     asynchronousCollections = require('../../fixture/manipulation/asynchronous-collections'),
     collectionInterpreter = new CollectionInterpreter(referencesResolver, flowDriver),
     flowProvider = new FlowProvider(),
-    sequenceProvider = new SequenceProvider(flowProvider),
+    sequenceProvider = new SequenceProvider(flowProvider, uniqueIdGenerator),
     sequencesContainer = new SequencesContainer(flowDriver, sequenceProvider),
     dataResolver = require('../../fixture/manipulation/data-resolver'),
     logger = new Logger()
