@@ -4,6 +4,9 @@ module.exports = {
     escaper: {
         class: 'danf:manipulation.escaper'
     },
+    uniqueIdGenerator: {
+        class: 'danf:manipulation.uniqueIdGenerator'
+    },
     referenceResolver: {
         class: 'danf:manipulation.referenceResolver',
         properties: {

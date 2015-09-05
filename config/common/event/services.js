@@ -78,6 +78,7 @@ module.exports = {
             children: {
                 class: 'danf:event.sequenceInterpreter.children',
                 properties: {
+                    uniqueIdGenerator: '#danf:manipulation.uniqueIdGenerator#',
                     referencesResolver: '#danf:event.referencesResolver#',
                     collectionInterpreter: '#danf:event.collectionInterpreter#'
                 }
@@ -102,6 +103,7 @@ module.exports = {
             parents: {
                 class: 'danf:event.sequenceInterpreter.parents',
                 properties: {
+                    uniqueIdGenerator: '#danf:manipulation.uniqueIdGenerator#',
                     referencesResolver: '#danf:event.referencesResolver#',
                     collectionInterpreter: '#danf:event.collectionInterpreter#'
                 }

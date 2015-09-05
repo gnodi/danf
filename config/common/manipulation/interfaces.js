@@ -35,6 +35,18 @@ module.exports = {
             }
         }
     },
+    uniqueIdGenerator: {
+        methods: {
+            /**
+             * Generate a unique id.
+             *
+             * @return {string} The unique id.
+             */
+            generate: {
+                returns: 'string'
+            }
+        }
+    },
     referenceResolver: {
         methods: {
             /**

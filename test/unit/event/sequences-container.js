@@ -38,7 +38,8 @@ var Logger = function() {};
 Logger.prototype.log = function() {
 }
 
-var referenceResolver = new ReferenceResolver(),
+var uniqueIdGenerator = new UniqueIdGenerator(),
+    referenceResolver = new ReferenceResolver(),
     flowContext = new FlowContext(),
     referencesResolver = new ReferencesResolver(referenceResolver, flowContext, {memo: 2}),
     servicesContainer = new ServicesContainer(),
@@ -97,10 +98,12 @@ var aliasSequenceInterpreter = new AliasSequenceInterpreter(sequencesContainer),
 
 aliasSequenceInterpreter.logger = logger;
 childrenSequenceInterpreter.logger = logger;
+childrenSequenceInterpreter.uniqueIdGenerator = uniqueIdGenerator;
 collectionsSequenceInterpreter.logger = logger;
 operationsSequenceInterpreter.logger = logger;
 inputSequenceInterpreter.logger = logger;
 parentsSequenceInterpreter.logger = logger;
+parentsSequenceInterpreter.uniqueIdGenerator = uniqueIdGenerator;
 
 sequencesContainer.addSequenceInterpreter(aliasSequenceInterpreter);
 sequencesContainer.addSequenceInterpreter(childrenSequenceInterpreter);

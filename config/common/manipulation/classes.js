@@ -2,6 +2,7 @@
 
 module.exports = {
     escaper: require('../../../lib/common/manipulation/escaper'),
+    uniqueIdGenerator: require('../../../lib/common/manipulation/unique-id-generator'),
     referenceResolver: require('../../../lib/common/manipulation/reference-resolver'),
     referenceType: require('../../../lib/common/manipulation/reference-type'),
     dataResolver: require('../../../lib/common/manipulation/data-resolver'),
