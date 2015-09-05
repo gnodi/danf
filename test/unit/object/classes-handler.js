@@ -21,6 +21,8 @@ ClassProcessor.prototype.process = function(class_) {
     class_.a = 2;
 }
 
+classesHandler.classesRegistry = classesRegistry;
+
 classesRegistry.index('a', A);
 classesRegistry.index('b', B);
 

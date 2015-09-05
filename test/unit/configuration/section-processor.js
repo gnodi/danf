@@ -61,6 +61,7 @@ var contract = {
 
 var modulesTree = new ModulesTree('main');
 
+modulesTree.appName = 'main';
 modulesTree.build(
     {
         dependencies: {
@@ -230,12 +231,13 @@ var expectedConfig = {
     size: 10
 };
 
-var sectionProcessor = new SectionProcessor('main:my_submodule1:my_submodule10', contract, configurationResolver, referenceResolver, namespacer),
-    noContractSectionProcessor = new SectionProcessor('main:my_submodule1:my_submodule10', null, configurationResolver, referenceResolver, namespacer),
-    noTypeParameterSectionProcessor = new SectionProcessor('main:my_submodule1:my_submodule10', {providers: {}, size: {}}, configurationResolver, referenceResolver, namespacer),
-    noEmbedParameterSectionProcessor = new SectionProcessor('main:my_submodule1:my_submodule10', {providers: {type: 'embedded'}, size: {type: 'number'}}, configurationResolver, referenceResolver, namespacer),
-    badTypeParameterSectionProcessor = new SectionProcessor('main:my_submodule1:my_submodule10', {providers: {type: 'foo'}, size: {type: 'foo'}}, configurationResolver, referenceResolver, namespacer)
-;
+var sectionProcessor = new SectionProcessor();
+
+sectionProcessor.name = 'main:my_submodule1:my_submodule10';
+sectionProcessor.contract = contract;
+sectionProcessor.configurationResolver = configurationResolver;
+sectionProcessor.referenceResolver = referenceResolver;
+sectionProcessor.namespacer = namespacer;
 
 describe('Section Processor', function() {
     describe('"process" method', function() {
@@ -251,14 +253,13 @@ describe('Section Processor', function() {
         })
 
         it('should handle environment configurations', function() {
-            var sectionProcessor = new SectionProcessor(
-                    'env',
-                    {value: {type: 'number'}},
-                    configurationResolver,
-                    referenceResolver,
-                    namespacer
-                )
-            ;
+            var sectionProcessor = new SectionProcessor();
+
+            sectionProcessor.name = 'env';
+            sectionProcessor.contract = {value: {type: 'number'}};
+            sectionProcessor.configurationResolver = configurationResolver;
+            sectionProcessor.referenceResolver = referenceResolver;
+            sectionProcessor.namespacer = namespacer;
 
             modulesTree.build({
                 config: {

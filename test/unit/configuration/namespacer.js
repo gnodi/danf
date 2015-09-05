@@ -8,11 +8,13 @@ var assert = require('assert'),
     ReferenceType = require('../../../lib/common/manipulation/reference-type')
 ;
 
-var modulesTree = new ModulesTree('main'),
+var modulesTree = new ModulesTree(),
     namespacer = new Namespacer(),
     referenceType = new ReferenceType(),
     sizeReferenceType = new ReferenceType()
 ;
+
+modulesTree.appName = 'main';
 
 referenceType.name = 'param';
 referenceType.delimiter = '%';

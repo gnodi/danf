@@ -54,11 +54,16 @@ var flowTests = [
 describe('Flow', function() {
     flowTests.forEach(function(test) {
         it('should allow to wait for asynchrone tasks to process', function(done) {
-            var flow = new Flow(test.input, test.scope, mapProvider.provide(), function(err, result) {
-                    assert.deepEqual(result, test.expected);
-                    done();
-                })
-            ;
+            var flow = new Flow();
+
+            flow.stream = test.input;
+            flow.initialScope = test.scope;
+            flow.context = mapProvider.provide();
+            flow.callback = function(err, result) {
+                assert.deepEqual(result, test.expected);
+                done();
+            };
+            flow.__init();
 
             for (var i = 0; i <= 3; i++) {
                 (function(i) {
@@ -82,21 +87,7 @@ describe('Flow', function() {
     })
 
     it('should allow to wait for tributary asynchrone tasks to process', function(done) {
-        var flow = new Flow({}, 'foo', mapProvider.provide(), function(err, result) {
-                assert.deepEqual(
-                    result,
-                    {
-                        foo: {
-                            bar1: 6,
-                            bar2: {
-                                bar3: 10,
-                                bar4: 14
-                            }
-                        }
-                    }
-                );
-                done();
-            }),
+        var flow = new Flow(),
             add = function(value) {
                 var task = flow.wait();
 
@@ -115,6 +106,26 @@ describe('Flow', function() {
             },
             j = 0
         ;
+
+        flow.stream = {};
+        flow.initialScope = 'foo';
+        flow.context = mapProvider.provide();
+        flow.callback = function(err, result) {
+            assert.deepEqual(
+                result,
+                {
+                    foo: {
+                        bar1: 6,
+                        bar2: {
+                            bar3: 10,
+                            bar4: 14
+                        }
+                    }
+                }
+            );
+            done();
+        };
+        flow.__init();
 
         var tributary = flow.addTributary('bar1');
 

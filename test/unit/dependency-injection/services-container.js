@@ -25,11 +25,13 @@ var assert = require('assert'),
 
 var referenceResolver = new ReferenceResolver(),
     interfacesRegistry = new InterfacesRegistry(),
-    interfacer = new Interfacer(interfacesRegistry),
+    interfacer = new Interfacer(),
     modulesTree = require('../../fixture/configuration/modules-tree'),
     namespacer = new Namespacer(),
     servicesContainer = new ServicesContainer()
 ;
+
+interfacer.interfacesRegistry = interfacesRegistry;
 
 var parameterType = new ReferenceType();
 parameterType.name = '%';
@@ -66,16 +68,61 @@ referenceResolver.addReferenceType(serviceType);
 referenceResolver.addReferenceType(serviceTagType);
 referenceResolver.addReferenceType(serviceFactoryType);
 
-servicesContainer.addServiceBuilder(new AbstractServiceBuilder(servicesContainer, referenceResolver));
-servicesContainer.addServiceBuilder(new AliasServiceBuilder(servicesContainer, referenceResolver));
-servicesContainer.addServiceBuilder(new ChildrenServiceBuilder(servicesContainer, referenceResolver));
-servicesContainer.addServiceBuilder(new ClassServiceBuilder(servicesContainer, referenceResolver));
-servicesContainer.addServiceBuilder(new DeclinationsServiceBuilder(servicesContainer, referenceResolver));
-servicesContainer.addServiceBuilder(new FactoriesServiceBuilder(servicesContainer, referenceResolver));
-servicesContainer.addServiceBuilder(new ParentServiceBuilder(servicesContainer, referenceResolver));
-servicesContainer.addServiceBuilder(new PropertiesServiceBuilder(servicesContainer, referenceResolver, interfacer));
-servicesContainer.addServiceBuilder(new TagsServiceBuilder(servicesContainer, referenceResolver, interfacer));
-servicesContainer.addServiceBuilder(new RegistryServiceBuilder(servicesContainer, referenceResolver, interfacer, modulesTree, namespacer));
+var abstractServiceBuilder = new AbstractServiceBuilder();
+abstractServiceBuilder.servicesContainer = servicesContainer;
+abstractServiceBuilder.referenceResolver = referenceResolver;
+
+var aliasServiceBuilder = new AliasServiceBuilder();
+aliasServiceBuilder.servicesContainer = servicesContainer;
+aliasServiceBuilder.referenceResolver = referenceResolver;
+
+var childrenServiceBuilder = new ChildrenServiceBuilder();
+childrenServiceBuilder.servicesContainer = servicesContainer;
+childrenServiceBuilder.referenceResolver = referenceResolver;
+
+var classServiceBuilder = new ClassServiceBuilder();
+classServiceBuilder.servicesContainer = servicesContainer;
+classServiceBuilder.referenceResolver = referenceResolver;
+
+var declinationsServiceBuilder = new DeclinationsServiceBuilder();
+declinationsServiceBuilder.servicesContainer = servicesContainer;
+declinationsServiceBuilder.referenceResolver = referenceResolver;
+
+var factoriesServiceBuilder = new FactoriesServiceBuilder();
+factoriesServiceBuilder.servicesContainer = servicesContainer;
+factoriesServiceBuilder.referenceResolver = referenceResolver;
+
+var parentServiceBuilder = new ParentServiceBuilder();
+parentServiceBuilder.servicesContainer = servicesContainer;
+parentServiceBuilder.referenceResolver = referenceResolver;
+
+var propertiesServiceBuilder = new PropertiesServiceBuilder();
+propertiesServiceBuilder.servicesContainer = servicesContainer;
+propertiesServiceBuilder.referenceResolver = referenceResolver;
+propertiesServiceBuilder.interfacer = interfacer;
+
+var tagsServiceBuilder = new TagsServiceBuilder();
+tagsServiceBuilder.servicesContainer = servicesContainer;
+tagsServiceBuilder.referenceResolver = referenceResolver;
+tagsServiceBuilder.interfacer = interfacer;
+
+var registryServiceBuilder = new RegistryServiceBuilder();
+registryServiceBuilder.servicesContainer = servicesContainer;
+registryServiceBuilder.referenceResolver = referenceResolver;
+registryServiceBuilder.interfacer = interfacer;
+registryServiceBuilder.modulesTree = modulesTree;
+registryServiceBuilder.namespacer = namespacer;
+
+servicesContainer.addServiceBuilder(abstractServiceBuilder);
+servicesContainer.addServiceBuilder(aliasServiceBuilder);
+servicesContainer.addServiceBuilder(childrenServiceBuilder);
+servicesContainer.addServiceBuilder(classServiceBuilder);
+servicesContainer.addServiceBuilder(declinationsServiceBuilder);
+servicesContainer.addServiceBuilder(factoriesServiceBuilder);
+servicesContainer.addServiceBuilder(parentServiceBuilder);
+servicesContainer.addServiceBuilder(propertiesServiceBuilder);
+servicesContainer.addServiceBuilder(tagsServiceBuilder);
+servicesContainer.addServiceBuilder(registryServiceBuilder);
 
 var Provider = function() { this.name = 'provider'; };
 Provider.prototype.provide = function() {

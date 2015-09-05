@@ -15,32 +15,32 @@ var eventNotifier = new EventNotifier(),
             input.a = context.a;
         }
     },
-    event = new Event(
-        'update',
-        {
-            context: {
-                a: 1
-            },
-            callback: function(stream) {
-                assert.deepEqual(
-                    stream,
-                    {
-                        foo: 'bar',
-                        bar: 'foo',
-                        a: 1
-                    }
-                );
-            },
-            parameters: {
-                foo: {type: 'string'}
-            }
-        },
-        sequence,
-        eventNotifier
-    )
+    event = new Event()
 ;
 
 eventNotifier.dataResolver = dataResolver;
+
+event.name = 'update';
+event.parameters = {
+    context: {
+        a: 1
+    },
+    callback: function(stream) {
+        assert.deepEqual(
+            stream,
+            {
+                foo: 'bar',
+                bar: 'foo',
+                a: 1
+            }
+        );
+    },
+    parameters: {
+        foo: {type: 'string'}
+    }
+};
+event.sequence = sequence;
+event.eventNotifier = eventNotifier;
 
 describe('Event notifier', function() {
     describe('method "notify"', function() {

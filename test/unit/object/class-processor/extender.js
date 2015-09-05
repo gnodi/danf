@@ -57,14 +57,16 @@ C.prototype.c = function() {
 };
 
 var classesRegistry = new ClassesRegistry(),
-    classesHandler = new ClassesHandler(classesRegistry),
-    extender = new Extender(classesRegistry, 'baseClass')
+    classesHandler = new ClassesHandler(),
+    extender = new Extender()
 ;
 
-classesRegistry.index('baseClass', function() {});
 classesRegistry.index('a', A);
 classesRegistry.index('b', B);
 classesRegistry.index('c', C);
+
+classesHandler.classesRegistry = classesRegistry;
+extender.classesRegistry = classesRegistry;
 
 describe('Extender', function() {
     describe('method "process"', function() {

@@ -8,9 +8,13 @@ var assert = require('assert'),
 ;
 
 var mapProvider = require('../../fixture/manipulation/map-provider'),
-    flow = new Flow({}, '.', mapProvider.provide()),
+    flow = new Flow(),
     flowContext = new FlowContext()
 ;
+
+flow.stream = {};
+flow.initialScope = '.';
+flow.context = mapProvider.provide();
 
 flowContext.__asyncFlow = flow;
 

@@ -70,8 +70,10 @@ Object.defineProperty(C.prototype, 'c', {
 });
 
 var interfacesRegistry = new InterfacesRegistry(),
-    interfacer = new Interfacer(interfacesRegistry)
+    interfacer = new Interfacer()
 ;
+
+interfacer.interfacesRegistry = interfacesRegistry;
 
 var config = {
         interfaces: {

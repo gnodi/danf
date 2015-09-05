@@ -10,13 +10,20 @@ var assert = require('assert'),
     GlobalSectionProcessor = require('../../fixture/configuration/section-processor')
 ;
 
-var modulesTree = new ModulesTree('main'),
+var modulesTree = new ModulesTree(),
     configurationResolver = require('../../fixture/configuration/configuration-resolver'),
     referenceResolver = new ReferenceResolver(),
     namespacer = new Namespacer(),
-    processor = new Processor(configurationResolver, referenceResolver, namespacer, 'test'),
+    processor = new Processor(),
     globalSectionProcessor = new GlobalSectionProcessor('global', configurationResolver, referenceResolver)
 ;
+
+modulesTree.appName = 'main';
+
+processor.configurationResolver = configurationResolver;
+processor.referenceResolver = referenceResolver;
+processor.namespacer = namespacer;
+processor.environment = 'test';
 
 var expectedConfig = {
         global: {

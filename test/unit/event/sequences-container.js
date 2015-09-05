@@ -27,14 +27,29 @@ var assert = require('assert'),
 var mapProvider = require('../../fixture/manipulation/map-provider');
 var FlowProvider = function() {};
 FlowProvider.prototype.provide = function(properties) {
-    return new Flow(properties.stream, properties.scope, properties.context, properties.callback);
+    var flow = new Flow();
+
+    flow.stream = properties.stream;
+    flow.initialScope = properties.scope;
+    flow.context = properties.context;
+    flow.callback = properties.callback;
+
+    flow.__init();
+
+    return flow;
 }
 
-var SequenceProvider = function(flowProvider, uniqueIdGenerator) { this.flowProvider = flowProvider };
+var SequenceProvider = function(flowProvider, uniqueIdGenerator) {
+    this.flowProvider = flowProvider;
+    this.uniqueIdGenerator = uniqueIdGenerator;
+};
 SequenceProvider.prototype.provide = function(properties) {
-    var sequence = new Sequence(properties.operation, this.flowProvider, mapProvider);
+    var sequence = new Sequence();
 
-    sequence.uniqueIdGenerator = uniqueIdGenerator;
+    sequence.operation = properties.operation;
+    sequence.flowProvider = this.flowProvider;
+    sequence.mapProvider = mapProvider;
+    sequence.uniqueIdGenerator = this.uniqueIdGenerator;
 
     return sequence;
 }
@@ -46,19 +61,30 @@ Logger.prototype.log = function() {
 var uniqueIdGenerator = new UniqueIdGenerator(),
     referenceResolver = new ReferenceResolver(),
     flowContext = new FlowContext(),
-    referencesResolver = new ReferencesResolver(referenceResolver, flowContext, {memo: 2}),
+    referencesResolver = new ReferencesResolver(),
     servicesContainer = new ServicesContainer(),
-    flowDriver = new FlowDriver(async),
+    flowDriver = new FlowDriver(),
     asynchronousCollections = require('../../fixture/manipulation/asynchronous-collections'),
-    collectionInterpreter = new CollectionInterpreter(referencesResolver, flowDriver),
+    collectionInterpreter = new CollectionInterpreter(),
     flowProvider = new FlowProvider(),
     sequenceProvider = new SequenceProvider(flowProvider, uniqueIdGenerator),
-    sequencesContainer = new SequencesContainer(flowDriver, sequenceProvider),
+    sequencesContainer = new SequencesContainer(),
     dataResolver = require('../../fixture/manipulation/data-resolver'),
     logger = new Logger()
 ;
 
+referencesResolver.referenceResolver = referenceResolver;
+referencesResolver.flowContext = flowContext;
+referencesResolver.config = {memo: 2};
+
+flowDriver.async = async;
+
+collectionInterpreter.referencesResolver = referencesResolver;
+collectionInterpreter.flowDriver = flowDriver;
 collectionInterpreter.asynchronousCollections = asynchronousCollections;
+
+sequencesContainer.flowDriver = flowDriver;
+sequencesContainer.sequenceProvider = sequenceProvider;
 
 var contextType = new ReferenceType();
 contextType.name = '@';
@@ -93,21 +119,35 @@ referenceResolver.addReferenceType(configType);
 referenceResolver.addReferenceType(sequenceType);
 referenceResolver.addReferenceType(sequenceTagType);
 
-var aliasSequenceInterpreter = new AliasSequenceInterpreter(sequencesContainer),
-    childrenSequenceInterpreter = new ChildrenSequenceInterpreter(sequencesContainer, referencesResolver, collectionInterpreter),
-    collectionsSequenceInterpreter = new CollectionsSequenceInterpreter(sequencesContainer),
-    operationsSequenceInterpreter = new OperationsSequenceInterpreter(sequencesContainer, referencesResolver, servicesContainer, collectionInterpreter),
-    inputSequenceInterpreter = new InputSequenceInterpreter(sequencesContainer, dataResolver),
-    parentsSequenceInterpreter = new ParentsSequenceInterpreter(sequencesContainer, referencesResolver, collectionInterpreter)
+var aliasSequenceInterpreter = new AliasSequenceInterpreter(),
+    childrenSequenceInterpreter = new ChildrenSequenceInterpreter(),
+    collectionsSequenceInterpreter = new CollectionsSequenceInterpreter(),
+    operationsSequenceInterpreter = new OperationsSequenceInterpreter(),
+    inputSequenceInterpreter = new InputSequenceInterpreter(),
+    parentsSequenceInterpreter = new ParentsSequenceInterpreter()
 ;
 
+aliasSequenceInterpreter.sequencesContainer = sequencesContainer;
 aliasSequenceInterpreter.logger = logger;
+childrenSequenceInterpreter.sequencesContainer = sequencesContainer;
 childrenSequenceInterpreter.logger = logger;
+childrenSequenceInterpreter.referencesResolver = referencesResolver;
+childrenSequenceInterpreter.collectionInterpreter = collectionInterpreter;
 childrenSequenceInterpreter.uniqueIdGenerator = uniqueIdGenerator;
+collectionsSequenceInterpreter.sequencesContainer = sequencesContainer;
 collectionsSequenceInterpreter.logger = logger;
+operationsSequenceInterpreter.sequencesContainer = sequencesContainer;
 operationsSequenceInterpreter.logger = logger;
+operationsSequenceInterpreter.referencesResolver = referencesResolver;
+operationsSequenceInterpreter.servicesContainer = servicesContainer;
+operationsSequenceInterpreter.collectionInterpreter = collectionInterpreter;
+inputSequenceInterpreter.sequencesContainer = sequencesContainer;
 inputSequenceInterpreter.logger = logger;
+inputSequenceInterpreter.dataResolver = dataResolver;
+parentsSequenceInterpreter.sequencesContainer = sequencesContainer;
 parentsSequenceInterpreter.logger = logger;
+parentsSequenceInterpreter.referencesResolver = referencesResolver;
+parentsSequenceInterpreter.collectionInterpreter = collectionInterpreter;
 parentsSequenceInterpreter.uniqueIdGenerator = uniqueIdGenerator;
 
 sequencesContainer.addSequenceInterpreter(aliasSequenceInterpreter);

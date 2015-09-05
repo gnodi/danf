@@ -11,6 +11,7 @@ var errorHandler = new ErrorHandler(),
     debugErrorHandler = new ErrorHandler()
 ;
 
+errorHandler.debug = false;
 debugErrorHandler.debug = true;
 
 var processTests = [

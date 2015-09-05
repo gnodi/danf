@@ -34,7 +34,14 @@ var data = {name: 'triggered'},
     },
     eventProvider = {
         provide: function() {
-            return new Event('click', {}, sequence, notifier);
+            var event = new Event();
+
+            event.name = 'click';
+            event.parameters = {};
+            event.sequence = sequence;
+            event.notifier = notifier;
+
+            return event;
         }
     }
 ;

@@ -83,13 +83,19 @@ C.prototype.m = function(keys) {
 describe('Inheriting from __async properties should allow', function() {
     it('to process asynchrone tasks', function(done) {
         var expected = {foo: 5},
-            flow = new Flow({}, null, mapProvider.provide(), function(err, result) {
-                assert.deepEqual(result, expected);
-                done();
-            }),
+            flow = new Flow(),
             a = new A(),
             b = new B(a)
         ;
+
+        flow.stream = {};
+        flow.initialScope = null;
+        flow.context = mapProvider.provide();
+        flow.callback = function(err, result) {
+            assert.deepEqual(result, expected);
+            done();
+        };
+        flow.__init();
 
         a.__asyncFlow = flow;
 
@@ -102,13 +108,19 @@ describe('Inheriting from __async properties should allow', function() {
                 bar: 1,
                 foobar: 2
             },
-            flow = new Flow({}, null, mapProvider.provide(), function(err, result) {
-                assert.deepEqual(result, expected);
-                done();
-            }),
+            flow = new Flow(),
             a = new A(),
             b = new B(a)
         ;
+
+        flow.stream = {};
+        flow.initialScope = null;
+        flow.context = mapProvider.provide();
+        flow.callback = function(err, result) {
+            assert.deepEqual(result, expected);
+            done();
+        };
+        flow.__init();
 
         a.__asyncFlow = flow;
 
@@ -117,13 +129,19 @@ describe('Inheriting from __async properties should allow', function() {
 
     it('to process asynchrone tasks', function(done) {
         var expected = {foo: {bar: 6}},
-            flow = new Flow({}, 'foo', mapProvider.provide(), function(err, result) {
-                assert.deepEqual(result, expected);
-                done();
-            }),
+            flow = new Flow(),
             a = new A(),
             b = new B(a)
         ;
+
+        flow.stream = {};
+        flow.initialScope = 'foo';
+        flow.context = mapProvider.provide();
+        flow.callback = function(err, result) {
+            assert.deepEqual(result, expected);
+            done();
+        };
+        flow.__init();
 
         a.__asyncFlow = flow;
 
@@ -132,13 +150,19 @@ describe('Inheriting from __async properties should allow', function() {
 
     it('to process asynchrone tasks', function(done) {
         var expected = {foo: {bar: 8}},
-            flow = new Flow({foo: {bar: 2}}, 'foo', mapProvider.provide(), function(err, result) {
-                assert.deepEqual(result, expected);
-                done();
-            }),
+            flow = new Flow(),
             a = new A(),
             b = new B(a)
         ;
+
+        flow.stream = {foo: {bar: 2}};
+        flow.initialScope = 'foo';
+        flow.context = mapProvider.provide();
+        flow.callback = function(err, result) {
+            assert.deepEqual(result, expected);
+            done();
+        };
+        flow.__init();
 
         a.__asyncFlow = flow;
 
@@ -158,14 +182,20 @@ describe('Inheriting from __async properties should allow', function() {
                     }
                 }
             },
-            flow = new Flow({}, 'foo', mapProvider.provide(), function(err, result) {
-                assert.deepEqual(result, expected);
-                done();
-            }),
+            flow = new Flow(),
             a = new A(),
             b = new B(a),
             c = new C(b)
         ;
+
+        flow.stream = {};
+        flow.initialScope = 'foo';
+        flow.context = mapProvider.provide();
+        flow.callback = function(err, result) {
+            assert.deepEqual(result, expected);
+            done();
+        };
+        flow.__init();
 
         a.__asyncFlow = flow;
 
@@ -186,14 +216,20 @@ describe('Inheriting from __async properties should allow', function() {
                     bar: 2
                 }
             },
-            flow = new Flow({foo: {bar: 2}}, 'foo', mapProvider.provide(), function(err, result) {
-                assert.deepEqual(result, expected);
-                done();
-            }),
+            flow = new Flow(),
             a = new A(),
             b = new B(a),
             c = new C(b)
         ;
+
+        flow.stream = {foo: {bar: 2}};
+        flow.initialScope = 'foo';
+        flow.context = mapProvider.provide();
+        flow.callback = function(err, result) {
+            assert.deepEqual(result, expected);
+            done();
+        };
+        flow.__init();
 
         a.__asyncFlow = flow;
 
@@ -202,13 +238,19 @@ describe('Inheriting from __async properties should allow', function() {
 
     it('to process asynchrone tasks', function(done) {
         var expected = {foo: {bar: 3}},
-            flow = new Flow({}, null, mapProvider.provide(), function(err, result) {
-                assert.deepEqual(result, expected);
-                done();
-            }),
+            flow = new Flow(),
             a = new A(),
             b = new B(a)
         ;
+
+        flow.stream = {};
+        flow.initialScope = null;
+        flow.context = mapProvider.provide();
+        flow.callback = function(err, result) {
+            assert.deepEqual(result, expected);
+            done();
+        };
+        flow.__init();
 
         a.__asyncFlow = flow;
 
@@ -217,13 +259,19 @@ describe('Inheriting from __async properties should allow', function() {
 
     it('to process asynchrone tasks', function(done) {
         var expected = {'foo.bar': 3},
-            flow = new Flow({}, null, mapProvider.provide(), function(err, result) {
-                assert.deepEqual(result, expected);
-                done();
-            }),
+            flow = new Flow(),
             a = new A(),
             b = new B(a)
         ;
+
+        flow.stream = {};
+        flow.initialScope = null;
+        flow.context = mapProvider.provide();
+        flow.callback = function(err, result) {
+            assert.deepEqual(result, expected);
+            done();
+        };
+        flow.__init();
 
         a.__asyncFlow = flow;
 
@@ -240,13 +288,19 @@ describe('Inheriting from __async properties should allow', function() {
                     }
                 }
             },
-            flow = new Flow({}, 'foo', mapProvider.provide(), function(err, result) {
-                assert.deepEqual(result, expected);
-                done();
-            }),
+            flow = new Flow(),
             a = new A(),
             b = new B(a)
         ;
+
+        flow.stream = {};
+        flow.initialScope = 'foo';
+        flow.context = mapProvider.provide();
+        flow.callback = function(err, result) {
+            assert.deepEqual(result, expected);
+            done();
+        };
+        flow.__init();
 
         a.__asyncFlow = flow;
 
@@ -255,13 +309,19 @@ describe('Inheriting from __async properties should allow', function() {
 
     it('to process asynchrone tasks', function(done) {
         var expected = 5,
-            flow = new Flow({}, null, mapProvider.provide(), function(err, result) {
-                assert.deepEqual(result, expected);
-                done();
-            }),
+            flow = new Flow(),
             a = new A(),
             b = new B(a)
         ;
+
+        flow.stream = {};
+        flow.initialScope = null;
+        flow.context = mapProvider.provide();
+        flow.callback = function(err, result) {
+            assert.deepEqual(result, expected);
+            done();
+        };
+        flow.__init();
 
         a.__asyncFlow = flow;
 
@@ -270,13 +330,19 @@ describe('Inheriting from __async properties should allow', function() {
 
     it('to process asynchrone tasks', function(done) {
         var expected = null,
-            flow = new Flow(null, null, mapProvider.provide(), function(err, result) {
-                assert.deepEqual(result, expected);
-                done();
-            }),
+            flow = new Flow(),
             a = new A(),
             b = new B(a)
         ;
+
+        flow.stream = null;
+        flow.initialScope = null;
+        flow.context = mapProvider.provide();
+        flow.callback = function(err, result) {
+            assert.deepEqual(result, expected);
+            done();
+        };
+        flow.__init();
 
         a.__asyncFlow = flow;
 
