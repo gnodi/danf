@@ -107,7 +107,7 @@ test-test:
 	# Test
 	@NODE_ENV=test ./node_modules/.bin/mocha \
 		--reporter $(REPORTER) \
-		--timeout 5000 \
+		--timeout 10000 \
 		--bail \
 		--recursive \
 		$(MOCHA_OPTS) \
