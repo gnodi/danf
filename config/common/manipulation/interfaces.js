@@ -535,9 +535,25 @@ module.exports = {
              */
             mergeTributary: {
                 arguments: ['number/tributary']
+            },
+            /**
+             * Retrieve a tributary embedded level.
+             *
+             * @param {number} tributary The id of the tributary.
+             * @return {number} The embedded level.
+             */
+            getTributaryLevel: {
+                arguments: ['number/tributary'],
+                returns: 'number'
             }
         },
         getters: {
+            /**
+             * The unique identifier of the flow.
+             *
+             * @return {string} The level.
+             */
+            id: 'string',
             /**
              * The context of execution of the flow.
              *
@@ -567,7 +583,13 @@ module.exports = {
              *
              * @return {string} The identifier of the tributary.
              */
-            currentTributary: 'number'
+            currentTributary: 'number',
+            /**
+             * The embedded level of the current tributary.
+             *
+             * @return {string} The level.
+             */
+            currentLevel: 'number'
         },
         setters: {
             /**

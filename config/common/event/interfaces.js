@@ -430,14 +430,16 @@ module.exports = {
              * @param {string} message The message.
              * @param {number} verbosity The verbosity level.
              * @param {number} indentation The indentation level.
-             * @param {number|string} item The item identifier.
+             * @param {number|null} tributary The tributary.
+             * @param {date|null} startedAt The start date of the task.
              */
             log: {
                 arguments: [
                     'string/message',
                     'number/verbosity',
                     'number/indentation',
-                    'number|string/item'
+                    'number|null/tributary',
+                    'date|null/startedAt'
                 ]
             }
         }
