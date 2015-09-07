@@ -81,6 +81,7 @@ flowDriver.async = async;
 
 collectionInterpreter.referencesResolver = referencesResolver;
 collectionInterpreter.flowDriver = flowDriver;
+collectionInterpreter.logger = logger;
 collectionInterpreter.asynchronousCollections = asynchronousCollections;
 
 sequencesContainer.flowDriver = flowDriver;

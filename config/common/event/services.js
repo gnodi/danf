@@ -61,6 +61,7 @@ module.exports = {
         properties: {
             referencesResolver: '#danf:event.referencesResolver#',
             flowDriver: '#danf:manipulation.flowDriver#',
+            logger: '#danf:event.logger#',
             asynchronousCollections: '&danf:manipulation.asynchronousCollection&'
         }
     },

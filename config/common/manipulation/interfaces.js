@@ -585,6 +585,12 @@ module.exports = {
              */
             currentTributary: 'number',
             /**
+             * The tributary count.
+             *
+             * @return {string} The count.
+             */
+            tributaryCount: 'number',
+            /**
              * The embedded level of the current tributary.
              *
              * @return {string} The level.
