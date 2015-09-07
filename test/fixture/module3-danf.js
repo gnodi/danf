@@ -17,6 +17,19 @@ Computer.prototype.inc = function (value, inc) {
     });
 }
 
+Computer.prototype.add = function (value, coeff) {
+    this.__asyncProcess(function(returnAsync) {
+        setTimeout(
+            function() {
+                returnAsync(function(value) {
+                    return value + coeff;
+                });
+            },
+            20
+        );
+    });
+}
+
 Computer.prototype.mul = function (value, coeff) {
     this.__asyncProcess(function(returnAsync) {
         setTimeout(
@@ -116,6 +129,31 @@ module.exports = {
                         method: 'mul',
                         arguments: ['@value@', '@coeff@'],
                         scope: 'value'
+                    }
+                ]
+            },
+            sum: {
+                input: {
+                    input: {
+                        type: 'number_array',
+                        required: true
+                    },
+                    sum: {
+                        type: 'number',
+                        default: 0
+                    }
+                },
+                operations: [
+                    {
+                        service: 'computer',
+                        method: 'add',
+                        arguments: ['@sum@', '@@.@@'],
+                        collection: {
+                            input: '@input@',
+                            method: '--',
+                            aggregate: true
+                        },
+                        scope: 'sum'
                     }
                 ]
             },
@@ -361,7 +399,7 @@ module.exports = {
                 compute: {
                     parameters: {
                         expected: {
-                            type: 'number',
+                            type: 'number'
                         },
                         done: {
                             type: 'function'
@@ -372,6 +410,31 @@ module.exports = {
                             name: 'compute',
                             output: {
                                 result: '@value@'
+                            }
+                        }
+                    ],
+                    callback: assertAsynchronousExpected
+                },
+                sum: {
+                    parameters: {
+                        input: {
+                            type: 'number_array'
+                        },
+                        expected: {
+                            type: 'number'
+                        },
+                        done: {
+                            type: 'function'
+                        }
+                    },
+                    sequences: [
+                        {
+                            name: 'sum',
+                            input: {
+                                input: '@input@'
+                            },
+                            output: {
+                                result: '@sum@'
                             }
                         }
                     ],

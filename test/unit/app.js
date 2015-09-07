@@ -140,6 +140,14 @@ describe('Danf application', function() {
         event.trigger({expected: 51, done: done});
     })
 
+    it('should allow to manage asynchronous flow', function(done) {
+        var eventsContainer = app.servicesContainer.get('danf:event.eventsContainer'),
+            event = eventsContainer.get('event', 'main:dep3:sum');
+        ;
+
+        event.trigger({input: [1, 5, 10], expected: 16, done: done});
+    })
+
     it('should handle environment configurations', function() {
         var timer = app.servicesContainer.get('main:timer');
 
