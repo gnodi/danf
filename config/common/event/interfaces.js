@@ -339,7 +339,7 @@ module.exports = {
              * @param {function} operation The operation.
              * @param {string|null} scope The optional scope.
              * @param {function|null} tributaryCallback The optional callback for the operation.
-             * @param {mixed_array} operationArguments The arguments of the operation.
+             * @param {mixed_array|mixed_object} operationArguments The arguments of the operation.
              * @param {function} retrieveContext The function allowing to retrieve the context.
              * @param {function} executeOperation The function allowing to execute the operation.
              * @param {function} endOperation The function allowing to end the operation.
@@ -348,10 +348,10 @@ module.exports = {
                 arguments: [
                     'danf:manipulation.flow/flow',
                     'function/callback',
-                    'function/operation',
+                    'mixed_object/operation',
                     'string|null/scope',
                     'function|null/tributaryCallback',
-                    'mixed_array/operationArguments',
+                    'mixed_array|mixed_object/operationArguments',
                     'function/retrieveContext',
                     'function/executeOperation',
                     'function/endOperation'
@@ -431,6 +431,7 @@ module.exports = {
              * @param {number} verbosity The verbosity level.
              * @param {number} indentation The indentation level.
              * @param {number|null} tributary The tributary.
+             * @param {number|null} level The current logging level.
              * @param {date|null} startedAt The start date of the task.
              */
             log: {
@@ -439,6 +440,7 @@ module.exports = {
                     'number/verbosity',
                     'number/indentation',
                     'number|null/tributary',
+                    'number|null/level',
                     'date|null/startedAt'
                 ]
             }
