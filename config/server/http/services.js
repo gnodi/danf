@@ -30,7 +30,8 @@ module.exports = {
                             app: '#danf:app#',
                             escaper: '#danf:manipulation.escaper#',
                             renderer: '#danf:rendering.renderer#',
-                            errorHandler: '#danf:http.errorHandler#'
+                            errorHandler: '#danf:http.errorHandler#',
+                            logger: '#danf:logging.logger#'
                         }
                     }
                 }

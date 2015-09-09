@@ -32,7 +32,8 @@ module.exports = {
             jquery: '#danf:vendor.jquery#',
             bodyProvider: '#danf:ajaxApp.bodyProvider#',
             readyTrigger: '#danf:ajaxApp.readyTrigger#',
-            historyHandler: '#danf:ajaxApp.historyHandler#'
+            historyHandler: '#danf:ajaxApp.historyHandler#',
+            logger: '#danf:logging.logger#'
         }
     },
     formsHandler: {
@@ -42,7 +43,8 @@ module.exports = {
             bodyProvider: '#danf:ajaxApp.bodyProvider#',
             readyTrigger: '#danf:ajaxApp.readyTrigger#',
             historyHandler: '#danf:ajaxApp.historyHandler#',
-            eventTrigger: '#danf:event.eventsHandler#'
+            eventTrigger: '#danf:event.eventsHandler#',
+            logger: '#danf:logging.logger#'
         }
     },
     readyProcessor: {

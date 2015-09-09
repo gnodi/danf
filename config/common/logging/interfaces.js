@@ -8,13 +8,13 @@ module.exports = {
              *
              * @param {string} message The message.
              * @param {number} verbosity The verbosity level.
-             * @param {number} indentation The indentation level.
+             * @param {number|null} indentation The optional indentation level.
              */
             log: {
                 arguments: [
                     'string/message',
                     'number/verbosity',
-                    'number/indentation'
+                    'number|null/indentation'
                 ]
             }
         }
