@@ -7,6 +7,7 @@ module.exports = ({
     cjsTranslate: true,
     paths: {
         'async': 'async/lib/async',
+        'chalk': 'chalk/index',
         'jquery': 'jquery/dist/jquery'
     },
     map: {
