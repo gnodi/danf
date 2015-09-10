@@ -16,7 +16,7 @@ module.exports = {
     readyTrigger: {
         class: 'danf:ajaxApp.readyTrigger',
         properties: {
-            eventTrigger: '#danf:event.eventsHandler#'
+            readyEvent: '#danf:event.eventsContainer[dom][danf:ajaxApp.ready]#'
         }
     },
     historyHandler: {
@@ -49,10 +49,6 @@ module.exports = {
     },
     readyProcessor: {
         tags: ['danf:ajaxApp.readyProcessor'],
-        properties: {
-            jquery: '#danf:vendor.jquery#',
-            eventTrigger: '#danf:event.eventsHandler#'
-        },
         children: {
             links: {
                 class: 'danf:ajaxApp.readyProcessor.links',

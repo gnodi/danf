@@ -8,7 +8,6 @@ module.exports = {
     linksHandler: require('../../../lib/client/ajax-app/links-handler'),
     formsHandler: require('../../../lib/client/ajax-app/forms-handler'),
     readyProcessor: {
-        abstract: require('../../../lib/client/ajax-app/ready-processor/abstract'),
         links: require('../../../lib/client/ajax-app/ready-processor/links')
     }
 };
