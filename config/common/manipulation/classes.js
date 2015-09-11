@@ -14,10 +14,12 @@ module.exports = {
     flowDriver: require('../../../lib/common/manipulation/flow-driver'),
     dataInterpreter: {
         abstract: require('../../../lib/common/manipulation/data-interpreter/abstract'),
-        flatten: require('../../../lib/common/manipulation/data-interpreter/flatten'),
         default: require('../../../lib/common/manipulation/data-interpreter/default'),
+        flatten: require('../../../lib/common/manipulation/data-interpreter/flatten'),
+        format: require('../../../lib/common/manipulation/data-interpreter/format'),
         required: require('../../../lib/common/manipulation/data-interpreter/required'),
-        type: require('../../../lib/common/manipulation/data-interpreter/type')
+        type: require('../../../lib/common/manipulation/data-interpreter/type'),
+        validate: require('../../../lib/common/manipulation/data-interpreter/validate')
     },
     asynchronousCallback: {
         error: require('../../../lib/common/manipulation/asynchronous-callback/error'),

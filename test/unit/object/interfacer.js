@@ -162,19 +162,19 @@ describe('Interfacer', function() {
                         function() {
                             obj.myMethod2(1, 2);
                         },
-                        /The method "myMethod2" defined by the interface "myInterface" takes a "string" as argument 0; a "number" given instead./
+                        /The method "myMethod2" defined by the interface "myInterface" takes a "string" as argument 0; a "number" of value `1` given instead./
                     );
                     assert.throws(
                         function() {
                             obj.myMethod2('foo', true);
                         },
-                        /The method "myMethod2" defined by the interface "myInterface" takes a "number" or a "string" as argument 1 \(foo\); a "boolean" given instead./
+                        /The method "myMethod2" defined by the interface "myInterface" takes a "number" or a "string" as argument 1 \(foo\); a "boolean" of value `true` given instead./
                     );
                     assert.throws(
                         function() {
                             obj.myMethod2('foo', 2);
                         },
-                        /The method "myMethod2" defined by the interface "myInterface" returns a "string"; a "number" given instead./
+                        /The method "myMethod2" defined by the interface "myInterface" returns a "string"; a "number" of value `2` given instead./
                     );
                 })
 
@@ -191,13 +191,13 @@ describe('Interfacer', function() {
                         function() {
                             obj.myMethod3('foo', 'bar', 2, false);
                         },
-                        /The method "myMethod3" defined by the interface "myInterface" takes an "array" or a "boolean" or "undefined" or a "string" as argument 2; a "number" given instead./
+                        /The method "myMethod3" defined by the interface "myInterface" takes an "array" or a "boolean" or "undefined" or a "string" as argument 2; a "number" of value `2` given instead./
                     );
                     assert.throws(
                         function() {
                             obj.myMethod3('foo', 'bar', [], 'foo', false);
                         },
-                        /The method "myMethod3" defined by the interface "myInterface" takes a "boolean" or "undefined" or an "array" as argument 3; a "string" given instead./
+                        /The method "myMethod3" defined by the interface "myInterface" takes a "boolean" or "undefined" or an "array" as argument 3; a "string" of value `"foo"` given instead./
                     );
                 })
 
@@ -235,7 +235,7 @@ describe('Interfacer', function() {
                         function() {
                             obj.property2;
                         },
-                        /The getter "property2" defined by the interface "myInterface" returns a "string"; a "number" given instead./
+                        /The getter "property2" defined by the interface "myInterface" returns a "string"; a "number" of value `2` given instead./
                     );
                 })
 
@@ -260,7 +260,7 @@ describe('Interfacer', function() {
                         function() {
                             obj.property1 = 'foo';
                         },
-                        /The setter "property1" defined by the interface "myInterface" takes a "number"; a "string" given instead./
+                        /The setter "property1" defined by the interface "myInterface" takes a "number"; a "string" of value `"foo"` given instead./
                     );
                 })
 

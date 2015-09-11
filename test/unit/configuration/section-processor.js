@@ -53,8 +53,11 @@ var contract = {
         type: 'number_array_object'
     },
     raw: {
-        type: function(value) {
-            return value ? true : false;
+        type: 'number',
+        validate: function(value) {
+            if (!value) {
+                throw new Error('a positive value');
+            }
         }
     }
 };

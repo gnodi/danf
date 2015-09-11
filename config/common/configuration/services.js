@@ -51,17 +51,23 @@ module.exports = {
     configurationInterpreter: {
         tags: ['danf:configuration.configurationInterpreter'],
         children: {
+            default: {
+                class: 'danf:manipulation.dataInterpreter.default'
+            },
             flatten: {
                 class: 'danf:manipulation.dataInterpreter.flatten'
             },
-            default: {
-                class: 'danf:manipulation.dataInterpreter.default'
+            format: {
+                class: 'danf:manipulation.dataInterpreter.format'
             },
             required: {
                 class: 'danf:manipulation.dataInterpreter.required'
             },
             type: {
                 class: 'danf:manipulation.dataInterpreter.type'
+            },
+            validate: {
+                class: 'danf:manipulation.dataInterpreter.validate'
             },
             abstractNamespacer: {
                 properties: {

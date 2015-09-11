@@ -66,97 +66,97 @@ var checkTypeErrorTests = [
         {
             data: 1,
             type: 'string',
-            expected: /The expected value is a "string"; a "number" given instead./
+            expected: /The expected value is a "string"; a "number" of value `1` given instead./
         },
         {
             data: 'bar',
             type: 'number',
             name: 'foo1',
-            expected: /The expected value for "foo1" is a "number"; a "string" given instead./
+            expected: /The expected value for "foo1" is a "number"; a "string" of value `"bar"` given instead./
         },
         {
             data: 1,
             type: 'boolean',
             name: 'foo2',
-            expected: /The expected value for "foo2" is a "boolean"; a "number" given instead./
+            expected: /The expected value for "foo2" is a "boolean"; a "number" of value `1` given instead./
         },
         {
             data: 1,
             type: 'function',
             name: 'foo3',
-            expected: /The expected value for "foo3" is a "function"; a "number" given instead./
+            expected: /The expected value for "foo3" is a "function"; a "number" of value `1` given instead./
         },
         {
             data: 1,
             type: 'string_array',
             name: 'foo4',
-            expected: /The expected value for "foo4" is a "string_array"; a "number" given instead./
+            expected: /The expected value for "foo4" is a "string_array"; a "number" of value `1` given instead./
         },
         {
             data: ['foo', 'bar'],
             type: 'number_array',
             name: 'foo5',
-            expected: /The expected value for "foo5" is a "number_array"; a "string_array" given instead./
+            expected: /The expected value for "foo5" is a "number_array"; a "string_array" of value `\["foo","bar"\]` given instead./
         },
         {
             data: 1,
             type: 'string_object',
             name: 'foo6',
-            expected: /The expected value for "foo6" is a "string_object"; a "number" given instead./
+            expected: /The expected value for "foo6" is a "string_object"; a "number" of value `1` given instead./
         },
         {
             data: {foo: 1},
             type: 'boolean_object',
             name: 'foo7',
-            expected: /The expected value for "foo7" is a "boolean_object"; a "number_object" given instead./
+            expected: /The expected value for "foo7" is a "boolean_object"; a "number_object" of value `{"foo":1}` given instead./
         },
         {
             data: 1,
             type: 'mixed_object',
             name: 'foo8',
-            expected: /The expected value for "foo8" is a "mixed_object"; a "number" given instead./
+            expected: /The expected value for "foo8" is a "mixed_object"; a "number" of value `1` given instead./
         },
         {
             data: {bar: 1},
             type: 'number_array_object',
             name: 'foo9',
-            expected: /The expected value for "foo9" is a "number_array_object"; a "number_object" given instead./
+            expected: /The expected value for "foo9" is a "number_array_object"; a "number_object" of value `{"bar":1}` given instead./
         },
         {
             data: {bar: [1]},
             type: 'string_array_object',
             name: 'foo10',
-            expected: /The expected value for "foo10" is a "string_array_object"; a "number_array_object" given instead./
+            expected: /The expected value for "foo10" is a "string_array_object"; a "number_array_object" of value `{"bar":\[1\]}` given instead./
         },
         {
             data: 1,
             type: 'mixed_array_object',
             name: 'foo11',
-            expected: /The expected value for "foo11" is a "mixed_array_object"; a "number" given instead./
+            expected: /The expected value for "foo11" is a "mixed_array_object"; a "number" of value `1` given instead./
         },
         {
             data: {},
             type: 'array',
             name: 'foo12',
-            expected: /The expected value for "foo12" is an "array"; an "object" given instead./
+            expected: /The expected value for "foo12" is an "array"; an "object" of value `{}` given instead./
         },
         {
             data: [],
             type: 'object',
             name: 'foo13',
-            expected: /The expected value for "foo13" is an "object"; an "array" given instead./
+            expected: /The expected value for "foo13" is an "object"; an "array" of value `\[\]` given instead./
         },,
         {
             data: [],
             type: 'object',
             name: 'foo14',
-            expected: /The expected value for "foo14" is an "object"; an "array" given instead./
+            expected: /The expected value for "foo14" is an "object"; an "array" of value `\[\]` given instead./
         },
         {
             data: [],
             type: 'interface',
             name: 'foo15',
-            expected: /The expected value for "foo15" is an "instance of `interface`"; an "array" given instead./
+            expected: /The expected value for "foo15" is an "instance of `interface`"; an "array" of value `\[\]` given instead./
         },
         {
             data: new BadClass(),
@@ -168,37 +168,37 @@ var checkTypeErrorTests = [
             data: true,
             type: 'number|string',
             name: 'foo17',
-            expected: /The expected value for "foo17" is a "number" or a "string"; a "boolean" given instead./
+            expected: /The expected value for "foo17" is a "number" or a "string"; a "boolean" of value `true` given instead./
         },
         {
             data: 2,
             type: 'interface_array',
             name: 'foo18',
-            expected: /The expected value for "foo18" is an "array of instance of `interface` values"; a "number" given instead./
+            expected: /The expected value for "foo18" is an "array of instance of `interface` values"; a "number" of value `2` given instead./
         },
         {
             data: [new Class()],
             type: 'interface_object',
             name: 'foo19',
-            expected: /The expected value for "foo19" is an "object of instance of `interface` properties"; an "object_array" given instead./
+            expected: /The expected value for "foo19" is an "object of instance of `interface` properties"; an "object_array" of value `\[{}\]` given instead./
         },
         {
             data: {foo: new Class(), bar: new BadClass()},
             type: 'interface_object',
             name: 'foo20',
-            expected: /The expected value for "foo20" is an "object of instance of `interface` properties"; an "object_object" given instead./
+            expected: /The expected value for "foo20" is an "object of instance of `interface` properties"; an "object_object" of value `{"foo":{},"bar":{}}` given instead./
         },
         {
             data: 3,
             type: 'date',
             name: 'foo21',
-            expected: /The expected value for "foo21" is a "date"; a "number" given instead./
+            expected: /The expected value for "foo21" is a "date"; a "number" of value `3` given instead./
         },
         {
             data: 'foo',
             type: 'error',
             name: 'foo22',
-            expected: /The expected value for "foo22" is an "error"; a "string" given instead./
+            expected: /The expected value for "foo22" is an "error"; a "string" of value `"foo"` given instead./
         }
     ]
 ;
@@ -343,7 +343,7 @@ describe('Object', function() {
 
                     Object.checkDependencies(a);
                 },
-                /The object expected a provider of "main:c" for its property "b"; a "string" given instead./
+                /The object expected a provider of "main:c" for its property "b"; a "string" of value `"dumb"` given instead./
             );
         })
 
@@ -364,7 +364,7 @@ describe('Object', function() {
 
                     Object.checkDependencies(a);
                 },
-                /The object expected a provider of "main:c" for its property "b"; an object with no "providedType" getter given instead./
+                /The object expected a provider of "main:c" for its property "b"; an "instance of \[`main:b`\]" with no "providedType" getter given instead./
             );
         })
 
