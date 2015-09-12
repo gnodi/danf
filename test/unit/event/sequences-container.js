@@ -1436,7 +1436,7 @@ describe('SequencesContainer', function() {
         sequenceTests.forEach(function(test) {
             it('should allow to retrieve a built sequence', function(done) {
                 var sequence = sequencesContainer.get(test.name),
-                    end = function(error, result) {
+                    end = function(result) {
                         assert.deepEqual(
                             result,
                             test.expected
@@ -1453,7 +1453,7 @@ describe('SequencesContainer', function() {
         sequenceOperationCollectionTests.forEach(function(test) {
             it('should allow to retrieve a built sequence with operations on collections', function(done) {
                 var sequence = sequencesContainer.get(test.name),
-                    end = function(error, result) {
+                    end = function(result) {
                         assert.deepEqual(
                             result,
                             test.expected
@@ -1470,7 +1470,7 @@ describe('SequencesContainer', function() {
         sequenceCollectionsTests.forEach(function(test) {
             it('should allow to retrieve a built sequence with parent on sequence collection', function(done) {
                 var sequence = sequencesContainer.get(test.name),
-                    end = function(error, result) {
+                    end = function(result) {
                         assert.deepEqual(
                             result,
                             test.expected
@@ -1549,7 +1549,7 @@ describe('SequencesContainer', function() {
                 );
 
                 var sequence = sequencesContainer.get(test.name),
-                    end = function(error, result) {
+                    end = function(result) {
                         assert.deepEqual(
                             result,
                             test.expected
@@ -1573,7 +1573,7 @@ describe('SequencesContainer', function() {
             assert(sequencesContainer.has('z'));
 
             var sequence = sequencesContainer.get('z'),
-                end = function(error, result) {
+                end = function(result) {
                     assert.deepEqual(
                         result,
                         {result: 5}

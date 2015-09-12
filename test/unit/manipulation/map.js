@@ -32,6 +32,20 @@ describe('Map', function() {
         );
     })
 
+    it('method "getAll" should not return the internal map', function() {
+        var values = map.getAll();
+
+        values.foo = 2;
+
+        assert.deepEqual(
+            map.getAll(),
+            {
+                foo: 1,
+                bar: 3
+            }
+        );
+    })
+
     it('method "unset" should unset a specific setted value', function() {
         map.unset('foo');
 

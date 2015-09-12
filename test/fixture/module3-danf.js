@@ -43,7 +43,7 @@ Computer.prototype.mul = function (value, coeff) {
     });
 }
 
-var assertAsynchronousExpected = function(error, stream) {
+var assertAsynchronousExpected = function(stream) {
         assert.equal(stream.result, stream.expected);
 
         stream.done();

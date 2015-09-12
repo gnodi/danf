@@ -59,7 +59,7 @@ describe('Flow', function() {
             flow.stream = test.input;
             flow.initialScope = test.scope;
             flow.context = mapProvider.provide();
-            flow.callback = function(err, result) {
+            flow.callback = function(result) {
                 assert.deepEqual(result, test.expected);
                 done();
             };
@@ -110,7 +110,7 @@ describe('Flow', function() {
         flow.stream = {};
         flow.initialScope = 'foo';
         flow.context = mapProvider.provide();
-        flow.callback = function(err, result) {
+        flow.callback = function(result) {
             assert.deepEqual(
                 result,
                 {

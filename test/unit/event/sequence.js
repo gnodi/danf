@@ -91,7 +91,7 @@ describe('Inheriting from __async properties should allow', function() {
         flow.stream = {};
         flow.initialScope = null;
         flow.context = mapProvider.provide();
-        flow.callback = function(err, result) {
+        flow.callback = function(result) {
             assert.deepEqual(result, expected);
             done();
         };
@@ -116,7 +116,7 @@ describe('Inheriting from __async properties should allow', function() {
         flow.stream = {};
         flow.initialScope = null;
         flow.context = mapProvider.provide();
-        flow.callback = function(err, result) {
+        flow.callback = function(result) {
             assert.deepEqual(result, expected);
             done();
         };
@@ -137,7 +137,7 @@ describe('Inheriting from __async properties should allow', function() {
         flow.stream = {};
         flow.initialScope = 'foo';
         flow.context = mapProvider.provide();
-        flow.callback = function(err, result) {
+        flow.callback = function(result) {
             assert.deepEqual(result, expected);
             done();
         };
@@ -158,7 +158,7 @@ describe('Inheriting from __async properties should allow', function() {
         flow.stream = {foo: {bar: 2}};
         flow.initialScope = 'foo';
         flow.context = mapProvider.provide();
-        flow.callback = function(err, result) {
+        flow.callback = function(result) {
             assert.deepEqual(result, expected);
             done();
         };
@@ -191,7 +191,7 @@ describe('Inheriting from __async properties should allow', function() {
         flow.stream = {};
         flow.initialScope = 'foo';
         flow.context = mapProvider.provide();
-        flow.callback = function(err, result) {
+        flow.callback = function(result) {
             assert.deepEqual(result, expected);
             done();
         };
@@ -225,7 +225,7 @@ describe('Inheriting from __async properties should allow', function() {
         flow.stream = {foo: {bar: 2}};
         flow.initialScope = 'foo';
         flow.context = mapProvider.provide();
-        flow.callback = function(err, result) {
+        flow.callback = function(result) {
             assert.deepEqual(result, expected);
             done();
         };
@@ -246,7 +246,7 @@ describe('Inheriting from __async properties should allow', function() {
         flow.stream = {};
         flow.initialScope = null;
         flow.context = mapProvider.provide();
-        flow.callback = function(err, result) {
+        flow.callback = function(result) {
             assert.deepEqual(result, expected);
             done();
         };
@@ -267,7 +267,7 @@ describe('Inheriting from __async properties should allow', function() {
         flow.stream = {};
         flow.initialScope = null;
         flow.context = mapProvider.provide();
-        flow.callback = function(err, result) {
+        flow.callback = function(result) {
             assert.deepEqual(result, expected);
             done();
         };
@@ -296,7 +296,7 @@ describe('Inheriting from __async properties should allow', function() {
         flow.stream = {};
         flow.initialScope = 'foo';
         flow.context = mapProvider.provide();
-        flow.callback = function(err, result) {
+        flow.callback = function(result) {
             assert.deepEqual(result, expected);
             done();
         };
@@ -317,7 +317,7 @@ describe('Inheriting from __async properties should allow', function() {
         flow.stream = {};
         flow.initialScope = null;
         flow.context = mapProvider.provide();
-        flow.callback = function(err, result) {
+        flow.callback = function(result) {
             assert.deepEqual(result, expected);
             done();
         };
@@ -338,7 +338,7 @@ describe('Inheriting from __async properties should allow', function() {
         flow.stream = null;
         flow.initialScope = null;
         flow.context = mapProvider.provide();
-        flow.callback = function(err, result) {
+        flow.callback = function(result) {
             assert.deepEqual(result, expected);
             done();
         };
