@@ -378,10 +378,10 @@ module.exports = {
             /**
              * Register a list of items.
              *
-             * @param {mixed_object} items The list of items.
+             * @param {object} items The list of items.
              */
             registerSet: {
-                arguments: ['mixed_object/items']
+                arguments: ['object/items']
             },
             /**
              * Deregister an item.
@@ -460,13 +460,13 @@ module.exports = {
             /**
              * Handle a change coming from a registry.
              *
-             * @param {mixed_object} items The items.
+             * @param {object} items The items.
              * @param {boolean} reset Whether or not it is a reset.
              * @param {string} name The name of the registry.
              */
             handleRegistryChange: {
                 arguments: [
-                    'mixed_object/items',
+                    'object/items',
                     'boolean/reset',
                     'string/name'
                 ]
@@ -613,147 +613,147 @@ module.exports = {
              * (https://github.com/caolan/async#each)
              */
             each: {
-                arguments: ['mixed_array/arr', 'function/iterator', 'function/callback']
+                arguments: ['array/arr', 'function/iterator', 'function/callback']
             },
             /**
              * Proxy to async collections method eachSeries.
              * (https://github.com/caolan/async#eachSeries)
              */
             eachSeries: {
-                arguments: ['mixed_array/arr', 'function/iterator', 'function/callback']
+                arguments: ['array/arr', 'function/iterator', 'function/callback']
             },
             /**
              * Proxy to async collections method eachLimit.
              * (https://github.com/caolan/async#eachLimit)
              */
             eachLimit: {
-                arguments: ['mixed_array/arr', 'number/limit', 'function/iterator', 'function/callback']
+                arguments: ['array/arr', 'number/limit', 'function/iterator', 'function/callback']
             },
             /**
              * Proxy to async collections method each.
              * (https://github.com/caolan/forEachOf#each)
              */
             forEachOf: {
-                arguments: ['mixed_array|mixed_object/arr', 'function/iterator', 'function/callback']
+                arguments: ['array|object/arr', 'function/iterator', 'function/callback']
             },
             /**
              * Proxy to async collections method eachSeries.
              * (https://github.com/caolan/async#forEachOfSeries)
              */
             forEachOfSeries: {
-                arguments: ['mixed_array|mixed_object/arr', 'function/iterator', 'function/callback']
+                arguments: ['array|object/arr', 'function/iterator', 'function/callback']
             },
             /**
              * Proxy to async collections method forEachOfLimit.
              * (https://github.com/caolan/async#eachLimit)
              */
             forEachOfLimit: {
-                arguments: ['mixed_array|mixed_object/arr', 'number/limit', 'function/iterator', 'function/callback']
+                arguments: ['array|object/arr', 'number/limit', 'function/iterator', 'function/callback']
             },
             /**
              * Proxy to async collections method map.
              * (https://github.com/caolan/async#map)
              */
             map: {
-                arguments: ['mixed_array/arr', 'function/iterator', 'function/callback']
+                arguments: ['array/arr', 'function/iterator', 'function/callback']
             },
             /**
              * Proxy to async collections method mapSeries.
              * (https://github.com/caolan/async#mapSeries)
              */
             mapSeries: {
-                arguments: ['mixed_array/arr', 'function/iterator', 'function/callback']
+                arguments: ['array/arr', 'function/iterator', 'function/callback']
             },
             /**
              * Proxy to async collections method mapLimit.
              * (https://github.com/caolan/async#mapLimit)
              */
             mapLimit: {
-                arguments: ['mixed_array/arr', 'number/limit', 'function/iterator', 'function/callback']
+                arguments: ['array/arr', 'number/limit', 'function/iterator', 'function/callback']
             },
             /**
              * Proxy to async collections method filter.
              * (https://github.com/caolan/async#filter)
              */
             filter: {
-                arguments: ['mixed_array/arr', 'function/iterator', 'function/callback']
+                arguments: ['array/arr', 'function/iterator', 'function/callback']
             },
             /**
              * Proxy to async collections method filterSeries.
              * (https://github.com/caolan/async#filterSeries)
              */
             filterSeries: {
-                arguments: ['mixed_array/arr', 'function/iterator', 'function/callback']
+                arguments: ['array/arr', 'function/iterator', 'function/callback']
             },
             /**
              * Proxy to async collections method reject.
              * (https://github.com/caolan/async#reject)
              */
             reject: {
-                arguments: ['mixed_array/arr', 'function/iterator', 'function/callback']
+                arguments: ['array/arr', 'function/iterator', 'function/callback']
             },
             /**
              * Proxy to async collections method rejectSeries.
              * (https://github.com/caolan/async#rejectSeries)
              */
             rejectSeries: {
-                arguments: ['mixed_array/arr', 'function/iterator', 'function/callback']
+                arguments: ['array/arr', 'function/iterator', 'function/callback']
             },
             /**
              * Proxy to async collections method reduce.
              * (https://github.com/caolan/async#reduce)
              */
             reduce: {
-                arguments: ['mixed_array/arr', 'mixed/memo', 'function/iterator', 'function/callback']
+                arguments: ['array/arr', 'mixed/memo', 'function/iterator', 'function/callback']
             },
             /**
              * Proxy to async collections method reduceRight.
              * (https://github.com/caolan/async#reduceRight)
              */
             reduceRight: {
-                arguments: ['mixed_array/arr', 'mixed/memo', 'function/iterator', 'function/callback']
+                arguments: ['array/arr', 'mixed/memo', 'function/iterator', 'function/callback']
             },
             /**
              * Proxy to async collections method detect.
              * (https://github.com/caolan/async#detect)
              */
             detect: {
-                arguments: ['mixed_array/arr', 'function/iterator', 'function/callback']
+                arguments: ['array/arr', 'function/iterator', 'function/callback']
             },
             /**
              * Proxy to async collections method detectSeries.
              * (https://github.com/caolan/async#detectSeries)
              */
             detectSeries: {
-                arguments: ['mixed_array/arr', 'function/iterator', 'function/callback']
+                arguments: ['array/arr', 'function/iterator', 'function/callback']
             },
             /**
              * Proxy to async collections method some.
              * (https://github.com/caolan/async#some)
              */
             some: {
-                arguments: ['mixed_array/arr', 'function/iterator', 'function/callback']
+                arguments: ['array/arr', 'function/iterator', 'function/callback']
             },
             /**
              * Proxy to async collections method every.
              * (https://github.com/caolan/async#every)
              */
             every: {
-                arguments: ['mixed_array/arr', 'function/iterator', 'function/callback']
+                arguments: ['array/arr', 'function/iterator', 'function/callback']
             },
             /**
              * Proxy to async collections method concat.
              * (https://github.com/caolan/async#concat)
              */
             concat: {
-                arguments: ['mixed_array/arr', 'function/iterator', 'function/callback']
+                arguments: ['array/arr', 'function/iterator', 'function/callback']
             },
             /**
              * Proxy to async collections method concatSeries.
              * (https://github.com/caolan/async#concatSeries)
              */
             concatSeries: {
-                arguments: ['mixed_array/arr', 'function/iterator', 'function/callback']
+                arguments: ['array/arr', 'function/iterator', 'function/callback']
             },
             /**
              * Proxy to async control flow method series.
@@ -1064,9 +1064,9 @@ module.exports = {
             /**
              * The parameters.
              *
-             * @return {mixed_object}
+             * @return {object}
              */
-            parameters: 'mixed_object'
+            parameters: 'object'
         }
     }
 };

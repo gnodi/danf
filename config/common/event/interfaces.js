@@ -87,15 +87,15 @@ module.exports = {
             /**
              * Execute the sequence.
              *
-             * @param {mixed_object} input The input of the sequence.
-             * @param {mixed_object} context The context of execution.
+             * @param {object} input The input of the sequence.
+             * @param {object} context The context of execution.
              * @param {string} scope The scope of execution in the stream.
              * @param {function|null} callback The optional callback.
              */
             execute: {
                 arguments: [
-                    'mixed_object/input',
-                    'mixed_object/context',
+                    'object/input',
+                    'object/context',
                     'string/scope',
                     'function|null/callback'
                 ]
@@ -119,10 +119,10 @@ module.exports = {
             /**
              * Trigger the execution of the event.
              *
-             * @param {mixed_object|null} data The optional data related to the event.
+             * @param {object|null} data The optional data related to the event.
              */
             trigger: {
-                arguments: ['mixed_object|null/data']
+                arguments: ['object|null/data']
             }
         },
         getters: {
@@ -135,9 +135,9 @@ module.exports = {
             /**
              * The parameters.
              *
-             * @return {mixed_object} The parameters.
+             * @return {object} The parameters.
              */
-            parameters: 'mixed_object',
+            parameters: 'object',
             /**
              * The sequence.
              *
@@ -339,7 +339,7 @@ module.exports = {
              * @param {function} operation The operation.
              * @param {string|null} scope The optional scope.
              * @param {function|null} tributaryCallback The optional callback for the operation.
-             * @param {mixed_array|mixed_object} operationArguments The arguments of the operation.
+             * @param {array|object} operationArguments The arguments of the operation.
              * @param {function} retrieveContext The function allowing to retrieve the context.
              * @param {function} executeOperation The function allowing to execute the operation.
              * @param {function} endOperation The function allowing to end the operation.
@@ -348,10 +348,10 @@ module.exports = {
                 arguments: [
                     'danf:manipulation.flow/flow',
                     'function/callback',
-                    'mixed_object/operation',
+                    'object/operation',
                     'string|null/scope',
                     'function|null/tributaryCallback',
-                    'mixed_array|mixed_object/operationArguments',
+                    'array|object/operationArguments',
                     'function/retrieveContext',
                     'function/executeOperation',
                     'function/endOperation'
@@ -372,12 +372,12 @@ module.exports = {
             /**
              * Build the sequencing shared context.
              *
-             * @param {mixed_object} context The sequencing shared context.
+             * @param {object} context The sequencing shared context.
              * @param {object} definition The definition of the sequence.
              */
             buildContext: {
                 arguments: [
-                    'mixed_object/context',
+                    'object/context',
                     'object/definition'
                 ]
             },
@@ -386,13 +386,13 @@ module.exports = {
              *
              * @param {array} interpretation The interpretation of the sequence.
              * @param {object} definition The definition of the sequence.
-             * @param {mixed_object} context The sequencing shared context.
+             * @param {object} context The sequencing shared context.
              */
             interpret: {
                 arguments: [
                     'array/interpretation',
                     'object/definition',
-                    'mixed_object/context'
+                    'object/context'
                 ]
             }
         },

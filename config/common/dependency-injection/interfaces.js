@@ -228,11 +228,11 @@ module.exports = {
             /**
              * Provide an object.
              *
-             * @param {mixed_object} properties The properties to inject to the provided object.
+             * @param {object} properties The properties to inject to the provided object.
              * @return {object} The object.
              */
             provide: {
-                arguments: ['mixed_object|null/properties'],
+                arguments: ['object|null/properties'],
                 returns: 'object'
             }
         },
