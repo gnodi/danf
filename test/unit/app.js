@@ -96,6 +96,22 @@ describe('Danf application', function() {
         assert.equal(computer.inc(), 4);
     })
 
+    it('should allow to process sequences of a triggered event', function(done) {
+        var eventsContainer = app.servicesContainer.get('danf:event.eventsContainer'),
+            event = eventsContainer.get('event', 'main:happenSomething');
+        ;
+
+        event.trigger({done: done});
+    })
+
+    it('should allow to process conditional sequences of a triggered event', function(done) {
+        var eventsContainer = app.servicesContainer.get('danf:event.eventsContainer'),
+            event = eventsContainer.get('event', 'main:happenSomething');
+        ;
+
+        event.trigger({data: {i: 2}, done: done});
+    })
+
     it('should allow cross danf modules inheritance', function(done) {
         var trigger = app.servicesContainer.get('main:trigger');
 

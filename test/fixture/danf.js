@@ -213,32 +213,33 @@ module.exports = {
                 happenSomething: {
                     parameters: {
                         data: {
-                            i: {
-                                type: 'number',
-                                default: 0
-                            },
-                            k: {
-                                type: 'number'
-                            },
-                            done: {
-                                type: 'function'
+                            type: 'embedded',
+                            default: {},
+                            embed: {
+                                i: {
+                                    type: 'number',
+                                    default: 0
+                                }
                             }
                         },
-                        context: {
-                            j: 2
+                        done: {
+                            type: 'function'
                         }
                     },
-                    callback: function(stream) {
-                        var expected = stream.data.k + stream.context.j;
+                    context: {
+                        j: 2
+                    },
+                    callback: function(stream, context) {
+                        var expected = stream.data.k + context.j;
 
-                        if (1 <= stream.data.k) {
+                        if (stream.data.k > 1) {
                             expected += 2;
                         } else {
                             expected += 1;
                         }
 
                         assert.strictEqual(stream.data.i, expected);
-                        stream.data.done();
+                        stream.done();
                     },
                     sequences: [
                         {
@@ -281,6 +282,18 @@ module.exports = {
                 operations: [
                     {
                         service: 'danf:manipulation.callbackExecutor',
+                        order: -1,
+                        method: 'execute',
+                        arguments: [
+                            function(i) {
+                                return i;
+                            },
+                            '@data.i@'
+                        ],
+                        scope: 'data.k'
+                    },
+                    {
+                        service: 'danf:manipulation.callbackExecutor',
                         order: 0,
                         method: 'execute',
                         arguments: [
@@ -291,8 +304,13 @@ module.exports = {
                         ]
                     },
                     {
-                        condition: function(stream) {
-                            return stream.data.i > 2;
+                        condition: function(stream, context) {
+                            var value = stream.data.k + context.j;
+
+                            // Should have no impact on real context.
+                            context.j = 10;
+
+                            return value > 3;
                         },
                         service: 'danf:manipulation.callbackExecutor',
                         order: 1,
@@ -314,7 +332,7 @@ module.exports = {
                                 return i + j;
                             },
                             '@data.i@',
-                            '@context.j@'
+                            '!j!'
                         ],
                         scope: 'data.i'
                     }
