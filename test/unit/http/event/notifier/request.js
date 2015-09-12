@@ -95,7 +95,7 @@ describe('Request notifier', function() {
                 }
 
 
-                var expected = new RegExp('Bad Request: The expected value for ".*" is a "number"; a "string" given instead.*');
+                var expected = new RegExp('Bad Request: The expected value for ".*" is a "number"; a "string" of value `"two"` given instead.*');
 
                 assert(expected.test(res.text));
 
