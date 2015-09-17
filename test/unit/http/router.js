@@ -35,19 +35,19 @@ var route = new Route(),
         request: {
             a: {
                 path: 'foo',
-                method: 'get'
+                methods: ['get']
             },
             b: {
                 path: '/foo/:foo/bar/:bar',
-                method: 'POST'
+                methods: ['get', 'POST']
             },
             c: {
                 path: /^\/foo/,
-                method: 'GET'
+                methods: ['post', 'GET']
             },
             d: {
                 path: 'bar',
-                method: 'get'
+                methods: ['get']
             }
         }
     }
@@ -77,12 +77,12 @@ var findTests = [
             expected: null
         },
         {
-            path: '/foo/1/bar/abc',
+            path: 'http://domain.com/foo/1/bar/abc',
             method: 'POST',
             expected: 'b'
         },
         {
-            path: '/foobar',
+            path: 'https://www.domain.org/foobar',
             method: 'GET',
             expected: 'c'
         }
@@ -104,9 +104,9 @@ var findFailTests = [
 ;
 
 describe('Router', function() {
-    describe('method "setRoute"', function() {
+    describe('method "set"', function() {
         it('should set a route', function() {
-            router.setRoute('foo', route);
+            router.set('foo', route);
 
             assert.deepEqual(router.get('foo'), route);
         })
@@ -118,18 +118,18 @@ describe('Router', function() {
             newRoute.method = 'get';
             newRoute.event = new Event();
 
-            router.setRoute('foo', newRoute);
+            router.set('foo', newRoute);
 
             assert.notDeepEqual(router.get('foo'), route);
             assert.deepEqual(router.get('foo'), newRoute);
         })
     })
 
-    describe('method "removeRoute"', function() {
+    describe('method "unset"', function() {
         it('should remove a route', function() {
             assert.throws(
                 function() {
-                    router.removeRoute('foo', route);
+                    router.unset('foo', route);
 
                     router.get('foo');
                 },
@@ -175,7 +175,7 @@ describe('Router', function() {
         );
 
         findTests.forEach(function(test) {
-            it('should find routes from path and method', function(done) {
+            it('should find route from path/url and method', function(done) {
                 var route = router.find(test.path, test.method);
 
                 if (null === test.expected) {
@@ -189,10 +189,36 @@ describe('Router', function() {
         })
 
         findFailTests.forEach(function(test) {
-            it('should throw an error on not found routes if asked', function() {
+            it('should throw an error on not found route if asked', function() {
                 assert.throws(
                     function() {
                         router.find(test.path, test.method, true);
+                    },
+                    test.expected
+                );
+            })
+        })
+    })
+
+    describe('method "follow"', function() {
+        router.handleRegistryChange(
+            configuredRoutes,
+            false
+        );
+
+        findTests.forEach(function(test) {
+            if (null !== test.expected) {
+                it('should follow a route from an existing path/url and method', function(done) {
+                    router.follow(test.path, test.method, {id: test.expected, done: done});
+                })
+            }
+        })
+
+        findFailTests.forEach(function(test) {
+            it('should throw an error on not found route', function() {
+                assert.throws(
+                    function() {
+                        router.follow(test.path, test.method);
                     },
                     test.expected
                 );
