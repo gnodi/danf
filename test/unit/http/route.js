@@ -30,7 +30,6 @@ regexpRoute.path = /^\/foo/;
 regexpRoute.method = 'GET';
 regexpRoute.event = event;
 
-
 var matchTests = [
         {
             path: 'foo',
