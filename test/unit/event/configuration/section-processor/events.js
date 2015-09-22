@@ -69,7 +69,7 @@ describe('Events section configuration processor', function() {
                                 }
                             }
                         },
-                        parameters: {type: 'mixed_object'}
+                        data: {type: 'object'}
                     }
                 },
                 request: {
@@ -108,7 +108,7 @@ describe('Events section configuration processor', function() {
                                 }
                             }
                         },
-                        parameters: {type: 'mixed_object'}
+                        data: {type: 'object'}
                     }
                 }
             }

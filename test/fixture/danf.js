@@ -211,7 +211,7 @@ module.exports = {
                     ]
                 },
                 happenSomething: {
-                    parameters: {
+                    data: {
                         data: {
                             type: 'embedded',
                             default: {},

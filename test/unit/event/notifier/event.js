@@ -35,7 +35,7 @@ event.parameters = {
             }
         );
     },
-    parameters: {
+    data: {
         foo: {type: 'string'}
     }
 };

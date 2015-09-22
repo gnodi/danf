@@ -322,7 +322,7 @@ module.exports = {
         events: {
             event: {
                 parallelComputing: {
-                    parameters: {
+                    data: {
                         input: {
                             type: 'number_array'
                         },
@@ -347,7 +347,7 @@ module.exports = {
                     callback: assertAsynchronousExpected
                 },
                 seriesComputing: {
-                    parameters: {
+                    data: {
                         input: {
                             type: 'number_array'
                         },
@@ -372,7 +372,7 @@ module.exports = {
                     callback: assertAsynchronousExpected
                 },
                 parallelLimitComputing: {
-                    parameters: {
+                    data: {
                         input: {
                             type: 'number_array'
                         },
@@ -397,7 +397,7 @@ module.exports = {
                     callback: assertAsynchronousExpected
                 },
                 compute: {
-                    parameters: {
+                    data: {
                         expected: {
                             type: 'number'
                         },
@@ -416,7 +416,7 @@ module.exports = {
                     callback: assertAsynchronousExpected
                 },
                 sum: {
-                    parameters: {
+                    data: {
                         input: {
                             type: 'number_array'
                         },
