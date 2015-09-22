@@ -5,26 +5,25 @@ var request = require('supertest'),
 ;
 
 function ForumHandler() {
-        this._topics = {
-            General: [
-                'Rules',
-                'Welcome'
-            ],
-            News: [
-                'The lion is dead tonight.',
-                'The third world peace is near.'
-            ]
-        };
+    this._topics = {
+        General: [
+            'Rules',
+            'Welcome'
+        ],
+        News: [
+            'The lion is dead tonight.',
+            'The third world peace is near.'
+        ]
+    };
 
-        this._messages = {
-            'The third world peace is near.': [
-                'OMG! I can\'t believe it!',
-                'Make bombs not peace!',
-                '???'
-            ]
-        };
-    }
-;
+    this._messages = {
+        'The third world peace is near.': [
+            'OMG! I can\'t believe it!',
+            'Make bombs not peace!',
+            '???'
+        ]
+    };
+}
 
 ForumHandler.prototype.getTopics = function(forumName) {
     return this._topics[forumName];
@@ -61,96 +60,26 @@ ForumHandler.prototype.computeForumSize = function(topics, messages) {
 };
 
 function SubrequestExecutor() {
-        this._topics = {
-            General: [
-                'Rules',
-                'Welcome'
-            ],
-            News: [
-                'The lion is dead tonight.',
-                'The third world peace is near.'
-            ]
-        };
-
-        this._messages = {
-            'The third world peace is near.': [
-                'OMG! I can\'t believe it!',
-                'Make bombs not peace!',
-                '???'
-            ]
-        };
-    }
-;
+}
 
 SubrequestExecutor.prototype.execute = function() {
-    var self = this,
-        requestWrapper = function(options, callback) {
-            request(self._app)
-                .get(options.path)
-                .end(function(err, res) {
-                    if (err) {
-                        if (res) {
-                            console.log(res.text);
-                        } else {
-                            console.log(err);
-                        }
+    this._router.follow.__asyncCall(
+        this._router,
+        'a',
+        '/sub',
+        'GET'
+    );
 
-                        throw err;
-                    }
-
-                    callback(res.text);
-                })
-            ;
-        }
-    ;
-
-    this.__asyncProcess(function(returnAsync) {
-        self._requestNotifier.notify(
-            self._subRequest,
-            {
-                query: {
-                    text: 'a'
-                },
-                callback: function(content) {
-                    returnAsync(function(stream) {
-                        var response = JSON.parse(content);
-
-                        stream.unshift(response.text);
-
-                        return stream;
-                    });
-                },
-                _requestWrapper: requestWrapper
-            }
-        );
-    });
-
-    this.__asyncProcess(function(returnAsync) {
-        self._requestNotifier.notify(
-            self._subRequest,
-            {
-                query: {
-                    text: 'b'
-                },
-                callback: function(content) {
-                    returnAsync(function(stream) {
-                        var response = JSON.parse(content);
-
-                        stream.push(response.text);
-
-                        return stream;
-                    });
-                },
-                _requestWrapper: requestWrapper
-            }
-        );
-    });
-
-    return [];
+    this._router.follow.__asyncCall(
+        this._router,
+        'b',
+        '/sub',
+        'GET'
+    );
 };
 
 function SessionTester() {
-};
+}
 
 SessionTester.prototype.test = function(order) {
     switch (order) {
@@ -208,7 +137,7 @@ SessionTester.prototype.testAsync = function(order, bis) {
 };
 
 function CookieTester() {
-};
+}
 
 CookieTester.prototype.test = function(order) {
     assert.equal(this._cookiesRegristry.get('foo'), undefined);
@@ -230,9 +159,7 @@ module.exports = {
             subrequestExecutor: {
                 class: 'subrequestExecutor',
                 properties: {
-                    _app: '#danf:app#',
-                    _subRequest: '#danf:event.eventsContainer[request][sub]#',
-                    _requestNotifier: '#danf:http.event.notifier.request#'
+                    _router: '#danf:http.router#'
                 }
             },
             sessionTester: {
@@ -513,8 +440,8 @@ module.exports = {
                     path: '/sub',
                     methods: ['get'],
                     view: {
-                        json: {
-                            select: ['text']
+                        text: {
+                            value: 'foo'
                         }
                     }
                 },

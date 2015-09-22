@@ -11,6 +11,28 @@ var app = danf(require(__dirname + '/../../../../fixture/http/danf'), '', {liste
 
 var expectedContent = '<!DOCTYPE html><html><head><title>3 messages (3/7kB) in the topic &quot;The third world peace is near.&quot;</title></head><body><p>OMG! I can\'t believe it!,Make bombs not peace!,???</p></body></html>';
 
+var requestNotifier = app.servicesContainer.get('danf:http.event.notifier.request');
+requestNotifier.executeRequest = function(options, body) {
+    this.__asyncProcess(function(returnAsync) {
+        request(app)
+            .get(options.path)
+            .end(function(err, res) {
+                if (err) {
+                    if (res) {
+                        console.log(res.text);
+                    } else {
+                        console.log(err);
+                    }
+
+                    throw err;
+                }
+
+                returnAsync(res.text);
+            })
+        ;
+    });
+}
+
 describe('Request notifier', function() {
     it('should be able to process a request', function(done) {
         request(app)
@@ -109,30 +131,7 @@ describe('Request notifier', function() {
             .get('/main')
             .set('Accept', '*/*')
             .expect(200, JSON.stringify({
-                text: ['a', 'b']
-            }))
-            .end(function(err, res) {
-                if (err) {
-                    if (res) {
-                        console.log(res.text);
-                    } else {
-                        console.log(err);
-                    }
-
-                    throw err;
-                }
-
-                done();
-            })
-        ;
-    })
-
-    it('should be able to process a request processing subrequests', function(done) {
-        request(app)
-            .get('/main')
-            .set('Accept', '*/*')
-            .expect(200, JSON.stringify({
-                text: ['a', 'b']
+                text: {a: 'foo', b: 'foo'}
             }))
             .end(function(err, res) {
                 if (err) {
