@@ -12,7 +12,7 @@ var route = new Route(),
     routes = [route, paramRoute, regexpRoute],
     event = {
         trigger: function(data) {
-            data.done();
+            data.parameters.done();
         }
     }
 ;

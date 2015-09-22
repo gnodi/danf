@@ -11,8 +11,8 @@ var route = new Route(),
     router = new Router(),
     Event = function(id) {
         this.trigger = function(data) {
-            assert.equal(data.id, id);
-            data.done();
+            assert.equal(data.parameters.id, id);
+            data.parameters.done();
         }
     },
     eventsContainer = {
@@ -180,11 +180,11 @@ describe('Router', function() {
 
                 if (null === test.expected) {
                     assert.equal(route, null);
-                    done();
                 } else {
                     assert(route);
-                    route.follow({id: test.expected, done: done});
                 }
+
+                done();
             })
         })
 
