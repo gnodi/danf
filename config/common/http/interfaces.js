@@ -4,17 +4,18 @@ module.exports = {
     route: {
         methods: {
             /**
-             * Match a path and a HTTP method.
+             * Match a path, a HTTP method and a host.
              *
              * @param {string} path The path.
              * @param {string} method The HTTP method.
+             * @param {string|null} host The host, default localhost.
              * @return {boolean} True if the route match, false otherwise.
              */
             match: {
                 arguments: [
                     'string/path',
-                    'string|null/method',
-                    'object|null/data'
+                    'string/method',
+                    'string|null/host'
                 ],
                 returns: 'boolean'
             },
@@ -34,7 +35,7 @@ module.exports = {
              *
              * @param {object|null} parameters The request parameters.
              * @param {object|null} headers The request headers.
-             * @param {object|null} meta The request metadata (protocol, port, hostname, ...).
+             * @param {object|null} meta The request metadata (path, protocol, host, ...).
              * @throw {error} if the url doest not match the route.
              */
             follow: {
@@ -106,7 +107,7 @@ module.exports = {
             /**
              * Find a route from a URL/path and a HTTP method.
              *
-             * @param {string} url The URL or path.
+             * @param {string|object} url The path/URL string or parsed.
              * @param {string|null} method The HTTP method.
              * @param {boolean|null} throwException Whether or not to throw an exception if no route found, default false.
              * @return {danf:http.route|null} The route or null if no route found and throwException is false.
@@ -114,7 +115,7 @@ module.exports = {
              */
             find: {
                 arguments: [
-                    'string/url',
+                    'string|object/url',
                     'string|null/method',
                     'boolean|null/throwException'
                 ],

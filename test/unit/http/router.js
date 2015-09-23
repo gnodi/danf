@@ -26,6 +26,7 @@ var route = new Route(),
 
             route.path = properties.path;
             route.method = properties.method;
+            route.host = properties.host;
             route.event = properties.event;
 
             return route;
@@ -35,19 +36,38 @@ var route = new Route(),
         request: {
             a: {
                 path: 'foo',
-                methods: ['get']
+                methods: ['get'],
+                host: 'localhost'
             },
             b: {
                 path: '/foo/:foo/bar/:bar',
-                methods: ['get', 'POST']
+                methods: ['get', 'POST'],
+                host: 'localhost'
             },
             c: {
                 path: /^\/foo/,
-                methods: ['post', 'GET']
+                methods: ['post', 'GET'],
+                host: 'localhost'
             },
             d: {
                 path: 'bar',
-                methods: ['get']
+                methods: ['get'],
+                host: 'localhost'
+            },
+            e: {
+                path: '/foo/:foo/bar/:bar',
+                methods: ['GET', 'POST'],
+                host: 'domain.com'
+            },
+            f: {
+                path: /^\/foo/,
+                methods: ['GET'],
+                host: 'www.domain.org'
+            },
+            g: {
+                path: /^\/foo/,
+                methods: ['GET'],
+                host: 'www.domain.org:443'
             }
         }
     }
@@ -58,47 +78,135 @@ router.eventsContainer = eventsContainer;
 
 route.path = 'foo';
 route.method = 'get';
+route.host = 'localhost';
 route.event = new Event();
 
 var findTests = [
         {
-            path: 'foo',
+            url: 'foo',
             method: 'GET',
+            parsedUrl: {
+                protocol: undefined,
+                host: undefined,
+                hostname: undefined,
+                port: undefined,
+                path: '/foo',
+                pathname: '/foo',
+                search: '',
+                hash: '',
+                parameters: {}
+            },
             expected: 'a'
         },
         {
-            path: '/foo',
+            url: '/foo',
             method: 'post',
+            parsedUrl: {
+                protocol: undefined,
+                host: undefined,
+                hostname: undefined,
+                port: undefined,
+                path: '/foo',
+                pathname: '/foo',
+                search: '',
+                hash: '',
+                parameters: {}
+            },
             expected: null
         },
         {
-            path: '/foo/bar',
+            url: '/foo/bar',
             method: 'post',
+            parsedUrl: {
+                protocol: undefined,
+                host: undefined,
+                hostname: undefined,
+                port: undefined,
+                path: '/foo/bar',
+                pathname: '/foo/bar',
+                search: '',
+                hash: '',
+                parameters: {}
+            },
             expected: null
         },
         {
-            path: 'http://domain.com/foo/1/bar/abc',
+            url: 'foo/1/bar/abc',
             method: 'POST',
+            parsedUrl: {
+                protocol: undefined,
+                host: undefined,
+                hostname: undefined,
+                port: undefined,
+                path: '/foo/1/bar/abc',
+                pathname: '/foo/1/bar/abc',
+                search: '',
+                hash: '',
+                parameters: {}
+            },
             expected: 'b'
         },
         {
-            path: 'https://www.domain.org/foobar',
+            url: 'http://domain.com/foo/1/bar/abc',
+            method: 'POST',
+            parsedUrl: {
+                protocol: 'http:',
+                host: 'domain.com',
+                hostname: 'domain.com',
+                port: undefined,
+                path: '/foo/1/bar/abc',
+                pathname: '/foo/1/bar/abc',
+                search: '',
+                hash: '',
+                parameters: {}
+            },
+            expected: 'e'
+        },
+        {
+            url: '/foobar?foo=bar',
             method: 'GET',
+            parsedUrl: {
+                protocol: undefined,
+                host: undefined,
+                hostname: undefined,
+                port: undefined,
+                path: '/foobar?foo=bar',
+                pathname: '/foobar',
+                search: '?foo=bar',
+                hash: '',
+                parameters: {foo: 'bar'}
+            },
             expected: 'c'
+        },
+        {
+            url: 'https://www.domain.org:443/foobar?foo=bar#plop',
+            method: 'GET',
+            parsedUrl: {
+                protocol: 'https:',
+                host: 'www.domain.org:443',
+                hostname: 'www.domain.org',
+                port: '443',
+                path: '/foobar?foo=bar',
+                pathname: '/foobar',
+                search: '?foo=bar',
+                hash: '#plop',
+                parameters: {foo: 'bar'}
+            },
+            expected: 'g'
         }
     ]
 ;
 
 var findFailTests = [
         {
-            path: '/foo',
+            url: '/foo',
             method: 'post',
-            expected: /No route for \[POST\]"\/foo" found\./
+            expected: /No route \[POST\]"\/foo" found for host "localhost"\./
         },
         {
-            path: '/foo/bar',
+            url: '/foo/bar',
             method: 'post',
-            expected: /No route for \[POST\]"\/foo\/bar" found\./
+            expected: /No route \[POST\]"\/foo\/bar" found for host "localhost"\./
         }
     ]
 ;
@@ -116,6 +224,7 @@ describe('Router', function() {
 
             newRoute.path = 'bar';
             newRoute.method = 'get';
+            newRoute.host = 'localhost';
             newRoute.event = new Event();
 
             router.set('foo', newRoute);
@@ -175,8 +284,8 @@ describe('Router', function() {
         );
 
         findTests.forEach(function(test) {
-            it('should find route from path/url and method', function(done) {
-                var route = router.find(test.path, test.method);
+            it('should find route from path/url string and method', function(done) {
+                var route = router.find(test.url, test.method);
 
                 if (null === test.expected) {
                     assert.equal(route, null);
@@ -192,10 +301,46 @@ describe('Router', function() {
             it('should throw an error on not found route if asked', function() {
                 assert.throws(
                     function() {
-                        router.find(test.path, test.method, true);
+                        router.find(test.url, test.method, true);
                     },
                     test.expected
                 );
+            })
+        })
+    })
+
+    describe('method "parse" and "parseQuerystring" should parse url', function() {
+        router.handleRegistryChange(
+            configuredRoutes,
+            false
+        );
+
+        findTests.forEach(function(test) {
+            it('should find route from parsed path/url and method', function() {
+                var parsedUrl = router.parse(test.url, test.method);
+
+                assert.deepEqual(parsedUrl, test.parsedUrl);
+            })
+        })
+    })
+
+    describe('method "find"', function() {
+        router.handleRegistryChange(
+            configuredRoutes,
+            false
+        );
+
+        findTests.forEach(function(test) {
+            it('should find route from parsed path/url and method', function(done) {
+                var route = router.find(test.parsedUrl, test.method);
+
+                if (null === test.expected) {
+                    assert.equal(route, null);
+                } else {
+                    assert(route);
+                }
+
+                done();
             })
         })
     })
@@ -209,7 +354,7 @@ describe('Router', function() {
         findTests.forEach(function(test) {
             if (null !== test.expected) {
                 it('should follow a route from an existing path/url and method', function(done) {
-                    router.follow(test.path, test.method, {id: test.expected, done: done});
+                    router.follow(test.url, test.method, {id: test.expected, done: done});
                 })
             }
         })
@@ -218,7 +363,7 @@ describe('Router', function() {
             it('should throw an error on not found route', function() {
                 assert.throws(
                     function() {
-                        router.follow(test.path, test.method);
+                        router.follow(test.url, test.method);
                     },
                     test.expected
                 );
