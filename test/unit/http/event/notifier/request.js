@@ -131,7 +131,7 @@ describe('Request notifier', function() {
             .get('/main')
             .set('Accept', '*/*')
             .expect(200, JSON.stringify({
-                text: {a: 'foo', b: 'foo'}
+                text: {a: 'foo', b: 'foo', c: 'foo'}
             }))
             .end(function(err, res) {
                 if (err) {

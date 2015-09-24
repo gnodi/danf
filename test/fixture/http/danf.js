@@ -70,11 +70,18 @@ SubrequestExecutor.prototype.execute = function() {
         'GET'
     );
 
-    this._router.follow.__asyncCall(
+    this._route.follow.__asyncCall(
         this._router,
-        'b',
-        '/sub',
-        'GET'
+        'b'
+    );
+
+    this._event.trigger.__asyncCall(
+        this._event,
+        'c',
+        {
+            path: '/sub',
+            method: 'GET'
+        }
     );
 };
 
@@ -159,7 +166,9 @@ module.exports = {
             subrequestExecutor: {
                 class: 'subrequestExecutor',
                 properties: {
-                    _router: '#danf:http.router#'
+                    _router: '#danf:http.router#',
+                    _route: '#danf:http.router[sub]#',
+                    _event: '#danf:event.eventsContainer[request][sub]#'
                 }
             },
             sessionTester: {
