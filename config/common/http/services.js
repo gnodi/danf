@@ -6,6 +6,10 @@ module.exports = {
         properties: {
             routeProvider: '#danf:http.routeProvider#',
             eventsContainer: '#danf:event.eventsContainer#'
+        },
+        registry: {
+            method: 'get',
+            namespace: [0]
         }
     },
     routeProvider: {

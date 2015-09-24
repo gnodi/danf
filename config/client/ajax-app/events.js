@@ -4,30 +4,42 @@ module.exports = {
     dom: {
         'danf:ajaxApp.ready': {
             event: 'ready',
-            sequences: ['danf:ajaxApp.process']
-        },
-        'danf:ajaxApp.ajaxReady': {
-            event: 'ajaxReady',
-            sequences: ['danf:ajaxApp.processAjax']
+            sequences: [
+                {
+                    name: 'danf:ajaxApp.process'
+                }
+            ]
         },
         'danf:ajaxApp.click.link': {
             event: 'click',
             selector: 'a.ajax',
             preventDefault: true,
             stopPropagation: true,
-            sequences: ['danf:ajaxApp.followAjaxLink']
+            sequences: [
+                {
+                    name: 'danf:ajaxApp.followLink'
+                }
+            ]
         },
         'danf:ajaxApp.click.submit': {
             event: 'click',
             selector: 'form.ajax :submit',
             preventDefault: true,
             stopPropagation: true,
-            sequences: ['danf:ajaxApp.submitForm']
+            sequences: [
+                {
+                    name: 'danf:ajaxApp.submitForm'
+                }
+            ]
         },
         'danf:ajaxApp.popstate': {
             event: 'popstate',
             selector: 'window',
-            sequences: ['danf:ajaxApp.navigate']
+            sequences: [
+                {
+                    name: 'danf:ajaxApp.navigate'
+                }
+            ]
         }
     }
 };

@@ -59,6 +59,15 @@ module.exports = {
                 arguments: ['object/state', 'string/path']
             },
             /**
+             * Replace the current history point.
+             *
+             * @param {object} state The state of the history point.
+             * @param {string} path The path of the history point.
+             */
+            replace: {
+                arguments: ['object/state', 'string/path']
+            },
+            /**
              * Navigate to a history point.
              *
              * @param {object} state The state of the history point.

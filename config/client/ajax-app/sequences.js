@@ -6,11 +6,6 @@ module.exports = {
             service: 'danf:ajaxApp.historyHandler',
             method: 'initialize',
             arguments: []
-        },
-        {
-            service: 'danf:ajaxApp.processor',
-            method: 'process',
-            arguments: ['@event@', '@data@']
         }
     ],
     processAjax: [
@@ -18,32 +13,38 @@ module.exports = {
             service: 'danf:event.notifier.dom',
             method: 'refreshListeners',
             arguments: ['@data@']
-        },
-        {
-            service: 'danf:ajaxApp.processor',
-            method: 'process',
-            arguments: ['@event@', '@data@']
         }
     ],
-    followAjaxLink: [
+    followLink: [
         {
-            service: 'danf:ajaxApp.linksHandler',
+            service: 'danf:ajaxApp.linkFollower',
             method: 'follow',
-            arguments: ['@event.currentTarget@']
+            arguments: ['!event.currentTarget!']
+        },
+        {
+            service: 'danf:manipulation.history',
+            method: 'replace'
         }
     ],
     submitForm: [
         {
-            service: 'danf:ajaxApp.formsHandler',
+            service: 'danf:ajaxApp.formSubmitter',
             method: 'submit',
-            arguments: ['@event.currentTarget@']
+            arguments: ['!event.currentTarget!']
+        },
+        {
+            condition: function(stream, context) {
+
+            },
+            service: 'danf:manipulation.history',
+            method: 'replace'
         }
     ],
     navigate: [
         {
             service: 'danf:ajaxApp.historyHandler',
             method: 'navigate',
-            arguments: ['@event.originalEvent.state@']
+            arguments: ['!event.originalEvent.state!']
         }
     ]
 };
