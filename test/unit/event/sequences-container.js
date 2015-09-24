@@ -8,7 +8,7 @@ var assert = require('assert'),
     ChildrenSequenceInterpreter = require('../../../lib/common/event/sequence-interpreter/children'),
     CollectionsSequenceInterpreter = require('../../../lib/common/event/sequence-interpreter/collections'),
     OperationsSequenceInterpreter = require('../../../lib/common/event/sequence-interpreter/operations'),
-    InputSequenceInterpreter = require('../../../lib/common/event/sequence-interpreter/input'),
+    StreamSequenceInterpreter = require('../../../lib/common/event/sequence-interpreter/stream'),
     ParentsSequenceInterpreter = require('../../../lib/common/event/sequence-interpreter/parents'),
     CollectionInterpreter = require('../../../lib/common/event/collection-interpreter'),
     UniqueIdGenerator = require('../../../lib/common/manipulation/unique-id-generator'),
@@ -124,7 +124,7 @@ var aliasSequenceInterpreter = new AliasSequenceInterpreter(),
     childrenSequenceInterpreter = new ChildrenSequenceInterpreter(),
     collectionsSequenceInterpreter = new CollectionsSequenceInterpreter(),
     operationsSequenceInterpreter = new OperationsSequenceInterpreter(),
-    inputSequenceInterpreter = new InputSequenceInterpreter(),
+    streamSequenceInterpreter = new StreamSequenceInterpreter(),
     parentsSequenceInterpreter = new ParentsSequenceInterpreter()
 ;
 
@@ -142,9 +142,9 @@ operationsSequenceInterpreter.logger = logger;
 operationsSequenceInterpreter.referencesResolver = referencesResolver;
 operationsSequenceInterpreter.servicesContainer = servicesContainer;
 operationsSequenceInterpreter.collectionInterpreter = collectionInterpreter;
-inputSequenceInterpreter.sequencesContainer = sequencesContainer;
-inputSequenceInterpreter.logger = logger;
-inputSequenceInterpreter.dataResolver = dataResolver;
+streamSequenceInterpreter.sequencesContainer = sequencesContainer;
+streamSequenceInterpreter.logger = logger;
+streamSequenceInterpreter.dataResolver = dataResolver;
 parentsSequenceInterpreter.sequencesContainer = sequencesContainer;
 parentsSequenceInterpreter.logger = logger;
 parentsSequenceInterpreter.referencesResolver = referencesResolver;
@@ -155,7 +155,7 @@ sequencesContainer.addSequenceInterpreter(aliasSequenceInterpreter);
 sequencesContainer.addSequenceInterpreter(childrenSequenceInterpreter);
 sequencesContainer.addSequenceInterpreter(collectionsSequenceInterpreter);
 sequencesContainer.addSequenceInterpreter(operationsSequenceInterpreter);
-sequencesContainer.addSequenceInterpreter(inputSequenceInterpreter);
+sequencesContainer.addSequenceInterpreter(streamSequenceInterpreter);
 sequencesContainer.addSequenceInterpreter(parentsSequenceInterpreter);
 
 var Computer = function() {};
@@ -416,7 +416,7 @@ var config = {
             ]
         },
         h: {
-            input: {
+            stream: {
                 x: {
                     type: 'number',
                     default: 2

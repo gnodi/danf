@@ -69,7 +69,7 @@ module.exports = {
         },
         sequences: {
             inc: {
-                input: {
+                stream: {
                     value: {
                         type: 'number',
                         required: true
@@ -113,7 +113,7 @@ module.exports = {
                 ]
             },
             mul: {
-                input: {
+                stream: {
                     value: {
                         type: 'number',
                         required: true
@@ -133,7 +133,7 @@ module.exports = {
                 ]
             },
             sum: {
-                input: {
+                stream: {
                     input: {
                         type: 'number_array',
                         required: true
@@ -158,7 +158,7 @@ module.exports = {
                 ]
             },
             incParallel: {
-                input: {
+                stream: {
                     input: {
                         type: 'number_array',
                         required: true
@@ -187,7 +187,7 @@ module.exports = {
                 ]
             },
             incSeries: {
-                input: {
+                stream: {
                     input: {
                         type: 'number_array',
                         required: true
@@ -216,7 +216,7 @@ module.exports = {
                 ]
             },
             incParallelLimit: {
-                input: {
+                stream: {
                     input: {
                         type: 'number_array',
                         required: true
@@ -248,7 +248,7 @@ module.exports = {
                 ]
             },
             compute: {
-                input: {
+                stream: {
                     inc: {
                         type: 'number',
                         default: 2

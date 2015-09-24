@@ -15,7 +15,7 @@ module.exports = {
         children: require('../../../lib/common/event/sequence-interpreter/children'),
         collections: require('../../../lib/common/event/sequence-interpreter/collections'),
         embedded: require('../../../lib/common/event/sequence-interpreter/embedded'),
-        input: require('../../../lib/common/event/sequence-interpreter/input'),
+        stream: require('../../../lib/common/event/sequence-interpreter/stream'),
         operations: require('../../../lib/common/event/sequence-interpreter/operations'),
         parents: require('../../../lib/common/event/sequence-interpreter/parents')
     },

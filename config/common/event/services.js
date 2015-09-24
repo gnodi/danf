@@ -88,8 +88,8 @@ module.exports = {
             collections: {
                 class: 'danf:event.sequenceInterpreter.collections'
             },
-            input: {
-                class: 'danf:event.sequenceInterpreter.input',
+            stream: {
+                class: 'danf:event.sequenceInterpreter.stream',
                 properties: {
                     dataResolver: '#danf:manipulation.dataResolver#'
                 }
