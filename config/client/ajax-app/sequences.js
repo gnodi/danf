@@ -31,12 +31,12 @@ module.exports = {
                 service: 'danf:ajaxApp.linkFollower',
                 method: 'follow',
                 arguments: ['!event.currentTarget!'],
-                scope: 'content'
+                scope: 'response'
             },
             {
                 service: 'danf:ajaxApp.linkFollower',
                 method: 'write',
-                arguments: ['@content@']
+                arguments: ['@response.content@', '!event.currentTarget!']
             },
             {
                 service: 'danf:manipulation.history',
@@ -54,7 +54,7 @@ module.exports = {
             {
                 service: 'danf:ajaxApp.formSubmitter',
                 method: 'write',
-                arguments: ['@content@', '!event.currentTarget!']
+                arguments: ['@response.content@', '!event.currentTarget!']
             },
             {
                 service: 'danf:manipulation.history',
