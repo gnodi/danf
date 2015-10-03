@@ -13,6 +13,18 @@ module.exports = {
             }
         }
     },
+    readyProcessor: {
+        methods: {
+            /**
+             * Process a ready sequence on a scope element.
+             *
+             * @param {object} scope The scope element.
+             */
+            process: {
+                arguments: ['object/scope']
+            }
+        }
+    },
     history: {
         methods: {
             /**

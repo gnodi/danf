@@ -1,61 +1,22 @@
 'use strict';
 
 module.exports = {
-    processor: {
-        class: 'danf:ajaxApp.processor',
-        properties: {
-            ajaxProcessors: '&danf:ajaxApp.readyProcessor&'
-        }
-    },
-    bodyProvider: {
-        class: 'danf:ajaxApp.bodyProvider',
-        properties: {
-            jquery: '#danf:vendor.jquery#'
-        }
-    },
-    readyTrigger: {
-        class: 'danf:ajaxApp.readyTrigger',
-        properties: {
-            readyEvent: '#danf:event.eventsContainer[dom][danf:ajaxApp.ready]#'
-        }
-    },
-    historyHandler: {
-        class: 'danf:ajaxApp.historyHandler',
-        properties: {
-            bodyProvider: '#danf:ajaxApp.bodyProvider#',
-            readyTrigger: '#danf:ajaxApp.readyTrigger#'
-        }
-    },
-    linksHandler: {
-        class: 'danf:ajaxApp.linksHandler',
+    linkFollower: {
+        class: 'danf:ajaxApp.linkFollower',
         properties: {
             jquery: '#danf:vendor.jquery#',
             bodyProvider: '#danf:ajaxApp.bodyProvider#',
             readyTrigger: '#danf:ajaxApp.readyTrigger#',
-            historyHandler: '#danf:ajaxApp.historyHandler#',
-            logger: '#danf:logging.logger#'
+            router: '#danf:logging.logger#',
+            reloadingSequence: '#danf:event.sequencesContainer[danf:ajaxApp.followLink]#'
         }
     },
-    formsHandler: {
-        class: 'danf:ajaxApp.formsHandler',
+    formSubmitter: {
+        class: 'danf:ajaxApp.formSubmitter',
         properties: {
             jquery: '#danf:vendor.jquery#',
-            bodyProvider: '#danf:ajaxApp.bodyProvider#',
             readyTrigger: '#danf:ajaxApp.readyTrigger#',
-            historyHandler: '#danf:ajaxApp.historyHandler#',
-            eventTrigger: '#danf:event.eventsHandler#',
-            logger: '#danf:logging.logger#'
-        }
-    },
-    readyProcessor: {
-        tags: ['danf:ajaxApp.readyProcessor'],
-        children: {
-            links: {
-                class: 'danf:ajaxApp.readyProcessor.links',
-                properties: {
-                    linksHandler: '#danf:ajaxApp.linksHandler#'
-                }
-            }
+            router: '#danf:logging.logger#'
         }
     }
 };

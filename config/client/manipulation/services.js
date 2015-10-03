@@ -7,6 +7,13 @@ module.exports = {
             jquery: '#danf:vendor.jquery#'
         }
     },
+    readyProcessor: {
+        class: 'danf:manipulation.readyProcessor',
+        properties: {
+            jquery: '#danf:vendor.jquery#',
+            processingSequence: '#danf:event.sequencesContainer[danf:manipulation.process]#'
+        }
+    },
     historyHandler: {
         class: 'danf:manipulation.historyHandler',
         properties: {

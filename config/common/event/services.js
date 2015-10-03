@@ -42,6 +42,10 @@ module.exports = {
             flowDriver: '#danf:manipulation.flowDriver#',
             sequenceProvider: '#danf:event.sequenceProvider#',
             sequenceInterpreters: '&danf:event.sequenceInterpreter&'
+        },
+        registry: {
+            method: 'get',
+            namespace: [0]
         }
     },
     eventsContainer: {
