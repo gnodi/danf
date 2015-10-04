@@ -6,13 +6,13 @@ module.exports = {
             event: 'ready',
             sequences: [
                 {
-                    name: 'danf:ajaxApp.process'
+                    name: 'danf:manipulation.process'
                 }
             ]
         },
         'danf:ajaxApp.click.link': {
             event: 'click',
-            selector: 'a.ajax',
+            selector: 'a[data-ajax]',
             preventDefault: true,
             stopPropagation: true,
             sequences: [
@@ -37,7 +37,7 @@ module.exports = {
             selector: 'window',
             sequences: [
                 {
-                    name: 'danf:ajaxApp.navigate'
+                    name: 'danf:manipulation.navigate'
                 }
             ]
         }

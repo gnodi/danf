@@ -14,11 +14,11 @@ module.exports = {
             processingSequence: '#danf:event.sequencesContainer[danf:manipulation.process]#'
         }
     },
-    historyHandler: {
-        class: 'danf:manipulation.historyHandler',
+    history: {
+        class: 'danf:manipulation.history',
         properties: {
             bodyProvider: '#danf:manipulation.bodyProvider#',
-            readyTrigger: '#danf:ajaxApp.readyTrigger#'
+            readyTrigger: '#danf:manipulation.readyProcessor#'
         }
     }
 };

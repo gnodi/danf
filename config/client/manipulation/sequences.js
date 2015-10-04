@@ -2,7 +2,7 @@
 
 module.exports = {
     process: {
-        data: {
+        stream: {
             scope: {
                 type: 'object',
                 default: null
@@ -10,6 +10,7 @@ module.exports = {
         },
         operations: [
             {
+                order: -10,
                 condition: function(stream) {
                     return stream.scope ? false : true;
                 },

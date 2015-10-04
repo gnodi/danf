@@ -70,20 +70,20 @@ module.exports = {
              * Get the instantiation of a service (lazy instantiation).
              *
              * @param {string} id The id of the service.
-             * @return {object} The service object.
+             * @return {object|function} The service object.
              */
             get: {
                 arguments: ['string/id'],
-                returns: 'object'
+                returns: 'object|function'
             },
             /**
              * Set an already instantiated service.
              *
              * @param {string} id The id of the service.
-             * @param {object} service The service object.
+             * @param {object|function} service The service object.
              */
             set: {
-                arguments: ['string/id', 'object/service']
+                arguments: ['string/id', 'object|function/service']
             },
             /**
              * Unset an instantiated service from the services container.

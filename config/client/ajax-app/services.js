@@ -5,9 +5,9 @@ module.exports = {
         class: 'danf:ajaxApp.linkFollower',
         properties: {
             jquery: '#danf:vendor.jquery#',
-            bodyProvider: '#danf:ajaxApp.bodyProvider#',
-            readyTrigger: '#danf:ajaxApp.readyTrigger#',
-            router: '#danf:logging.logger#',
+            bodyProvider: '#danf:manipulation.bodyProvider#',
+            readyProcessor: '#danf:manipulation.readyProcessor#',
+            router: '#danf:http.router#',
             reloadingSequence: '#danf:event.sequencesContainer[danf:ajaxApp.followLink]#'
         }
     },
@@ -15,8 +15,8 @@ module.exports = {
         class: 'danf:ajaxApp.formSubmitter',
         properties: {
             jquery: '#danf:vendor.jquery#',
-            readyTrigger: '#danf:ajaxApp.readyTrigger#',
-            router: '#danf:logging.logger#'
+            readyProcessor: '#danf:manipulation.readyProcessor#',
+            router: '#danf:http.router#'
         }
     }
 };

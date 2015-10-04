@@ -2,7 +2,7 @@
 
 module.exports = {
     process: {
-        data: {
+        stream: {
             scope: {
                 type: 'object',
                 default: null
@@ -19,9 +19,12 @@ module.exports = {
             }
         ],
         parents: [
-            name: 'danf:manipulation.process',
-            input: {
-                scope: '@scope@'
+            {
+                order: -20,
+                target: 'danf:manipulation.process',
+                input: {
+                    scope: '@scope@'
+                }
             }
         ]
     }
