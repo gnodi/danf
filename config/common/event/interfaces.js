@@ -12,14 +12,6 @@ module.exports = {
                 arguments: ['danf:event.event/event']
             },
             /**
-             * Refresh listeners if needed.
-             *
-             * @param {object} data The data used to customize the refresh processing.
-             */
-            refreshListeners: {
-                arguments: ['object/data']
-            },
-            /**
              * Notify an event triggering.
              *
              * @param {danf:event.event} event The event.

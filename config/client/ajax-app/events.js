@@ -10,6 +10,15 @@ module.exports = {
                 }
             ]
         },
+        'danf:ajaxApp.autoloadLink.ready': {
+            event: 'ready',
+            selector: 'a[data-ajax*="autoload"]',
+            sequences: [
+                {
+                    name: 'danf:ajaxApp.followLink'
+                }
+            ]
+        },
         'danf:ajaxApp.click.link': {
             event: 'click',
             selector: 'a[data-ajax]',

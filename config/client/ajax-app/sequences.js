@@ -1,56 +1,26 @@
 'use strict';
 
 module.exports = {
-    process: {
-        stream: {
-            scope: {
-                type: 'object',
-                default: null
-            }
-        },
-        operations: [
-            {
-                order: 0,
-                service: 'danf:vendor.jquery',
-                method: '.',
-                arguments: ['a[data-ajax*="autoload"]', '@scope@'],
-                scope: 'links'
-            },
-            {
-                order: 1,
-                service: 'danf:vendor.jquery',
-                method: 'do',
-                arguments: ['@links@', 'click'],
-            }
-        ],
-        parents: [
-            {
-                target: 'danf:manipulation.process',
-                input: {
-                    scope: '@scope@'
-                }
-            }
-        ]
-    },
     followLink: {
         operations: [
             {
                 order: 0,
                 service: 'danf:ajaxApp.linkFollower',
                 method: 'follow',
-                arguments: ['!event.currentTarget!'],
+                arguments: ['!event.target!'],
                 scope: 'response'
             },
             {
                 order: 10,
                 service: 'danf:ajaxApp.linkFollower',
                 method: 'write',
-                arguments: ['@response.content@', '!event.currentTarget!', '!event!']
+                arguments: ['@response.text@', '!event.target!', '!event!']
             },
             {
                 order: 20,
                 service: 'danf:manipulation.history',
-                method: 'replace'
+                method: 'replace',
+                arguments: []
             }
         ]
     },
@@ -60,18 +30,19 @@ module.exports = {
                 order: 0,
                 service: 'danf:ajaxApp.formSubmitter',
                 method: 'submit',
-                arguments: ['!event.currentTarget!']
+                arguments: ['!event.target!']
             },
             {
                 order: 10,
                 service: 'danf:ajaxApp.formSubmitter',
                 method: 'write',
-                arguments: ['@response.content@', '!event.currentTarget!']
+                arguments: ['@response.text@', '!event.target!']
             },
             {
                 order: 20,
                 service: 'danf:manipulation.history',
-                method: 'replace'
+                method: 'replace',
+                arguments: []
             }
         ]
     }

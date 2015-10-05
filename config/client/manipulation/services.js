@@ -11,7 +11,7 @@ module.exports = {
         class: 'danf:manipulation.readyProcessor',
         properties: {
             jquery: '#danf:vendor.jquery#',
-            processingSequence: '#danf:event.sequencesContainer[danf:manipulation.process]#'
+            processingEvent: '#danf:event.eventsContainer[dom][danf:manipulation.danf]#'
         }
     },
     history: {
