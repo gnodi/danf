@@ -11,16 +11,13 @@ module.exports = {
                 scope: 'response'
             },
             {
+                condition: function(stream) {
+                    return stream.response && stream.response.status < 400;
+                },
                 order: 10,
                 service: 'danf:ajaxApp.linkFollower',
                 method: 'write',
-                arguments: ['@response.text@', '!event.target!', '!event!']
-            },
-            {
-                order: 20,
-                service: 'danf:manipulation.history',
-                method: 'replace',
-                arguments: []
+                arguments: ['@response.text@', '@response.url@', '!event.target!', '!event!']
             }
         ]
     },
@@ -30,19 +27,17 @@ module.exports = {
                 order: 0,
                 service: 'danf:ajaxApp.formSubmitter',
                 method: 'submit',
-                arguments: ['!event.target!']
+                arguments: ['!event.target!'],
+                scope: 'response'
             },
             {
+                condition: function(stream) {
+                    return stream.response && stream.response.status < 400;
+                },
                 order: 10,
                 service: 'danf:ajaxApp.formSubmitter',
                 method: 'write',
-                arguments: ['@response.text@', '!event.target!']
-            },
-            {
-                order: 20,
-                service: 'danf:manipulation.history',
-                method: 'replace',
-                arguments: []
+                arguments: ['@response.text@', '@response.url@', '!event.target!']
             }
         ]
     }

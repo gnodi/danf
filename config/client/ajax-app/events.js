@@ -32,7 +32,7 @@ module.exports = {
         },
         'danf:ajaxApp.click.submit': {
             event: 'click',
-            selector: 'form.ajax :submit',
+            selector: 'form[data-ajax] :submit',
             preventDefault: true,
             stopPropagation: true,
             sequences: [

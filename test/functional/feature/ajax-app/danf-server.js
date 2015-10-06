@@ -1,134 +1,181 @@
 'use strict';
 
-module.exports = {
-    config: {
-        events: {
-            request: {
-                home: {
-                    path: '',
-                    methods: ['get'],
-                    view: {
-                        html: {
-                            layout: {
-                                file: __dirname + '/layout.jade'
-                            },
-                            body: {
-                                file: __dirname + '/index.jade'
-                            }
-                        }
-                    },
-                    sequences: ['generateRandom']
-                },
-                form: {
-                    path: '/form',
-                    methods: ['get'],
-                    parameters: {
-                        name: {
-                            type: 'string',
-                            default: ''
-                        }
-                    },
-                    view: {
-                        html: {
-                            layout: {
-                                file: __dirname + '/layout.jade'
-                            },
-                            body: {
-                                file: __dirname + '/form.jade'
-                            }
-                        }
-                    },
-                    sequences: ['generateRandom']
-                },
-                a: {
-                    path: '/a/:number',
-                    methods: ['get'],
-                    view: {
-                        html: {
-                            layout: {
-                                file: __dirname + '/layout.jade'
-                            },
-                            body: {
-                                file: __dirname + '/a.jade',
-                                embed: {
-                                    date: {
-                                        file: __dirname + '/date.jade',
-                                    }
-                                }
-                            }
-                        }
-                    },
-                    sequences: ['getDate', 'generateRandom']
-                },
-                b: {
-                    path: '/b/:number',
-                    methods: ['get'],
-                    view: {
-                        html: {
-                            layout: {
-                                file: __dirname + '/layout.jade'
-                            },
-                            body: {
-                                file: __dirname + '/b.jade',
-                                embed: {
-                                    date: {
-                                        file: __dirname + '/date.jade',
-                                    }
-                                }
-                            }
-                        }
-                    },
-                    sequences: ['getDate']
-                },
-                c: {
-                    path: '/c/:number',
-                    methods: ['get'],
-                    view: {
-                        html: {
-                            layout: {
-                                file: __dirname + '/layout.jade'
-                            },
-                            body: {
-                                file: __dirname + '/c.jade',
-                                embed: {
-                                    date: {
-                                        file: __dirname + '/date.jade',
-                                    }
-                                }
-                            }
-                        }
-                    },
-                    sequences: ['getDate']
-                }
-            }
-        },
-        sequences: {
-            getDate: [
-                {
-                    service: 'danf:manipulation.callbackExecutor',
-                    method: 'execute',
-                    arguments: [
-                        function(parameters) {
-                            var date = new Date();
+var utils = require('../../../../lib/common/utils');
 
-                            parameters.date = date.toLocaleTimeString();
+module.exports = utils.merge(
+    require('./danf-common'),
+    {
+        config: {
+            events: {
+                request: {
+                    home: {
+                        view: {
+                            html: {
+                                layout: {
+                                    file: __dirname + '/layout.jade'
+                                },
+                                body: {
+                                    file: __dirname + '/index.jade'
+                                }
+                            }
                         },
-                        '@.@'
+                        sequences: [
+                            {
+                                name: 'generateRandom',
+                                output: {
+                                    random: '@random@'
+                                }
+                            }
+                        ]
+                    },
+                    form: {
+                        view: {
+                            html: {
+                                layout: {
+                                    file: __dirname + '/layout.jade'
+                                },
+                                body: {
+                                    file: __dirname + '/form.jade'
+                                }
+                            }
+                        },
+                        sequences: [
+                            {
+                                name: 'generateRandom',
+                                output: {
+                                    random: '@random@'
+                                }
+                            }
+                        ]
+                    },
+                    a: {
+                        view: {
+                            html: {
+                                layout: {
+                                    file: __dirname + '/layout.jade'
+                                },
+                                body: {
+                                    file: __dirname + '/a.jade',
+                                    embed: {
+                                        date: {
+                                            file: __dirname + '/date.jade',
+                                        }
+                                    }
+                                }
+                            }
+                        },
+                        sequences: [
+                            {
+                                name: 'getDate',
+                                output: {
+                                    date: '@date@'
+                                }
+                            },
+                            {
+                                name: 'generateRandom',
+                                output: {
+                                    random: '@random@'
+                                }
+                            }
+                        ]
+                    },
+                    b: {
+                        view: {
+                            html: {
+                                layout: {
+                                    file: __dirname + '/layout.jade'
+                                },
+                                body: {
+                                    file: __dirname + '/b.jade',
+                                    embed: {
+                                        date: {
+                                            file: __dirname + '/date.jade',
+                                        }
+                                    }
+                                }
+                            }
+                        },
+                        sequences: [
+                            {
+                                name: 'getDate',
+                                output: {
+                                    date: '@date@'
+                                }
+                            },
+                            {
+                                name: 'generateRandom',
+                                output: {
+                                    random: '@random@'
+                                }
+                            }
+                        ]
+                    },
+                    c: {
+                        view: {
+                            html: {
+                                layout: {
+                                    file: __dirname + '/layout.jade'
+                                },
+                                body: {
+                                    file: __dirname + '/c.jade',
+                                    embed: {
+                                        date: {
+                                            file: __dirname + '/date.jade',
+                                        }
+                                    }
+                                }
+                            }
+                        },
+                        sequences: [
+                            {
+                                name: 'getDate',
+                                output: {
+                                    date: '@date@'
+                                }
+                            },
+                            {
+                                name: 'generateRandom',
+                                output: {
+                                    random: '@random@'
+                                }
+                            }
+                        ]
+                    }
+                }
+            },
+            sequences: {
+                getDate: {
+                    operations: [
+                        {
+                            service: 'danf:manipulation.callbackExecutor',
+                            method: 'execute',
+                            arguments: [
+                                function(parameters) {
+                                    var date = new Date();
+
+                                    parameters.date = date.toLocaleTimeString();
+                                },
+                                '@.@'
+                            ]
+                        }
+                    ]
+                },
+                generateRandom: {
+                    operations: [
+                        {
+                            service: 'danf:manipulation.callbackExecutor',
+                            method: 'execute',
+                            arguments: [
+                                function() {
+                                    return Math.floor(Math.random() * 10000);
+                                }
+                            ],
+                            scope: 'random'
+                        }
                     ]
                 }
-            ],
-            generateRandom: [
-                {
-                    service: 'danf:manipulation.callbackExecutor',
-                    method: 'execute',
-                    arguments: [
-                        function() {
-                            return Math.floor(Math.random() * 10000);
-                        }
-                    ],
-                    returns: 'random'
-                }
-            ]
+            }
         }
-    }
-};
+    },
+    true
+);

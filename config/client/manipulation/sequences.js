@@ -23,10 +23,11 @@ module.exports = {
     navigate: {
         operations: [
             {
+                order: 0,
                 service: 'danf:manipulation.history',
                 method: 'navigate',
                 arguments: ['!event.originalEvent.state!']
             }
         ]
-    },
+    }
 };

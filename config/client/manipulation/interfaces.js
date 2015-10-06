@@ -6,9 +6,10 @@ module.exports = {
             /**
              * Provide the jquery body element.
              *
-             * @return {object} The jquery body element.
+             * @return {object} The optional dom or jquery specific document.
              */
             provide: {
+                arguments: ['object|null/document'],
                 returns: 'object'
             }
         }
@@ -50,6 +51,16 @@ module.exports = {
              * @param {object|null} state The state.
              */
             replace: {
+                arguments: ['string|null/path', 'object|null/state']
+            },
+            /**
+             * Replace the current history state if path is the same
+             * as the current one, push otherwise.
+             *
+             * @param {string|null} path The path.
+             * @param {object|null} state The state.
+             */
+            set: {
                 arguments: ['string|null/path', 'object|null/state']
             },
             /**

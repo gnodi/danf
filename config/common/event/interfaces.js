@@ -81,14 +81,14 @@ module.exports = {
              *
              * @param {object} input The input of the sequence.
              * @param {object} context The context of execution.
-             * @param {string} scope The scope of execution in the stream.
+             * @param {string|null} scope The scope of execution in the stream.
              * @param {function|null} callback The optional callback.
              */
             execute: {
                 arguments: [
                     'object/input',
                     'object/context',
-                    'string/scope',
+                    'string|null/scope',
                     'function|null/callback'
                 ]
             },

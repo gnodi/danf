@@ -13,7 +13,6 @@ module.exports = {
                         class: 'danf:http.event.notifier.request',
                         properties: {
                             jquery: '#danf:vendor.jquery#',
-                            history: '#danf:manipulation.history#',
                             logger: '#danf:logging.logger#'
                         }
                     }

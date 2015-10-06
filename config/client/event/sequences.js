@@ -10,11 +10,12 @@ module.exports = {
         },
         operations: [
             {
+                order: 0,
                 condition: function(stream) {
                     return stream.scope ? true : false;
                 },
                 service: 'danf:event.notifier.dom',
-                method: 'refreshListeners',
+                method: 'applyListeners',
                 arguments: ['@scope@']
             }
         ],

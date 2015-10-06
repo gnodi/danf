@@ -3,7 +3,7 @@ a(class='ajax', href='/') index
 p= '--- form-id: ' + random + ' ---'
 
 if name
-    h1(id='hello')= 'Hello ' + name + '!'
+    h1(id='hello')= 'Hello ' + name + '!!'
 else
     h1(id='hello')= 'Hello!'
 
@@ -14,13 +14,7 @@ form(action='/form', method='get')
     input(type='submit')
 
 h2= 'Ajax form (reload the body)'
-form(action='/form', class='ajax', method='get')
+form(action='/form', method='get', data-ajax='{}')
     label(for='name') Name:
     input(name='name', id='name', type='text')
     input(type='submit')
-
-h2= 'Customized ajax form (reload only the name in the title "Hello ...!")'
-form(action='/form', class='ajax', method='get')
-    label(for='name') Name:
-    input(name='name', id='name', type='text')
-    input(type='submit', data-ajax='{"event":"name", "preventDefault":true}')

@@ -17,8 +17,9 @@ module.exports = {
     history: {
         class: 'danf:manipulation.history',
         properties: {
+            jquery: '#danf:vendor.jquery#',
             bodyProvider: '#danf:manipulation.bodyProvider#',
-            readyTrigger: '#danf:manipulation.readyProcessor#'
+            readyProcessor: '#danf:manipulation.readyProcessor#'
         }
     }
 };
