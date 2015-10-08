@@ -12,7 +12,7 @@ var assert = require('assert'),
     FactoriesServiceBuilder = require('../../../lib/common/dependency-injection/service-builder/factories'),
     ParentServiceBuilder = require('../../../lib/common/dependency-injection/service-builder/parent'),
     PropertiesServiceBuilder = require('../../../lib/common/dependency-injection/service-builder/properties'),
-    TagsServiceBuilder = require('../../../lib/common/dependency-injection/service-builder/tags'),
+    CollectionsServiceBuilder = require('../../../lib/common/dependency-injection/service-builder/collections'),
     RegistryServiceBuilder = require('../../../lib/common/dependency-injection/service-builder/registry'),
     AbstractBuilder = require('../../../lib/common/dependency-injection/service-builder/abstract-service-builder'),
     ReferenceResolver = require('../../../lib/common/manipulation/reference-resolver'),
@@ -50,10 +50,10 @@ serviceType.name = '#';
 serviceType.delimiter = '#';
 serviceType.allowsConcatenation = false;
 
-var serviceTagType = new ReferenceType();
-serviceTagType.name = '&';
-serviceTagType.delimiter = '&';
-serviceTagType.allowsConcatenation = false;
+var serviceCollectionType = new ReferenceType();
+serviceCollectionType.name = '&';
+serviceCollectionType.delimiter = '&';
+serviceCollectionType.allowsConcatenation = false;
 
 var serviceFactoryType = new ReferenceType();
 serviceFactoryType.name = '>';
@@ -65,7 +65,7 @@ referenceResolver.addReferenceType(parameterType);
 referenceResolver.addReferenceType(contextType);
 referenceResolver.addReferenceType(configType);
 referenceResolver.addReferenceType(serviceType);
-referenceResolver.addReferenceType(serviceTagType);
+referenceResolver.addReferenceType(serviceCollectionType);
 referenceResolver.addReferenceType(serviceFactoryType);
 
 var abstractServiceBuilder = new AbstractServiceBuilder();
@@ -101,10 +101,10 @@ propertiesServiceBuilder.servicesContainer = servicesContainer;
 propertiesServiceBuilder.referenceResolver = referenceResolver;
 propertiesServiceBuilder.interfacer = interfacer;
 
-var tagsServiceBuilder = new TagsServiceBuilder();
-tagsServiceBuilder.servicesContainer = servicesContainer;
-tagsServiceBuilder.referenceResolver = referenceResolver;
-tagsServiceBuilder.interfacer = interfacer;
+var collectionsServiceBuilder = new CollectionsServiceBuilder();
+collectionsServiceBuilder.servicesContainer = servicesContainer;
+collectionsServiceBuilder.referenceResolver = referenceResolver;
+collectionsServiceBuilder.interfacer = interfacer;
 
 var registryServiceBuilder = new RegistryServiceBuilder();
 registryServiceBuilder.servicesContainer = servicesContainer;
@@ -121,7 +121,7 @@ servicesContainer.addServiceBuilder(declinationsServiceBuilder);
 servicesContainer.addServiceBuilder(factoriesServiceBuilder);
 servicesContainer.addServiceBuilder(parentServiceBuilder);
 servicesContainer.addServiceBuilder(propertiesServiceBuilder);
-servicesContainer.addServiceBuilder(tagsServiceBuilder);
+servicesContainer.addServiceBuilder(collectionsServiceBuilder);
 servicesContainer.addServiceBuilder(registryServiceBuilder);
 
 var Provider = function() { this.name = 'provider'; };
@@ -214,7 +214,7 @@ var config = {
                 item: '#registry[b]#',
                 deepItem: '#deepRegistry[b][j]#'
             },
-            tags: ['provider']
+            collections: ['provider']
         },
         rule: {
             factories: {
@@ -273,7 +273,7 @@ var config = {
         },
         storage: {
             parent: 'abstractStorage',
-            tags: ['storage'],
+            collections: ['storage'],
             properties: {
                 type: 'HD'
             },
@@ -406,7 +406,7 @@ describe('ServicesContainer', function() {
             assert.equal(provider.deepItem, 6);
         })
 
-        it('should resolve the tags', function() {
+        it('should resolve the collections', function() {
             var manager = servicesContainer.get('manager');
 
             assert.notEqual(manager.providers.bigImages, undefined);

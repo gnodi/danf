@@ -27,7 +27,7 @@ module.exports = {
     },
     sectionProcessor: {
         class: 'danf:configuration.sectionProcessor',
-        tags: ['danf:configuration.sectionProcessor'],
+        collections: ['danf:configuration.sectionProcessor'],
         properties: {
             configurationResolver: '#danf:configuration.configurationResolver#',
             referenceResolver: '#danf:manipulation.referenceResolver#',
@@ -49,7 +49,7 @@ module.exports = {
         }
     },
     configurationInterpreter: {
-        tags: ['danf:configuration.configurationInterpreter'],
+        collections: ['danf:configuration.configurationInterpreter'],
         children: {
             default: {
                 class: 'danf:manipulation.dataInterpreter.default'
@@ -86,7 +86,7 @@ module.exports = {
         }
     },
     referenceType: {
-        tags: ['danf:manipulation.referenceType'],
+        collections: ['danf:manipulation.referenceType'],
         class: 'danf:manipulation.referenceType',
         children: {
             config: {

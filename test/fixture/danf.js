@@ -117,7 +117,7 @@ module.exports = {
                     storages: '#storage.@storages@#',
                     adapter: '#@adapter@#'
                 },
-                tags: ['provider']
+                collections: ['provider']
             },
             rule: {
                 factories: {

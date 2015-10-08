@@ -108,17 +108,17 @@ sequenceType.name = '#';
 sequenceType.delimiter = '#';
 sequenceType.allowsConcatenation = false;
 
-var sequenceTagType = new ReferenceType();
-sequenceTagType.name = '&';
-sequenceTagType.delimiter = '&';
-sequenceTagType.allowsConcatenation = false;
+var sequenceCollectionType = new ReferenceType();
+sequenceCollectionType.name = '&';
+sequenceCollectionType.delimiter = '&';
+sequenceCollectionType.allowsConcatenation = false;
 
 referenceResolver.addReferenceType(contextType);
 referenceResolver.addReferenceType(globalContextType);
 referenceResolver.addReferenceType(memoryType);
 referenceResolver.addReferenceType(configType);
 referenceResolver.addReferenceType(sequenceType);
-referenceResolver.addReferenceType(sequenceTagType);
+referenceResolver.addReferenceType(sequenceCollectionType);
 
 var aliasSequenceInterpreter = new AliasSequenceInterpreter(),
     childrenSequenceInterpreter = new ChildrenSequenceInterpreter(),

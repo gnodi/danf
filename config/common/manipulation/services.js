@@ -14,7 +14,7 @@ module.exports = {
         }
     },
     referenceType: {
-        tags: ['danf:manipulation.referenceType'],
+        collections: ['danf:manipulation.referenceType'],
         class: 'danf:manipulation.referenceType',
         children: {
             parameter: {
@@ -50,7 +50,7 @@ module.exports = {
         }
     },
     dataInterpreter: {
-        tags: ['danf:manipulation.dataInterpreter'],
+        collections: ['danf:manipulation.dataInterpreter'],
         children: {
             default: {
                 class: 'danf:manipulation.dataInterpreter.default'
@@ -96,7 +96,7 @@ module.exports = {
         }
     },
     asynchronousCallback: {
-        tags: ['danf:manipulation.asynchronousCallback'],
+        collections: ['danf:manipulation.asynchronousCallback'],
         children: {
             error: {
                 class: 'danf:manipulation.asynchronousCallback.error'
@@ -110,7 +110,7 @@ module.exports = {
         }
     },
     asynchronousInput: {
-        tags: ['danf:manipulation.asynchronousInput'],
+        collections: ['danf:manipulation.asynchronousInput'],
         children: {
             array: {
                 class: 'danf:manipulation.asynchronousInput.array'
@@ -121,7 +121,7 @@ module.exports = {
         }
     },
     asynchronousIterator: {
-        tags: ['danf:manipulation.asynchronousIterator'],
+        collections: ['danf:manipulation.asynchronousIterator'],
         children: {
             collection: {
                 class: 'danf:manipulation.asynchronousIterator.collection'
@@ -136,7 +136,7 @@ module.exports = {
     },
     asynchronousCollection: {
         class: 'danf:manipulation.asynchronousCollection',
-        tags: ['danf:manipulation.asynchronousCollection'],
+        collections: ['danf:manipulation.asynchronousCollection'],
         children: {
             each: {
                 properties: {

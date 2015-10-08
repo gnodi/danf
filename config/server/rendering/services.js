@@ -9,7 +9,7 @@ module.exports = {
         }
     },
     formatRenderer: {
-        tags: ['danf:rendering.formatRenderer'],
+        collections: ['danf:rendering.formatRenderer'],
         children: {
             text: {
                 class: 'danf:rendering.formatRenderer.text',

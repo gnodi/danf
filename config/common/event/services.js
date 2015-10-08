@@ -70,7 +70,7 @@ module.exports = {
         }
     },
     sequenceInterpreter: {
-        tags: ['danf:event.sequenceInterpreter'],
+        collections: ['danf:event.sequenceInterpreter'],
         properties: {
             logger: '#danf:event.logger#'
         },
@@ -117,7 +117,7 @@ module.exports = {
         }
     },
     notifier: {
-        tags: ['danf:event.notifier'],
+        collections: ['danf:event.notifier'],
         properties: {
             dataResolver: '#danf:manipulation.dataResolver#'
         },

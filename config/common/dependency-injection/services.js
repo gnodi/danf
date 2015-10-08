@@ -18,7 +18,7 @@ module.exports = {
         }
     },
     referenceType: {
-        tags: ['danf:manipulation.referenceType'],
+        collections: ['danf:manipulation.referenceType'],
         class: 'danf:manipulation.referenceType',
         children: {
             service: {
@@ -36,7 +36,7 @@ module.exports = {
                     allowsConcatenation: false
                 }
             },
-            serviceTag: {
+            serviceCollection: {
                 properties: {
                     name: '&',
                     delimiter: '&',

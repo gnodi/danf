@@ -25,7 +25,7 @@ module.exports = {
         }
     },
     classProcessor: {
-        tags: ['danf:object.classProcessor'],
+        collections: ['danf:object.classProcessor'],
         children: {
             extender: {
                 class: 'danf:object.classProcessor.extender',

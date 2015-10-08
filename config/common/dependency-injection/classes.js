@@ -14,7 +14,7 @@ module.exports = {
         factories: require('../../../lib/common/dependency-injection/service-builder/factories'),
         parent: require('../../../lib/common/dependency-injection/service-builder/parent'),
         properties: require('../../../lib/common/dependency-injection/service-builder/properties'),
-        tags: require('../../../lib/common/dependency-injection/service-builder/tags')
+        collections: require('../../../lib/common/dependency-injection/service-builder/collections')
     },
     configuration: {
         sectionProcessor: {
