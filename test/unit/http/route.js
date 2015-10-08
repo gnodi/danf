@@ -177,7 +177,7 @@ describe('Route', function() {
                 function() {
                     paramRoute.follow(null, null, {path: '/foo/ijk'});
                 },
-                /Path "\/foo\/ijk" for host "localhost" doest not match route \[POST\]"\/foo\/:foo\/bar\/:bar" of "localhost"\./
+                /Path "\/foo\/ijk" for host "localhost" does not match route \[POST\]"\/foo\/:foo\/bar\/:bar" of "localhost"\./
             );
         })
 
@@ -186,7 +186,7 @@ describe('Route', function() {
                 function() {
                     hostRoute.follow(null, null, {path: '/bar', host: 'localhost'});
                 },
-                /Path "\/bar" for host "localhost" doest not match route \[GET\]"\/bar" of "www.foo.bar"\./
+                /Path "\/bar" for host "localhost" does not match route \[GET\]"\/bar" of "www.foo.bar"\./
             );
         })
     })
