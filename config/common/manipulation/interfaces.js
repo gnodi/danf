@@ -199,7 +199,7 @@ module.exports = {
              * @param {object} erase Should erase data1 with data2 if conflict?
              * @param {string} namespace The namespace of the data.
              * @param {object|null} parameters The additional parameters used for the resolving.
-             * @param {boolean} formatsContract Whether or not to format the contract.
+             * @param {boolean} isRoot Whether or not this is the root merging.
              * @return {mixed} The merged data.
              */
             merge: {
@@ -210,7 +210,7 @@ module.exports = {
                     'boolean|undefined/erase',
                     'string|undefined/namespace',
                     'object|undefined/parameters',
-                    'boolean|undefined/formatsContract'
+                    'boolean|undefined/isRoot'
                 ],
                 returns: 'mixed'
             },
@@ -221,7 +221,7 @@ module.exports = {
              * @param {object} contract The contract the data should respect.
              * @param {string} namespace The optional namespace.
              * @param {object|null} parameters The additional parameters used for the resolving.
-             * @param {boolean} formatsContract Whether or not to format the contract.
+             * @param {boolean} isRoot Whether or not this is the root resolving.
              * @return {mixed} The resolved data.
              */
             resolve: {
@@ -230,7 +230,7 @@ module.exports = {
                     'object/contract',
                     'string|undefined/namespace',
                     'object|undefined/parameters',
-                    'boolean|undefined/formatsContract'
+                    'boolean|undefined/isRoot'
                 ],
                 returns: 'mixed'
             }

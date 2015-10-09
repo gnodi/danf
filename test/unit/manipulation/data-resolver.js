@@ -463,8 +463,14 @@ var resolveErrorTests = [
         },
         {
             data: {foo: 1},
+            contract: {foo: {type: 3}},
+            expected: /The parameter "type" defined for the contract of the field "1.foo" must be a "string"./,
+            namespace: '1'
+        },
+        {
+            data: {foo: 1},
             contract: {foo: {}},
-            expected: /There is no type parameter defined for the contract of the field "1.foo"./,
+            expected: /There is no parameter "type" defined for the contract of the field "1.foo"./,
             namespace: '1'
         },
         {
