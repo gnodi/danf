@@ -467,6 +467,95 @@ module.exports = {
                             select: ['result']
                         }
                     }
+                },
+                api: {
+                    path: '/api/resource',
+                    methods: ['get'],
+                    parameters: {
+                        value: {
+                            type: 'number',
+                            default: 2
+                        }
+                    },
+                    sequences: [
+                        {
+                            name: 'add',
+                            input: {
+                                value: '@value@',
+                                inc: '@inc'
+                            },
+                            output: {
+                                result: '@value@'
+                            }
+                        }
+                    ],
+                    view: {
+                        json: {
+                            select: ['result']
+                        }
+                    },
+                    children: {
+                        get: {
+                            path: '/:id',
+                            methods: ['get'],
+                            parameters: {
+                                inc: {
+                                    type: 'number',
+                                    default: 1
+                                }
+                            }
+                        },
+                        post: {
+                            methods: ['post'],
+                            parameters: {
+                                inc: {
+                                    type: 'number',
+                                    default: 2
+                                }
+                            }
+                        },
+                        alter: {
+                            path: '/:id',
+                            methods: ['put'],
+                            parameters: {
+                                inc: {
+                                    type: 'number',
+                                    default: 3
+                                }
+                            },
+                            children: {
+                                put: {
+                                },
+                                patch: {
+                                    methods: ['put']
+                                },
+                                delete: {
+                                    methods: ['delete'],
+                                    parameters: {
+                                        inc: {
+                                            type: 'number',
+                                            default: 4
+                                        }
+                                    }
+                                }
+                            }
+                        },
+                        sub: {
+                            path: '/:resource-id/sub',
+                            children: {
+                                get: {
+                                    path: '/:sub-id',
+                                    methods: ['get'],
+                                    parameters: {
+                                        inc: {
+                                            type: 'number',
+                                            default: 5
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
                 }
             }
         }

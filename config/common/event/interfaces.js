@@ -19,6 +19,20 @@ module.exports = {
              */
             notify: {
                 arguments: ['danf:event.event/event', 'mixed/data']
+            },
+            /**
+             * Merge a field of contract.
+             *
+             * @param {string} field The name of the field.
+             * @param {mixed} parentValue The parent value.
+             * @param {mixed} childValue The child value.
+             */
+            mergeContractField: {
+                arguments: [
+                    'string/field',
+                    'mixed/parentValue',
+                    'mixed/childValue'
+                ]
             }
         },
         getters: {

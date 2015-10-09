@@ -213,4 +213,71 @@ describe('Danf application', function() {
             })
         ;
     })
+
+    it('should allow events inheritance', function(done) {
+        var i = 0,
+            requestTests = [
+                {
+                    path: '/api/resource/1',
+                    method: 'get',
+                    expected: 3
+                },
+                {
+                    path: '/api/resource',
+                    method: 'post',
+                    expected: 4
+                },
+                {
+                    path: '/api/resource/alter',
+                    method: 'put',
+                    expected: 5
+                },
+                {
+                    path: '/api/resource/alter',
+                    method: 'path',
+                    expected: 5
+                },
+                {
+                    path: '/api/resource/alter',
+                    method: 'delete',
+                    expected: 6
+                },
+                {
+                    path: '/api/resource/1/sub/2',
+                    method: 'get',
+                    expected: 7
+                }
+            ],
+            valid = function() {
+                i++;
+
+                if (i === requests.length) {
+                    done();
+                }
+            }
+        ;
+
+        requestTests.forEach(function(test) {
+            var requestMethod = request(app)[test.method];
+
+            requestMethod(test.path)
+                .set('Accept', 'application/json')
+                .expect(200, JSON.stringify({result: test.expected}))
+                .expect('Content-Type', 'application/json; charset=utf-8')
+                .end(function(err, res) {
+                    if (err) {
+                        if (res) {
+                            console.log(res.text);
+                        } else {
+                            console.log(err);
+                        }
+
+                        throw err;
+                    }
+
+                    valid();
+                })
+            ;
+        });
+    })
 })
