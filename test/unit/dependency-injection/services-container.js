@@ -124,6 +124,27 @@ servicesContainer.addServiceBuilder(propertiesServiceBuilder);
 servicesContainer.addServiceBuilder(collectionsServiceBuilder);
 servicesContainer.addServiceBuilder(registryServiceBuilder);
 
+var servicesContainerPrototype = utils.clone(servicesContainer),
+    getServiceContainer = function(create) {
+        var currentServicesContainer = servicesContainer;
+
+        if (create) {
+            currentServicesContainer = utils.clone(servicesContainerPrototype);
+        }
+
+        abstractServiceBuilder.servicesContainer = currentServicesContainer;
+        aliasServiceBuilder.servicesContainer = currentServicesContainer;
+        childrenServiceBuilder.servicesContainer = currentServicesContainer;
+        classServiceBuilder.servicesContainer = currentServicesContainer;
+        declinationsServiceBuilder.servicesContainer = currentServicesContainer;
+        factoriesServiceBuilder.servicesContainer = currentServicesContainer;
+        parentServiceBuilder.servicesContainer = currentServicesContainer;
+        propertiesServiceBuilder.servicesContainer = currentServicesContainer;
+
+        return currentServicesContainer;
+    }
+;
+
 var Provider = function() { this.name = 'provider'; };
 Provider.prototype.provide = function() {
     return this.name;
@@ -424,7 +445,9 @@ describe('ServicesContainer', function() {
         it('should fail to resolve a non-existent reference', function() {
             assert.throws(
                 function() {
-                    var badConfig = utils.clone(config);
+                    var badConfig = utils.clone(config),
+                        servicesContainer = getServiceContainer(true)
+                    ;
 
                     badConfig.services.provider.declinations = '$providersTypo$';
                     servicesContainer.config = badConfig;
@@ -432,22 +455,13 @@ describe('ServicesContainer', function() {
                 },
                 /The reference "\$providersTypo\$" in source "\$providersTypo\$" declared in the definition of the service "provider" cannot be resolved./
             );
-
-            assert.throws(
-                function() {
-                    var badConfig = utils.clone(config);
-
-                    badConfig.services.provider.properties.rules = '>rule.@rulesTypo@>provider>@@rules.@rules@@@>';
-                    servicesContainer.config = badConfig;
-                    servicesContainer.handleRegistryChange(badConfig.services);
-                },
-                /One of the references "@rulesTypo@", "@rules@" in source ">rule.@rulesTypo@>provider>@@rules.@rules@@@>" declared in the definition of the service "provider.smallImages" cannot be resolved./
-            );
         })
 
         it('should fail to instantiate an abstract service', function() {
             assert.throws(
                 function() {
+                    var servicesContainer = getServiceContainer(true);
+
                     servicesContainer.config = {};
                     servicesContainer.handleRegistryChange(
                         {
@@ -467,7 +481,9 @@ describe('ServicesContainer', function() {
         it('should fail to instantiate a service defined on an abstract class', function() {
             assert.throws(
                 function() {
-                    var AbstractClass = function() {};
+                    var servicesContainer = getServiceContainer(true),
+                        AbstractClass = function() {}
+                    ;
 
                     AbstractClass.defineAsAbstract();
                     AbstractClass.__metadata.id = 'A';
@@ -490,6 +506,8 @@ describe('ServicesContainer', function() {
         it('should fail to instantiate a service with a circular dependency', function() {
             assert.throws(
                 function() {
+                    var servicesContainer = getServiceContainer(true);
+
                     servicesContainer.config = {};
                     servicesContainer.handleRegistryChange(
                         {
@@ -521,6 +539,8 @@ describe('ServicesContainer', function() {
         it('should fail to instantiate a registry service with no retrieving implemented method', function() {
             assert.throws(
                 function() {
+                    var servicesContainer = getServiceContainer(true);
+
                     servicesContainer.config = {};
                     servicesContainer.handleRegistryChange(
                         {
@@ -540,9 +560,6 @@ describe('ServicesContainer', function() {
 
     describe('method "set"', function() {
         it('should replace an already instanciated service', function() {
-            servicesContainer.config = config;
-            servicesContainer.handleRegistryChange(config.services);
-
             var storage = servicesContainer.set('storage.local', { name: 'local super storage' }),
                 provider = servicesContainer.get('provider.bigImages')
             ;
