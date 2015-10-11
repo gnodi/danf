@@ -122,10 +122,10 @@ describe('Events section configuration processor', function() {
 
         eventContract.namespace = true;
         eventContract.references = ['$'];
-        eventContract.validate = '...';
+        eventContract.format = '...';
         requestContract.namespace = true;
         requestContract.references = ['$'];
-        requestContract.validate = '...';
+        requestContract.format = '...';
 
         var expectedContract = {
                 event: eventContract,
@@ -134,8 +134,8 @@ describe('Events section configuration processor', function() {
             contract = events.contract
         ;
 
-        contract.event.validate = '...';
-        contract.request.validate = '...';
+        contract.event.format = '...';
+        contract.request.format = '...';
 
         assert.deepEqual(
             contract,

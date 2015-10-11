@@ -218,32 +218,27 @@ describe('Danf application', function() {
         var i = 0,
             requestTests = [
                 {
-                    path: '/api/resource/1',
+                    path: '/api/inc/1',
                     method: 'get',
                     expected: 3
                 },
                 {
-                    path: '/api/resource',
+                    path: '/api/inc',
                     method: 'post',
                     expected: 4
                 },
                 {
-                    path: '/api/resource/alter',
+                    path: '/api/inc/alter/3',
                     method: 'put',
                     expected: 5
                 },
                 {
-                    path: '/api/resource/alter',
-                    method: 'path',
-                    expected: 5
-                },
-                {
-                    path: '/api/resource/alter',
-                    method: 'delete',
+                    path: '/api/inc/alter/4',
+                    method: 'patch',
                     expected: 6
                 },
                 {
-                    path: '/api/resource/1/sub/2',
+                    path: '/api/inc/6/dec/1',
                     method: 'get',
                     expected: 7
                 }
@@ -251,7 +246,7 @@ describe('Danf application', function() {
             valid = function() {
                 i++;
 
-                if (i === requests.length) {
+                if (i === requestTests.length) {
                     done();
                 }
             }
@@ -262,7 +257,10 @@ describe('Danf application', function() {
 
             requestMethod(test.path)
                 .set('Accept', 'application/json')
-                .expect(200, JSON.stringify({result: test.expected}))
+                .expect(
+                    test.method === 'post' ? 201 : 200,
+                    JSON.stringify({value: test.expected})
+                )
                 .expect('Content-Type', 'application/json; charset=utf-8')
                 .end(function(err, res) {
                     if (err) {

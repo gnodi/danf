@@ -17,12 +17,12 @@ Computer.prototype.inc = function (value, inc) {
     });
 }
 
-Computer.prototype.add = function (value, coeff) {
+Computer.prototype.dec = function (value, dec) {
     this.__asyncProcess(function(returnAsync) {
         setTimeout(
             function() {
                 returnAsync(function(value) {
-                    return value + coeff;
+                    return value - dec;
                 });
             },
             20
@@ -112,6 +112,26 @@ module.exports = {
                     }
                 ]
             },
+            dec: {
+                stream: {
+                    value: {
+                        type: 'number',
+                        required: true
+                    },
+                    dec: {
+                        type: 'number',
+                        required: true
+                    }
+                },
+                operations: [
+                    {
+                        service: 'computer',
+                        method: 'dec',
+                        arguments: ['@value@', '@dec@'],
+                        scope: 'value'
+                    }
+                ]
+            },
             mul: {
                 stream: {
                     value: {
@@ -146,7 +166,7 @@ module.exports = {
                 operations: [
                     {
                         service: 'computer',
-                        method: 'add',
+                        method: 'inc',
                         arguments: ['@sum@', '@@.@@'],
                         collection: {
                             input: '@input@',
@@ -469,41 +489,38 @@ module.exports = {
                     }
                 },
                 api: {
-                    path: '/api/resource',
-                    methods: ['get'],
+                    path: '/api/inc',
                     parameters: {
                         value: {
                             type: 'number',
                             default: 2
+                        },
+                        inc: {
+                            type: 'number',
+                            required: true
                         }
                     },
                     sequences: [
                         {
-                            name: 'add',
+                            name: 'inc',
                             input: {
                                 value: '@value@',
-                                inc: '@inc'
+                                inc: '@inc@'
                             },
                             output: {
-                                result: '@value@'
+                                value: '@value@'
                             }
                         }
                     ],
                     view: {
                         json: {
-                            select: ['result']
+                            select: ['value']
                         }
                     },
                     children: {
                         get: {
-                            path: '/:id',
+                            path: '/:inc',
                             methods: ['get'],
-                            parameters: {
-                                inc: {
-                                    type: 'number',
-                                    default: 1
-                                }
-                            }
                         },
                         post: {
                             methods: ['post'],
@@ -515,43 +532,41 @@ module.exports = {
                             }
                         },
                         alter: {
-                            path: '/:id',
+                            path: '/alter/:inc',
                             methods: ['put'],
-                            parameters: {
-                                inc: {
-                                    type: 'number',
-                                    default: 3
-                                }
-                            },
                             children: {
                                 put: {
                                 },
                                 patch: {
-                                    methods: ['put']
-                                },
-                                delete: {
-                                    methods: ['delete'],
-                                    parameters: {
-                                        inc: {
-                                            type: 'number',
-                                            default: 4
-                                        }
-                                    }
+                                    methods: ['patch']
                                 }
                             }
                         },
-                        sub: {
-                            path: '/:resource-id/sub',
+                        dec: {
+                            path: '/:inc/dec',
                             children: {
                                 get: {
-                                    path: '/:sub-id',
+                                    path: '/:dec',
                                     methods: ['get'],
                                     parameters: {
-                                        inc: {
+                                        dec: {
                                             type: 'number',
-                                            default: 5
+                                            required: true
                                         }
-                                    }
+                                    },
+                                    sequences: [
+                                        {
+                                            order: 1,
+                                            name: 'dec',
+                                            input: {
+                                                value: '@value@',
+                                                dec: '@dec@'
+                                            },
+                                            output: {
+                                                value: '@value@'
+                                            }
+                                        }
+                                    ]
                                 }
                             }
                         }
