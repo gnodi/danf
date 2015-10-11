@@ -493,7 +493,7 @@ module.exports = {
                     parameters: {
                         value: {
                             type: 'number',
-                            default: 2
+                            default: 1
                         },
                         inc: {
                             type: 'number',
@@ -543,7 +543,7 @@ module.exports = {
                             }
                         },
                         dec: {
-                            path: '/:inc/dec',
+                            path: '/:inc/sub',
                             children: {
                                 get: {
                                     path: '/:dec',

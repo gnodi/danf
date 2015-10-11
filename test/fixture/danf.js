@@ -253,6 +253,21 @@ module.exports = {
                         }
                     ]
                 }
+            },
+            request: {
+                'dep3:api': {
+                    parameters: {
+                        value: {
+                            type: 'number',
+                            default: 2
+                        }
+                    },
+                    children: {
+                        dec: {
+                            path: '/:inc/dec'
+                        }
+                    }
+                }
             }
         },
         sequences: {
