@@ -12,7 +12,7 @@ module.exports = {
         },
         'danf:ajaxApp.autoloadLink.ready': {
             event: 'ready',
-            selector: 'a[data-ajax*="autoload"]',
+            selector: '[data-ajax*="autoload"]',
             sequences: [
                 {
                     name: 'danf:ajaxApp.followLink'
