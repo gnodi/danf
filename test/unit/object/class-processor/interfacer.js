@@ -5,7 +5,7 @@ require('../../../../lib/common/init');
 var assert = require('assert'),
     utils = require('../../../../lib/common/utils'),
     Interfacer = require('../../../../lib/common/object/class-processor/interfacer'),
-    InterfacesRegistry = require('../../../../lib/common/object/interfaces-registry')
+    InterfacesContainer = require('../../../../lib/common/object/interfaces-container')
 ;
 
 var MyClass = function() { this._value = 1 },
@@ -68,11 +68,11 @@ Object.defineProperty(C.prototype, 'c', {
     value: 'c'
 });
 
-var interfacesRegistry = new InterfacesRegistry(),
+var interfacesContainer = new InterfacesContainer(),
     interfacer = new Interfacer()
 ;
 
-interfacer.interfacesRegistry = interfacesRegistry;
+interfacer.interfacesContainer = interfacesContainer;
 
 var config = {
         interfaces: {
@@ -130,7 +130,7 @@ var config = {
 
 describe('Interfacer', function() {
     describe('method "process"', function() {
-        interfacesRegistry.handleRegistryChange(config['interfaces']);
+        interfacesContainer.handleRegistryChange(config['interfaces']);
 
         it('process a class with a defined interfaces without any error', function() {
             interfacer.process(MyClass);

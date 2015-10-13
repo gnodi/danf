@@ -4,8 +4,7 @@ require('../../../../lib/common/init');
 
 var assert = require('assert'),
     Extender = require('../../../../lib/common/object/class-processor/extender'),
-    ClassesHandler = require('../../../../lib/common/object/classes-handler'),
-    ClassesRegistry = require('../../../../lib/common/object/classes-registry')
+    ClassesContainer = require('../../../../lib/common/object/classes-container')
 ;
 
 var A = function() {
@@ -56,17 +55,15 @@ C.prototype.c = function() {
     return C.Parent.prototype.c.call(this);
 };
 
-var classesRegistry = new ClassesRegistry(),
-    classesHandler = new ClassesHandler(),
+var classesContainer = new ClassesContainer(),
     extender = new Extender()
 ;
 
-classesRegistry.index('a', A);
-classesRegistry.index('b', B);
-classesRegistry.index('c', C);
+classesContainer.setDefinition('a', A);
+classesContainer.setDefinition('b', B);
+classesContainer.setDefinition('c', C);
 
-classesHandler.classesRegistry = classesRegistry;
-extender.classesRegistry = classesRegistry;
+extender.classesContainer = classesContainer;
 
 describe('Extender', function() {
     describe('method "process"', function() {

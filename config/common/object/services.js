@@ -1,42 +1,34 @@
 'use strict';
 
 module.exports = {
-    classesRegistry: {
-        class: 'danf:object.classesRegistry',
-        lock: true
-    },
-    interfacesRegistry: {
-        class: 'danf:object.interfacesRegistry',
-        lock: true
-    },
-    classesHandler: {
-        class: 'danf:object.classesHandler',
+    classesContainer: {
+        class: 'danf:object.classesContainer',
         properties: {
-            classesRegistry: '#danf:object.classesRegistry#',
             classProcessors: '&danf:object.classProcessor&'
         },
+        lock: true
+    },
+    interfacesContainer: {
+        class: 'danf:object.interfacesContainer',
         lock: true
     },
     interfacer: {
         class: 'danf:object.interfacer',
         properties: {
             debug: '%danf:context.debug%',
-            interfacesRegistry: '#danf:object.interfacesRegistry#'
+            interfacesContainer: '#danf:object.interfacesContainer#'
         }
     },
     classProcessor: {
         collections: ['danf:object.classProcessor'],
         children: {
             extender: {
-                class: 'danf:object.classProcessor.extender',
-                properties: {
-                    classesRegistry: '#danf:object.classesRegistry#'
-                }
+                class: 'danf:object.classProcessor.extender'
             },
             interfacer: {
                 class: 'danf:object.classProcessor.interfacer',
                 properties: {
-                    interfacesRegistry: '#danf:object.interfacesRegistry#'
+                    interfacesContainer: '#danf:object.interfacesContainer#'
                 }
             }
         }

@@ -17,21 +17,21 @@ var assert = require('assert'),
     AbstractBuilder = require('../../../lib/common/dependency-injection/service-builder/abstract-service-builder'),
     ReferenceResolver = require('../../../lib/common/manipulation/reference-resolver'),
     ReferenceType = require('../../../lib/common/manipulation/reference-type'),
-    InterfacesRegistry = require('../../../lib/common/object/interfaces-registry'),
+    InterfacesContainer = require('../../../lib/common/object/interfaces-container'),
     Interfacer = require('../../../lib/common/object/interfacer'),
     Namespacer = require('../../../lib/common/configuration/namespacer'),
     utils = require('../../../lib/common/utils')
 ;
 
 var referenceResolver = new ReferenceResolver(),
-    interfacesRegistry = new InterfacesRegistry(),
+    interfacesContainer = new InterfacesContainer(),
     interfacer = new Interfacer(),
     modulesTree = require('../../fixture/configuration/modules-tree'),
     namespacer = new Namespacer(),
     servicesContainer = new ServicesContainer()
 ;
 
-interfacer.interfacesRegistry = interfacesRegistry;
+interfacer.interfacesContainer = interfacesContainer;
 
 var parameterType = new ReferenceType();
 parameterType.name = '%';
@@ -154,7 +154,7 @@ Provider.prototype.reset = function() {
 };
 Provider.defineImplementedInterfaces(['provider']);
 
-interfacesRegistry.index(
+interfacesContainer.setDefinition(
     'provider',
     {
         methods: {

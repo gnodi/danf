@@ -3,7 +3,7 @@
 require('../../../lib/common/init');
 
 var assert = require('assert'),
-    InterfacesRegistry = require('../../../lib/common/object/interfaces-registry'),
+    InterfacesContainer = require('../../../lib/common/object/interfaces-container'),
     Interfacer = require('../../../lib/common/object/interfacer'),
     ObjectProvider = require('../../../lib/common/dependency-injection/object-provider')
 ;
@@ -17,14 +17,14 @@ Class.defineImplementedInterfaces(['interface']);
 Class.prototype.public = function() {};
 Class.prototype.private = function() {};
 
-var interfacesRegistry = new InterfacesRegistry(),
+var interfacesContainer = new InterfacesContainer(),
     interfacer = new Interfacer(),
     objectProvider = new ObjectProvider()
 ;
 
-interfacer.interfacesRegistry = interfacesRegistry;
+interfacer.interfacesContainer = interfacesContainer;
 objectProvider.interfacer = interfacer;
-interfacesRegistry.index(
+interfacesContainer.setDefinition(
     'interface',
     {
         methods: {
