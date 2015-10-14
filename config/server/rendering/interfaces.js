@@ -24,9 +24,9 @@ module.exports = {
         },
         getters: {
             /**
-             * The contract that the view part of the controller should respect.
+             * Contract that the view part of the controller should respect.
              *
-             * @return {object} The contract.
+             * @return {object}
              */
             contract: 'object',
         }
@@ -52,21 +52,21 @@ module.exports = {
         },
         getters: {
             /**
-             * The handled format.
+             * Handled format.
              *
-             * @return {string} The format.
+             * @return {string}
              */
             format: 'string',
             /**
-             * The relative content type header.
+             * Relative content type header.
              *
-             * @return {string} The header value.
+             * @return {string}
              */
             contentTypeHeader: 'string',
             /**
-             * The contract that the view part of the controller should respect.
+             * Contract that the view part of the controller should respect.
              *
-             * @return {object} The contract.
+             * @return {object}
              */
             contract: 'object'
         }

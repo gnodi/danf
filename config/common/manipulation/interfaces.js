@@ -152,38 +152,38 @@ module.exports = {
     referenceType: {
         getters: {
             /**
-             * The unique name of the type.
+             * Identifier name.
              *
-             * @return {string} The name.
+             * @return {string}
              */
             name: 'string',
             /**
-             * The delimiter for the reference.
+             * Delimiter.
              *
-             * @return {string} The delimiter.
+             * @return {string}
              */
             delimiter: 'string',
             /**
-             * The size of the reference.
+             * Size.
              *
              * if size = 1 & delimiter = % => %ref%
              * if size = 4 & delimiter = > => >ref>is>like>that>
              *
-             * @return {number} The size.
+             * @return {number}
              */
             size: 'number',
             /**
-             * The indexes of the reference which should be namespaced when asked.
+             * Indexes of the reference which should be namespaced when asked.
              *
              * if size = 4 & delimiter = > & namespace = [0, 2] => >prefix:ref>is>prefix:like>that>
              *
-             * @return {number_array} The namespaced indexes.
+             * @return {number_array}
              */
             namespace: 'number_array',
             /**
              * Whether or not the type allow the concatenation.
              *
-             * @return {boolean} True if the concatenation is allowed, false otherwise.
+             * @return {boolean}
              */
             allowsConcatenation: 'boolean'
         }
@@ -293,17 +293,17 @@ module.exports = {
         },
         getters: {
             /**
-             * The order of execution.
+             * Order of execution.
              *
-             * @return {number} The order.
+             * @return {number}
              */
             order: 'number'
         },
         setters: {
             /**
-             * The data resolver.
+             * Data resolver.
              *
-             * @param {danf:manipulation.dataResolver} The data resolver.
+             * @param {danf:manipulation.dataResolver}
              */
             dataResolver: 'danf:manipulation.dataResolver'
         }
@@ -549,57 +549,57 @@ module.exports = {
         },
         getters: {
             /**
-             * The unique identifier of the flow.
+             * Unique identifier.
              *
-             * @return {string} The level.
+             * @return {string}
              */
             id: 'string',
             /**
-             * The context of execution of the flow.
+             * Context of execution.
              *
-             * @return {danf:manipulation.map} The context.
+             * @return {danf:manipulation.map}
              */
             context: 'danf:manipulation.map',
             /**
-             * The stream.
+             * Stream.
              *
-             * @return {object} The stream.
+             * @return {object}
              */
             stream: 'object',
             /**
-             * The current stream.
+             * Current stream.
              *
-             * @return {object} The stream.
+             * @return {object}
              */
             currentStream: 'object',
             /**
-             * The parent stream of the current one.
+             * Parent stream of the current one.
              *
-             * @return {object} The stream.
+             * @return {object}
              */
             parentStream: 'object',
             /**
-             * The current tributary.
+             * Current tributary.
              *
-             * @return {string} The identifier of the tributary.
+             * @return {string}
              */
             currentTributary: 'number',
             /**
-             * The tributary count.
+             * Tributary count.
              *
-             * @return {string} The count.
+             * @return {string}
              */
             tributaryCount: 'number',
             /**
-             * The embedded level of the current tributary.
+             * Embedded level of the current tributary.
              *
-             * @return {string} The level.
+             * @return {string}
              */
             currentLevel: 'number'
         },
         setters: {
             /**
-             * The current stream.
+             * Current stream.
              *
              * @param {object}
              */
@@ -1050,19 +1050,19 @@ module.exports = {
         },
         getters: {
             /**
-             * The async method name.
+             * Async method name.
              *
              * @return {string}
              */
             method: 'string',
             /**
-             * The optional alias name.
+             * Optional alias name.
              *
-             * @return {string}
+             * @return {string|null}
              */
             alias: 'string|null',
             /**
-             * The parameters.
+             * Parameters.
              *
              * @return {object}
              */

@@ -48,19 +48,19 @@ module.exports = {
         },
         getters: {
             /**
-             * The path.
+             * Path.
              *
              * @return {string}
              */
             path: 'string',
             /**
-             * The HTTP method.
+             * HTTP method.
              *
              * @return {string}
              */
             method: 'string',
             /**
-             * The associated request event.
+             * Associated request event.
              *
              * @return {danf:event.event}
              */

@@ -190,31 +190,31 @@ module.exports = {
         },
         getters: {
             /**
-             * The name.
+             * Name.
              *
              * @return {string}
              */
             name: 'string',
             /**
-             * The name of the extended interface.
+             * Name of the extended interface.
              *
              * @return {string}
              */
             'extends': 'string',
             /**
-             * The methods.
+             * Methods.
              *
              * @return {mixed_object_object}
              */
             methods: 'mixed_object_object',
             /**
-             * The getters.
+             * Getters.
              *
              * @return {string_object}
              */
             getters: 'string_object',
             /**
-             * The setters.
+             * Setters.
              *
              * @return {string_object}
              */
@@ -247,7 +247,7 @@ module.exports = {
         },
         getters: {
             /**
-             * The order of execution.
+             * Order of execution.
              *
              * @return {number}
              */
@@ -255,7 +255,7 @@ module.exports = {
         },
         setters: {
             /**
-             * The classes container.
+             * Classes container.
              *
              * @param {danf:object.classesContainer}
              */

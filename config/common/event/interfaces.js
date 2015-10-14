@@ -37,15 +37,15 @@ module.exports = {
         },
         getters: {
             /**
-             * The identifier name of the notifier.
+             * Identifier name.
              *
-             * @return {string} The name.
+             * @return {string}
              */
             name: 'string',
             /**
-             * The contract that an event should respect in the configuration.
+             * Contract that an event should respect in the configuration.
              *
-             * @return {object} The contract.
+             * @return {object}
              */
             contract: 'object'
         }
@@ -133,29 +133,29 @@ module.exports = {
         },
         getters: {
             /**
-             * The identifier name.
+             * Identifier name.
              *
-             * @return {danf:event.notifier} The name.
+             * @return {danf:event.notifier}
              */
             name: 'string',
             /**
-             * The parameters.
+             * Parameters.
              *
-             * @return {object} The parameters.
+             * @return {object}
              */
             parameters: 'object',
             /**
-             * The sequence.
+             * Sequence.
              *
-             * @return {danf:event.sequence} The sequence.
+             * @return {danf:event.sequence}
              */
             sequence: 'danf:event.sequence'
         },
         setters: {
             /**
-             * The notifier.
+             * Notifier.
              *
-             * @return {danf:event.notifier} The notifier.
+             * @param {danf:event.notifier}
              */
             notifier: 'danf:event.notifier'
         }
@@ -252,9 +252,9 @@ module.exports = {
         },
         getters: {
             /**
-             * The config handled parameters.
+             * Config handled parameters.
              *
-             * @return {object} The parameters.
+             * @return {object}
              */
             handledParameters: 'object'
         }
@@ -366,9 +366,9 @@ module.exports = {
         },
         getters: {
             /**
-             * The contract that a collection should respect in the configuration.
+             * Contract that a collection should respect in the configuration.
              *
-             * @return {object} The contract.
+             * @return {object}
              */
             contract: 'object'
         }
@@ -404,23 +404,23 @@ module.exports = {
         },
         getters: {
             /**
-             * The contract that a sequence should respect in the configuration.
+             * Contract that a sequence should respect in the configuration.
              *
-             * @return {object} The contract.
+             * @return {object}
              */
             contract: 'object',
             /**
-             * The order of interpretation.
+             * Order of interpretation.
              *
-             * @return {number} The order.
+             * @return {number}
              */
             order: 'number'
         },
         setters: {
             /**
-             * The sequences container.
+             * Sequences container.
              *
-             * @param {danf:event.sequencesContainer} The sequences container.
+             * @param {danf:event.sequencesContainer}
              */
             sequencesContainer: 'danf:event.sequencesContainer'
         }

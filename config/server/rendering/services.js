@@ -18,7 +18,10 @@ module.exports = {
                 }
             },
             json: {
-                class: 'danf:rendering.formatRenderer.json'
+                class: 'danf:rendering.formatRenderer.json',
+                properties: {
+                    referenceResolver: '#danf:manipulation.referenceResolver#'
+                }
             },
             html: {
                 class: 'danf:rendering.formatRenderer.html',

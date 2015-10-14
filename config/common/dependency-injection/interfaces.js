@@ -122,23 +122,23 @@ module.exports = {
         },
         getters: {
             /**
-             * The config.
+             * Config.
              *
-             * @return {object} The config.
+             * @return {object}
              */
             config: 'object',
             /**
-             * The config handled parameters.
+             * Config handled parameters.
              *
-             * @return {object} The parameters.
+             * @return {object}
              */
             handledParameters: 'object'
         },
         setters: {
             /**
-             * The config.
+             * Config.
              *
-             * @param {object} The config.
+             * @param {object}
              */
             config: 'object'
         }
@@ -203,23 +203,23 @@ module.exports = {
         },
         getters: {
             /**
-             * The contract its handled parameters should respect.
+             * Contract its handled parameters should respect.
              *
-             * @return {object} The contract.
+             * @return {object}
              */
             contract: 'object',
             /**
-             * The define order of execution.
+             * Define order of execution.
              *
-             * @return {number|undefined} The order.
+             * @return {number|null}
              */
-            defineOrder: 'number|undefined',
+            defineOrder: 'number|null',
             /**
-             * The instantiate order of execution.
+             * Instantiate order of execution.
              *
-             * @return {number|undefined} The order.
+             * @return {number|null}
              */
-            instantiateOrder: 'number|undefined'
+            instantiateOrder: 'number|null'
         }
 
     },
@@ -238,9 +238,9 @@ module.exports = {
         },
         getters: {
             /**
-             * The object provided type.
+             * Object provided type.
              *
-             * @return {string} The type.
+             * @return {string}
              */
             providedType: 'string'
         }
