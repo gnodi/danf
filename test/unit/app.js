@@ -259,7 +259,7 @@ describe('Danf application', function() {
                 .set('Accept', 'application/json')
                 .expect(
                     test.method === 'post' ? 201 : 200,
-                    JSON.stringify({value: test.expected})
+                    JSON.stringify({result: test.expected})
                 )
                 .expect('Content-Type', 'application/json; charset=utf-8')
                 .end(function(err, res) {

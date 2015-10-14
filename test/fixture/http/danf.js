@@ -358,7 +358,9 @@ module.exports = {
                             }
                         },
                         json: {
-                            select: ['messages']
+                            value: {
+                                messages: '@messages@'
+                            }
                         }
                     },
                     sequences: [
@@ -388,7 +390,9 @@ module.exports = {
                     },
                     view: {
                         json: {
-                            select: ['number']
+                            value: {
+                                number: '@number@'
+                            }
                         }
                     },
                     sequences: [
@@ -413,7 +417,9 @@ module.exports = {
                     },
                     view: {
                         json: {
-                            select: ['number']
+                            value: {
+                                number: '@number@'
+                            }
                         }
                     },
                     sequences: [
@@ -433,7 +439,9 @@ module.exports = {
                     methods: ['get'],
                     view: {
                         json: {
-                            select: ['text']
+                            value: {
+                                text: '@text@'
+                            }
                         }
                     },
                     sequences: [
@@ -506,7 +514,9 @@ module.exports = {
                     ],
                     view: {
                         json: {
-                            select: ['c']
+                            value: {
+                                c: '@c@'
+                            }
                         }
                     }
                 }

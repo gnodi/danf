@@ -484,7 +484,9 @@ module.exports = {
                     ],
                     view: {
                         json: {
-                            select: ['result']
+                            value: {
+                                result: '@result@'
+                            }
                         }
                     }
                 },
@@ -514,7 +516,9 @@ module.exports = {
                     ],
                     view: {
                         json: {
-                            select: ['value']
+                            value: {
+                                result: '@value@'
+                            }
                         }
                     },
                     children: {
