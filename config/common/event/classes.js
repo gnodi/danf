@@ -1,9 +1,24 @@
 'use strict';
 
 module.exports = {
-    sequencerProvider: require('../../../lib/common/event/sequencer-provider'),
-    sequenceBuilder: require('../../../lib/common/event/sequence-builder'),
-    eventsHandler: require('../../../lib/common/event/events-handler'),
+    referencesResolver: require('../../../lib/common/event/references-resolver'),
+    sequence: require('../../../lib/common/event/sequence'),
+    event: require('../../../lib/common/event/event'),
+    sequencesContainer: require('../../../lib/common/event/sequences-container'),
+    eventsContainer: require('../../../lib/common/event/events-container'),
+    collectionInterpreter: require('../../../lib/common/event/collection-interpreter'),
+    flowContext: require('../../../lib/common/event/flow-context'),
+    logger: require('../../../lib/common/event/logger'),
+    sequenceInterpreter: {
+        abstract: require('../../../lib/common/event/sequence-interpreter/abstract'),
+        alias: require('../../../lib/common/event/sequence-interpreter/alias'),
+        children: require('../../../lib/common/event/sequence-interpreter/children'),
+        collections: require('../../../lib/common/event/sequence-interpreter/collections'),
+        embedded: require('../../../lib/common/event/sequence-interpreter/embedded'),
+        stream: require('../../../lib/common/event/sequence-interpreter/stream'),
+        operations: require('../../../lib/common/event/sequence-interpreter/operations'),
+        parents: require('../../../lib/common/event/sequence-interpreter/parents')
+    },
     notifier: {
         abstract: require('../../../lib/common/event/notifier/abstract'),
         event: require('../../../lib/common/event/notifier/event')

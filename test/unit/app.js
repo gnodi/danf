@@ -1,10 +1,11 @@
 'use strict';
 
 var assert = require('assert'),
+    request = require('supertest'),
     danf = require('../../lib/server/app')
 ;
 
-var app = danf(require(__dirname + '/../fixture/danf'), '', {silent: true, environment: 'test'});
+var app = danf(require(__dirname + '/../fixture/danf'), '', {listen: false, environment: 'test', verbosity: 5});
 
 describe('Danf application', function() {
     it('should provide a "container" accessible property', function() {
@@ -69,9 +70,9 @@ describe('Danf application', function() {
     })
 
     it('should allow multilevel inheritance', function() {
-        var classesRegistry = app.servicesContainer.get('danf:object.classesRegistry'),
-            a = classesRegistry.get('main:a'),
-            b = classesRegistry.get('main:b')
+        var classesContainer = app.servicesContainer.get('danf:object.classesContainer'),
+            a = classesContainer.get('main:a'),
+            b = classesContainer.get('main:b')
         ;
 
         assert.equal(typeof a, 'function');
@@ -95,6 +96,22 @@ describe('Danf application', function() {
         assert.equal(computer.inc(), 4);
     })
 
+    it('should allow to process sequences of a triggered event', function(done) {
+        var eventsContainer = app.servicesContainer.get('danf:event.eventsContainer'),
+            event = eventsContainer.get('event', 'main:happenSomething');
+        ;
+
+        event.trigger({done: done});
+    })
+
+    it('should allow to process conditional sequences of a triggered event', function(done) {
+        var eventsContainer = app.servicesContainer.get('danf:event.eventsContainer'),
+            event = eventsContainer.get('event', 'main:happenSomething');
+        ;
+
+        event.trigger({data: {i: 2}, done: done});
+    })
+
     it('should allow cross danf modules inheritance', function(done) {
         var trigger = app.servicesContainer.get('main:trigger');
 
@@ -105,6 +122,46 @@ describe('Danf application', function() {
         var trigger = app.servicesContainer.get('main:dep1:trigger');
 
         trigger.trigger(done);
+    })
+
+    it('should allow to manage asynchronous flow', function(done) {
+        var eventsContainer = app.servicesContainer.get('danf:event.eventsContainer'),
+            event = eventsContainer.get('event', 'main:dep3:parallelComputing');
+        ;
+
+        event.trigger({input: [1, 2, 3, 4, 5], expected: 5, done: done});
+    })
+
+    it('should allow to manage asynchronous flow', function(done) {
+        var eventsContainer = app.servicesContainer.get('danf:event.eventsContainer'),
+            event = eventsContainer.get('event', 'main:dep3:seriesComputing');
+        ;
+
+        event.trigger({input: [1, 2, 3, 4, 5], expected: 15, done: done});
+    })
+
+    it('should allow to manage asynchronous flow', function(done) {
+        var eventsContainer = app.servicesContainer.get('danf:event.eventsContainer'),
+            event = eventsContainer.get('event', 'main:dep3:parallelLimitComputing');
+        ;
+
+        event.trigger({input: [1, 2, 3, 4, 5], expected: 9, done: done}); // 1 unlock 3 unlock 5
+    })
+
+    it('should allow to manage asynchronous flow', function(done) {
+        var eventsContainer = app.servicesContainer.get('danf:event.eventsContainer'),
+            event = eventsContainer.get('event', 'main:dep3:compute');
+        ;
+
+        event.trigger({expected: 51, done: done});
+    })
+
+    it('should allow to manage asynchronous flow', function(done) {
+        var eventsContainer = app.servicesContainer.get('danf:event.eventsContainer'),
+            event = eventsContainer.get('event', 'main:dep3:sum');
+        ;
+
+        event.trigger({input: [1, 5, 10], expected: 16, done: done});
     })
 
     it('should handle environment configurations', function() {
@@ -121,22 +178,6 @@ describe('Danf application', function() {
         assert.equal(callbackExecutor.executeCallback(function() { return 3; }), 3);
     })
 
-    it('should process basic events', function(done) {
-        var trigger = app.servicesContainer.get('danf:event.eventsHandler'),
-            computer = app.servicesContainer.get('main:computer')
-        ;
-
-        trigger.trigger('event', 'happenSomething', computer, {i: 3, k: 3, done: done});
-    })
-
-    it('should process basic events', function(done) {
-        var trigger = app.servicesContainer.get('danf:event.eventsHandler'),
-            computer = app.servicesContainer.get('main:computer')
-        ;
-
-        trigger.trigger('event', 'happenSomething', computer, {k: 0, done: done});
-    })
-
     it('should provide a service with utils', function() {
         var utils = app.servicesContainer.get('danf:utils'),
             a = {a: 1},
@@ -149,5 +190,92 @@ describe('Danf application', function() {
             utils.merge(a, b),
             {a:1, b:2}
         );
+    })
+
+    it('should process requests', function(done) {
+        request(app)
+            .get('/computing?val=1')
+            .set('Accept', 'application/json')
+            .expect(200, JSON.stringify({result: 69}))
+            .expect('Content-Type', 'application/json; charset=utf-8')
+            .end(function(err, res) {
+                if (err) {
+                    if (res) {
+                        console.log(res.text);
+                    } else {
+                        console.log(err);
+                    }
+
+                    throw err;
+                }
+
+                done();
+            })
+        ;
+    })
+
+    it('should allow events inheritance', function(done) {
+        var i = 0,
+            requestTests = [
+                {
+                    path: '/api/inc/1',
+                    method: 'get',
+                    expected: 3
+                },
+                {
+                    path: '/api/inc',
+                    method: 'post',
+                    expected: 4
+                },
+                {
+                    path: '/api/inc/alter/3',
+                    method: 'put',
+                    expected: 5
+                },
+                {
+                    path: '/api/inc/alter/4',
+                    method: 'patch',
+                    expected: 6
+                },
+                {
+                    path: '/api/inc/6/dec/1',
+                    method: 'get',
+                    expected: 7
+                }
+            ],
+            valid = function() {
+                i++;
+
+                if (i === requestTests.length) {
+                    done();
+                }
+            }
+        ;
+
+        requestTests.forEach(function(test) {
+            var requestMethod = request(app)[test.method];
+
+            requestMethod(test.path)
+                .set('Accept', 'application/json')
+                .expect(
+                    test.method === 'post' ? 201 : 200,
+                    JSON.stringify({result: test.expected})
+                )
+                .expect('Content-Type', 'application/json; charset=utf-8')
+                .end(function(err, res) {
+                    if (err) {
+                        if (res) {
+                            console.log(res.text);
+                        } else {
+                            console.log(err);
+                        }
+
+                        throw err;
+                    }
+
+                    valid();
+                })
+            ;
+        });
     })
 })

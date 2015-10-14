@@ -3,55 +3,56 @@
 require('../../../../lib/common/init');
 
 var assert = require('assert'),
-    Event = require('../../../../lib/common/event/notifier/event')
+    Event = require('../../../../lib/common/event/event'),
+    EventNotifier = require('../../../../lib/common/event/notifier/event')
 ;
 
-var eventNotifier = new Event(),
+var eventNotifier = new EventNotifier(),
     dataResolver = require('../../../fixture/manipulation/data-resolver'),
-    sequencer = {
-        start: function(stream, callback) {
-            stream.data.bar = 'foo';
-
-            callback(stream);
+    sequence = {
+        execute: function(input, context, scope, callback) {
+            input.bar = 'foo';
+            input.a = context.a;
         }
-    }
+    },
+    event = new Event()
 ;
 
 eventNotifier.dataResolver = dataResolver;
 
+event.name = 'update';
+event.parameters = {
+    context: {
+        a: 1
+    },
+    callback: function(stream) {
+        assert.deepEqual(
+            stream,
+            {
+                foo: 'bar',
+                bar: 'foo',
+                a: 1
+            }
+        );
+    },
+    data: {
+        foo: {type: 'string'}
+    }
+};
+event.sequence = sequence;
+event.eventNotifier = eventNotifier;
+
 describe('Event notifier', function() {
     describe('method "notify"', function() {
         it('should notify listeners of an event triggering', function() {
-            eventNotifier.addListener(
-                'update',
-                {
-                    context: 'foo',
-                    callback: function(stream) {
-                        assert.deepEqual(
-                            stream,
-                            {
-                                context: 'foo',
-                                data: {
-                                    foo: 'bar',
-                                    bar: 'foo'
-                                }
-                            }
-                        );
-                    },
-                    contract: {
-                        foo: {type: 'string'}
-                    }
-                },
-                sequencer
-            );
-
-            eventNotifier.notify('update', {foo: 'bar'});
+            eventNotifier.addListener(event);
+            eventNotifier.notify(event, {foo: 'bar'});
         })
 
         it('should fail to trigger an event with a bad formatted data', function() {
             assert.throws(
                 function() {
-                    eventNotifier.notify('update', {bar: 'foo'});
+                    eventNotifier.notify(event, {bar: 'foo'});
                 },
                 /The embedded field "bar" is not defined in the contract of the field "event\[event\]\[update\].data"./
             );

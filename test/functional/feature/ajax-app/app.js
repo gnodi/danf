@@ -3,6 +3,8 @@
 var danf = require('../../../..'),
     app = danf(
         __dirname + '/danf-server.js',
-        __dirname + '/danf-client.js'
+        __dirname + '/danf-client.js',
+        {},
+        {verbosity: 2}
     )
 ;

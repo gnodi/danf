@@ -315,6 +315,11 @@ var tests = [
             source: '%.%',
             context: {foo: { bar: 'ok' }},
             expected: {foo: { bar: 'ok' }}
+        },
+        {
+            source: '%a\\%\\b%',
+            context: {'a\\%\\b': 2},
+            expected: 2
         }
     ]
 ;

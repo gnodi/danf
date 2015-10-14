@@ -297,8 +297,11 @@ var resolveTests = [
             },
             contract: {
                 foo: {
-                    type: function(value) {
-                        return value === 2;
+                    type: 'number',
+                    validate: function(value) {
+                        if (value !== 2) {
+                            throw new Error('must be 2')
+                        }
                     }
                 }
             },
@@ -369,6 +372,75 @@ var resolveTests = [
             expected: {
                 foo: true
             }
+        },
+        {
+            data: {
+                foo: [1, 3, 5]
+            },
+            contract: {
+                foo: {
+                    format: function(value) {
+                        if (Array.isArray(value)) {
+                            var formattedValue = 0;
+
+                            for (var i = 0; i < value.length; i++) {
+                                formattedValue += value[i];
+                            }
+
+                            return formattedValue;
+                        }
+                    },
+                    type: 'number'
+                }
+            },
+            expected: {
+                foo: 9
+            }
+        },
+        {
+            data: {
+                foo: [1, 3, 5]
+            },
+            contract: {
+                foo: {
+                    format: function(value) {
+                        if (Array.isArray(value)) {
+                            var formattedValue = 0;
+
+                            for (var i = 0; i < value.length; i++) {
+                                formattedValue += value[i];
+                            }
+
+                            return formattedValue;
+                        }
+                    },
+                    type: 'number',
+                    validate: function(value) {
+                        if (value !== 9) {
+                            throw new Error('must be 9')
+                        }
+                    }
+                }
+            },
+            expected: {
+                foo: 9
+            }
+        },
+        {
+            data: {
+                foo: 9
+            },
+            contract: {
+                foo: {
+                    type: 'number',
+                    validate: function(value) {
+                        return Math.min(value, 5);
+                    }
+                }
+            },
+            expected: {
+                foo: 5
+            }
         }
     ]
 ;
@@ -391,86 +463,92 @@ var resolveErrorTests = [
         },
         {
             data: {foo: 1},
+            contract: {foo: {type: 3}},
+            expected: /The parameter "type" defined for the contract of the field "1.foo" must be a "string"./,
+            namespace: '1'
+        },
+        {
+            data: {foo: 1},
             contract: {foo: {}},
-            expected: /There is no type parameter defined for the contract of the field "1.foo"./,
+            expected: /There is no parameter "type" defined for the contract of the field "1.foo"./,
             namespace: '1'
         },
         {
             data: {foo: 1},
             contract: {foo: {type: 'string'}},
-            expected: /The expected value for "3.foo" is a "string"; a "number" given instead./,
+            expected: /The expected value for "3.foo" is a "string"; a "number" of value `1` given instead./,
             namespace: '3'
         },
         {
             data: {foo: 'bar'},
             contract: {foo: {type: 'number'}},
-            expected: /The expected value for "4.foo" is a "number"; a "string" given instead./,
+            expected: /The expected value for "4.foo" is a "number"; a "string" of value `"bar"` given instead./,
             namespace: '4'
         },
         {
             data: {foo: 'bar'},
             contract: {foo: {type: 'boolean'}},
-            expected: /The expected value for "5.foo" is a "boolean"; a "string" given instead./,
+            expected: /The expected value for "5.foo" is a "boolean"; a "string" of value `"bar"` given instead./,
             namespace: '5'
         },
         {
             data: {foo: 1},
             contract: {foo: {type: 'function'}},
-            expected: /The expected value for "6.foo" is a "function"; a "number" given instead./,
+            expected: /The expected value for "6.foo" is a "function"; a "number" of value `1` given instead./,
             namespace: '6'
         },
         {
             data: {foo: 1},
             contract: {foo: {type: 'string_array'}},
-            expected: /The expected value for "7.foo" is a "string_array"; a "number" given instead./,
+            expected: /The expected value for "7.foo" is a "string_array"; a "number" of value `1` given instead./,
             namespace: '7'
         },
         {
             data: {foo: ['foo', 'bar']},
             contract: {foo: {type: 'number_array'}},
-            expected: /The expected value for "8.foo" is a "number_array"; a "string_array" given instead./,
+            expected: /The expected value for "8.foo" is a "number_array"; a "string_array" of value `\["foo","bar"\]` given instead./,
             namespace: '8'
         },
         {
             data: {foo: 1},
             contract: {foo: {type: 'string_object'}},
-            expected: /The expected value for "9.foo" is a "string_object"; a "number" given instead./,
+            expected: /The expected value for "9.foo" is a "string_object"; a "number" of value `1` given instead./,
             namespace: '9'
         },
         {
             data: {foo: {bar: 'bar'}},
             contract: {foo: {type: 'boolean_object'}},
-            expected: /The expected value for "10.foo" is a "boolean_object"; a "string_object" given instead./,
+            expected: /The expected value for "10.foo" is a "boolean_object"; a "string_object" of value `{"bar":"bar"}` given instead./,
             namespace: '10'
         },
         {
             data: {foo: 1},
             contract: {foo: {type: 'mixed_object'}},
-            expected: /The expected value for "11.foo" is a "mixed_object"; a "number" given instead./,
+            expected: /The expected value for "11.foo" is a "mixed_object"; a "number" of value `1` given instead./,
             namespace: '11'
         },
         {
             data: {foo: {bar: 1}},
             contract: {foo: {type: 'number_array_object'}},
-            expected: /The expected value for "12.foo" is a "number_array_object"; a "number_object" given instead./,
+            expected: /The expected value for "12.foo" is a "number_array_object"; a "number_object" of value `{"bar":1}` given instead./,
             namespace: '12'
         },
         {
             data: {foo: {bar: [1]}},
             contract: {foo: {type: 'string_array_object'}},
-            expected: /The expected value for "13.foo" is a "string_array_object"; a "number_array_object" given instead./,
+            expected: /The expected value for "13.foo" is a "string_array_object"; a "number_array_object" of value `{"bar":\[1\]}` given instead./,
             namespace: '13'
         },
         {
             data: {foo: 1},
             contract: {foo: {type: 'mixed_array_object'}},
-            expected: /The expected value for "14.foo" is a "mixed_array_object"; a "number" given instead./,
+            expected: /The expected value for "14.foo" is a "mixed_array_object"; a "number" of value `1` given instead./,
             namespace: '14'
         },
         {
             data: {foo: true},
             contract: {foo: {type: 'number|string'}},
-            expected: /The expected value for "15.foo" is a "number" or a "string"; a "boolean" given instead./,
+            expected: /The expected value for "15.foo" is a "number" or a "string"; a "boolean" of value `true` given instead./,
             namespace: '15'
         },
         {
@@ -482,7 +560,7 @@ var resolveErrorTests = [
         {
             data: {foo: [{bar: 2}, {bar: 'foo'}]},
             contract: {foo: {type: 'embedded_array', embed: {bar: {type: 'number'}}}},
-            expected: /The expected value for "17.foo\[1\].bar" is a "number"; a "string" given instead./,
+            expected: /The expected value for "17.foo\[1\].bar" is a "number"; a "string" of value `"foo"` given instead./,
             namespace: '17'
         },
         {
@@ -494,18 +572,64 @@ var resolveErrorTests = [
         {
             data: {foo: {a: [{bar: 2}], b: [3]}},
             contract: {foo: {type: 'embedded_array_object', embed: {bar: {type: 'number', required: true}}}},
-            expected: /The value of the field "19.foo" must be an "object of arrays of object properties"; a "number" was found in the array of an object./,
+            expected: /The expected value for "19.foo" is an "object of arrays of object properties"; a "number" of value `3` was found in the array `\[3\]` of the object `{"a":\[{"bar":2}\],"b":\[3\]}`./,
             namespace: '19'
         },
         {
             data: {foo: 2},
-            contract: {foo: {type: function(value) {
-                if ('number' !== typeof value || 1 < value) {
-                    return 'should be an "integer lower than or equal to 1"'
-                };
-            }}},
-            expected: /The given value "2" of type "number" for the field "20.foo" is not valid \(should be an "integer lower than or equal to 1"\)./,
+            contract: {foo: {
+                type: 'number',
+                validate: function(value) {
+                    if (1 < value) {
+                        throw new Error('an "integer lower than or equal to 1"');
+                    }
+                }
+            }},
+            expected: /The expected value for "20.foo" is an "integer lower than or equal to 1"; a "number" of value `2` given instead./,
             namespace: '20'
+        },
+        {
+            data: {foo: [1, 3, 5]},
+            contract: {foo: {
+                format: function(value) {
+                    if (Array.isArray(value)) {
+                        var formattedValue = 0;
+
+                        for (var i = 0; i < value.length; i++) {
+                            formattedValue += value[i];
+                        }
+
+                        return formattedValue;
+                    }
+                },
+                type: 'number',
+                validate: function(value) {
+                    if (value !== 8) {
+                        throw new Error('8')
+                    }
+                }
+            }},
+            expected: /The expected value for "21.foo" is 8; a "number" of value `9` given instead./,
+            namespace: '21'
+        },
+        {
+            data: {foo: [1, 'a', 5]},
+            contract: {foo: {
+                format: function(value) {
+                    if (Array.isArray(value)) {
+                        var formattedValue = 0;
+
+                        for (var i = 0; i < value.length; i++) {
+                            formattedValue += value[i];
+                        }
+
+                        return formattedValue;
+                    }
+                },
+                type: 'number'
+            }},
+            expected: /The expected value for "22.foo" is a "number"; a "string" of value `"1a5"` given instead./,
+            namespace: '22'
         }
     ]
 ;

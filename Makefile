@@ -3,7 +3,7 @@ REPORTER = dot
 
 check: test
 
-test: test-utils test-manipulation test-configuration test-object test-dependency-injection test-file-system test-event test-http test-rendering test-test test-app
+test: test-utils test-manipulation test-configuration test-object test-dependency-injection test-file-system test-event test-http test-rendering test-logging test-test test-app
 
 test-utils:
 	# Utils
@@ -19,6 +19,7 @@ test-manipulation:
 		--reporter $(REPORTER) \
 		--timeout 5000 \
 		--bail \
+		--recursive \
 		$(MOCHA_OPTS) \
 		test/unit/manipulation/*
 
@@ -28,6 +29,7 @@ test-configuration:
 		--reporter $(REPORTER) \
 		--timeout 5000 \
 		--bail \
+		--recursive \
 		$(MOCHA_OPTS) \
 		test/unit/configuration/*
 
@@ -37,6 +39,7 @@ test-object:
 		--reporter $(REPORTER) \
 		--timeout 5000 \
 		--bail \
+		--recursive \
 		$(MOCHA_OPTS) \
 		test/unit/object/*
 
@@ -46,6 +49,7 @@ test-dependency-injection:
 		--reporter $(REPORTER) \
 		--timeout 5000 \
 		--bail \
+		--recursive \
 		$(MOCHA_OPTS) \
 		test/unit/dependency-injection/*
 
@@ -55,6 +59,7 @@ test-file-system:
 		--reporter $(REPORTER) \
 		--timeout 5000 \
 		--bail \
+		--recursive \
 		$(MOCHA_OPTS) \
 		test/unit/file-system/*
 
@@ -64,6 +69,7 @@ test-event:
 		--reporter $(REPORTER) \
 		--timeout 5000 \
 		--bail \
+		--recursive \
 		$(MOCHA_OPTS) \
 		test/unit/event/*
 
@@ -73,6 +79,7 @@ test-http:
 		--reporter $(REPORTER) \
 		--timeout 5000 \
 		--bail \
+		--recursive \
 		$(MOCHA_OPTS) \
 		test/unit/http/*
 
@@ -82,15 +89,27 @@ test-rendering:
 		--reporter $(REPORTER) \
 		--timeout 5000 \
 		--bail \
+		--recursive \
 		$(MOCHA_OPTS) \
 		test/unit/rendering/*
+
+test-logging:
+	# Logging
+	@NODE_ENV=test ./node_modules/.bin/mocha \
+		--reporter $(REPORTER) \
+		--timeout 5000 \
+		--bail \
+		--recursive \
+		$(MOCHA_OPTS) \
+		test/unit/logging/*
 
 test-test:
 	# Test
 	@NODE_ENV=test ./node_modules/.bin/mocha \
 		--reporter $(REPORTER) \
-		--timeout 5000 \
+		--timeout 20000 \
 		--bail \
+		--recursive \
 		$(MOCHA_OPTS) \
 		test/unit/test/*
 

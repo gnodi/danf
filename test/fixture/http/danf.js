@@ -5,26 +5,25 @@ var request = require('supertest'),
 ;
 
 function ForumHandler() {
-        this._topics = {
-            General: [
-                'Rules',
-                'Welcome'
-            ],
-            News: [
-                'The lion is dead tonight.',
-                'The third world peace is near.'
-            ]
-        };
+    this._topics = {
+        General: [
+            'Rules',
+            'Welcome'
+        ],
+        News: [
+            'The lion is dead tonight.',
+            'The third world peace is near.'
+        ]
+    };
 
-        this._messages = {
-            'The third world peace is near.': [
-                'OMG! I can\'t believe it!',
-                'Make bombs not peace!',
-                '???'
-            ]
-        };
-    }
-;
+    this._messages = {
+        'The third world peace is near.': [
+            'OMG! I can\'t believe it!',
+            'Make bombs not peace!',
+            '???'
+        ]
+    };
+}
 
 ForumHandler.prototype.getTopics = function(forumName) {
     return this._topics[forumName];
@@ -35,123 +34,59 @@ ForumHandler.prototype.getMessages = function(topicName, page) {
 };
 
 ForumHandler.prototype.computeForumSize = function(topics, messages) {
-    var sequencer = this._sequencerProvider.provide();
+    this.__asyncProcess(function(returnAsync) {
+        setTimeout(
+            function() {
+                returnAsync(function(count) {
+                    return count + topics.length;
+                });
+            },
+            20
+        );
+    })
 
-    var topicsTask = sequencer.wait();
-
-    setTimeout(
-        function() {
-            sequencer.end(topicsTask, function(count) {
-                return count + topics.length;
-            });
-        },
-        20
-    );
-
-    var messagesTask = sequencer.wait();
-
-    setTimeout(
-        function() {
-            sequencer.end(messagesTask, function(count) {
-                return count + messages.length;
-            });
-        },
-        10
-    );
+    this.__asyncProcess(function(returnAsync) {
+        setTimeout(
+            function() {
+                returnAsync(function(count) {
+                    return count + messages.length;
+                });
+            },
+            20
+        );
+    })
 
     return 2;
 };
 
 function SubrequestExecutor() {
-        this._topics = {
-            General: [
-                'Rules',
-                'Welcome'
-            ],
-            News: [
-                'The lion is dead tonight.',
-                'The third world peace is near.'
-            ]
-        };
-
-        this._messages = {
-            'The third world peace is near.': [
-                'OMG! I can\'t believe it!',
-                'Make bombs not peace!',
-                '???'
-            ]
-        };
-    }
-;
+}
 
 SubrequestExecutor.prototype.execute = function() {
-    var self = this,
-        sequencer = this._sequencerProvider.provide(),
-        subrequestTaskA = sequencer.wait(),
-        subrequestTaskB = sequencer.wait(),
-        requestWrapper = function(options, callback) {
-            request(self._app)
-                .get(options.path)
-                .end(function(err, res) {
-                    if (err) {
-                        if (res) {
-                            console.log(res.text);
-                        } else {
-                            console.log(err);
-                        }
-
-                        throw err;
-                    }
-
-                    callback(res.text);
-                })
-            ;
-        }
-    ;
-
-    this._requestNotifier.notify(
-        'main:sub',
-        {
-            query: {
-                text: 'a'
-            },
-            callback: function(content) {
-                sequencer.end(subrequestTaskA, function(stream) {
-                    var response = JSON.parse(content);
-
-                    stream.unshift(response.text);
-
-                    return stream;
-                });
-            },
-            _requestWrapper: requestWrapper
-        }
+    this._router.follow.__asyncCall(
+        this._router,
+        'a',
+        '/sub',
+        'GET'
     );
 
-    this._requestNotifier.notify(
-        'main:sub',
-        {
-            query: {
-                text: 'b'
-            },
-            callback: function(content) {
-                sequencer.end(subrequestTaskB, function(stream) {
-                    var response = JSON.parse(content);
-
-                    stream.push(response.text);
-
-                    return stream;
-                });
-            },
-            _requestWrapper: requestWrapper
-        }
+    this._route.follow.__asyncCall(
+        this._router,
+        'b'
     );
 
-    return [];
+    this._event.trigger.__asyncCall(
+        this._event,
+        'c',
+        {
+            path: '/sub',
+            method: 'GET'
+        }
+    );
 };
 
 function SessionTester() {
-};
+}
 
 SessionTester.prototype.test = function(order) {
     switch (order) {
@@ -209,7 +144,7 @@ SessionTester.prototype.testAsync = function(order, bis) {
 };
 
 function CookieTester() {
-};
+}
 
 CookieTester.prototype.test = function(order) {
     assert.equal(this._cookiesRegristry.get('foo'), undefined);
@@ -221,19 +156,19 @@ CookieTester.prototype.test = function(order) {
 
 module.exports = {
     config: {
+        classes: {
+            subrequestExecutor: SubrequestExecutor
+        },
         services: {
             forumHandler: {
-                class: ForumHandler,
-                properties: {
-                    _sequencerProvider: '#danf:event.currentSequencerProvider#'
-                }
+                class: ForumHandler
             },
             subrequestExecutor: {
-                class: SubrequestExecutor,
+                class: 'subrequestExecutor',
                 properties: {
-                    _app: '#danf:app#',
-                    _sequencerProvider: '#danf:event.currentSequencerProvider#',
-                    _requestNotifier: '#danf:http.event.notifier.request#'
+                    _router: '#danf:http.router#',
+                    _route: '#danf:http.router[sub]#',
+                    _event: '#danf:event.eventsContainer[request][sub]#'
                 }
             },
             sessionTester: {
@@ -250,115 +185,151 @@ module.exports = {
             }
         },
         sequences: {
-            getForum: [
-                {
-                    service: 'danf:manipulation.callbackExecutor',
-                    method: 'execute',
-                    arguments: [
-                        function(parameters, defaultPage) {
-                            var topic = parameters.topic;
+            getForum: {
+                operations: [
+                    {
+                        order: 0,
+                        service: 'danf:manipulation.callbackExecutor',
+                        method: 'execute',
+                        arguments: [
+                            function(parameters, defaultPage) {
+                                var topic = parameters.topic;
 
-                            topic = topic.charAt(0).toUpperCase() + topic.slice(1);
-                            parameters.topic = topic.charAt(0) + topic.slice(1).toLowerCase();
+                                topic = topic.charAt(0).toUpperCase() + topic.slice(1);
+                                parameters.topic = topic.charAt(0) + topic.slice(1).toLowerCase();
 
-                            parameters.page = undefined !== parameters.page ? parameters.page : defaultPage;
-                        },
-                        '@.@',
-                        '$main:defaultPage$'
-                    ]
-                },
-                {
-                    service: 'main:forumHandler',
-                    method: 'getTopics',
-                    arguments: ['@topic@'],
-                    returns: 'topics'
-                },
-                {
-                    service: 'main:forumHandler',
-                    method: 'getMessages',
-                    arguments: ['@topics.1@', '@page@'],
-                    returns: 'messages'
-                },
-                {
-                    service: 'main:forumHandler',
-                    method: 'computeForumSize',
-                    arguments: ['@topics@', '@messages@'],
-                    returns: 'size'
-                },
-                {
-                    service: 'danf:manipulation.callbackExecutor',
-                    method: 'execute',
-                    arguments: [
-                        function(parameters, title) {
-                            parameters.count = parameters.messages.length;
-                            parameters.title = title;
-                        },
-                        '@.@',
-                        '$main:title$'
-                    ]
-                }
-            ],
-            increment: [
-                {
-                    service: 'danf:manipulation.callbackExecutor',
-                    method: 'execute',
-                    arguments: [
-                        function(value) {
-                            return value + 1;
-                        },
-                        '@number@'
-                    ],
-                    returns: 'number'
-                },
-            ],
-            executeSubrequest: [
-                {
-                    service: 'main:subrequestExecutor',
-                    method: 'execute',
-                    returns: 'text'
-                },
-            ],
-            processForum: [
-                {
-                    service: 'danf:manipulation.callbackExecutor',
-                    method: 'execute',
-                    arguments: [
-                        function(parameters, defaultPage) {
-                            var topic = parameters.topic;
+                                parameters.page = undefined !== parameters.page ? parameters.page : defaultPage;
+                            },
+                            '@.@',
+                            '$main:defaultPage$'
+                        ]
+                    },
+                    {
+                        order: 1,
+                        service: 'main:forumHandler',
+                        method: 'getTopics',
+                        arguments: ['@topic@'],
+                        scope: 'topics'
+                    },
+                    {
+                        order: 2,
+                        service: 'main:forumHandler',
+                        method: 'getMessages',
+                        arguments: ['@topics.1@', '@page@'],
+                        scope: 'messages'
+                    },
+                    {
+                        order: 3,
+                        service: 'main:forumHandler',
+                        method: 'computeForumSize',
+                        arguments: ['@topics@', '@messages@'],
+                        scope: 'size'
+                    },
+                    {
+                        order: 4,
+                        service: 'danf:manipulation.callbackExecutor',
+                        method: 'execute',
+                        arguments: [
+                            function(parameters, title) {
+                                parameters.count = parameters.messages.length;
+                                parameters.title = title;
+                            },
+                            '@.@',
+                            '$main:title$'
+                        ]
+                    }
+                ]
+            },
+            increment: {
+                operations: [
+                    {
+                        service: 'danf:manipulation.callbackExecutor',
+                        method: 'execute',
+                        arguments: [
+                            function(value) {
+                                return value + 1;
+                            },
+                            '@number@'
+                        ],
+                        scope: 'number'
+                    }
+                ]
+            },
+            executeSubrequest: {
+                operations: [
+                    {
+                        service: 'main:subrequestExecutor',
+                        method: 'execute',
+                        scope: 'text'
+                    }
+                ]
+            },
+            processForum: {
+                operations: [
+                    {
+                        service: 'danf:manipulation.callbackExecutor',
+                        method: 'execute',
+                        arguments: [
+                            function(parameters, defaultPage) {
+                                var topic = parameters.topic;
 
-                            topic = topic.charAt(0).toUpperCase() + topic.slice(1);
-                            parameters.topic = topic.charAt(0) + topic.slice(1).toLowerCase();
+                                topic = topic.charAt(0).toUpperCase() + topic.slice(1);
+                                parameters.topic = topic.charAt(0) + topic.slice(1).toLowerCase();
 
-                            parameters.page = undefined !== parameters.page ? parameters.page : defaultPage;
-                        },
-                        '@.@',
-                        '$main:defaultPage$'
-                    ]
-                }
-            ],
-            testSession: [
-                {
-                    service: 'sessionTester',
-                    method: 'test',
-                    arguments: ['@order@']
-                },
-                {
-                    service: 'sessionTester',
-                    method: 'testAsync',
-                    arguments: ['@order@']
-                },
-                {
-                    service: 'sessionTester',
-                    method: 'testAsync',
-                    arguments: ['@order@', true]
-                }
-            ],
-            testCookie: [
-                {
-                    service: 'cookieTester',
-                    method: 'test'
-                }
-            ]
+                                parameters.page = undefined !== parameters.page ? parameters.page : defaultPage;
+                            },
+                            '@.@',
+                            '$main:defaultPage$'
+                        ]
+                    }
+                ]
+            },
+            testSession: {
+                operations: [
+                    {
+                        order: 0,
+                        service: 'sessionTester',
+                        method: 'test',
+                        arguments: ['@order@']
+                    },
+                    {
+                        order: 1,
+                        service: 'sessionTester',
+                        method: 'testAsync',
+                        arguments: ['@order@']
+                    },
+                    {
+                        order: 2,
+                        service: 'sessionTester',
+                        method: 'testAsync',
+                        arguments: ['@order@', true]
+                    }
+                ]
+            },
+            testCookie: {
+                operations: [
+                    {
+                        service: 'cookieTester',
+                        method: 'test'
+                    }
+                ]
+            },
+            testInjection: {
+                operations: [
+                    {
+                        service: 'danf:manipulation.callbackExecutor',
+                        method: 'execute',
+                        arguments: [
+                            function(a, b) {
+                                return a + b;
+                            },
+                            '@a@',
+                            '@b@'
+                        ],
+                        scope: 'c'
+                    }
+                ]
+            }
         },
         events: {
             request: {
@@ -368,6 +339,15 @@ module.exports = {
                         'X-Custom': 'ok'
                     },
                     methods: ['get', 'post'],
+                    parameters: {
+                        page: {
+                            type: 'number',
+                            default: 1
+                        },
+                        topic: {
+                            type: 'string'
+                        }
+                    },
                     view: {
                         html: {
                             layout: {
@@ -378,10 +358,27 @@ module.exports = {
                             }
                         },
                         json: {
-                            select: ['messages']
+                            value: {
+                                messages: '@messages@'
+                            }
                         }
                     },
-                    sequences: ['getForum']
+                    sequences: [
+                        {
+                            name: 'getForum',
+                            input: {
+                                page: '@page@',
+                                topic: '@topic@'
+                            },
+                            output: {
+                                title: '@title@',
+                                size: '@size@',
+                                count: '@count@',
+                                topics: '@topics@',
+                                messages: '@messages@'
+                            }
+                        }
+                    ]
                 },
                 param: {
                     path: '/param',
@@ -393,10 +390,22 @@ module.exports = {
                     },
                     view: {
                         json: {
-                            select: ['number']
+                            value: {
+                                number: '@number@'
+                            }
                         }
                     },
-                    sequences: ['increment']
+                    sequences: [
+                        {
+                            name: 'increment',
+                            input: {
+                                number: '@number@'
+                            },
+                            output: {
+                                number: '@number@'
+                            }
+                        }
+                    ]
                 },
                 stringParam: {
                     path: '/string-param',
@@ -408,27 +417,48 @@ module.exports = {
                     },
                     view: {
                         json: {
-                            select: ['number']
+                            value: {
+                                number: '@number@'
+                            }
                         }
                     },
-                    sequences: ['increment']
+                    sequences: [
+                        {
+                            name: 'increment',
+                            input: {
+                                number: '@number@'
+                            },
+                            output: {
+                                number: '@number@'
+                            }
+                        }
+                    ]
                 },
                 main: {
                     path: '/main',
                     methods: ['get'],
                     view: {
                         json: {
-                            select: ['text']
+                            value: {
+                                text: '@text@'
+                            }
                         }
                     },
-                    sequences: ['executeSubrequest']
+                    sequences: [
+                        {
+                            name: 'executeSubrequest',
+                            output: {
+                                text: '@text@'
+                            }
+                        }
+                    ]
                 },
                 sub: {
                     path: '/sub',
                     methods: ['get'],
                     view: {
-                        json: {
-                            select: ['text']
+                        text: {
+                            value: 'foo'
                         }
                     }
                 },
@@ -439,12 +469,56 @@ module.exports = {
                 session: {
                     path: '/session/:order',
                     methods: ['get'],
-                    sequences: ['testSession']
+                    sequences: [
+                        {
+                            name: 'testSession',
+                            input: {
+                                order: '@order@'
+                            }
+                        }
+                    ]
                 },
                 cookie: {
                     path: '/cookie',
                     methods: ['get'],
-                    sequences: ['testCookie']
+                    sequences: [
+                        {
+                            name: 'testCookie'
+                        }
+                    ]
+                },
+                injection: {
+                    path: '/injection',
+                    methods: ['get'],
+                    parameters: {
+                        a: {
+                            type: 'string',
+                            required: true
+                        },
+                        b: {
+                            type: 'string',
+                            required: true
+                        }
+                    },
+                    sequences: [
+                        {
+                            name: 'testInjection',
+                            input: {
+                                a: '@a@',
+                                b: '@b@'
+                            },
+                            output: {
+                                c: '@c@'
+                            }
+                        }
+                    ],
+                    view: {
+                        json: {
+                            value: {
+                                c: '@c@'
+                            }
+                        }
+                    }
                 }
             }
         },

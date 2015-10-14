@@ -1,49 +1,44 @@
 'use strict';
 
 module.exports = {
-    process: [
-        {
-            service: 'danf:ajaxApp.historyHandler',
-            method: 'initialize',
-            arguments: []
-        },
-        {
-            service: 'danf:ajaxApp.processor',
-            method: 'process',
-            arguments: ['@event@', '@data@']
-        }
-    ],
-    processAjax: [
-        {
-            service: 'danf:event.notifier.dom',
-            method: 'refreshListeners',
-            arguments: ['@data@']
-        },
-        {
-            service: 'danf:ajaxApp.processor',
-            method: 'process',
-            arguments: ['@event@', '@data@']
-        }
-    ],
-    followAjaxLink: [
-        {
-            service: 'danf:ajaxApp.linksHandler',
-            method: 'follow',
-            arguments: ['@event.currentTarget@']
-        }
-    ],
-    submitForm: [
-        {
-            service: 'danf:ajaxApp.formsHandler',
-            method: 'submit',
-            arguments: ['@event.currentTarget@']
-        }
-    ],
-    navigate: [
-        {
-            service: 'danf:ajaxApp.historyHandler',
-            method: 'navigate',
-            arguments: ['@event.originalEvent.state@']
-        }
-    ]
+    followLink: {
+        operations: [
+            {
+                order: 0,
+                service: 'danf:ajaxApp.linkFollower',
+                method: 'follow',
+                arguments: ['!event.target!'],
+                scope: 'response'
+            },
+            {
+                condition: function(stream) {
+                    return stream.response && stream.response.status < 400;
+                },
+                order: 10,
+                service: 'danf:ajaxApp.linkFollower',
+                method: 'write',
+                arguments: ['@response.text@', '@response.url@', '!event.target!', '!event!']
+            }
+        ]
+    },
+    submitForm: {
+        operations: [
+            {
+                order: 0,
+                service: 'danf:ajaxApp.formSubmitter',
+                method: 'submit',
+                arguments: ['!event.target!'],
+                scope: 'response'
+            },
+            {
+                condition: function(stream) {
+                    return stream.response && stream.response.status < 400;
+                },
+                order: 10,
+                service: 'danf:ajaxApp.formSubmitter',
+                method: 'write',
+                arguments: ['@response.text@', '@response.url@', '!event.target!']
+            }
+        ]
+    }
 };

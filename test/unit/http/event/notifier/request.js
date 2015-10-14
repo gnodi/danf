@@ -7,9 +7,31 @@ var assert = require('assert'),
     danf = require('../../../../../lib/server/app')
 ;
 
-var app = danf(require(__dirname + '/../../../../fixture/http/danf'), '', {listen: false, environment: 'test'});
+var app = danf(require(__dirname + '/../../../../fixture/http/danf'), '', {listen: false, environment: 'test', verbosity: 0});
 
 var expectedContent = '<!DOCTYPE html><html><head><title>3 messages (3/7kB) in the topic &quot;The third world peace is near.&quot;</title></head><body><p>OMG! I can\'t believe it!,Make bombs not peace!,???</p></body></html>';
+
+var requestNotifier = app.servicesContainer.get('danf:http.event.notifier.request');
+requestNotifier.executeRequest = function(options, body) {
+    this.__asyncProcess(function(returnAsync) {
+        request(app)
+            .get(options.path)
+            .end(function(err, res) {
+                if (err) {
+                    if (res) {
+                        console.log(res.text);
+                    } else {
+                        console.log(err);
+                    }
+
+                    throw err;
+                }
+
+                returnAsync(res.text);
+            })
+        ;
+    });
+}
 
 describe('Request notifier', function() {
     it('should be able to process a request', function(done) {
@@ -95,7 +117,7 @@ describe('Request notifier', function() {
                 }
 
 
-                var expected = new RegExp('Bad Request: The expected value for ".*" is a "number"; a "string" given instead.*');
+                var expected = new RegExp('Bad Request: The expected value for ".*" is a "number"; a "string" of value `"two"` given instead.*');
 
                 assert(expected.test(res.text));
 
@@ -109,30 +131,7 @@ describe('Request notifier', function() {
             .get('/main')
             .set('Accept', '*/*')
             .expect(200, JSON.stringify({
-                text: ['a', 'b']
-            }))
-            .end(function(err, res) {
-                if (err) {
-                    if (res) {
-                        console.log(res.text);
-                    } else {
-                        console.log(err);
-                    }
-
-                    throw err;
-                }
-
-                done();
-            })
-        ;
-    })
-
-    it('should be able to process a request processing subrequests', function(done) {
-        request(app)
-            .get('/main')
-            .set('Accept', '*/*')
-            .expect(200, JSON.stringify({
-                text: ['a', 'b']
+                text: {a: 'foo', b: 'foo', c: 'foo'}
             }))
             .end(function(err, res) {
                 if (err) {
@@ -176,6 +175,29 @@ describe('Request notifier', function() {
             .get('/main')
             .set('Accept', 'text/plain')
             .expect(406)
+            .end(function(err, res) {
+                if (err) {
+                    if (res) {
+                        console.log(res.text);
+                    } else {
+                        console.log(err);
+                    }
+
+                    throw err;
+                }
+
+                done();
+            })
+        ;
+    })
+
+    it('should prevent parameters injection', function(done) {
+        request(app)
+            .get('/injection?a=b&b=@a@')
+            .set('Accept', '*/*')
+            .expect(200, JSON.stringify({
+                c: 'b@a@'
+            }))
             .end(function(err, res) {
                 if (err) {
                     if (res) {

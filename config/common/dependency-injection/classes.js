@@ -2,8 +2,8 @@
 
 module.exports = {
     servicesContainer: require('../../../lib/common/dependency-injection/services-container'),
-    contextProvider: require('../../../lib/common/dependency-injection/context-provider'),
     objectProvider: require('../../../lib/common/dependency-injection/object-provider'),
+    registry: require('../../../lib/common/dependency-injection/registry'),
     serviceBuilder: {
         abstractServiceBuilder: require('../../../lib/common/dependency-injection/service-builder/abstract-service-builder'),
         abstract: require('../../../lib/common/dependency-injection/service-builder/abstract'),
@@ -14,7 +14,7 @@ module.exports = {
         factories: require('../../../lib/common/dependency-injection/service-builder/factories'),
         parent: require('../../../lib/common/dependency-injection/service-builder/parent'),
         properties: require('../../../lib/common/dependency-injection/service-builder/properties'),
-        tags: require('../../../lib/common/dependency-injection/service-builder/tags')
+        collections: require('../../../lib/common/dependency-injection/service-builder/collections')
     },
     configuration: {
         sectionProcessor: {

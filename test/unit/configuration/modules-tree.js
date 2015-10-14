@@ -6,7 +6,9 @@ var assert = require('assert'),
     ModulesTree = require('../../../lib/common/configuration/modules-tree')
 ;
 
-var modulesTree = new ModulesTree('app');
+var modulesTree = new ModulesTree();
+
+modulesTree.appName = 'app';
 
 describe('ModulesTree', function() {
     describe('"build" method', function() {

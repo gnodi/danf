@@ -27,7 +27,7 @@ module.exports = {
     },
     sectionProcessor: {
         class: 'danf:configuration.sectionProcessor',
-        tags: ['danf:configuration.sectionProcessor'],
+        collections: ['danf:configuration.sectionProcessor'],
         properties: {
             configurationResolver: '#danf:configuration.configurationResolver#',
             referenceResolver: '#danf:manipulation.referenceResolver#',
@@ -49,19 +49,25 @@ module.exports = {
         }
     },
     configurationInterpreter: {
-        tags: ['danf:configuration.configurationInterpreter'],
+        collections: ['danf:configuration.configurationInterpreter'],
         children: {
+            default: {
+                class: 'danf:manipulation.dataInterpreter.default'
+            },
             flatten: {
                 class: 'danf:manipulation.dataInterpreter.flatten'
             },
-            default: {
-                class: 'danf:manipulation.dataInterpreter.default'
+            format: {
+                class: 'danf:manipulation.dataInterpreter.format'
             },
             required: {
                 class: 'danf:manipulation.dataInterpreter.required'
             },
             type: {
                 class: 'danf:manipulation.dataInterpreter.type'
+            },
+            validate: {
+                class: 'danf:manipulation.dataInterpreter.validate'
             },
             abstractNamespacer: {
                 properties: {
@@ -73,14 +79,14 @@ module.exports = {
                 parent: 'danf:configuration.configurationInterpreter.abstractNamespacer',
                 class: 'danf:configuration.manipulation.dataInterpreter.references'
             },
-            namespaces: {
+            namespace: {
                 parent: 'danf:configuration.configurationInterpreter.abstractNamespacer',
-                class: 'danf:configuration.manipulation.dataInterpreter.namespaces'
+                class: 'danf:configuration.manipulation.dataInterpreter.namespace'
             }
         }
     },
     referenceType: {
-        tags: ['danf:manipulation.referenceType'],
+        collections: ['danf:manipulation.referenceType'],
         class: 'danf:manipulation.referenceType',
         children: {
             config: {

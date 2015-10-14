@@ -7,7 +7,12 @@ var utils = require('../../../lib/common/utils'),
 module.exports = GlobalSectionProcessor;
 
 function GlobalSectionProcessor(name, configurationResolver, referenceResolver) {
-    SectionProcessor.call(this, name, null, configurationResolver, referenceResolver);
+    SectionProcessor.call(this);
+
+    this.name = name;
+    this.contract = null;
+    this.configurationResolver = configurationResolver;
+    this.referenceResolver = referenceResolver;
 
     this.contract = {
     	value: {

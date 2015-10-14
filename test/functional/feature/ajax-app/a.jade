@@ -1,5 +1,5 @@
 div
-    a(class='ajax', href='/') index
+    a(href='/', data-ajax='{}') index
 
     p
         span a-
@@ -8,8 +8,8 @@ div
 
     ul
         li
-            a(class='ajax-autoload', href='/b/1', data-ajax='{"reloadTime":30}') b-1
+            a(href='/b/1', data-ajax='{"autoload":30}') b-1
         li
-            a(class='ajax-autoload', href='/b/2', data-ajax='{"reloadTime":45}') b-2
+            a(href='/b/2', data-ajax='{"autoload":45}') b-2
         li
-            a(class='ajax-autoload', href='/b/3', data-ajax='{"reloadTime":60}') b-3
+            a(href='/b/3', data-ajax='{"autoload":60}') b-3

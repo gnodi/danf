@@ -15,89 +15,89 @@ module.exports = {
         },
         getters: {
             /**
-             * The id of the module.
+             * Id.
              *
-             * @return {string} The id.
+             * @return {string}
              */
             id: 'string',
             /**
-             * The alias of the module.
+             * Alias.
              *
-             * @return {string} The alias.
+             * @return {string}
              */
             alias: 'string',
             /**
-             * The level of the module.
+             * Level.
              *
-             * @return {number} The level.
+             * @return {number}
              */
             level: 'number',
             /**
-             * The contract of the module.
+             * Contract.
              *
-             * @return {object} The id.
+             * @return {object}
              */
             contract: 'object',
             /**
-             * The config of the module.
+             * Config.
              *
-             * @return {object} The config.
+             * @return {object}
              */
             config: 'object',
             /**
-             * The parent of the module.
+             * Parent.
              *
-             * @return {string} The parent.
+             * @return {string}
              */
             parent: 'string',
             /**
-             * The dependencies of the module.
+             * Dependencies.
              *
-             * @return {danf:configuration.module_object} The dependencies.
+             * @return {danf:configuration.module_object}
              */
             dependencies: 'danf:configuration.module_object'
         },
         setters: {
             /**
-             * The id of the module.
+             * Id.
              *
-             * @param {string} id The id.
+             * @param {string}
              */
             id: 'string',
             /**
-             * The alias of the module.
+             * Alias.
              *
-             * @param {string} alias The alias.
+             * @param {string}
              */
             alias: 'string',
             /**
-             * The level of the module.
+             * Level.
              *
-             * @param {number} level The level.
+             * @param {number}
              */
             level: 'number',
             /**
-             * The contract of the module.
+             * Contract.
              *
-             * @param {object} contract The id.
+             * @param {object}
              */
             contract: 'object',
             /**
-             * The config of the module.
+             * Config.
              *
-             * @param {object} config The config.
+             * @param {object}
              */
             config: 'object',
             /**
-             * The parent of the module.
+             * Parent.
              *
-             * @param {string} parent The parent.
+             * @param {string}
              */
             parent: 'string',
             /**
-             * The dependencies of the module.
+             * Dependencies.
              *
-             * @param {danf:configuration.module_object} dependencies The dependencies.
+             * @param {danf:configuration.module_object}
              */
             dependencies: 'danf:configuration.module_object'
         }
@@ -164,11 +164,11 @@ module.exports = {
         },
         getters: {
             /**
-             * The name of the application.
+             * Name of the application.
              *
-             * @return {string} The name.
+             * @return {string}
              */
-            appName: 'string',
+            appName: 'string'
         }
     },
     namespacer: {
@@ -267,29 +267,29 @@ module.exports = {
         },
         getters: {
             /**
-             * The name of the section.
+             * Name of the section.
              *
-             * @return {string} The name.
+             * @return {string}
              */
             name: 'string',
             /**
-             * The contract that the config must respect.
+             * Contract that the config must respect.
              *
-             * @return {object} The contract.
+             * @return {object}
              */
             contract: 'object',
             /**
              * Whether or not the section must be processed in priority.
              *
-             * @return {boolean} True if the section must be processed in priority, false otherwise.
+             * @return {boolean}
              */
             priority: 'boolean'
         },
         setters: {
             /**
-             * The contract that the config must respect.
+             * Contract that the config must respect.
              *
-             * @param {object} The contract.
+             * @param {object}
              */
             contract: 'object'
         }

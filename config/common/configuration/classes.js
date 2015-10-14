@@ -9,7 +9,7 @@ module.exports = {
     manipulation: {
         dataInterpreter: {
             abstractNamespacer: require('../../../lib/common/configuration/manipulation/data-interpreter/abstract-namespacer'),
-            namespaces: require('../../../lib/common/configuration/manipulation/data-interpreter/namespaces'),
+            namespace: require('../../../lib/common/configuration/manipulation/data-interpreter/namespace'),
             references: require('../../../lib/common/configuration/manipulation/data-interpreter/references')
         }
     },

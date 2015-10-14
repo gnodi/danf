@@ -1,63 +1,25 @@
 'use strict';
 
 module.exports = {
-    processor: {
-        class: 'danf:ajaxApp.processor',
-        properties: {
-            ajaxProcessors: '&danf:ajaxApp.readyProcessor&'
-        }
-    },
-    bodyProvider: {
-        class: 'danf:ajaxApp.bodyProvider',
-        properties: {
-            jquery: '#danf:vendor.jquery#'
-        }
-    },
-    readyTrigger: {
-        class: 'danf:ajaxApp.readyTrigger',
-        properties: {
-            eventTrigger: '#danf:event.eventsHandler#'
-        }
-    },
-    historyHandler: {
-        class: 'danf:ajaxApp.historyHandler',
-        properties: {
-            bodyProvider: '#danf:ajaxApp.bodyProvider#',
-            readyTrigger: '#danf:ajaxApp.readyTrigger#'
-        }
-    },
-    linksHandler: {
-        class: 'danf:ajaxApp.linksHandler',
+    linkFollower: {
+        class: 'danf:ajaxApp.linkFollower',
         properties: {
             jquery: '#danf:vendor.jquery#',
-            bodyProvider: '#danf:ajaxApp.bodyProvider#',
-            readyTrigger: '#danf:ajaxApp.readyTrigger#',
-            historyHandler: '#danf:ajaxApp.historyHandler#'
+            bodyProvider: '#danf:manipulation.bodyProvider#',
+            history: '#danf:manipulation.history#',
+            readyProcessor: '#danf:manipulation.readyProcessor#',
+            router: '#danf:http.router#',
+            reloadingSequence: '#danf:event.sequencesContainer[danf:ajaxApp.followLink]#'
         }
     },
-    formsHandler: {
-        class: 'danf:ajaxApp.formsHandler',
+    formSubmitter: {
+        class: 'danf:ajaxApp.formSubmitter',
         properties: {
             jquery: '#danf:vendor.jquery#',
-            bodyProvider: '#danf:ajaxApp.bodyProvider#',
-            readyTrigger: '#danf:ajaxApp.readyTrigger#',
-            historyHandler: '#danf:ajaxApp.historyHandler#',
-            eventTrigger: '#danf:event.eventsHandler#'
-        }
-    },
-    readyProcessor: {
-        tags: ['danf:ajaxApp.readyProcessor'],
-        properties: {
-            jquery: '#danf:vendor.jquery#',
-            eventTrigger: '#danf:event.eventsHandler#'
-        },
-        children: {
-            links: {
-                class: 'danf:ajaxApp.readyProcessor.links',
-                properties: {
-                    linksHandler: '#danf:ajaxApp.linksHandler#'
-                }
-            }
+            bodyProvider: '#danf:manipulation.bodyProvider#',
+            history: '#danf:manipulation.history#',
+            readyProcessor: '#danf:manipulation.readyProcessor#',
+            router: '#danf:http.router#'
         }
     }
 };

@@ -4,18 +4,31 @@ require('../../../../lib/common/init');
 
 var assert = require('assert'),
     danf = require('../../../../lib/server/app'),
+    ReferenceType = require('../../../../lib/common/manipulation/reference-type'),
+    ReferenceResolver = require('../../../../lib/common/manipulation/reference-resolver'),
     Json = require('../../../../lib/server/rendering/format-renderer/json')
 ;
 
 var app = danf(require(__dirname + '/../../../fixture/rendering/danf'), '', {listen: false, environment: 'test'}),
+    referenceType = new ReferenceType(),
+    referenceResolver = new ReferenceResolver(),
     json = new Json(),
     response = app.response
 ;
 
+referenceType.name = '@';
+referenceType.delimiter = '@';
+referenceResolver.addReferenceType(referenceType);
+json.referenceResolver = referenceResolver;
+response.req = app.request;
+
 response.req = app.request;
 
 var config = {
-        select: ['topic', 'messages']
+        value: {
+            topic: '@topic@',
+            messages: '@messages@'
+        }
     },
     expected = {
         topic: 'foo',

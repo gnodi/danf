@@ -24,15 +24,23 @@ module.exports = {
             dom: {
                 helloWorld: {
                     event: 'ready',
-                    sequences: ['displayHelloWorld']
+                    sequences: [
+                        {
+                            name: 'displayHelloWorld'
+                        }
+                    ]
                 }
             }
         },
         sequences: {
-            displayHelloWorld: [{
-                service: 'displayer',
-                method: 'display'
-            }]
+            displayHelloWorld: {
+                operations: [
+                    {
+                        service: 'displayer',
+                        method: 'display'
+                    }
+                ]
+            }
         }
     }
 };

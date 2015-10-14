@@ -61,23 +61,29 @@ module.exports = {
                 arguments: ['boolean/reset']
             },
             /**
+             * Finalize the building of the services.
+             */
+            finalize: {
+                arguments: []
+            },
+            /**
              * Get the instantiation of a service (lazy instantiation).
              *
              * @param {string} id The id of the service.
-             * @return {object} The service object.
+             * @return {object|function} The service object.
              */
             get: {
                 arguments: ['string/id'],
-                returns: 'object'
+                returns: 'object|function'
             },
             /**
              * Set an already instantiated service.
              *
              * @param {string} id The id of the service.
-             * @param {object} service The service object.
+             * @param {object|function} service The service object.
              */
             set: {
-                arguments: ['string/id', 'object/service']
+                arguments: ['string/id', 'object|function/service']
             },
             /**
              * Unset an instantiated service from the services container.
@@ -116,23 +122,23 @@ module.exports = {
         },
         getters: {
             /**
-             * The config.
+             * Config.
              *
-             * @return {object} The config.
+             * @return {object}
              */
             config: 'object',
             /**
-             * The config handled parameters.
+             * Config handled parameters.
              *
-             * @return {object} The parameters.
+             * @return {object}
              */
             handledParameters: 'object'
         },
         setters: {
             /**
-             * The config.
+             * Config.
              *
-             * @param {object} The config.
+             * @param {object}
              */
             config: 'object'
         }
@@ -173,6 +179,17 @@ module.exports = {
                 returns: 'object|null'
             },
             /**
+             * Finalize a service.
+             *
+             * @param {object} instance The service instance.
+             * @param {object} service The service definition.
+             * @return {object} The handled instance.
+             */
+            finalize: {
+                arguments: ['object|null/instance', 'object/definition'],
+                returns: 'object'
+            },
+            /**
              * Update a service.
              *
              * @param {object} instance The service instance.
@@ -186,23 +203,23 @@ module.exports = {
         },
         getters: {
             /**
-             * The contract its handled parameters should respect.
+             * Contract its handled parameters should respect.
              *
-             * @return {object} The contract.
+             * @return {object}
              */
             contract: 'object',
             /**
-             * The define order of execution.
+             * Define order of execution.
              *
-             * @return {number|undefined} The order.
+             * @return {number|null}
              */
-            defineOrder: 'number|undefined',
+            defineOrder: 'number|null',
             /**
-             * The instantiate order of execution.
+             * Instantiate order of execution.
              *
-             * @return {number|undefined} The order.
+             * @return {number|null}
              */
-            instantiateOrder: 'number|undefined'
+            instantiateOrder: 'number|null'
         }
 
     },
@@ -211,49 +228,21 @@ module.exports = {
             /**
              * Provide an object.
              *
-             * @param {mixed} argument1...N Some optional arguments.
-             * @return {object} An object.
+             * @param {object} properties The properties to inject to the provided object.
+             * @return {object} The object.
              */
             provide: {
-                arguments: ['mixed.../argument1...N'],
+                arguments: ['object|null/properties'],
                 returns: 'object'
             }
         },
         getters: {
             /**
-             * The object provided type.
+             * Object provided type.
              *
-             * @return {string} The type.
+             * @return {string}
              */
             providedType: 'string'
-        }
-    },
-    contextProvider: {
-        extends: 'danf:dependencyInjection.provider',
-        methods: {
-            /**
-             * Set the context.
-             *
-             * @return {mixed} The context.
-             */
-            set: {
-                arguments: ['mixed/context']
-            },
-            /**
-             * Unset the context.
-             */
-            unset: {}
-        }
-    },
-    objectProvider: {
-        extends: 'danf:dependencyInjection.provider',
-        setters: {
-            /**
-             * The class of the provided objects.
-             *
-             * @param function The class.
-             */
-            class: 'function'
         }
     }
 };

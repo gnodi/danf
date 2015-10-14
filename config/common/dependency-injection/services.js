@@ -18,7 +18,7 @@ module.exports = {
         }
     },
     referenceType: {
-        tags: ['danf:manipulation.referenceType'],
+        collections: ['danf:manipulation.referenceType'],
         class: 'danf:manipulation.referenceType',
         children: {
             service: {
@@ -36,7 +36,7 @@ module.exports = {
                     allowsConcatenation: false
                 }
             },
-            serviceTag: {
+            serviceCollection: {
                 properties: {
                     name: '&',
                     delimiter: '&',
@@ -45,18 +45,19 @@ module.exports = {
             }
         }
     },
-    contextProvider: {
-        class: 'danf:dependencyInjection.contextProvider',
-        properties: {
-            interfacer: '#danf:object.interfacer#'
-        },
-        abstract: true
-    },
     objectProvider: {
         class: 'danf:dependencyInjection.objectProvider',
         properties: {
             interfacer: '#danf:object.interfacer#',
-            classesRegistry: '#danf:object.classesRegistry#'
+            classesContainer: '#danf:object.classesContainer#',
+            debug: '%danf:context.debug%'
+        },
+        abstract: true
+    },
+    registry: {
+        class: 'danf:dependencyInjection.registry',
+        properties: {
+            interfacer: '#danf:object.interfacer#'
         },
         abstract: true
     }

@@ -1,6 +1,52 @@
 'use strict';
 
 module.exports = {
+    escaper: {
+        methods: {
+            /**
+             * Escape strings.
+             *
+             * @param {mixed} source The source to look for the strings.
+             * @param {string_array} strings The strings.
+             *
+             * @return {mixed} The escaped source.
+             */
+            escape: {
+                arguments: [
+                    'mixed/source',
+                    'string_array/strings'
+                ],
+                returns: 'mixed'
+            },
+            /**
+             * Unescape strings.
+             *
+             * @param {mixed} source The source to look for the strings.
+             * @param {string_array} strings The strings.
+             *
+             * @return {string} The unescaped source.
+             */
+            unescape: {
+                arguments: [
+                    'mixed/source',
+                    'string_array/strings'
+                ],
+                returns: 'mixed'
+            }
+        }
+    },
+    uniqueIdGenerator: {
+        methods: {
+            /**
+             * Generate a unique id.
+             *
+             * @return {string} The unique id.
+             */
+            generate: {
+                returns: 'string'
+            }
+        }
+    },
     referenceResolver: {
         methods: {
             /**
@@ -8,14 +54,14 @@ module.exports = {
              *
              * @param {string} source The string where the reference occurred.
              * @param {string} type The type of the reference.
-             * @param {string|undefined} inText An optionnal text specifying where the reference is declared (errors).
+             * @param {string|null} inText An optionnal text specifying where the reference is declared (errors).
              * @return {string_array|null} The existing reference or null.
              */
             extract: {
                 arguments: [
                     'string/source',
                     'string/type',
-                    'string|undefined/inText'
+                    'string|null/inText'
                 ],
                 returns: 'string_array|null'
             },
@@ -89,7 +135,7 @@ module.exports = {
              * @param {string} source The string where the reference occurred.
              * @param {string} type The type of the reference.
              * @param {mixed} context The context allowing to resolve the reference.
-             * @param {string|undefined} inText An optionnal text specifying where the reference is declared (errors).
+             * @param {string|null} inText An optionnal text specifying where the reference is declared (errors).
              * @return {mixed} The resolved references.
              */
             resolve: {
@@ -97,7 +143,7 @@ module.exports = {
                     'string/source',
                     'string/type',
                     'mixed/context',
-                    'string|undefined/inText'
+                    'string|null/inText'
                 ],
                 returns: 'mixed'
             }
@@ -106,38 +152,38 @@ module.exports = {
     referenceType: {
         getters: {
             /**
-             * The unique name of the type.
+             * Identifier name.
              *
-             * @return {string} The name.
+             * @return {string}
              */
             name: 'string',
             /**
-             * The delimiter for the reference.
+             * Delimiter.
              *
-             * @return {string} The delimiter.
+             * @return {string}
              */
             delimiter: 'string',
             /**
-             * The size of the reference.
+             * Size.
              *
              * if size = 1 & delimiter = % => %ref%
              * if size = 4 & delimiter = > => >ref>is>like>that>
              *
-             * @return {number} The size.
+             * @return {number}
              */
             size: 'number',
             /**
-             * The indexes of the reference which should be namespaced when asked.
+             * Indexes of the reference which should be namespaced when asked.
              *
-             * if size = 4 & delimiter = > & namespaces = [0, 2] => >prefix:ref>is>prefix:like>that>
+             * if size = 4 & delimiter = > & namespace = [0, 2] => >prefix:ref>is>prefix:like>that>
              *
-             * @return {number_array} The namespaced indexes.
+             * @return {number_array}
              */
-            namespaces: 'number_array',
+            namespace: 'number_array',
             /**
              * Whether or not the type allow the concatenation.
              *
-             * @return {boolean} True if the concatenation is allowed, false otherwise.
+             * @return {boolean}
              */
             allowsConcatenation: 'boolean'
         }
@@ -153,7 +199,7 @@ module.exports = {
              * @param {object} erase Should erase data1 with data2 if conflict?
              * @param {string} namespace The namespace of the data.
              * @param {object|null} parameters The additional parameters used for the resolving.
-             * @param {boolean} formatsContract Whether or not to format the contract.
+             * @param {boolean} isRoot Whether or not this is the root merging.
              * @return {mixed} The merged data.
              */
             merge: {
@@ -164,7 +210,7 @@ module.exports = {
                     'boolean|undefined/erase',
                     'string|undefined/namespace',
                     'object|undefined/parameters',
-                    'boolean|undefined/formatsContract'
+                    'boolean|undefined/isRoot'
                 ],
                 returns: 'mixed'
             },
@@ -175,7 +221,7 @@ module.exports = {
              * @param {object} contract The contract the data should respect.
              * @param {string} namespace The optional namespace.
              * @param {object|null} parameters The additional parameters used for the resolving.
-             * @param {boolean} formatsContract Whether or not to format the contract.
+             * @param {boolean} isRoot Whether or not this is the root resolving.
              * @return {mixed} The resolved data.
              */
             resolve: {
@@ -184,7 +230,7 @@ module.exports = {
                     'object/contract',
                     'string|undefined/namespace',
                     'object|undefined/parameters',
-                    'boolean|undefined/formatsContract'
+                    'boolean|undefined/isRoot'
                 ],
                 returns: 'mixed'
             }
@@ -247,130 +293,74 @@ module.exports = {
         },
         getters: {
             /**
-             * The order of execution.
+             * Order of execution.
              *
-             * @return {number} The order.
+             * @return {number}
              */
             order: 'number'
         },
         setters: {
             /**
-             * The data resolver.
+             * Data resolver.
              *
-             * @param {danf:manipulation.dataResolver} The data resolver.
+             * @param {danf:manipulation.dataResolver}
              */
             dataResolver: 'danf:manipulation.dataResolver'
         }
     },
-    sequencer: {
+    map: {
         methods: {
             /**
-             * Add a callback in the sequence to proceed.
+             * Set an item.
              *
-             * @param {danf:manipulation.sequencer|function} callback The callback or sub-sequencer.
-             * @param {string} scope The optional scope of the stream for the callback.
+             * @param {string|number} key The key.
+             * @param {mixed} value The value.
              */
-            pipe: {
-                arguments: ['danf:manipulation.sequencer|function/callback', 'string|undefined/scope']
+            set: {
+                arguments: ['string|number/key', 'mixed/value']
             },
             /**
-             * Add a callback to proceed on each call to set the global context for each stream.
+             * Unset an item.
              *
-             * @param {function} callback The callback.
+             * @param {string|number} key The key.
              */
-            addGlobalContext: {
-                arguments: ['function/callback']
+            unset: {
+                arguments: ['string|number/key']
             },
             /**
-             * Start to proceed a new stream.
-             *
-             * @param {mixed} stream The stream.
-             * @param {function|undefined|null} callback The callback to call after the processing of the stream.
-             * @param {function|undefined|null} context A callback to proceed on each call to set the context for this particular stream.
+             * Clear all items.
              */
-            start: {
-                arguments: ['mixed/stream', 'function|undefined|null/callback', 'function|undefined|null/context']
+            clear: {
+                arguments: []
             },
             /**
-             * Ask the sequencer to wait for an asynchrone task to finish.
+             * Whether or not a key exists.
              *
-             * @return {number} The identifier of the task.
+             * @param {string|number} key The key.
+             * @return {boolean} True if the key exists, false otherwise.
              */
-            wait: {
-                returns: 'number'
+            has: {
+                arguments: ['string|number/key'],
+                returns: 'boolean'
             },
             /**
-             * Tell the sequencer that an asynchrone task has ended.
+             * Get an item.
              *
-             * @param {number} task The identifier of the task.
-             * @param {function|undefined} callback The optional callback to call after the end of the task allowing to impact the stream.
+             * @param {string|number} key The key.
+             * @return {mixed} The value.
+             * @throw {error} If the key does not exist.
              */
-            end: {
-                arguments: ['number/task', 'function|undefined/callback']
-            }
-        },
-        getters: {
-            /**
-             * The sequencer stack.
-             *
-             * @return {danf:manipulation.sequencerStack} The sequencer stack.
-             */
-            sequencerStack: 'danf:manipulation.sequencerStack',
-            /**
-             * The stream context.
-             *
-             * @return {object_array} The stream context.
-             */
-            streamContext: 'object_array',
-            /**
-             * The global context.
-             *
-             * @return {function_array} The global context.
-             */
-            globalContext: 'function_array'
-        },
-        setters: {
-            /**
-             * The sequencer stack.
-             *
-             * @param {danf:manipulation.sequencerStack} The sequencer stack.
-             */
-            sequencerStack: 'danf:manipulation.sequencerStack'
-        }
-    },
-    sequencerStack: {
-        methods: {
-            /**
-             * Add a sequencer on the stack.
-             *
-             * @param {danf:manipulation.sequencer} sequencer The sequencer.
-             */
-            push: {
-                arguments: ['danf:manipulation.sequencer/sequencer']
+            get: {
+                arguments: ['string|number/key'],
+                returns: 'mixed'
             },
             /**
-             * Free a sequencer in the stack.
+             * Get all the items.
              *
-             * @param {danf:manipulation.sequencer} sequencer The sequencer.
+             * @return {object} The items.
              */
-            free: {
-                arguments: ['danf:manipulation.sequencer/sequencer']
-            },
-            /**
-             * Retrieve the list of global contexts.
-             *
-             * @return {function_array_array} The global contexts.
-             */
-            retrieveGlobalContexts: {
-                returns: 'array'
-            },
-            /**
-             * Retrieve the list of stream contexts.
-             *
-             * @return {function_array} The stream contexts.
-             */
-            retrieveStreamContexts: {
-                returns: 'array'
+            getAll: {
+                returns: 'object'
             }
         }
     },
@@ -388,10 +378,10 @@ module.exports = {
             /**
              * Register a list of items.
              *
-             * @param {mixed_object} items The list of items.
+             * @param {object} items The list of items.
              */
             registerSet: {
-                arguments: ['mixed_object/items']
+                arguments: ['object/items']
             },
             /**
              * Deregister an item.
@@ -408,7 +398,7 @@ module.exports = {
                 arguments: []
             },
             /**
-             * Whether or not the item has been registered.
+             * Whether or not an item has been registered.
              *
              * @param {string} name The identifier name of the item.
              * @return {boolean} True if the item has been registered, false otherwise.
@@ -470,13 +460,13 @@ module.exports = {
             /**
              * Handle a change coming from a registry.
              *
-             * @param {mixed_object} items The items.
+             * @param {object} items The items.
              * @param {boolean} reset Whether or not it is a reset.
              * @param {string} name The name of the registry.
              */
             handleRegistryChange: {
                 arguments: [
-                    'mixed_object/items',
+                    'object/items',
                     'boolean/reset',
                     'string/name'
                 ]
@@ -489,24 +479,594 @@ module.exports = {
              * Execute a callback.
              *
              * @param {function} callback The callback.
-             * @param {mixed} paramN The N-th argument to pass to the callback.
+             * @param {mixed} argN The N-th argument to pass to the callback.
              * @return {mixed} The return of the callback.
              */
             execute: {
-                arguments: [
-                    'function/callback',
-                    'arg0/mixed',
-                    'arg1/mixed',
-                    'arg2/mixed',
-                    'arg3/mixed',
-                    'arg4/mixed',
-                    'arg5/mixed',
-                    'arg6/mixed',
-                    'arg7/mixed',
-                    'arg8/mixed',
-                    'arg9/mixed'
-                ]
+                arguments: ['function/callback', 'mixed.../argN']
             }
+        }
+    },
+    flow: {
+        methods: {
+            /**
+             * Wait for a task to execute.
+             *
+             * @return {number} The id of the task.
+             */
+            wait: {
+                arguments: [],
+                returns: 'number'
+            },
+            /**
+             * End a task.
+             *
+             * @param {number} task The id of the task.
+             * @param {mixed|undefined} returnedValue The optional value returned by the task.
+             */
+            end: {
+                arguments: ['number/task', 'mixed|undefined/returnedValue']
+            },
+            /**
+             * Add a tributary and set the context as this tributary.
+             *
+             * @param {string|null} scope The optional scope.
+             * @param {function|null} format The optional function allowing to format the result.
+             * @param {function|null} format The optional final callback.
+             * @return {number} The id of the tributary.
+             */
+            addTributary: {
+                arguments: ['string|null/scope', 'function|null/format', 'function|null/callback'],
+                returns: 'number'
+            },
+            /**
+             * Set an already added tributary as context.
+             *
+             * @param {number} tributary The id of the tributary.
+             */
+            setTributary: {
+                arguments: ['number/tributary']
+            },
+            /**
+             * Merge tributary and set the context as its parent if the current
+             * one was the merged tributary.
+             *
+             * @param {number} tributary The id of the tributary.
+             */
+            mergeTributary: {
+                arguments: ['number/tributary']
+            },
+            /**
+             * Retrieve a tributary embedded level.
+             *
+             * @param {number} tributary The id of the tributary.
+             * @return {number} The embedded level.
+             */
+            getTributaryLevel: {
+                arguments: ['number/tributary'],
+                returns: 'number'
+            }
+        },
+        getters: {
+            /**
+             * Unique identifier.
+             *
+             * @return {string}
+             */
+            id: 'string',
+            /**
+             * Context of execution.
+             *
+             * @return {danf:manipulation.map}
+             */
+            context: 'danf:manipulation.map',
+            /**
+             * Stream.
+             *
+             * @return {object}
+             */
+            stream: 'object',
+            /**
+             * Current stream.
+             *
+             * @return {object}
+             */
+            currentStream: 'object',
+            /**
+             * Parent stream of the current one.
+             *
+             * @return {object}
+             */
+            parentStream: 'object',
+            /**
+             * Current tributary.
+             *
+             * @return {string}
+             */
+            currentTributary: 'number',
+            /**
+             * Tributary count.
+             *
+             * @return {string}
+             */
+            tributaryCount: 'number',
+            /**
+             * Embedded level of the current tributary.
+             *
+             * @return {string}
+             */
+            currentLevel: 'number'
+        },
+        setters: {
+            /**
+             * Current stream.
+             *
+             * @param {object}
+             */
+            currentStream: 'object'
+        }
+    },
+    flowDriver: {
+        methods: {
+            /**
+             * Proxy to async collections method each.
+             * (https://github.com/caolan/async#each)
+             */
+            each: {
+                arguments: ['array/arr', 'function/iterator', 'function/callback']
+            },
+            /**
+             * Proxy to async collections method eachSeries.
+             * (https://github.com/caolan/async#eachSeries)
+             */
+            eachSeries: {
+                arguments: ['array/arr', 'function/iterator', 'function/callback']
+            },
+            /**
+             * Proxy to async collections method eachLimit.
+             * (https://github.com/caolan/async#eachLimit)
+             */
+            eachLimit: {
+                arguments: ['array/arr', 'number/limit', 'function/iterator', 'function/callback']
+            },
+            /**
+             * Proxy to async collections method each.
+             * (https://github.com/caolan/forEachOf#each)
+             */
+            forEachOf: {
+                arguments: ['array|object/arr', 'function/iterator', 'function/callback']
+            },
+            /**
+             * Proxy to async collections method eachSeries.
+             * (https://github.com/caolan/async#forEachOfSeries)
+             */
+            forEachOfSeries: {
+                arguments: ['array|object/arr', 'function/iterator', 'function/callback']
+            },
+            /**
+             * Proxy to async collections method forEachOfLimit.
+             * (https://github.com/caolan/async#eachLimit)
+             */
+            forEachOfLimit: {
+                arguments: ['array|object/arr', 'number/limit', 'function/iterator', 'function/callback']
+            },
+            /**
+             * Proxy to async collections method map.
+             * (https://github.com/caolan/async#map)
+             */
+            map: {
+                arguments: ['array/arr', 'function/iterator', 'function/callback']
+            },
+            /**
+             * Proxy to async collections method mapSeries.
+             * (https://github.com/caolan/async#mapSeries)
+             */
+            mapSeries: {
+                arguments: ['array/arr', 'function/iterator', 'function/callback']
+            },
+            /**
+             * Proxy to async collections method mapLimit.
+             * (https://github.com/caolan/async#mapLimit)
+             */
+            mapLimit: {
+                arguments: ['array/arr', 'number/limit', 'function/iterator', 'function/callback']
+            },
+            /**
+             * Proxy to async collections method filter.
+             * (https://github.com/caolan/async#filter)
+             */
+            filter: {
+                arguments: ['array/arr', 'function/iterator', 'function/callback']
+            },
+            /**
+             * Proxy to async collections method filterSeries.
+             * (https://github.com/caolan/async#filterSeries)
+             */
+            filterSeries: {
+                arguments: ['array/arr', 'function/iterator', 'function/callback']
+            },
+            /**
+             * Proxy to async collections method reject.
+             * (https://github.com/caolan/async#reject)
+             */
+            reject: {
+                arguments: ['array/arr', 'function/iterator', 'function/callback']
+            },
+            /**
+             * Proxy to async collections method rejectSeries.
+             * (https://github.com/caolan/async#rejectSeries)
+             */
+            rejectSeries: {
+                arguments: ['array/arr', 'function/iterator', 'function/callback']
+            },
+            /**
+             * Proxy to async collections method reduce.
+             * (https://github.com/caolan/async#reduce)
+             */
+            reduce: {
+                arguments: ['array/arr', 'mixed/memo', 'function/iterator', 'function/callback']
+            },
+            /**
+             * Proxy to async collections method reduceRight.
+             * (https://github.com/caolan/async#reduceRight)
+             */
+            reduceRight: {
+                arguments: ['array/arr', 'mixed/memo', 'function/iterator', 'function/callback']
+            },
+            /**
+             * Proxy to async collections method detect.
+             * (https://github.com/caolan/async#detect)
+             */
+            detect: {
+                arguments: ['array/arr', 'function/iterator', 'function/callback']
+            },
+            /**
+             * Proxy to async collections method detectSeries.
+             * (https://github.com/caolan/async#detectSeries)
+             */
+            detectSeries: {
+                arguments: ['array/arr', 'function/iterator', 'function/callback']
+            },
+            /**
+             * Proxy to async collections method some.
+             * (https://github.com/caolan/async#some)
+             */
+            some: {
+                arguments: ['array/arr', 'function/iterator', 'function/callback']
+            },
+            /**
+             * Proxy to async collections method every.
+             * (https://github.com/caolan/async#every)
+             */
+            every: {
+                arguments: ['array/arr', 'function/iterator', 'function/callback']
+            },
+            /**
+             * Proxy to async collections method concat.
+             * (https://github.com/caolan/async#concat)
+             */
+            concat: {
+                arguments: ['array/arr', 'function/iterator', 'function/callback']
+            },
+            /**
+             * Proxy to async collections method concatSeries.
+             * (https://github.com/caolan/async#concatSeries)
+             */
+            concatSeries: {
+                arguments: ['array/arr', 'function/iterator', 'function/callback']
+            },
+            /**
+             * Proxy to async control flow method series.
+             * (https://github.com/caolan/async#series)
+             */
+            series: {
+                arguments: ['function_array|function_object/tasks', 'function|null/callback']
+            },
+            /**
+             * Proxy to async control flow method parallel.
+             * (https://github.com/caolan/async#parallel)
+             */
+            parallel: {
+                arguments: ['function_array|function_object/tasks', 'function|null/callback']
+            },
+            /**
+             * Proxy to async control flow method parallelLimit.
+             * (https://github.com/caolan/async#parallelLimit)
+             */
+            parallelLimit: {
+                arguments: ['function_array|function_object/tasks', 'number/limit', 'function|null/callback']
+            },
+            /**
+             * Proxy to async control flow method whilst.
+             * (https://github.com/caolan/async#whilst)
+             */
+            whilst: {
+                arguments: ['function/test', 'function/fn', 'function/callback']
+            },
+            /**
+             * Proxy to async control flow method doWhilst.
+             * (https://github.com/caolan/async#doWhilst)
+             */
+            doWhilst: {
+                arguments: ['function/fn', 'function/test', 'function/callback']
+            },
+            /**
+             * Proxy to async control flow method until.
+             * (https://github.com/caolan/async#until)
+             */
+            until: {
+                arguments: ['function/test', 'function/fn', 'function/callback']
+            },
+            /**
+             * Proxy to async control flow method doUntil.
+             * (https://github.com/caolan/async#doUntil)
+             */
+            doUntil: {
+                arguments: ['function/fn', 'function/test', 'function/callback']
+            },
+            /**
+             * Proxy to async control flow method forever.
+             * (https://github.com/caolan/async#forever)
+             */
+            forever: {
+                arguments: ['function/fn', 'function/errback']
+            },
+            /**
+             * Proxy to async control flow method compose.
+             * (https://github.com/caolan/async#compose)
+             */
+            compose: {
+                arguments: ['function.../fnN'],
+                returns: 'function'
+            },
+            /**
+             * Proxy to async control flow method seq.
+             * (https://github.com/caolan/async#seq)
+             */
+            seq: {
+                arguments: ['function.../fnN'],
+                returns: 'function'
+            },
+            /**
+             * Proxy to async control flow method applyEach.
+             * (https://github.com/caolan/async#applyEach)
+             */
+            applyEach: {
+                arguments: ['function_array|function_object/fns', 'mixed...|function/args|callback', 'function/callback']
+            },
+            /**
+             * Proxy to async control flow method applyEachSeries.
+             * (https://github.com/caolan/async#applyEachSeries)
+             */
+            applyEachSeries: {
+                arguments: ['function_array|function_object/fns', 'mixed...|function/args|callback', 'function/callback']
+            },
+            /**
+             * Proxy to async control flow method queue.
+             * (https://github.com/caolan/async#queue)
+             */
+            queue: {
+                arguments: ['function/worker', 'concurrency/number'],
+                returns: 'object'
+            },
+            /**
+             * Proxy to async control flow method priorityQueue.
+             * (https://github.com/caolan/async#priorityQueue)
+             */
+            priorityQueue: {
+                arguments: ['function/worker', 'concurrency/number']
+            },
+            /**
+             * Proxy to async control flow method cargo.
+             * (https://github.com/caolan/async#cargo)
+             */
+            cargo: {
+                arguments: ['function/worker', 'concurrency|null/payload'],
+                returns: 'object'
+            },
+            /**
+             * Proxy to async control flow method auto.
+             * (https://github.com/caolan/async#auto)
+             */
+            auto: {
+                arguments: ['function_array|function_object/tasks', 'function|null/callback']
+            },
+            /**
+             * Proxy to async control flow method retry.
+             * (https://github.com/caolan/async#retry)
+             */
+            retry: {
+                arguments: ['number|function/times|task', 'function|null/task|callback', 'function|null/callback']
+            },
+            /**
+             * Proxy to async control flow method iterator.
+             * (https://github.com/caolan/async#iterator)
+             */
+            iterator: {
+                arguments: ['function_array|function_object/tasks'],
+                returns: 'function'
+            },
+            /**
+             * Proxy to async control flow method apply.
+             * (https://github.com/caolan/async#apply)
+             */
+            apply: {
+                arguments: ['function/fn', 'mixed...|null/args'],
+                returns: 'function'
+            },
+            /**
+             * Proxy to async control flow method nextTick.
+             * (https://github.com/caolan/async#nextTick)
+             */
+            nextTick: {
+                arguments: ['function/callback']
+            },
+            /**
+             * Proxy to async control flow method nextTick.
+             * (https://github.com/caolan/async#nextTick)
+             */
+            setImmediate: {
+                arguments: ['function/callback']
+            },
+            /**
+             * Proxy to async control flow method times.
+             * (https://github.com/caolan/async#times)
+             */
+            times: {
+                arguments: ['number/n', 'function/callback']
+            },
+            /**
+             * Proxy to async control flow method timesSeries.
+             * (https://github.com/caolan/async#timesSeries)
+             */
+            timesSeries: {
+                arguments: ['number/n', 'function/callback']
+            },
+            /**
+             * Proxy to async utils method memoize.
+             * (https://github.com/caolan/async#memoize)
+             */
+            memoize: {
+                arguments: ['function/fn', 'function|null/hasher'],
+                returns: 'function'
+            },
+            /**
+             * Proxy to async utils method unmemoize.
+             * (https://github.com/caolan/async#unmemoize)
+             */
+            unmemoize: {
+                arguments: ['function/fn', 'function|null/hasher']
+            },
+            /**
+             * Proxy to async utils method log.
+             * (https://github.com/caolan/async#log)
+             */
+            log: {
+                arguments: ['function/fn', 'mixed...|null/args']
+            },
+            /**
+             * Proxy to async utils method dir.
+             * (https://github.com/caolan/async#dir)
+             */
+            dir: {
+                arguments: ['function/fn', 'mixed...|null/args']
+            }
+        }
+    },
+    asynchronousCallback: {
+        methods: {
+            /**
+             * Adapt asynchronous callback execution.
+             *
+             * @param {function} callback The callback.
+             * @param {error} error The optional error.
+             * @param {mixed} result The result.
+             */
+            execute: {
+                arguments: ['function/callback', 'error|null/error', 'mixed/result']
+            },
+            /**
+             * Adapt asynchronous callback.
+             *
+             * @param {function} callback The callback.
+             * @return {function} The adapted callback.
+             */
+            wrap: {
+                arguments: ['function/callback'],
+                returns: 'function'
+            }
+        }
+    },
+    asynchronousInput: {
+        methods: {
+            /**
+             * Format the input of a collection.
+             *
+             * @param {mixed} input The input.
+             * @return {mixed} The formatted input.
+             */
+            format: {
+                arguments: ['mixed/input'],
+                returns: 'mixed'
+            }
+        }
+    },
+    asynchronousIterator: {
+        methods: {
+            /**
+             * Adapt asynchronous iterator.
+             *
+             * @param {function} iterator The iterator.
+             * @return {function} The adapted iterator.
+             */
+            wrap: {
+                arguments: ['function/iterator'],
+                returns: 'function'
+            }
+        }
+    },
+    asynchronousCollection: {
+        methods: {
+            /**
+             * Format the input of a collection.
+             *
+             * @param {mixed} input The input.
+             * @return {mixed} The formatted input.
+             */
+            formatInput: {
+                arguments: ['mixed/input'],
+                returns: 'mixed'
+            },
+            /**
+             * Adapt asynchronous iterator.
+             *
+             * @param {function} iterator The iterator.
+             * @return {function} The adapted iterator.
+             */
+            wrapIterator: {
+                arguments: ['function/iterator'],
+                returns: 'function'
+            },
+            /**
+             * Adapt asynchronous callback execution.
+             *
+             * @param {function} callback The callback.
+             * @param {error} error The optional error.
+             * @param {mixed} result The result.
+             */
+            executeIteratorCallback: {
+                arguments: ['function/callback', 'error|null/error', 'mixed/result']
+            },
+            /**
+             * Adapt asynchronous callback.
+             *
+             * @param {function} callback The callback.
+             * @return {function} The adapted callback.
+             */
+            wrapCallback: {
+                arguments: ['function/callback'],
+                returns: 'function'
+            }
+        },
+        getters: {
+            /**
+             * Async method name.
+             *
+             * @return {string}
+             */
+            method: 'string',
+            /**
+             * Optional alias name.
+             *
+             * @return {string|null}
+             */
+            alias: 'string|null',
+            /**
+             * Parameters.
+             *
+             * @return {object}
+             */
+            parameters: 'object'
         }
     }
 };

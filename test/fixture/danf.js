@@ -90,7 +90,8 @@ module.exports = {
             trigger: {
                 class: 'trigger',
                 properties: {
-                    eventsHandler: '#danf:event.eventsHandler#'
+                    startEvent: '#danf:event.eventsContainer[event][start]#',
+                    startDependencyEvent: '#danf:event.eventsContainer[event][dep1:start]#'
                 }
             },
             computer: {
@@ -116,7 +117,7 @@ module.exports = {
                     storages: '#storage.@storages@#',
                     adapter: '#@adapter@#'
                 },
-                tags: ['provider']
+                collections: ['provider']
             },
             rule: {
                 factories: {
@@ -195,28 +196,31 @@ module.exports = {
                     class: '[-]interfacedData',
                     interface: '[-]data'
                 }
-            },
-            currentDataProvider: {
-                parent: 'danf:dependencyInjection.contextProvider',
-                properties: {
-                    interface: '[-]data'
-                }
             }
         },
         events: {
             event: {
                 start: {
-                    context: 2,
-                    sequences: ['initialize']
+                    context: {
+                        value: 2
+                    },
+                    sequences: [
+                        {
+                            name: 'initialize'
+                        }
+                    ]
                 },
                 happenSomething: {
-                    contract: {
-                        i: {
-                            type: 'number',
-                            default: 0
-                        },
-                        k: {
-                            type: 'number'
+                    data: {
+                        data: {
+                            type: 'embedded',
+                            default: {},
+                            embed: {
+                                i: {
+                                    type: 'number',
+                                    default: 0
+                                }
+                            }
                         },
                         done: {
                             type: 'function'
@@ -225,79 +229,130 @@ module.exports = {
                     context: {
                         j: 2
                     },
-                    callback: function(stream) {
-                        var expected = stream.data.k + stream.context.j;
+                    callback: function(stream, context) {
+                        var expected = stream.data.k + context.j;
 
-                        if (1 <= stream.data.k) {
+                        if (stream.data.k > 1) {
                             expected += 2;
                         } else {
                             expected += 1;
                         }
 
                         assert.strictEqual(stream.data.i, expected);
-                        stream.data.done();
+                        stream.done();
                     },
-                    sequences: ['doSomething']
+                    sequences: [
+                        {
+                            name: 'doSomething',
+                            input: {
+                                data: '@data@'
+                            },
+                            output: {
+                                data: '@data@'
+                            }
+                        }
+                    ]
+                }
+            },
+            request: {
+                'dep3:api': {
+                    parameters: {
+                        value: {
+                            type: 'number',
+                            default: 2
+                        }
+                    },
+                    children: {
+                        dec: {
+                            path: '/:inc/dec'
+                        }
+                    }
                 }
             }
         },
         sequences: {
-            initialize: [
-                {
-                    service: 'provider.smallImages',
-                    method: 'checkRules',
-                    arguments: ['dumb.jpg'],
-                    returns: 'dumb'
-                },
-                {
-                    service: 'danf:manipulation.callbackExecutor',
-                    method: 'execute',
-                    arguments: [
-                        function(dumb) {
-                            assert.strictEqual(dumb, true);
-                        },
-                        '@dumb@'
-                    ]
-                }
-            ],
-            doSomething: [
-                {
-                    service: 'danf:manipulation.callbackExecutor',
-                    method: 'execute',
-                    arguments: [
-                        function(data) {
-                            data.i++;
-                        },
-                        '@data@'
-                    ]
-                },
-                {
-                    condition: function(stream) {
-                        return stream.data.i > 2;
+            initialize: {
+                operations: [
+                    {
+                        service: 'provider.smallImages',
+                        order: 0,
+                        method: 'checkRules',
+                        arguments: ['dumb.jpg'],
+                        scope: 'dumb'
                     },
-                    service: 'danf:manipulation.callbackExecutor',
-                    method: 'execute',
-                    arguments: [
-                        function(i) {
-                            return ++i;
+                    {
+                        service: 'danf:manipulation.callbackExecutor',
+                        order: 2,
+                        method: 'execute',
+                        arguments: [
+                            function(dumb) {
+                                assert.strictEqual(dumb, true);
+                            },
+                            '@dumb@'
+                        ]
+                    }
+                ]
+            },
+            doSomething: {
+                operations: [
+                    {
+                        service: 'danf:manipulation.callbackExecutor',
+                        order: -1,
+                        method: 'execute',
+                        arguments: [
+                            function(i) {
+                                return i;
+                            },
+                            '@data.i@'
+                        ],
+                        scope: 'data.k'
+                    },
+                    {
+                        service: 'danf:manipulation.callbackExecutor',
+                        order: 0,
+                        method: 'execute',
+                        arguments: [
+                            function(data) {
+                                data.i++;
+                            },
+                            '@data@'
+                        ]
+                    },
+                    {
+                        condition: function(stream, context) {
+                            var value = stream.data.k + context.j;
+
+                            // Should have no impact on real context.
+                            context.j = 10;
+
+                            return value > 3;
                         },
-                        '@data.i@'
-                    ],
-                    returns: 'data.i'
-                },
-                {
-                    service: 'danf:manipulation.callbackExecutor',
-                    method: 'execute',
-                    arguments: [
-                        function(i, j) {
-                            return i + j;
-                        },
-                        '@data.i@',
-                        '@context.j@'
-                    ],
-                    returns: 'data.i'
-                }
-            ]
+                        service: 'danf:manipulation.callbackExecutor',
+                        order: 1,
+                        method: 'execute',
+                        arguments: [
+                            function(i) {
+                                return ++i;
+                            },
+                            '@data.i@'
+                        ],
+                        scope: 'data.i'
+                    },
+                    {
+                        service: 'danf:manipulation.callbackExecutor',
+                        order: 2,
+                        method: 'execute',
+                        arguments: [
+                            function(i, j) {
+                                return i + j;
+                            },
+                            '@data.i@',
+                            '!j!'
+                        ],
+                        scope: 'data.i'
+                    }
+                ]
+            }
         },
         this: {
             providers: {

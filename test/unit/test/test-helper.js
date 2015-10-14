@@ -6,7 +6,7 @@ var assert = require('assert'),
     TestHelper = require('../../../lib/server/test/test-helper')
 ;
 
-var testHelper = TestHelper(
+var testHelper = TestHelper.get(
         {
             config: {
                 classes: {
@@ -25,7 +25,7 @@ var testHelper = TestHelper(
     )
 ;
 
-describe('EventsHandler', function() {
+describe('TestHelper', function() {
     it('method "getService" should be able to retrieve a defined service', function() {
         var a = testHelper.getService('a');
 
@@ -50,5 +50,55 @@ describe('EventsHandler', function() {
         var app = testHelper.getApp();
 
         assert.equal(1, app.context.check);
+    })
+
+    describe('function "get"', function() {
+        it('should retrieve the same test helper instance for the same arguments', function() {
+            testHelper.foo = 'bar';
+
+            var otherTestHelper = TestHelper.get(
+                    {
+                        config: {
+                            classes: {
+                                a: require('../../fixture/app/a'),
+                                b: require('../../fixture/app/b'),
+                                c: require('../../fixture/app/c')
+                            },
+                            services: {
+                                a: {
+                                    class: require('../../fixture/app/a')
+                                }
+                            }
+                        }
+                    },
+                    {check: 1}
+                )
+            ;
+
+            assert.equal(otherTestHelper.foo, 'bar');
+        })
+
+        it('should retrieve a different test helper instance for different arguments', function() {
+            var otherTestHelper = TestHelper.get(
+                    {
+                        config: {
+                            classes: {
+                                a: require('../../fixture/app/a'),
+                                b: require('../../fixture/app/b'),
+                                c: require('../../fixture/app/c')
+                            },
+                            services: {
+                                a: {
+                                    class: require('../../fixture/app/a')
+                                }
+                            }
+                        }
+                    },
+                    {check: 2}
+                )
+            ;
+
+            assert.notEqual(otherTestHelper.foo, 'bar');
+        })
     })
 })

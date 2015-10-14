@@ -10,5 +10,6 @@ test-app:
 	@NODE_ENV=test ./node_modules/.bin/mocha \
 		--reporter $(REPORTER) \
 		--timeout 5000 \
+		--recursive \
 		$(MOCHA_OPTS) \
 		test/unit/*

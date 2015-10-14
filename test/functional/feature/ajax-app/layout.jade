@@ -11,8 +11,8 @@ html
                     }
                 }
             };
-        script(data-main='/app', src='/require')
+        script(data-main='/app', src='/require', async)
     body
         p= '--- page-id: ' + random + ' ---'
 
-        div(id='ajax-body')!= _view.body
+        div(id='body')!= _view.body

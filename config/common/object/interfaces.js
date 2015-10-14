@@ -1,101 +1,129 @@
 'use strict';
 
 module.exports = {
-    classesHandler: {
+    classesContainer: {
         methods: {
             /**
-             * Process the classes.
-             */
-            process: {
-            }
-        }
-    },
-    classesRegistry: {
-        methods: {
-            /**
-             * Index a class.
+             * Set the definition of a class.
              *
-             * @param {string} name The name of the class.
-             * @param {string} class_ The class.
+             * @param {string} id The id of the class.
+             * @param {function} class The class.
              */
-            index: {
-                arguments: ['string/name', 'function/class_']
+            setDefinition: {
+                arguments: ['string/id', 'function/class']
             },
             /**
-             * Whether or not the class has been indexed.
+             * Get the definition of a class.
              *
-             * @param {string} name The name of the class.
-             * @return {boolean} True if the class has been indexed, false otherwise.
+             * @param {string} id The id of the class.
+             * @return {object} The class.
              */
-            has: {
-                arguments: ['string/name'],
+            getDefinition: {
+                arguments: ['string/id'],
+                returns: 'object'
+            },
+            /**
+             * Whether or not a class is defined.
+             *
+             * @param {string} id The id of the class.
+             * @return {boolean} True if the class is defined, false otherwise.
+             */
+            hasDefinition: {
+                arguments: ['string/id'],
                 returns: 'boolean'
             },
             /**
-             * Get a class from its name.
+             * Build the definitions of the classes applying the class processors.
+             */
+            build: {
+                arguments: []
+            },
+            /**
+             * Get a processed class.
              *
-             * @param {string} name The name of the class.
+             * @param {string} id The id of the class.
              * @return {function} The class.
-             * @throw {error} If the class is not defined.
              */
             get: {
-                arguments: ['string/name'],
+                arguments: ['string/id'],
                 returns: 'function'
             },
             /**
-             * Get all the classes.
+             * Whether or not a class has been processed.
              *
-             * @return {function_object} The classes.
+             * @param {string} id The id of the class.
+             * @return {boolean} True if the class has been processed, false otherwise.
              */
-            getAll: {
-                returns: 'object'
+            has: {
+                arguments: ['string/id'],
+                returns: 'boolean'
             }
         }
     },
-    interfacesRegistry: {
+    interfacesContainer: {
         methods: {
             /**
-             * Index an interface.
+             * Set the definition of an interface.
              *
-             * @param {string} name The name of the interface.
-             * @param {string} interface_ The interface.
+             * @param {string} id The id of the interface.
+             * @param {object} definition The definition of the interface.
              */
-            index: {
-                arguments: ['string/name', 'object/interface_']
+            setDefinition: {
+                arguments: ['string/id', 'object/definition']
             },
             /**
-             * Whether or not the interface has been indexed.
+             * Get the definition of an interface.
              *
-             * @param {string} name The name of the interface.
-             * @return {boolean} True if the interface has been indexed, false otherwise.
+             * @param {string} id The id of the interface.
+             * @return {object} The definition of the interface.
              */
-            has: {
-                arguments: ['string/name'],
+            getDefinition: {
+                arguments: ['string/id'],
+                returns: 'object'
+            },
+            /**
+             * Whether or not an interface is defined.
+             *
+             * @param {string} id The id of the interface.
+             * @return {boolean} True if the interface is defined, false otherwise.
+             */
+            hasDefinition: {
+                arguments: ['string/id'],
                 returns: 'boolean'
             },
             /**
-             * Get a interface from its name.
+             * Build the definitions of the interfaces.
+             */
+            build: {
+                arguments: []
+            },
+            /**
+             * Get an interface.
              *
-             * @param {string} name The name of the interface.
-             * @return {function} The interface.
-             * @throw {error} If the interface is not defined.
+             * @param {string} id The id of the interface.
+             * @return {danf:object.interface} The interface.
              */
             get: {
-                arguments: ['string/name'],
-                returns: 'object'
+                arguments: ['string/id'],
+                returns: 'danf:object.interface'
             },
             /**
-             * Get all the interfaces.
+             * Whether or not an interface has been processed.
              *
-             * @return {object} The interfaces.
+             * @param {string} id The id of the interface.
+             * @return {boolean} True if the interface exists, false otherwise.
              */
-            getAll: {
-                returns: 'object'
-            },
+            has: {
+                arguments: ['string/id'],
+                returns: 'boolean'
+            }
+        }
+    },
+    'interface': {
+        methods: {
             /**
-             * Whether or not an interface define a method.
+             * Whether or not the interface define a method.
              *
-             * @param {string} name The name of the interface.
              * @param {string} methodName The name of the method.
              * @return {boolean} True if the interface define the method, false otherwise.
              * @throw {error} If the interface is not defined.
@@ -105,9 +133,8 @@ module.exports = {
                 returns: 'boolean'
             },
             /**
-             * Get a method of an interface.
+             * Get a method of the interface.
              *
-             * @param {string} name The name of the interface.
              * @param {string} methodName The name of the method.
              * @return {object} The method.
              * @throw {error} If the method of the interface is not defined.
@@ -117,9 +144,8 @@ module.exports = {
                 returns: 'object'
             },
             /**
-             * Whether or not an interface define a getter.
+             * Whether or not the interface define a getter.
              *
-             * @param {string} name The name of the interface.
              * @param {string} getterName The name of the getter.
              * @return {boolean} True if the interface define the getter, false otherwise.
              * @throw {error} If the interface is not defined.
@@ -129,9 +155,8 @@ module.exports = {
                 returns: 'boolean'
             },
             /**
-             * Get a getter of an interface.
+             * Get a getter of the interface.
              *
-             * @param {string} name The name of the interface.
              * @param {string} getterName The name of the getter.
              * @return {object} The getter.
              * @throw {error} If the getter of the interface is not defined.
@@ -141,9 +166,8 @@ module.exports = {
                 returns: 'string'
             },
             /**
-             * Whether or not an interface define a setter.
+             * Whether or not the interface define a setter.
              *
-             * @param {string} name The name of the interface.
              * @param {string} setterName The name of the setter.
              * @return {boolean} True if the interface define the setter, false otherwise.
              * @throw {error} If the interface is not defined.
@@ -153,9 +177,8 @@ module.exports = {
                 returns: 'boolean'
             },
             /**
-             * Get a setter of an interface.
+             * Get a setter of the interface.
              *
-             * @param {string} name The name of the interface.
              * @param {string} setterName The name of the setter.
              * @return {object} The setter.
              * @throw {error} If the setter of the interface is not defined.
@@ -164,6 +187,38 @@ module.exports = {
                 arguments: ['string/name', 'string/setterName'],
                 returns: 'string'
             }
+        },
+        getters: {
+            /**
+             * Name.
+             *
+             * @return {string}
+             */
+            name: 'string',
+            /**
+             * Name of the extended interface.
+             *
+             * @return {string}
+             */
+            'extends': 'string',
+            /**
+             * Methods.
+             *
+             * @return {mixed_object_object}
+             */
+            methods: 'mixed_object_object',
+            /**
+             * Getters.
+             *
+             * @return {string_object}
+             */
+            getters: 'string_object',
+            /**
+             * Setters.
+             *
+             * @return {string_object}
+             */
+            setters: 'string_object'
         }
     },
     interfacer: {
@@ -184,19 +239,27 @@ module.exports = {
             /**
              * Process a class.
              *
-             * @param {function} class_ The class.
+             * @param {function}
              */
             process: {
-                arguments: ['function/class_']
+                arguments: ['function/class']
             }
         },
         getters: {
             /**
-             * The order of execution.
+             * Order of execution.
              *
-             * @return {number} The order.
+             * @return {number}
              */
             order: 'number'
+        },
+        setters: {
+            /**
+             * Classes container.
+             *
+             * @param {danf:object.classesContainer}
+             */
+            classesContainer: 'danf:object.classesContainer'
         }
     }
 };

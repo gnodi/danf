@@ -8,9 +8,11 @@ var assert = require('assert'),
 ;
 
 var mapper = new Mapper(),
-    cssMapper = new Mapper('css'),
+    cssMapper = new Mapper(),
     dirname = fs.realpathSync(__dirname + '/../../fixture/file-system').replace(/\\/g, '/')
 ;
+
+cssMapper.defaultExtension = 'css';
 
 var config = {
     'danf/test': dirname + '/node-modules/test',

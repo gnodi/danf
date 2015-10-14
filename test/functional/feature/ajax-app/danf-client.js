@@ -1,5 +1,7 @@
 'use strict';
 
+var utils = require('../../../../lib/common/utils');
+
 function NameSetter() {}
 NameSetter.prototype.set = function(data) {
     var $ = this.jquery,
@@ -9,31 +11,41 @@ NameSetter.prototype.set = function(data) {
     $('#hello').text(element.find('#hello').text());
 };
 
-module.exports = {
-    config: {
-        events: {
-            event: {
-                'danf:form.name': {
-                    sequences: ['setName']
+module.exports = utils.merge(
+    require('./danf-common'),
+    {
+        config: {
+            events: {
+                event: {
+                    'danf:form.name': {
+                        sequences: [
+                            {
+                                name: 'setName'
+                            }
+                        ]
+                    }
                 }
-            }
-        },
-        sequences: {
-            setName: [
-                {
-                    service: 'nameSetter',
-                    method: 'set',
-                    arguments: ['@data.data@']
+            },
+            sequences: {
+                setName: {
+                    operations: [
+                        {
+                            service: 'nameSetter',
+                            method: 'set',
+                            arguments: ['@data.data@']
+                        }
+                    ]
                 }
-            ]
-        },
-        services: {
-            nameSetter: {
-                class: NameSetter,
-                properties: {
-                    jquery: '#danf:vendor.jquery#'
+            },
+            services: {
+                nameSetter: {
+                    class: NameSetter,
+                    properties: {
+                        jquery: '#danf:vendor.jquery#'
+                    }
                 }
             }
         }
-    }
-};
+    },
+    true
+);
