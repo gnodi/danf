@@ -13,8 +13,8 @@ coverage
 
 build/Release
 
-node_modules
+/node_modules
 
 .lock-wscript
 
-.bin
+/.bin
