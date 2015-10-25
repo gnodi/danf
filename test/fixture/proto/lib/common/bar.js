@@ -1,4 +1,8 @@
 'use strict';
 
-module.exports = function() {
+module.exports = Class;
+
+function Class() {
 }
+
+Class.name = 'root-common-bar';

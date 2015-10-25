@@ -2,7 +2,8 @@
 
 var assert = require('assert'),
     path = require('path'),
-    danf = require('../../lib/server/app')
+    danf = require('../../lib/server/app'),
+utils = require('../../lib/common/utils')
 ;
 
 var rootPath = path.join(__dirname, '/../fixture/proto');
@@ -13,7 +14,20 @@ describe('Danf proto application', function() {
             danf.prototype.buildServerConfiguration(rootPath, 'danf'),
             {
                 config: {
-                    classes: {}
+                    classes: {
+                        'foo.bar': require(path.join(
+                            rootPath,
+                            'lib/common/foo/bar.js'
+                        )),
+                        bar: require(path.join(
+                            rootPath,
+                            'lib/server/bar.js'
+                        )),
+                        foo: require(path.join(
+                            rootPath,
+                            'lib/common/foo.js'
+                        ))
+                    }
                 },
                 dependencies: {
                     a: {
@@ -38,7 +52,15 @@ describe('Danf proto application', function() {
                         dependencies: {
                             c: {
                                 contract: {},
-                                dependencies: {}
+                                dependencies: {},
+                                config: {
+                                    classes: {
+                                        'foo.bar': require(path.join(
+                                            rootPath,
+                                            'node_modules/a/node_modules/c/lib/server/foo/bar.js'
+                                        ))
+                                    }
+                                }
                             }
                         }
                     }
@@ -50,7 +72,20 @@ describe('Danf proto application', function() {
             danf.prototype.buildSpecificConfiguration(rootPath, 'danf', 'client'),
             {
                 config: {
-                    classes: {}
+                    classes: {
+                        'foo.bar': require(path.join(
+                            rootPath,
+                            'lib/common/foo/bar.js'
+                        )),
+                        bar: require(path.join(
+                            rootPath,
+                            'lib/common/bar.js'
+                        )),
+                        foo: require(path.join(
+                            rootPath,
+                            'lib/client/foo.js'
+                        ))
+                    }
                 },
                 dependencies: {
                     a: {
@@ -66,7 +101,19 @@ describe('Danf proto application', function() {
                         dependencies: {
                             b: {
                                 contract: {},
-                                dependencies: {}
+                                dependencies: {},
+                                config: {
+                                    classes: {
+                                        bar: require(path.join(
+                                            rootPath,
+                                            'node_modules/a/node_modules/b/lib/common/bar.js'
+                                        )),
+                                        foo: require(path.join(
+                                            rootPath,
+                                            'node_modules/a/node_modules/b/lib/client/foo.js'
+                                        ))
+                                    }
+                                }
                             }
                         }
                     }
