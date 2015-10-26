@@ -2,31 +2,24 @@
 
 var assert = require('assert'),
     path = require('path'),
-    danf = require('../../lib/server/app'),
-utils = require('../../lib/common/utils')
+    fs = require('fs'),
+    danf = require('../../lib/server/app')
 ;
 
-var rootPath = path.join(__dirname, '/../fixture/proto');
+var rootPath = fs.realpathSync(path.join(__dirname, '/../fixture/proto')),
+    requirePattern = 'require(\'{0}/{1}\')'.format(rootPath, '{0}')
+;
 
 describe('Danf proto application', function() {
     it('should build its configuration from files, folders and node modules', function() {
         assert.deepEqual(
-            danf.prototype.buildServerConfiguration(rootPath, 'danf'),
+            danf.prototype.buildSideConfiguration(rootPath, 'danf', 'server'),
             {
                 config: {
                     classes: {
-                        'foo.bar': require(path.join(
-                            rootPath,
-                            'lib/common/foo/bar.js'
-                        )),
-                        bar: require(path.join(
-                            rootPath,
-                            'lib/server/bar.js'
-                        )),
-                        foo: require(path.join(
-                            rootPath,
-                            'lib/common/foo.js'
-                        ))
+                        'foo.bar': requirePattern.format('lib/common/foo/bar.js'),
+                        bar: requirePattern.format('lib/server/bar.js'),
+                        foo: requirePattern.format('lib/common/foo.js')
                     }
                 },
                 dependencies: {
@@ -55,10 +48,7 @@ describe('Danf proto application', function() {
                                 dependencies: {},
                                 config: {
                                     classes: {
-                                        'foo.bar': require(path.join(
-                                            rootPath,
-                                            'node_modules/a/node_modules/c/lib/server/foo/bar.js'
-                                        ))
+                                        'foo.bar': requirePattern.format('node_modules/a/node_modules/c/lib/server/foo/bar.js')
                                     }
                                 }
                             }
@@ -69,22 +59,13 @@ describe('Danf proto application', function() {
         );
 
         assert.deepEqual(
-            danf.prototype.buildSpecificConfiguration(rootPath, 'danf', 'client'),
+            danf.prototype.buildSideConfiguration(rootPath, 'danf', 'client'),
             {
                 config: {
                     classes: {
-                        'foo.bar': require(path.join(
-                            rootPath,
-                            'lib/common/foo/bar.js'
-                        )),
-                        bar: require(path.join(
-                            rootPath,
-                            'lib/common/bar.js'
-                        )),
-                        foo: require(path.join(
-                            rootPath,
-                            'lib/client/foo.js'
-                        ))
+                        'foo.bar': requirePattern.format('lib/common/foo/bar.js'),
+                        bar: requirePattern.format('lib/common/bar.js'),
+                        foo: requirePattern.format('lib/client/foo.js')
                     }
                 },
                 dependencies: {
@@ -104,14 +85,8 @@ describe('Danf proto application', function() {
                                 dependencies: {},
                                 config: {
                                     classes: {
-                                        bar: require(path.join(
-                                            rootPath,
-                                            'node_modules/a/node_modules/b/lib/common/bar.js'
-                                        )),
-                                        foo: require(path.join(
-                                            rootPath,
-                                            'node_modules/a/node_modules/b/lib/client/foo.js'
-                                        ))
+                                        bar: requirePattern.format('node_modules/a/node_modules/b/lib/common/bar.js'),
+                                        foo: requirePattern.format('node_modules/a/node_modules/b/lib/client/foo.js')
                                     }
                                 }
                             }
