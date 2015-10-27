@@ -11,7 +11,7 @@ var rootPath = fs.realpathSync(path.join(__dirname, '/../fixture/proto')),
 ;
 
 describe('Danf proto application', function() {
-    it('should build its configuration from files, folders and node modules', function() {
+    it('should build its server configuration from files, folders and node modules', function() {
         assert.deepEqual(
             danf.prototype.buildSideConfiguration(rootPath, 'danf', 'server'),
             {
@@ -19,7 +19,8 @@ describe('Danf proto application', function() {
                     classes: {
                         'foo.bar': requirePattern.format('lib/common/foo/bar.js'),
                         bar: requirePattern.format('lib/server/bar.js'),
-                        foo: requirePattern.format('lib/common/foo.js')
+                        foo: requirePattern.format('lib/common/foo.js'),
+                        main: require(path.join(rootPath, 'lib/main.js'))
                     }
                 },
                 dependencies: {
@@ -27,10 +28,29 @@ describe('Danf proto application', function() {
                         config: {
                             events: {
                                 request: {
-                                    compute: {},
+                                    compute: {
+                                        path: 'computing',
+                                        methods: ['get'],
+                                        view: {
+                                            html: {
+                                                body: {
+                                                    file: './computing.jade'
+                                                }
+                                            }
+                                        }
+                                    },
                                     api: {
                                         children: {
                                             user: {
+                                                path: 'users',
+                                                methods: ['get', 'post', 'put'],
+                                                view: {
+                                                    html: {
+                                                        body: {
+                                                            file: './user.jade'
+                                                        }
+                                                    }
+                                                },
                                                 children: {
                                                     message: {}
                                                 }
@@ -57,7 +77,9 @@ describe('Danf proto application', function() {
                 }
             }
         );
+    })
 
+    it('should build its client configuration from files, folders and node modules', function() {
         assert.deepEqual(
             danf.prototype.buildSideConfiguration(rootPath, 'danf', 'client'),
             {
@@ -65,16 +87,57 @@ describe('Danf proto application', function() {
                     classes: {
                         'foo.bar': requirePattern.format('lib/common/foo/bar.js'),
                         bar: requirePattern.format('lib/common/bar.js'),
-                        foo: requirePattern.format('lib/client/foo.js')
+                        foo: requirePattern.format('lib/client/foo.js'),
+                        main: require(path.join(rootPath, 'lib/main.js'))
                     }
                 },
                 dependencies: {
                     a: {
                         config: {
-                            this: {},
+                            this: {foo: 'bar'},
+                            'dep1.subdep2': {key: 'value'},
                             events: {
                                 request: {
-                                    compute: {}
+                                    compute: {
+                                        path: 'computing',
+                                        methods: ['get'],
+                                        view: {
+                                            html: {
+                                                body: {
+                                                    file: './computing.jade'
+                                                }
+                                            }
+                                        }
+                                    },
+                                    api: {
+                                        children: {
+                                            user: {
+                                                methods: ['get', 'post'],
+                                                view: {
+                                                    html: {
+                                                        body: {
+                                                            file: './user.jade'
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            },
+                            'events/dev': {
+                                request: {
+                                    compute: {
+                                        path: 'computing/dev',
+                                        methods: ['get'],
+                                        view: {
+                                            html: {
+                                                body: {
+                                                    file: './computing.jade'
+                                                }
+                                            }
+                                        }
+                                    }
                                 }
                             }
                         },

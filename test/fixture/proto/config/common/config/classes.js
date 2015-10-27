@@ -1,3 +1,5 @@
 'use strict';
 
-module.exports = {};
+module.exports = {
+    main: require('../../../lib/main.js')
+};
