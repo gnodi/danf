@@ -133,7 +133,7 @@ describe('utils', function() {
         ;
 
         object.a = 5;
-        object.a.e = 6;
+        object.c.e = 6;
         clone.b = 7;
         clone.c.d = 8;
         object.a = 9;

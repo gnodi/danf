@@ -1,8 +1,3 @@
 'use strict';
 
-module.exports = Class;
-
-function Class() {
-}
-
-Class.name = 'root-common-foobar';
+module.exports = function() {};
