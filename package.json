@@ -2,33 +2,18 @@
     "name": "danf",
     "description": "Danf is a javascript/node.js full-stack OOP framework allowing to code the same way on both the server (node.js) and client (browser) sides. It provides many features in order to help producing scalable, maintainable, testable and performant applications.",
     "version": "0.2.3",
-    "author": "Thomas Prelot <tprelot@gmail.com>",
+    "author": {
+        "name": "Thomas Prelot",
+        "email": "tprelot@gmail.com",
+        "url": "https://github.com/Gnucki"
+    },
     "contributors": [
         {
             "name": "Thomas Prelot",
-            "email": "tprelot@gmail.com"
+            "email": "tprelot@gmail.com",
+            "url": "https://github.com/Gnucki"
         }
     ],
-    "dependencies": {
-        "async": "~1.0",
-        "chalk": "~1.1",
-        "cookie-parser": "~1.3",
-        "escape-html": "~1.0",
-        "express": "~4.12",
-        "express-session": "~1.10",
-        "gnucki-r": "~1.0",
-        "jade": "~1.9",
-        "jquery": "~2.1",
-        "parseurl": "~1.3",
-        "requirejs": "~2.1",
-        "send": "0.13.*",
-        "tosource": "~1.0",
-        "utils-merge": "~1.0"
-    },
-    "devDependencies": {
-        "mocha": "~2.2",
-        "supertest": "~1.0"
-    },
     "keywords": [
         "danf",
         "framework",
@@ -51,6 +36,26 @@
         "event",
         "test"
     ],
+    "dependencies": {
+        "async": "~1.0",
+        "chalk": "~1.1",
+        "cookie-parser": "~1.3",
+        "escape-html": "~1.0",
+        "express": "~4.12",
+        "express-session": "~1.10",
+        "gnucki-r": "~1.0",
+        "jade": "~1.9",
+        "jquery": "~2.1",
+        "parseurl": "~1.3",
+        "requirejs": "~2.1",
+        "send": ">=0.12.0 <0.14.0",
+        "tosource": "~1.0",
+        "utils-merge": "~1.0"
+    },
+    "devDependencies": {
+        "mocha": "~2.2",
+        "supertest": "~1.0"
+    },
     "license": "MIT",
     "repository": {
         "type": "git",
