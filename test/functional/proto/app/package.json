@@ -1,23 +1,32 @@
 {
-    "name": "my-app",
-    "description": "My Danf application",
+    "name": "<%= repository.name %>",
+    "description": "<%= app.description %>",
     "version": "0.0.0",
-    "author": "Me <me@mydomain.me>",
-    "contributors": [],
+    "author": {
+        "name": "<%= author.name %>",
+        "email": "<%= author.email %>",
+        "url": "<%= author.url %>"
+    },
+    "contributors": [
+        {
+            "name": "<%= author.name %>",
+            "email": "<%= author.email %>",
+            "url": "<%= author.url %>"
+        }
+    ],
     "dependencies": {
-        "danf": "0.2.3",
-        "amdefine": "0.1.*"
+        "danf": "0.3.0"
     },
     "devDependencies": {
-        "mocha": "2.2.*",
-        "supertest": "0.15.*"
+        "mocha": "~2.2",
+        "supertest": "~1.0"
     },
     "keywords": [
-        "my-app",
-        "danf"
+        "danf",
+        "module",
+        "<%= app.name %>"
     ],
-    "repository": "git://github.com/me/my-app",
-    "main": "app",
+    "repository": "git://github.com/<%= repository.username %>/<%= repository.name %>",
     "scripts": {
         "test": "make test"
     },

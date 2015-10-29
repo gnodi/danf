@@ -7,13 +7,15 @@ module.exports = {
         properties: {
             foo: '%foo%',
             bar: ['John', 'Doe'],
-            multipleDependencies: '&tagged&'
+            color: '$color.red$',
+            collectionDependencies: '&collection&'
         }
     },
     dependency: {
         class: 'dependency'
     },
-    tagged: {
+    collection: {
+        collections: ['collection'],
         properties: {
             simpleDependency: '#dependency#'
         },

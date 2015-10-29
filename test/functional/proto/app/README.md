@@ -1,18 +1,43 @@
-my-app
-======
+<%= repository.name %>
+======================
 
-This is a prototype of a Danf application helping you to create your own.
-Download the zip file and unzip the archive to your working directory.
+<%= app.description %>
 
-Then, install dependencies:
+Use as a danf module
+--------------------
+
+Add the module to your `package.json`:
+```json
+{
+    ...
+    "dependencies": {
+        ...,
+        "<%= repository.name %>": "*"
+    },
+    ...
+}
+```
+
+Then, install this new dependency:
 ```sh
 $ npm install
 ```
 
-You can launch the server to test your installation:
+Use as an application
+---------------------
+
+Start the server with the command:
 ```sh
 $ node app-dev
 ```
 
-You should see `Hi!` at `http://localhost:3080` following by this instruction:
-`Replace "my-app" in all files by the name of your application.`. Do it.
+You should be able to test the application at `http://localhost:3080`.
+
+> Use `app-prod` to start the server in prod environment.
+
+Execute tests
+-------------
+
+```sh
+$ make test
+```
