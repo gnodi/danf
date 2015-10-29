@@ -3,7 +3,7 @@ REPORTER = dot
 
 check: test
 
-test: test-utils test-manipulation test-configuration test-object test-dependency-injection test-file-system test-event test-http test-rendering test-logging test-test test-app
+test: test-utils test-manipulation test-configuration test-object test-dependency-injection test-file-system test-event test-http test-rendering test-logging test-test test-app test-proto
 
 test-utils:
 	# Utils
@@ -120,3 +120,11 @@ test-app:
 		--timeout 5000 \
 		$(MOCHA_OPTS) \
 		test/unit/app.js
+
+test-proto:
+	# Proto
+	@NODE_ENV=test ./node_modules/.bin/mocha \
+		--reporter $(REPORTER) \
+		--timeout 5000 \
+		$(MOCHA_OPTS) \
+		test/unit/proto.js

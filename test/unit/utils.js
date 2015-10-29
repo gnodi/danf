@@ -69,6 +69,36 @@ var mergeTests = [
             expected: {
                 a: {b: {c: 3, d: 4}}
             }
+        },
+        {
+            arguments: [
+                {a: {b: [3, 2]}},
+                {a: {b: [2, 4]}},
+                true
+            ],
+            expected: {
+                a: {b: [3, 2, 2, 4]}
+            }
+        },
+        {
+            arguments: [
+                {a: {b: [3, 2]}},
+                {a: {c: 2}},
+                true
+            ],
+            expected: {
+                a: {b: [3, 2], c: 2}
+            }
+        },
+        {
+            arguments: [
+                {a: {b: [3, 2]}},
+                {a: {b: {c: 2, d: 4}}},
+                true
+            ],
+            expected: {
+                a: {b: {0: 3, 1: 2, c: 2, d: 4}}
+            }
         }
     ]
 ;
@@ -103,7 +133,7 @@ describe('utils', function() {
         ;
 
         object.a = 5;
-        object.a.e = 6;
+        object.c.e = 6;
         clone.b = 7;
         clone.c.d = 8;
         object.a = 9;
