@@ -101,7 +101,7 @@ A strong dependency injection component allows you to declare services from your
 Isomorphism
 -----------
 
-One of the big interests of node.js is that you can use the same langage (javascript) on both client-side and server-side. But the ways of coding in node.js and for a webpage is often so different that this asset is not really exploted. Danf is an isomorphic framework which propose you a way of coding usable both sides without distorting commonJS pattern used in node.js.
+One of the big interests of Node.js is that you can use the same langage (javascript) on both client and server sides. But the ways of coding in Node.js and for a webpage is often so different that this asset is not operated at 100%. Danf is an isomorphic framework which propose you to potentially and easily use the same code on both sides with a classic Node.js coding style.
 
 Event driven
 ------------

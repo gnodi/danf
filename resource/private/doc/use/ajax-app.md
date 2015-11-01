@@ -6,37 +6,108 @@ Make an Ajax App
 Documentation
 -------------
 
-As a lot of js files are requested by the browser, it is a nice idea to work in an ajax app mode to increase performances (less network bandwidth, less js interpretation time).
-Danf provides an easy way to do that while keeping deep linking and bookmarking.
+The better way to do a website with native Danf is to make an ajax app. This will allow you to maximize the performances and should offer a great experience to your users.
+Danf provides an easy way to do that while keeping deep linking, bookmarking and a full navigable website even without javascript.
 
 ### Use ajax links
 
 ```jade
 //- resource/private/view/index.jade
 
-p
-    a(href='/a/1') a-1 (standard link - reload the page)
-p
-    a(class='ajax', href='/a/2') a-2 (ajax link - reload the body of the page asynchronously)
-p
-    a(class='ajax-autoload', href='/a/3') a-3 (autoload ajax link - load the content of the link automatically)
-p
-    a(class='ajax-autoload', href='/a/4', data-ajax='{"reloadTime":10}') a-4 (autoload ajax link with reload - load the content of the link automatically every 10 seconds)
+a(href='/a/1') a-1 (standard link - reload the page)
+a(href='/a/2', data-ajax='{}') a-2 (ajax link - reload the body of the page asynchronously)
+a(href='/a/3', data-ajax='{"autoload":0}') a-3 (autoload ajax link - load the content of the link automatically)
 ```
 
-The second link will appear as a clickable link in the page. When you click it, an history will be created and the path of your current url will become `/a/2`.
-The third and fourth links will load automaticaly in the page. No history will be created. It is like they are parts of the index page.
+The first link is a standard link.
 
-Here is the corresponding config to handle these links:
+The second link appears as a standard clickable link in the page. When you click it, the content of the link is loaded and displayed in the body. An history state is created and the path of your current URL becomes `/a/2`.
+
+The third link is loaded automaticaly and replaced with the loaded content. No history state is created. It feels like it is a normal part of the page. This is usefull to factorize page chunks like a menu, a header, a footer, ...
+
+For the ajax links to work, you have to define a request event for each one:
 
 ```javascript
-// config/server/events/request.js
+// config/common/config/events/request.js
+
+'use strict';
+
+module.exports = {
+    a1: {
+        path: '/a1',
+        methods: ['get']
+    },
+    a2: {
+        path: '/a1',
+        methods: ['get']
+    }
+};
+```
+
+> It is a good practice to factorize the definition of the request event in common config, then to define specific attributes on each side:
+> ```javascript
+> // config/server/config/events/request.js
+>
+> 'use strict';
+>
+> module.exports = {
+>     a1: {
+>         view: {
+>             html: {
+>                 layout: {
+>                     file: '%view.path%/layout.jade'
+>                 },
+>                 body: {
+>                     file: '%view.path%/a1.jade'
+>                 }
+>             }
+>         }
+>     }
+> };
+> ```
+
+Here is an example of possible custom layout for the pages of your site:
+
+```jade
+//- resource/private/view/layout.jade
+
+doctype html
+html
+    head
+        title <%= app.name %>
+
+        link(rel='icon', type='image/png', href='favicon.png')
+        link(rel='stylesheet', type='text/css', href='/-/my-app/css/style.css')
+
+        script.
+            var require = {
+                config: {
+                    app: {
+                        context: JSON.parse('!{_context}') || {}
+                    }
+                }
+            };
+        script(data-main='/app', src='/require', async)
+    body
+    header ...
+    nav ...
+    section(id='body')
+        != _view.body
+    footer ...
+```
+
+> You can move the body used by the ajax app mechanism defining your own body element with the attribute `id="body"`.
+
+And a possible simple corresponding view configuration:
+
+```javascript
+// config/server/config/events/request.js
 
 'use strict';
 
 module.exports = {
     home: {
-        path: '',
+        path: '/',
         methods: ['get'],
         view: {
             html: {
@@ -48,197 +119,40 @@ module.exports = {
                 }
             }
         }
-    },
-    a: {
-        path: '/a/:number',
-        methods: ['get'],
-        view: {
-            html: {
-                layout: {
-                    file: '%view.path%/layout.jade'
-                },
-                body: {
-                    file: '%view.path%/a.jade',
-                    embed: {
-                        date: {
-                            file: '%view.path%/date.jade',
-                        }
-                    }
-                }
-            }
-        },
-        sequences: ['getDate']
     }
 };
 ```
 
-```javascript
-// config/server/sequences.js
-
-'use strict';
-
-module.exports = {
-    getDate: [
-        {
-            service: 'danf:manipulation.callbackExecutor',
-            method: 'execute',
-            arguments: [
-                function(parameters) {
-                    var date = new Date();
-
-                    parameters.date = date.toLocaleTimeString();
-                },
-                '@.@'
-            ]
-        }
-    ]
-};
-```
-
-And the template files:
-
-```jade
-//- resource/private/view/layout.jade
-
-doctype html
-html
-    head
-        title Danf application
-
-        link(rel='stylesheet', type='text/css', href='-/tutorial/resource/public/css/style.css')
-
-        script.
-            var require = {
-                config: {
-                    app: {
-                        context: JSON.parse('!{_context}') || {}
-                    }
-                }
-            };
-        script(data-main='/app', src='/require')
-    body
-        != _view.body
-```
-
-This file is already present in the proto application.
-
-
-```jade
-//- resource/private/view/a.jade
-
-div
-    a(class='ajax', href='/') index
-
-    p
-        span a-
-        span= number
-    p!= _view.date
-```
-
-Note how the result of the interpretation of the embedded file `'%view.path%/date.jade'` is injected here thanks to `_view.date`.
-
-```jade
-//- resource/private/view/date.jade
-
-span(class='date')= '(' + date + ')'
-```
-
-Finally, You can add some CSS:
-
-```css
-/* resource/public/css/style.css */
-
-.date {
-    color: grey;
-    font-size: 90%;
-    font-style: italic;
-}
-```
-
-You can use the embedded mechanism for the layout part. It is also possible to define another body location for your ajax links using the id `ajax-body` in your HTML:
-
-```jade
-//- resource/private/view/layout.jade
-
-doctype html
-html
-    head
-        title Danf application
-
-        link(rel='stylesheet', type='text/css', href='-/tutorial/resource/public/css/style.css')
-
-        script.
-            var require = {
-                config: {
-                    app: {
-                        context: JSON.parse('!{_context}') || {}
-                    }
-                }
-            };
-        script(data-main='/app', src='/require')
-    body
-        div
-            != _view.menu
-        div(id='ajax-body')
-        div
-            != _view.footer
-```
-
-You can use another template engine using the [Express'](http://expressjs.com/api.html) mechanism. For this, you can use the variable `app` in your files `app-dev.js` and `app-prod.js`.
+> You can use another template engine using the [Express'](http://expressjs.com/api.html) mechanism. For this, you can use the variable `app` in your files `app-dev.js` and `app-prod.js`.
 
 ### Use ajax forms
 
 ```jade
-// resource/private/view/framework.jade
+// resource/private/view/form.jade
 
-form(action='/name', id='framework-form' class='ajax', method='post')
-    label(for='name')Name:
-    input(name='name', type='text')
-    input(type='submit', data-ajax='{"event": "postName"}')
+form(action='/form', method='get', data-ajax='{}')
+    label(for='name') Name:
+    input(name='name', id='name', type='text')
+    input(type='submit')
 ```
 
-Here is a simple ajax form allowing to post names (not a really interesting example ok...). The server side is not explicited here but you can handle its response like the following thanks to `data-ajax='{"event": "postName"}'`:
+Here is a simple ajax form allowing to post names (not a really interesting example ok...). As for links, you have to define a request event:
 
 ```javascript
-// config/client/events/event.js
+// config/common/config/events/request.js
 
 'use strict';
 
-define(function(require) {
-    return {
-        'danf:form.postName': {
-            sequences: ['postName']
-        }
+module.exports = {
+    form: {
+        path: '/form',
+        methods: ['get', 'post']
     }
-});
+};
 ```
 
-```javascript
-// config/client/sequences.js
-
-'use strict';
-
-define(function(require) {
-    return {
-        postName: [
-            {
-                service: 'danf:manipulation.callbackExecutor',
-                method: 'execute',
-                arguments: [
-                    function(data, input) {
-                        alert('New name added: {0}'.format(input.name));
-                        console.log(data);
-                    },
-                    '@data.data@',
-                    '@data.input@'
-                ]
-            }
-        ]
-    }
-});
-```
-
-You can see an interesting example in the application accessible below in the navigation part.
+> By default, the content of the response of the submitted request is displayed in the body. You can alter this behaviour by defining the target attribute as a [JQuery selector](https://api.jquery.com/category/selectors/):
+> ```data-ajax='{"target":"#result"}'```
 
 Navigation
 ----------
