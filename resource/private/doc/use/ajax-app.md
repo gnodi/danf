@@ -74,7 +74,7 @@ Here is an example of possible custom layout for the pages of your site:
 doctype html
 html
     head
-        title <%= app.name %>
+        title My App
 
         link(rel='icon', type='image/png', href='favicon.png')
         link(rel='stylesheet', type='text/css', href='/-/my-app/css/style.css')
