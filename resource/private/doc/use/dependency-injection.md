@@ -81,7 +81,7 @@ module.exports = {
 Finally, you can define your service like that:
 
 ```javascript
-// config/server/service.js
+// config/server/services.js
 
 'use strict';
 

@@ -1,9 +1,9 @@
-Understand the Concepts
-=======================
+Danf Concepts
+=============
 
-[←](index.md)
+[←](../index.md)
 
-Just take 5 minutes to understand some of the main concepts that lead the development of Danf.
+Just take 10 minutes to understand some of the main concepts that lead the development of Danf.
 
 Object-Oriented Programming (OOP)
 ---------------------------------
@@ -21,8 +21,8 @@ Let's see an example of a pure OOP code where you want to sell a product in a st
 
 ```javascript
 var store = new Store(),
-	product = new Product(),
-	customer = new Customer()
+    product = new Product(),
+    customer = new Customer()
 ;
 
 // A first possibility.
@@ -44,9 +44,9 @@ A better way, to handle that is to use a "service" (SOA pattern):
 
 ```javascript
 var store = new Store(),
-	product = new Product(),
-	customer = new Customer(),
-	saleHandler = new SaleHandler()
+    product = new Product(),
+    customer = new Customer(),
+    saleHandler = new SaleHandler()
 ;
 
 saleHandler->sell(product, store, customer);
@@ -66,9 +66,9 @@ Let's keep the previous example. Imagine, there are 3 sale entities in the compa
 
 ```javascript
 var clothingSaleHandler = new ClothingSaleHandler(),
-	perfumeSaleHandler = new PerfumeSaleHandler(),
-	jewelSaleHandler = new JewelSaleHandler(),
-	logger = new Logger()
+    perfumeSaleHandler = new PerfumeSaleHandler(),
+    jewelSaleHandler = new JewelSaleHandler(),
+    logger = new Logger()
 ;
 
 clothingSaleHandler->setLogger(logger);
@@ -116,4 +116,4 @@ This framework does not forget the spirit of javascript and node.js: events driv
 
 > Moreover, the way the events are handled gives a pretty easy alternative to callback hell.
 
-[←](index.md)
+[←](../index.md)
