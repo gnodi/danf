@@ -8,6 +8,9 @@ module.exports = {
             html: {
                 body: {
                     file: '%rootPath%/index.jade'
+                },
+                layout: {
+                    file: '%rootPath%/layout.jade'
                 }
             }
         }
