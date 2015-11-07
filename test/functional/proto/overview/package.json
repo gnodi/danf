@@ -1,0 +1,36 @@
+{
+    "name": "repository.name",
+    "description": "app.description",
+    "version": "0.0.0",
+    "author": {
+        "name": "author.name",
+        "email": "author.email",
+        "url": "author.url"
+    },
+    "contributors": [
+        {
+            "name": "author.name",
+            "email": "author.email",
+            "url": "author.url"
+        }
+    ],
+    "dependencies": {
+        "danf": "*"
+    },
+    "devDependencies": {
+        "mocha": "~2.2",
+        "supertest": "~1.0"
+    },
+    "keywords": [
+        "danf",
+        "module",
+        "app.name"
+    ],
+    "repository": "git://github.com/repository.username/repository.name",
+    "scripts": {
+        "test": "make test"
+    },
+    "engines": {
+        "node": "*"
+    }
+}
