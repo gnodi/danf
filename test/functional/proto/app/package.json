@@ -1,21 +1,21 @@
 {
-    "name": "<%= repository.name %>",
-    "description": "<%= app.description %>",
+    "name": "repository.name",
+    "description": "app.description",
     "version": "0.0.0",
     "author": {
-        "name": "<%= author.name %>",
-        "email": "<%= author.email %>",
-        "url": "<%= author.url %>"
+        "name": "author.name",
+        "email": "author.email",
+        "url": "author.url"
     },
     "contributors": [
         {
-            "name": "<%= author.name %>",
-            "email": "<%= author.email %>",
-            "url": "<%= author.url %>"
+            "name": "author.name",
+            "email": "author.email",
+            "url": "author.url"
         }
     ],
     "dependencies": {
-        "danf": "0.3.0"
+        "danf": "*"
     },
     "devDependencies": {
         "mocha": "~2.2",
@@ -24,9 +24,9 @@
     "keywords": [
         "danf",
         "module",
-        "<%= app.name %>"
+        "app.name"
     ],
-    "repository": "git://github.com/<%= repository.username %>/<%= repository.name %>",
+    "repository": "git://github.com/repository.username/repository.name",
     "scripts": {
         "test": "make test"
     },
