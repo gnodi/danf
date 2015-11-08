@@ -7,6 +7,11 @@ module.exports = {
     home: {
         path: '/',
         methods: ['get'],
+        sequences: [
+            {
+                name: 'compute'
+            }
+        ],
         view: {
             html: {
                 layout: {

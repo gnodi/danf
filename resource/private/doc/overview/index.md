@@ -41,6 +41,8 @@ Object.defineProperty(Computer.prototype, 'processors', {
 
 // Define a method.
 Computer.prototype.compute = function(value, timeout) {
+    var self = this;
+
     // Handle asynchronous computing.
     if (timeout) {
         // Wrap an asynchronous operation in order to return the result to the stream.
@@ -48,8 +50,8 @@ Computer.prototype.compute = function(value, timeout) {
             // Simulate an asynchronous computing.
             setTimeout(
                 function() {
-                    for (var i = 0; i < this._processors.length; i++) {
-                        value = this._processors[i].process(value);
+                    for (var i = 0; i < self._processors.length; i++) {
+                        value = self._processors[i].process(value);
                     }
 
                     // Return the computed value to the stream.
@@ -83,11 +85,11 @@ function Processor() {
 }
 
 // Define the interfaces implemented by the class.
-Computer.defineImplementedInterfaces(['processor']);
+Processor.defineImplementedInterfaces(['processor']);
 
-Computer.defineDependency('_order', 'number');
-Computer.defineDependency('_operand', 'number');
-Computer.defineDependency('_operation', 'function');
+Processor.defineDependency('_order', 'number');
+Processor.defineDependency('_operand', 'number');
+Processor.defineDependency('_operation', 'function');
 
 Object.defineProperty(Processor.prototype, 'order', {
     get: function() { return this._order; },
@@ -183,6 +185,10 @@ module.exports = {
                 arguments: ['number/value'],
                 returns: 'number'
             }
+        },
+        // Define the getters of the interface.
+        getters: {
+            order: 'number'
         }
     }
 };

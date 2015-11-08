@@ -11,6 +11,10 @@ module.exports = {
                 arguments: ['number/value'],
                 returns: 'number'
             }
+        },
+        // Define the getters of the interface.
+        getters: {
+            order: 'number'
         }
     }
 };

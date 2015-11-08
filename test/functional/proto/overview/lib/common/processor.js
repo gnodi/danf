@@ -6,11 +6,11 @@ function Processor() {
 }
 
 // Define the interfaces implemented by the class.
-Computer.defineImplementedInterfaces(['processor']);
+Processor.defineImplementedInterfaces(['processor']);
 
-Computer.defineDependency('_order', 'number');
-Computer.defineDependency('_operand', 'number');
-Computer.defineDependency('_operation', 'function');
+Processor.defineDependency('_order', 'number');
+Processor.defineDependency('_operand', 'number');
+Processor.defineDependency('_operation', 'function');
 
 Object.defineProperty(Processor.prototype, 'order', {
     get: function() { return this._order; },
