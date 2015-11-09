@@ -9,6 +9,8 @@ You have many ways to learn more about [Danf](../../../README.md):
 - Think Danf has been made from random theories? Take a look at the main [concepts](concept/index.md) that guided the developement of the framework.
 - Need to deepen your understanding of Danf? Jump into the [full documentation](documentation/index.md)!
 
+> All this documentation assumes you [use an application created with the danf yeoman generator](installation.md).
+
 [←](../../../README.md)
 
 ![powered-bis](../../public/img/powered-bis.png) ![powered](../../public/img/powered.png) ![powered-white](../../public/img/powered-white.png)
