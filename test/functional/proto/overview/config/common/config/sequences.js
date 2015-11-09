@@ -4,8 +4,9 @@ module.exports = {
     // Define a sequence.
     simple: {
         // Check input stream.
-        // The input stream is an object with a property 'value'
-        // and a property 'timeout'.
+        // The input stream is an object with a property 'value',
+        // a property 'timeout' and a property 'name'.
+        // Not defining this will result in a free stream input.
         stream: {
             value: {
                 type: 'number',
@@ -14,6 +15,10 @@ module.exports = {
             timeout: {
                 type: 'number',
                 default: 10
+            },
+            name: {
+                type: 'string',
+                required: true
             }
         },
         // Define the processed operations.
@@ -31,7 +36,7 @@ module.exports = {
             }
         ],
         // Link the sequence to some collections.
-        collections: ['computing']
+        collections: ['computation']
     },
     unpredictable: {
         operations: [
@@ -44,31 +49,55 @@ module.exports = {
             {
                 service: 'computer',
                 method: 'compute',
-                arguments: [6, 10],
+                arguments: [3, 10],
                 scope: 'value'
             }
         ],
-        collections: ['computing']
+        collections: ['computation']
     },
     parallel: {
+        stream: {
+            value1: {
+                type: 'number',
+                default: 2
+            },
+            value2: {
+                type: 'number',
+                default: 3
+            },
+            name: {
+                type: 'string',
+                required: true
+            }
+        },
         operations: [
             // Use 2 different scopes.
             {
                 service: 'computer',
                 method: 'compute',
-                arguments: [2, 10],
+                arguments: ['@value1@', 10],
                 scope: 'value1'
             },
             {
                 service: 'computer',
                 method: 'compute',
-                arguments: [6, 10],
+                arguments: ['@value2@', 10],
                 scope: 'value2'
             }
         ],
-        collections: ['computing']
+        collections: ['computation']
     },
     series: {
+        stream: {
+            value: {
+                type: 'number',
+                default: 2
+            },
+            name: {
+                type: 'string',
+                required: true
+            }
+        },
         operations: [
             // Define an order.
             // Operations of the same order execute in parallel.
@@ -78,7 +107,7 @@ module.exports = {
                 order: 0,
                 service: 'computer',
                 method: 'compute',
-                arguments: [2, 10],
+                arguments: ['@value@', 10],
                 scope: 'value'
             },
             {
@@ -89,9 +118,19 @@ module.exports = {
                 scope: 'value'
             }
         ],
-        collections: ['computing']
+        collections: ['computation']
     },
     collection: {
+        stream: {
+            value: {
+                type: 'number_array',
+                default: [2, 3, 4]
+            },
+            name: {
+                type: 'string',
+                required: true
+            }
+        },
         operations: [
             {
                 service: 'computer',
@@ -99,84 +138,127 @@ module.exports = {
                 // Define the arguments for each item.
                 // '@@.@@' is a reference resolved in the context of
                 // the collection item.
-                // Here the collection items are 2, 3 and 4.
+                // Taking the default value of stream property 'value',
+                // the collection items are 2, 3 and 4.
                 // @@.@@ will resolve in 2, 3 and 4.
                 arguments: ['@@.@@'],
                 scope: 'value',
                 // Define processing on a collection.
                 collection: {
                     // Define the input collection.
-                    input: [2, 3, 4],
+                    input: '@value@',
                     // Define the async method used.
                     method: '||'
                 }
             }
         ],
-        collections: ['computing']
+        collections: ['computation']
     },
     log: {
         operations: [
             {
-                condition: function(stream, context) {
-                    return undefined !== stream.value;
-                },
+                // Define sequence internal order.
+                order: 0,
+                // Use the danf callback executor (only use it for test)
+                // to set a stringified stream.
+                service: 'danf:manipulation.callbackExecutor',
+                method: 'execute',
+                arguments: [
+                    function(stream) {
+                        var valueStream = {};
+
+                        for (var key in stream) {
+                            if (0 === key.indexOf('value')) {
+                                valueStream[key] = stream[key];
+                            }
+                        }
+
+                        return JSON.stringify(valueStream);
+                    },
+                    '@stream@'
+                ],
+                scope: 'stream'
+            },
+            {
+                order: 1,
                 // Use the danf logger to log input and output.
                 service: 'danf:logging.logger',
                 method: 'log',
                 // Define the string to log. Some references can be
                 // resolved inside a string.
-                arguments: ['<<blue>>@text@: <<bold>>@value@']
+                arguments: ['<<@color@>>@name@ @text@: <<bold>>@stream@']
             }
         ],
         // Add operations on sequences belonging to the collection
-        // 'computing'.
+        // 'computation'.
         parents: [
             {
                 // Define the order relatively to the parent sequence.
                 order: -10,
-                // Define the target as the collection 'computing'.
-                target: '&computing&',
+                // Define the target as the collection 'computation'.
+                target: '&computation&',
                 // Define the input of the sequence in the context of
                 // the parent sequence stream.
                 input: {
-                    value: '@value@',
-                    text: 'input'
+                    stream: '@.@',
+                    text: 'input',
+                    color: 'magenta',
+                    name: '@name@'
                 }
             },
             {
                 order: 10,
-                target: '&computing&',
+                target: '&computation&',
                 input: {
-                    value: '@value@',
-                    text: 'output'
+                    stream: '@.@',
+                    text: 'output',
+                    color: 'blue',
+                    name: '@name@'
                 }
             }
         ]
     },
     compute: {
+        // Add operations to the list of operations of this sequence.
+        // Here the sequence has no own operations.
         children: [
             {
+                // Define the order relatively to this sequence.
                 order: 0,
+                // Define the name of the child sequence.
                 name: 'simple',
                 input: {
-                    value: 2
+                    value: 2,
+                    name: 'simple'
                 }
             },
             {
                 order: 1,
-                name: 'unpredictable'
+                name: 'unpredictable',
+                input: {
+                    name: 'unpredictable'
+                }
             },
             {
                 order: 2,
-                name: 'parallel'
+                name: 'parallel',
+                input: {
+                    name: 'parallel'
+                }
             },
             {
                 order: 3,
-                name: 'series'
+                name: 'series',
+                input: {
+                    name: 'series'
+                }
             },
             {
                 order: 4,
-                name: 'collection'
+                name: 'collection',
+                input: {
+                    name: 'collection'
+                }
             }
         ]
     }

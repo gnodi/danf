@@ -1,17 +1,19 @@
 'use strict';
 
-/**
- * @see https://github.com/gnodi/danf/blob/master/resource/private/doc/documentation/event.md
- */
 module.exports = {
+    // Define a request.
     home: {
+        // Define the path of the request.
         path: '/',
+        // Define the available HTTP methods.
         methods: ['get'],
+        // Link the sequences.
         sequences: [
             {
                 name: 'compute'
             }
         ],
+        // Define the view.
         view: {
             html: {
                 layout: {

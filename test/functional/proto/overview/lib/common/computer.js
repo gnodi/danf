@@ -28,11 +28,11 @@ Object.defineProperty(Computer.prototype, 'processors', {
 Computer.prototype.compute = function(value, timeout) {
     var self = this;
 
-    // Handle asynchronous computing.
+    // Handle asynchronous computation.
     if (timeout) {
         // Wrap an asynchronous operation in order to return the result to the stream.
         this.__asyncProcess(function(returnAsync) {
-            // Simulate an asynchronous computing.
+            // Simulate an asynchronous computation.
             setTimeout(
                 function() {
                     for (var i = 0; i < self._processors.length; i++) {
@@ -45,7 +45,7 @@ Computer.prototype.compute = function(value, timeout) {
                 timeout
             );
         });
-    // Handle synchronous computing.
+    // Handle synchronous computation.
     } else {
         for (var i = 0; i < this._processors.length; i++) {
             value = this._processors[i].process(value);
