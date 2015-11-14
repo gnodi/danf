@@ -94,10 +94,17 @@ module.exports = {
 };
 ```
 
+Architecture
+------------
+
+Here is a diagram of the macro architecture of Danf:
+
+![architecture](resource/private/img/architecture.png)
+
 Features
 --------
 
-Here is the list of the major features proposed by Danf:
+Here is a list of the major features proposed by Danf:
 - An object-oriented programming layer (formal classes, easy inheritance, ensured interfaces, ...).
 - An inversion of control design (dependency injection via configuration files).
 - A perfect isomorphism allowing to use the same code on both client and server sides (in a standard Node.js coding style).

@@ -10,6 +10,8 @@ Model
 
 *The model layer is the layer contening your business code and allowing you to define a complex modular OOP SOA architecture.*
 
+![model](../../img/architecture-model.png)
+
 Let's explain with an example. Take an asynchronous computer and a processor mock classes:
 
 ```javascript
@@ -200,6 +202,8 @@ Sequencing
 ----------
 
 *The sequencing layer is the layer responsible for managing asynchronicity and calling the model layer.*
+
+![sequencing](../../img/architecture-sequencing.png)
 
 Here is a really simple sequence using the code defined in the model layer.
 
@@ -576,14 +580,16 @@ module.exports = {
 };
 ```
 
-> It is a good practice to use an action name for your sequence.  
-> `simple` is bad.  
+> It is a good practice to use an action name for your sequence.
+> `simple` is bad.
 > `compute` is good.
 
 Event
 -----
 
 *The event layer is the layer responsible for linking sequences to specific event like an HTTP request, a click on a DOM element, ...*
+
+![event](../../img/architecture-event.png)
 
 If you look at the path of the previously defined config, you can see that it has been done in the folder `/config/common`. This means that you will be able to use it on both client and server sides.
 
