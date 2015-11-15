@@ -1361,8 +1361,8 @@ var sequenceOperationCollectionTests = [
     {
         name: 'concat',
         input: [
-            {value: 8, delay: 70},
-            {value: 5, delay: 40},
+            {value: 8, delay: 90},
+            {value: 5, delay: 50},
             {value: 2, delay: 10}
         ],
         expected: [1, 2, 3, 4, 5, 6, 7, 8, 9]
