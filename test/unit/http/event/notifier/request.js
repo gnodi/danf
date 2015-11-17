@@ -213,4 +213,25 @@ describe('Request notifier', function() {
             })
         ;
     })
+
+    it('should prevent parameters injection', function(done) {
+        request(app)
+            .get('/redirect')
+            .set('Accept', '*/*')
+            .expect(302)
+            .end(function(err, res) {
+                if (err) {
+                    if (res) {
+                        console.log(res.text);
+                    } else {
+                        console.log(err);
+                    }
+
+                    throw err;
+                }
+
+                done();
+            })
+        ;
+    })
 })
