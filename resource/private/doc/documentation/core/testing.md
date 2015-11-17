@@ -1,14 +1,14 @@
-Code Unit Tests
-===============
+Testing
+=======
 
-[←](index.md)
+[←](../index.md)
 
 Documentation
 -------------
 
 ### Use the helper
 
-Danf provides an helper allowing you to easily test your classes.
+Danf provides an helper allowing you to easily test your classes and services.
 
 Take an example:
 
@@ -47,18 +47,7 @@ Object.defineProperty(Computer.prototype, 'value', {
 ```
 
 ```javascript
-// config/server/classes.js
-
-'use strict';
-
-module.exports = {
-    abstractComputer: require('../../lib/server/abstract-computer'),
-    computer:  require('../../lib/server/computer')
-};
-```
-
-```javascript
-// config/server/services.js
+// config/server/config/services.js
 
 'use strict';
 
@@ -71,15 +60,16 @@ module.exports = {
     }
 };
 ```
+
 You can retrieve an instance of the `TestHelper` class like this:
 
 ```javascript
-// test/computer.js
+// test/unit/computer.js
 
 'use strict';
 
 var TestHelper = require('-/danf/lib/test/test-helper'),
-    configuration = require('../danf'),
+    configuration = require('../../danf-server'),
     testHelper = new TestHelper(configuration)
 ;
 ```
@@ -108,20 +98,20 @@ This `testHelper` then allows you to:
 
 In most cases you will use `testHelper.getInstance('...')` because you want to test an isolated instance of your class (mock dependencies). In some cases, however, you might want to retrieve a service in order to make "more functional" tests.
 
-### Make tests with the proto application
+### Make tests
 
 [Mocha](https://github.com/mochajs/mocha) and [Supertest](https://github.com/tj/supertest) are integrated by default in the proto application to help you quickly implement and execute your tests.
 
 Let's test the previous example with mocha:
 
 ```javascript
-// test/computer.js
+// test/unit/computer.js
 
 'use strict';
 
 var assert = require('assert'),
     TestHelper = require('-/danf/lib/test/test-helper'),
-    configuration = require('../danf'),
+    configuration = require('../../danf-server'),
     testHelper = new TestHelper(configuration)
 ;
 
@@ -144,15 +134,17 @@ describe('Computer', function() {
 
 See the [Mocha](https://github.com/mochajs/mocha) and [Supertest](https://github.com/tj/supertest) documentation for more informations.
 
-To execute these tests, just use the command `$ make test`.
+### Execute tests
 
-This is the end of the documentation. You can now learn to [customize](../customize/index.md) the framework!
+To execute your tests, simply use the command:
+
+```sh
+$ make test
+```
 
 Navigation
 ----------
 
-[Previous section](ajax-app.md)
+[< Ajax App](ajax-app.md) |
 
-[Application](../test/tests.md)
-
-[←](index.md)
+[←](../index.md)

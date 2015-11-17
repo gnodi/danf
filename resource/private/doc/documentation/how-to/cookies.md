@@ -1,16 +1,15 @@
-Use Cookies
-===========
+How to Use Cookies
+==================
 
 [←](../index.md)
 
-Documentation
--------------
-
-### Usage
+Usage
+-----
 
 You can use the [service](../dependency-injection.md) `danf:http.cookiesRegistry` to easily manage cookies on both client-side and server-side.
 
-### API
+API
+---
 
 **Get a cookie.**
 

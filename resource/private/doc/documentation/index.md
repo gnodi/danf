@@ -3,21 +3,22 @@ Danf Full Documentation
 
 [←](../index.md)
 
-In this part, you have access to a documentation of the core features of the framework.
+Learn more about the core features of the framework:
 
-* [Start a new application](app.md)
-* [Define the configuration](configuration.md)
-* [Develop with object-oriented programming](object.md)
-* [Use dependency injection](dependency-injection.md)
-* [Extend to the client side](client-side.md)
-* [Master the events](events.md)
-* [Handle assets](assets.md)
-* [Make an ajax app](ajax-app.md)
-* [Code unit tests](tests.md)
+* [Configuration](core/configuration.md)
+* [OOP](core/oop.md)
+* [Dependency injection](core/dependency-injection.md)
+* [Sequencing](core/sequencing.md)
+* [Events](core/events.md)
+* [Ajax app](core/ajax-app.md)
+* [Testing](core/testing.md)
 
-You can also access a documentation of the sub features.
+Learn how to do things with Danf:
 
-* [Use cookies](sub/cookies.md)
-* [Handle the session](sub/session.md)
+* [How to use cookies](how-to/cookies.md)
+* [How to handle the session](how-to/session.md)
+* [How to redirect a HTTP request](how-to/redirect.md)
+* [How to start many workers](how-to/workers.md)
+* [How to works with public assets (images, css, ...)](how-to/assets.md)
 
 [←](../index.md)

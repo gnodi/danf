@@ -9,7 +9,7 @@ Here is a list of danf modules. Fork it and add your own!
 >
 > Examples:
 > * `danf-me-form`
-> * `danf-codator-mongo`
+> * `danf-gnodi-mongo`
 
 * [danf](https://github.com/gnodi/danf): This is not a module but the framework itself. Add your module after it!
 

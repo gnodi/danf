@@ -1,7 +1,7 @@
-Make an Ajax App
-================
+Ajax App
+========
 
-[←](index.md)
+[←](../index.md)
 
 Documentation
 -------------
@@ -17,15 +17,15 @@ Danf provides an easy way to do that while keeping deep linking, bookmarking and
 a(href='/a/1') a-1 (standard link - reload the page)
 a(href='/a/2', data-ajax='{}') a-2 (ajax link - reload the body of the page asynchronously)
 a(href='/a/3', data-ajax='{"autoload":0}') a-3 (autoload ajax link - load the content of the link automatically)
+a(href='/a/4', data-ajax='{"autoload":60}') a-3 (autoload ajax link - reload the content of the link automatically every 60 secondes)
 ```
 
-The first link is a standard link.
+* The first link is a standard link.
+* The second link appears as a standard clickable link in the page. When you click it, the content of the link is loaded and displayed in the body. An history state is created and the path of your current URL becomes `/a/2`.
+* The third link is loaded automaticaly and replaced with the loaded content. No history state is created. It feels like it is a normal part of the page. This is usefull to factorize page chunks like a menu, a header, a footer, ...
+* The fourth link is like the third one, except that the content will be reloaded every 60 secondes.
 
-The second link appears as a standard clickable link in the page. When you click it, the content of the link is loaded and displayed in the body. An history state is created and the path of your current URL becomes `/a/2`.
-
-The third link is loaded automaticaly and replaced with the loaded content. No history state is created. It feels like it is a normal part of the page. This is usefull to factorize page chunks like a menu, a header, a footer, ...
-
-For the ajax links to work, you have to define a request event for each one:
+For these ajax links to work, you have to define a request event for each one:
 
 ```javascript
 // config/common/config/events/request.js
@@ -52,6 +52,9 @@ module.exports = {
 >
 > module.exports = {
 >     a1: {
+>         headers: {
+>             'Content-Type': 'application/json; charset=utf-8'
+>         },   
 >         view: {
 >             html: {
 >                 layout: {
@@ -157,9 +160,6 @@ module.exports = {
 Navigation
 ----------
 
-[Previous section](app.md) |
- [Next section](event.md)
+[< Events](events.md) | [Testing >](testing.md)
 
-[Application](../test/ajax-app.md)
-
-[←](index.md)
+[←](../index.md)
