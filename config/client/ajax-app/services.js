@@ -9,7 +9,7 @@ module.exports = {
             history: '#danf:manipulation.history#',
             readyProcessor: '#danf:manipulation.readyProcessor#',
             router: '#danf:http.router#',
-            reloadingSequence: '#danf:event.sequencesContainer[danf:ajaxApp.followLink]#'
+            reloadingSequence: '#danf:sequencing.sequencesContainer[danf:ajaxApp.followLink]#'
         }
     },
     formSubmitter: {

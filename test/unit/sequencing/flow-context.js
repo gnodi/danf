@@ -3,7 +3,7 @@
 require('../../../lib/common/init');
 
 var assert = require('assert'),
-    FlowContext = require('../../../lib/common/event/flow-context'),
+    FlowContext = require('../../../lib/common/sequencing/flow-context'),
     Flow = require('../../../lib/common/manipulation/flow')
 ;
 

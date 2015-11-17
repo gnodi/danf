@@ -5,7 +5,7 @@ require('../../../lib/common/init');
 var assert = require('assert'),
     utils = require('../../../lib/common/utils'),
     Flow = require('../../../lib/common/manipulation/flow'),
-    Sequence = require('../../../lib/common/event/sequence')
+    Sequence = require('../../../lib/common/sequencing/sequence')
 ;
 
 var mapProvider = require('../../fixture/manipulation/map-provider');
