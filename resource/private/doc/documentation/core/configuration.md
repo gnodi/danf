@@ -86,6 +86,25 @@ module.exports = {
 };
 ```
 
+A bad config like:
+
+```javascript
+// config/common/config/this.js
+
+'use strict';
+
+module.exports = {
+    foo: [2, 11, 5],
+    bar: 4
+};
+```
+
+will throw an error with the following explicit message:
+
+```
+The expected value for "main:config.bar" is a "string"; a "number" of value `4` given instead.
+```
+
 As you can see this config has been defined in the folder `config/common`. This means that it will be available for both client and server sides. You can override this config on one side with:
 
 ```javascript
@@ -203,63 +222,47 @@ The config is built from logical directory tree structure. For instance, if you 
 > - The absolute namespace of your module is 'main:'.
 > - The absolute namespace of `bar` is `main:foo:bar:`.
 
-#### Type
+#### Use the contract attribute "type"
 
 There is many available types helping you to easily check the format of your config:
-* `number`: A number value.
-* `string`: A string value.
-* `boolean`: A boolean value.
-* `function`: A function value.
-* `date`: A Date value.
-* `error`: An Error value.
-* `undefined`: Undefined value.
-* `null`: A null value.
-* `free`: A totally free value.
-* `number_array`: An array of number values.
-* `string_array`: An array of string values.
-* `boolean_array`: An array of boolean values.
-* `function_array`: An array of function values.
-* `date_array`: An array of Date values.
-* `error_array`: An array of Error values.
-* `free_array`: An array of free values.
-* `number_object`: An object of number properties.
-* `string_object`: An object of string properties.
-* `boolean_object`: An object of boolean properties.
-* `function_object`: An object of function properties.
-* `date_object`: An object of Date properties.
-* `error_object`: An object of Error properties.
-* `free_object`: An object of free properties.
-* `number_array_array`: An array of arrays of number values.
-* `string_array_array`: An array of arrays of string values.
-* `boolean_array_array`: An array of arrays of boolean values.
-* `free_array_array`: An array of arrays of free values.
-* `number_array_object`: An object of arrays of number properties.
-* `string_array_object`: An object of arrays of string properties.
-* `boolean_array_object`: An object of arrays of boolean properties.
-* `free_array_object`: An object of arrays of free properties.
-* `embedded`: An embedded object with defined names for its properties.
-* `embedded_array`: An array of embedded object with defined names for their properties.
-* `embedded_object`: An object of embedded object with defined names for their properties.
-* `function() {}`: An interpreted callback.
+- `number`: A number value.
+- `string`: A string value.
+- `boolean`: A boolean value.
+- `function`: A function value.
+- `date`: A Date value.
+- `regexp`: A RegExp value.
+- `error`: An Error value.
+- `undefined`: Undefined value.
+- `null`: A null value.
+- `free`: A totally free value.
+- `array`: An array of values.
+- `*_array`: An array of * values.
+- `object`: An array with properties.
+- `*_object`: An array with * properties.
+- `*_array_array`: An array of arrays of * values.
+- `*_array_object`: An object with arrays of * values.
+- `*_object_array`: An array of object with * properties.
+- `*_object_object`: An object with objects with * properties.
+- `embedded`: An embedded object with defined names for its properties.
+- `embedded_array`: An array of embedded object with defined names for their properties.
+- `embedded_object`: An object of embedded object with defined names for their properties.
 
 ##### Simple
 
 ```javascript
-// danf.js
+// config/common/contract.js
 
 'use strict';
 
 module.exports = {
-    contract: {
-        field: {
-            type: 'number'
-        }
+    field: {
+        type: 'number'
     }
 };
 ```
 
 ```javascript
-// config/server/this.js
+// config/common/config/this.js
 
 'use strict';
 
@@ -281,21 +284,19 @@ Other types with the same behaviour:
 ##### *_array
 
 ```javascript
-// danf.js
+// config/common/contract.js
 
 'use strict';
 
 module.exports = {
-    contract: {
-        field: {
-            type: 'number_array'
-        }
+    field: {
+        type: 'number_array'
     }
 };
 ```
 
 ```javascript
-// config/server/this.js
+// config/common/config/this.js
 
 'use strict';
 
@@ -304,32 +305,22 @@ module.exports = {
 };
 ```
 
-Other types with the same behaviour:
-* `string_array`
-* `boolean_array`
-* `function_array`
-* `date_array`
-* `error_array`
-* `free_array`
-
 ##### *_object
 
 ```javascript
-// danf.js
+// config/common/contract.js
 
 'use strict';
 
 module.exports = {
-    contract: {
-        field: {
-            type: 'number_object'
-        }
+    field: {
+        type: 'number_object'
     }
 };
 ```
 
 ```javascript
-// config/server/this.js
+// config/common/config/this.js
 
 'use strict';
 
@@ -341,32 +332,22 @@ module.exports = {
 };
 ```
 
-Other types with the same behaviour:
-* `string_object`
-* `boolean_object`
-* `function_object`
-* `date_object`
-* `error_object`
-* `free_object`
-
 ##### *_array_array
 
 ```javascript
-// danf.js
+// config/common/contract.js
 
 'use strict';
 
 module.exports = {
-    contract: {
-        field: {
-            type: 'number_array_array'
-        }
+    field: {
+        type: 'number_array_array'
     }
 };
 ```
 
 ```javascript
-// config/server/this.js
+// config/common/config/this.js
 
 'use strict';
 
@@ -379,32 +360,22 @@ module.exports = {
 };
 ```
 
-Other types with the same behaviour:
-* `string_array_array`
-* `boolean_array_array`
-* `function_array_array`
-* `date_array_array`
-* `error_array_array`
-* `free_array_array`
-
 ##### *_array_object
 
 ```javascript
-// danf.js
+// config/common/contract.js
 
 'use strict';
 
 module.exports = {
-    contract: {
-        field: {
-            type: 'number_array_object'
-        }
+    field: {
+        type: 'number_array_object'
     }
 };
 ```
 
 ```javascript
-// config/server/this.js
+// config/common/config/this.js
 
 'use strict';
 
@@ -416,32 +387,22 @@ module.exports = {
 };
 ```
 
-Other types with the same behaviour:
-* `string_array_object`
-* `boolean_array_object`
-* `function_array_object`
-* `date_array_object`
-* `error_array_object`
-* `free_array_object`
-
 ##### *_object_array
 
 ```javascript
-// danf.js
+// config/common/contract.js
 
 'use strict';
 
 module.exports = {
-    contract: {
-        field: {
-            type: 'number_object_array'
-        }
+    field: {
+        type: 'number_object_array'
     }
 };
 ```
 
 ```javascript
-// config/server/this.js
+// config/common/config/this.js
 
 'use strict';
 
@@ -453,32 +414,22 @@ module.exports = {
 };
 ```
 
-Other types with the same behaviour:
-* `string_object_array`
-* `boolean_object_array`
-* `function_object_array`
-* `date_object_array`
-* `error_object_array`
-* `free_object_array`
-
 ##### *_object_object
 
 ```javascript
-// danf.js
+// config/common/contract.js
 
 'use strict';
 
 module.exports = {
-    contract: {
-        field: {
-            type: 'number_object_object'
-        }
+    field: {
+        type: 'number_object_object'
     }
 };
 ```
 
 ```javascript
-// config/server/this.js
+// config/common/config/this.js
 
 'use strict';
 
@@ -490,32 +441,22 @@ module.exports = {
 };
 ```
 
-Other types with the same behaviour:
-* `string_object_object`
-* `boolean_object_object`
-* `function_object_object`
-* `date_object_object`
-* `error_object_object`
-* `free_object_object`
-
 ##### Embedded
 
 ```javascript
-// danf.js
+// config/common/contract.js
 
 'use strict';
 
 module.exports = {
-    contract: {
-        field: {
-            type: 'embedded',
-            embed: {
-                foo: {
-                    type: 'number'
-                },
-                bar: {
-                    type: 'string'
-                }
+    field: {
+        type: 'embedded',
+        embed: {
+            foo: {
+                type: 'number'
+            },
+            bar: {
+                type: 'string'
             }
         }
     }
@@ -523,7 +464,7 @@ module.exports = {
 ```
 
 ```javascript
-// config/server/this.js
+// config/common/config/this.js
 
 'use strict';
 
@@ -538,21 +479,19 @@ module.exports = {
 ##### Embedded array
 
 ```javascript
-// danf.js
+// config/common/contract.js
 
 'use strict';
 
 module.exports = {
-    contract: {
-        field: {
-            type: 'embedded_array',
-            embed: {
-                foo: {
-                    type: 'number'
-                },
-                bar: {
-                    type: 'string'
-                }
+    field: {
+        type: 'embedded_array',
+        embed: {
+            foo: {
+                type: 'number'
+            },
+            bar: {
+                type: 'string'
             }
         }
     }
@@ -560,7 +499,7 @@ module.exports = {
 ```
 
 ```javascript
-// config/server/this.js
+// config/common/config/this.js
 
 'use strict';
 
@@ -581,21 +520,19 @@ module.exports = {
 ##### Embedded object
 
 ```javascript
-// danf.js
+// config/common/contract.js
 
 'use strict';
 
 module.exports = {
-    contract: {
-        field: {
-            type: 'embedded_object',
-            embed: {
-                foo: {
-                    type: 'number'
-                },
-                bar: {
-                    type: 'string'
-                }
+    field: {
+        type: 'embedded_object',
+        embed: {
+            foo: {
+                type: 'number'
+            },
+            bar: {
+                type: 'string'
             }
         }
     }
@@ -603,7 +540,7 @@ module.exports = {
 ```
 
 ```javascript
-// config/server/this.js
+// config/common/config/this.js
 
 'use strict';
 
@@ -621,61 +558,22 @@ module.exports = {
 };
 ```
 
-##### Callback
-
-```javascript
-// danf.js
-
-'use strict';
-
-module.exports = {
-    contract: {
-        field: {
-            type: function(value) {
-                if (value <= 1) {
-                    // OK.
-                    return;
-                } else if (value >= 3) {
-                    // OK.
-                    return true;
-                }
-
-                // KO.
-                return 'the value must be 2';
-            }
-        }
-    }
-};
-```
-
-```javascript
-// config/server/this.js
-
-'use strict';
-
-module.exports = {
-    field: 2
-};
-```
-
 ##### Multitypes
 
 ```javascript
-// danf.js
+// config/common/contract.js
 
 'use strict';
 
 module.exports = {
-    contract: {
-        field: {
-            type: 'number|string'
-        }
+    field: {
+        type: 'number|string'
     }
 };
 ```
 
 ```javascript
-// config/server/this.js
+// config/common/config/this.js
 
 'use strict';
 
@@ -685,7 +583,7 @@ module.exports = {
 ```
 
 ```javascript
-// config/server/this.js
+// config/common/config/this.js
 
 'use strict';
 
@@ -699,18 +597,16 @@ module.exports = {
 Notice that some values can be interpreted:
 
 ```javascript
-// danf.js
+// config/common/contract.js
 
 'use strict';
 
 module.exports = {
-    contract: {
-        number: {
-            type: 'number'
-        },
-        boolean: {
-            type: 'boolean'
-        }
+    number: {
+        type: 'number'
+    },
+    boolean: {
+        type: 'boolean'
     }
 };
 ```
@@ -718,7 +614,11 @@ module.exports = {
 Config:
 
 ```javascript
-{
+// config/common/config/this.js
+
+'use strict';
+
+module.exports = {
     number: '1',
     boolean: '1'
 }
@@ -733,41 +633,63 @@ will result in:
 }
 ```
 
-#### Required
+#### Use the contract attribute "format"
 
-`required` forces the definition of the field:
+Format allows you to format the data. It occurs before the type check during the merging phase and the validation phase.
 
 ```javascript
-// danf.js
+// config/common/contract.js
 
 'use strict';
 
 module.exports = {
-    contract: {
-        field: {
-            type: 'number',
-            required: true
-        }
+    field: {
+        format: function(value) {
+            if (!Array.isArray(value)) {
+                return [value];
+            }
+        },
+        type: 'number_array'
     }
 };
 ```
 
-By default `required = false`.
-
-#### Default
-
-`default` allows to specify a default value if the field is not defined:
+Config:
 
 ```javascript
-// danf.js
+// config/common/config/this.js
 
 'use strict';
 
 module.exports = {
-    contract: {
-        field: {
-            type: 'number',
-            default: 0
+    field: 2
+};
+```
+
+will result in the interpreted config:
+
+```javascript
+{
+    field: [2]
+}
+```
+
+#### Use the contract attribute "validate"
+
+Validate allows you to format and validate the data. It occurs after the type check only at the validation phase.
+
+```javascript
+// config/common/contract.js
+
+'use strict';
+
+module.exports = {
+    field: {
+        type: 'number',
+        validate: function(value) {
+            if (1 < value) {
+                throw new Error('an "integer lower than or equal to 1"');
+            }
         }
     }
 };
@@ -776,7 +698,68 @@ module.exports = {
 Config:
 
 ```javascript
-{}
+// config/common/config/this.js
+
+'use strict';
+
+module.exports = {
+    field: 2
+};
+```
+
+will throw an error with the following message:
+
+```
+The expected value for "main:config.field" is an "integer lower than or equal to 1"; a "number" of value `2` given instead.
+```
+
+> Validate can return a formatted value.
+
+#### Use the contract attribute "required"
+
+`required` forces the definition of the field:
+
+```javascript
+// config/common/contract.js
+
+'use strict';
+
+module.exports = {
+    field: {
+        type: 'number',
+        required: true
+    }
+};
+```
+
+By default `required = false`.
+
+#### Use the contract attribute "default"
+
+`default` allows to specify a default value if the field is not defined:
+
+```javascript
+// config/common/contract.js
+
+'use strict';
+
+module.exports = {
+    field: {
+        type: 'number',
+        default: 0
+    }
+};
+```
+
+Config:
+
+```javascript
+// config/common/config/this.js
+
+'use strict';
+
+module.exports = {  
+};
 ```
 
 will result in:
@@ -787,21 +770,19 @@ will result in:
 
 The value must be of the defined type.
 
-#### Flatten
+#### Use the contract attribute "flatten"
 
 Flatten allow to flatten a field:
 
 ```javascript
-// danf.js
+// config/common/contract.js
 
 'use strict';
 
 module.exports = {
-    contract: {
-        field: {
-            type: 'number_object',
-            flatten: true
-        }
+    field: {
+        type: 'number_object',
+        flatten: true
     }
 };
 ```
@@ -809,7 +790,11 @@ module.exports = {
 Config:
 
 ```javascript
-{
+// config/common/config/this.js
+
+'use strict';
+
+module.exports = {
     field: {
         foo: {
             bar: 2
@@ -820,7 +805,7 @@ Config:
             }
         }
     }
-}
+};
 ```
 
 will result in:
@@ -837,21 +822,19 @@ will result in:
 You can specify the separator instead of `true` (`flatten: ';'`)
 The flattened value should be of the defined type.
 
-#### Namespace
+#### Use the contract attribute "namespace"
 
 Namespace prefixes your field with the namespace of its owner module:
 
 ```javascript
-// danf.js
+// config/common/contract.js
 
 'use strict';
 
 module.exports = {
-    contract: {
-        field: {
-            type: 'number_object',
-            namespace: true
-        }
+    field: {
+        type: 'number_object',
+        namespace: true
     }
 };
 ```
@@ -859,7 +842,11 @@ module.exports = {
 Config:
 
 ```javascript
-{
+// config/common/config/this.js
+
+'use strict';
+
+module.exports = {
     field: {
         foo: 1,
         bar: 4
@@ -880,21 +867,19 @@ will result in:
 
 It is a good way to avoid naming collisions between danf modules.
 
-#### References
+#### Use the contract attribute "references"
 
 References defines the references which should be prefixed with the namespace of theirs owner module:
 
 ```javascript
-// danf.js
+// config/common/contract.js
 
 'use strict';
 
 module.exports = {
-    contract: {
-        field: {
-            type: 'number_object',
-            references: ['#', '$']
-        }
+    field: {
+        type: 'number_object',
+        references: ['#', '$']
     }
 };
 ```
@@ -902,7 +887,11 @@ module.exports = {
 Config:
 
 ```javascript
-{
+// config/common/config/this.js
+
+'use strict';
+
+module.exports = {
     field: {
         foo: 'hello $world$!',
         bar: #bar#
@@ -923,314 +912,141 @@ will result in:
 
 References `%...%` are automaticaly prefixed.
 
+> A chapter explaining references is available below.
+
 #### Advanced example
 
+Here is a complex contract:
+
 ```javascript
-// danf.js
+// config/common/contract.js
+
+'use strict';
 
 module.exports = {
-    contract: {
-        providers: {
-            type: 'embedded_object',
-            embed: {
-                codes: {
-                    type: 'number_array'
-                },
-                active: {
-                    type: 'boolean',
-                    default: false
-                },
-                rules: {
-                    type: 'embedded_array',
-                    embed: {
-                        name: {
-                            type: 'string',
-                            required: true
-                        },
-                        params: {
-                            type: 'free'
-                        }
+    providers: {
+        type: 'embedded_object',
+        embed: {
+            codes: {
+                type: 'number_array'
+            },
+            active: {
+                type: 'boolean',
+                default: false
+            },
+            rules: {
+                type: 'embedded_array',
+                embed: {
+                    name: {
+                        type: 'string',
+                        required: true
+                    },
+                    params: {
+                        type: 'free'
                     }
                 }
             }
-        },
-        size: {
-            type: 'number',
-        },
-        terms: {
-            type: 'string_array'
-        },
-        properties: {
-            type: 'free_object'
-        },
-        methods: {
-            type: 'number_array_object'
         }
     },
-    config: {
-        this: {
-            providers: {
-                images: {
-                    codes: [123, 256],
-                    active: true,
-                    rules: [
-                        {
-                            name: 'size',
-                            params: {
-                                min: 2,
-                                max: 3
-                            }
-                        },
-                        {
-                            name: 'existence',
-                            params: null
-                        }
-                    ]
+    size: {
+        type: 'number',
+    },
+    terms: {
+        type: 'string_array'
+    },
+    properties: {
+        type: 'free_object'
+    },
+    methods: {
+        type: 'number_array_object'
+    }
+};
+```
+
+Here is a config respecting this contract:
+
+```javascript
+// config/common/config/this.js
+
+'use strict';
+
+module.exports = {
+    providers: {
+        images: {
+            codes: [123, 256],
+            active: true,
+            rules: [
+                {
+                    name: 'size',
+                    params: {
+                        min: 2,
+                        max: 3
+                    }
                 },
-                videos: {
-                    codes: [],
-                    active: false,
-                    rules: [
-                        {
-                            name: 'type',
-                            params: 'mpeg'
-                        }
-                    ]
-                },
-                big_images: {
-                    codes: [123, 256],
-                    active: true,
-                    rules: [
-                        {
-                            name: 'size',
-                            params: {
-                                min: 4
-                            }
-                        }, {
-                            name: 'existence',
-                            params: null
-                        }
-                    ]
+                {
+                    name: 'existence',
+                    params: null
                 }
-            },
-            size: 4,
-            terms: [
-                'condition1',
-                'condition2',
-                'condition3'
-            ],
-            properties: {
-                backgroundColor: { r: 50, g: 100, b: 150 },
-                width: 1920,
-                height: 1080
-            },
-            methods: {
-                setBlue: [0, 0, 255],
-                setYellow: [255, 255, 0]
-            }
-        }
-    }
-};
-```
-
-### Override the config of dependencies
-
-You can override the config of a submodule dependency in this way:
-
-```javascript
-// mod1/danf.js
-
-'use strict';
-
-module.exports = {
-    contract: {
-        width: {
-            type: 'number'
+            ]
         },
-        height: {
-            type: 'number'
-        }
-    },
-    config: {
-        this: {
-            width: 2,
-            height: 4
-        }
-    }
-};
-```
-
-```javascript
-// danf.js
-
-'use strict';
-
-module.exports = {
-    dependencies: {
-        mod1: require('./mod1/danf')
-    },
-    contract: {
-    },
-    config: {
-        this: {
+        videos: {
+            codes: [],
+            active: false,
+            rules: [
+                {
+                    name: 'type',
+                    params: 'mpeg'
+                }
+            ]
         },
-        mod1: {
-            width: 3
-        }
-    }
-};
-```
-
-The resulting config is:
-
-```javascript
-{
-    width: 3,
-    height: 4
-}
-```
-
-### Force version of a dependency
-
-Sometimes, you can have dependencies with an indentical dependency. You could then decide to merge this dependencies.
-It is a bit complicated, but let's see an example:
-
-```javascript
-// danf.js
-
-'use strict';
-
-module.exports = {
-    dependencies: {
-        mod1: require('./mod1/danf'),
-        mod2: require('./mod2/danf')
-    }
-};
-```
-
-```javascript
-// mod1/danf.js
-
-'use strict';
-
-module.exports = {
-    dependencies: {
-        mod10: require('./mod1/danf')
-    }
-};
-```
-
-```javascript
-// mod2/danf.js
-
-'use strict';
-
-module.exports = {
-    dependencies: {
-        mod10: require('./mod10/danf')
-    }
-};
-```
-
-```javascript
-// mod1/mod10/danf.js
-
-'use strict';
-
-module.exports = {
-};
-```
-
-```javascript
-// mod2/mod10/danf.js
-
-'use strict';
-
-module.exports = {
-};
-```
-
-You will have a `mod1.mod10` and a `mod2.mod10` submodules whereas you certainly want only one of the two.
-You can force the use of only one in this way:
-
-```javascript
-// danf.js
-
-'use strict';
-
-module.exports = {
-    dependencies: {
-        mod1: require('./mod1/danf'),
-        mod2: require('./mod2/danf'),
-        'mod2.mod10': 'mod1.mod10'
-    }
-};
-```
-
-This means that, instead of using its own dependency, `mod2` will use `mod1` one's for `mod10` dependency.
-It is not a default behaviour because it could lead to problems with the version of Node's modules.
-However, you will certainly need this feature if you use the dependency injection in order to ensure scope for services.
-
-Of course, you can override the config of the dependency of your own dependencies:
-
-```javascript
-// danf.js
-
-'use strict';
-
-module.exports = {
-    dependencies: {
-        mod1: require('./mod1/danf'),
-        mod2: require('./mod2/danf')
-    },
-    config: {
-        'mod1.mod10': {
-            // ...
-        }
-    }
-};
-```
-
-### Define config for a specific environment
-
-```javascript
-// danf.js
-
-'use strict';
-
-module.exports = {
-    contract: {
-        debug: {
-            type: 'boolean'
+        big_images: {
+            codes: [123, 256],
+            active: true,
+            rules: [
+                {
+                    name: 'size',
+                    params: {
+                        min: 4
+                    }
+                }, {
+                    name: 'existence',
+                    params: null
+                }
+            ]
         }
     },
-    config: {
-        this: {
-            debug: true;
-        },
-        'this/prod': {
-            debug: false;
-        }
+    size: 4,
+    terms: [
+        'condition1',
+        'condition2',
+        'condition3'
+    ],
+    properties: {
+        backgroundColor: { r: 50, g: 100, b: 150 },
+        width: 1920,
+        height: 1080
+    },
+    methods: {
+        setBlue: [0, 0, 255],
+        setYellow: [255, 255, 0]
     }
 };
 ```
 
-The config for an environment overrides the standard config. Here, in a `prod` environment, the resulting config will be `debug: false` whereas in the others it will be `debug: true`.
-
-### Factorize config
+#### Factorize config
 
 You can factorize your configuration using parameters:
 
 ```javascript
-// config/server/this.js
+// config/common/config/this.js
 
 'use strict';
 
 module.exports = {
     roles: {
-        admin: %users.lana%,
-        moderator: %users.tom%,
-        contact: %users.tom%
+        admin: '%users.lana%',
+        moderator: '%users.tom%',
+        contact: '%users.tom%'
     }
 };
 ```
@@ -1238,19 +1054,19 @@ module.exports = {
 `@users.lana@` is a reference to a parameter:
 
 ```javascript
-// config/server/parameters.js
+// config/common/config/parameters.js
 
 'use strict';
 
 module.exports = {
     users: {
         tom: {
-            name: tom,
-            email: tom-@danf.com
+            name: 'tom',
+            email: 'tom-@danf.com'
         },
         lana: {
-            name: lana,
-            email: lana-@danf.com
+            name: 'lana',
+            email: 'lana-@danf.com'
         }
     }
 };
@@ -1261,21 +1077,21 @@ The resulting config of the interpretation of these references will be:
 ```javascript
 roles: {
     admin: {
-        name: lana,
-        email: lana-@danf.com
+        name: 'lana',
+        email: 'lana-@danf.com'
     },
     moderator: {
-        name: tom,
-        email: tom-@danf.com
+        name: 'tom',
+        email: 'tom-@danf.com'
     },
     contact: {
-        name: tom,
-        email: tom-@danf.com
+        name: 'tom',
+        email: 'tom-@danf.com'
     }
 };
 ```
 
-### Use references
+### References
 
 References are a powerful tool used by the config. A reference works as a kind of selector on a context. There are many types of references used in Danf in many places. The parameters are one of these types. `%` is the delimiter of this type (this delimiter can change for another type) and the context is the list of configured parameters. The references of the parameters are interpreted before anything else occurs on the config. This is why you can factorize configuration with it. The interpretation of a type of references can be made at any time (even runtime) by any classes.
 
@@ -1285,7 +1101,7 @@ Let's see some examples to understand how works the references:
 // Source
 '%foo.bar%'
 // Context
-{foo: { bar: 'ok' }}
+{foo: {bar: 'ok'}}
 // Result of the interpretation
 'ok'
 ```
