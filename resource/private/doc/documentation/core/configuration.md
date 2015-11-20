@@ -222,9 +222,12 @@ The config is built from logical directory tree structure. For instance, if you 
 > - The absolute namespace of your module is 'main:'.
 > - The absolute namespace of `bar` is `main:foo:bar:`.
 
-#### Use the contract attribute "type"
+#### Use the contract attributes
 
-There is many available types helping you to easily check the format of your config:
+##### Type
+
+Attribute `type` allows to check the type of a field.
+There are many available types helping you to easily check the format of your config:
 - `number`: A number value.
 - `string`: A string value.
 - `boolean`: A boolean value.
@@ -247,7 +250,7 @@ There is many available types helping you to easily check the format of your con
 - `embedded_array`: An array of embedded object with defined names for their properties.
 - `embedded_object`: An object of embedded object with defined names for their properties.
 
-##### Simple
+**Simple**
 
 ```javascript
 // config/common/contract.js
@@ -271,17 +274,7 @@ module.exports = {
 };
 ```
 
-Other types with the same behaviour:
-* `string`
-* `boolean`
-* `function`
-* `date`
-* `error`
-* `undefined`
-* `null`
-* `free`
-
-##### *_array
+***_array**
 
 ```javascript
 // config/common/contract.js
@@ -305,7 +298,7 @@ module.exports = {
 };
 ```
 
-##### *_object
+***_object*
 
 ```javascript
 // config/common/contract.js
@@ -332,7 +325,7 @@ module.exports = {
 };
 ```
 
-##### *_array_array
+***_array_array**
 
 ```javascript
 // config/common/contract.js
@@ -360,7 +353,7 @@ module.exports = {
 };
 ```
 
-##### *_array_object
+***_array_object**
 
 ```javascript
 // config/common/contract.js
@@ -387,7 +380,7 @@ module.exports = {
 };
 ```
 
-##### *_object_array
+***_object_array**
 
 ```javascript
 // config/common/contract.js
@@ -414,7 +407,7 @@ module.exports = {
 };
 ```
 
-##### *_object_object
+***_object_object**
 
 ```javascript
 // config/common/contract.js
@@ -441,7 +434,7 @@ module.exports = {
 };
 ```
 
-##### Embedded
+**Embedded**
 
 ```javascript
 // config/common/contract.js
@@ -476,7 +469,7 @@ module.exports = {
 };
 ```
 
-##### Embedded array
+**Embedded array**
 
 ```javascript
 // config/common/contract.js
@@ -517,7 +510,7 @@ module.exports = {
 };
 ```
 
-##### Embedded object
+**Embedded object**
 
 ```javascript
 // config/common/contract.js
@@ -558,7 +551,7 @@ module.exports = {
 };
 ```
 
-##### Multitypes
+**Multitypes**
 
 ```javascript
 // config/common/contract.js
@@ -592,7 +585,7 @@ module.exports = {
 };
 ```
 
-##### Interpretation
+**Interpretation**
 
 Notice that some values can be interpreted:
 
@@ -633,9 +626,9 @@ will result in:
 }
 ```
 
-#### Use the contract attribute "format"
+##### Format
 
-Format allows you to format the data. It occurs before the type check during the merging phase and the validation phase.
+Attribut `format` allows you to format the data. It occurs before the type check during the merging phase and the validation phase.
 
 ```javascript
 // config/common/contract.js
@@ -674,9 +667,9 @@ will result in the interpreted config:
 }
 ```
 
-#### Use the contract attribute "validate"
+##### Validate
 
-Validate allows you to format and validate the data. It occurs after the type check only at the validation phase.
+Attribute `validate` allows you to format and validate the data. It occurs after the type check only at the validation phase.
 
 ```javascript
 // config/common/contract.js
@@ -715,9 +708,9 @@ The expected value for "main:config.field" is an "integer lower than or equal to
 
 > Validate can return a formatted value.
 
-#### Use the contract attribute "required"
+##### Required
 
-`required` forces the definition of the field:
+Attribute `required` forces the definition of the field:
 
 ```javascript
 // config/common/contract.js
@@ -734,9 +727,9 @@ module.exports = {
 
 By default `required = false`.
 
-#### Use the contract attribute "default"
+##### Default
 
-`default` allows to specify a default value if the field is not defined:
+Attribute `default` allows to specify a default value if the field is not defined:
 
 ```javascript
 // config/common/contract.js
@@ -770,9 +763,9 @@ will result in:
 
 The value must be of the defined type.
 
-#### Use the contract attribute "flatten"
+##### Flatten
 
-Flatten allow to flatten a field:
+Attribute `flatten` allow to flatten a field:
 
 ```javascript
 // config/common/contract.js
@@ -822,9 +815,9 @@ will result in:
 You can specify the separator instead of `true` (`flatten: ';'`)
 The flattened value should be of the defined type.
 
-#### Use the contract attribute "namespace"
+##### Namespace
 
-Namespace prefixes your field with the namespace of its owner module:
+Attribute `namespace` prefixes your field with the namespace of its owner module:
 
 ```javascript
 // config/common/contract.js
@@ -867,9 +860,9 @@ will result in:
 
 It is a good way to avoid naming collisions between danf modules.
 
-#### Use the contract attribute "references"
+##### References
 
-References defines the references which should be prefixed with the namespace of theirs owner module:
+Attribute `references` defines the references which should be prefixed with the namespace of theirs owner module:
 
 ```javascript
 // config/common/contract.js
@@ -914,7 +907,7 @@ References `%...%` are automaticaly prefixed.
 
 > A chapter explaining references is available below.
 
-#### Advanced example
+#### See an advanced example
 
 Here is a complex contract:
 

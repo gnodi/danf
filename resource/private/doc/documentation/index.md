@@ -3,6 +3,8 @@ Danf Full Documentation
 
 [←](../index.md)
 
+![architecture](../../img/architecture.png)
+
 Learn more about the core features of the framework:
 
 * [Configuration](core/configuration.md)

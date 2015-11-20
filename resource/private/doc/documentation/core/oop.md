@@ -3,6 +3,8 @@ OOP
 
 [←](../index.md)
 
+![model](../../../img/architecture-model.png)
+
 Documentation
 -------------
 

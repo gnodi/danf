@@ -3,6 +3,8 @@ Dependency Injection
 
 [←](../index.md)
 
+![model](../../../img/architecture-model.png)
+
 Documentation
 -------------
 
@@ -343,6 +345,49 @@ Synchronizer.prototype.compute = function() {
 ```
 
 `Synchronizer.defineDependency('_computers', 'computer_array');` means that the private property `_computers` should be an array of objects whom classes implement the interface `computer`.
+
+#### Registry
+
+You can control the instantiation of a service injected into another. To do this, use the attribute `factories` and the references of type `>`:
+
+```javascript
+// config/common/config/service.js
+
+'use strict';
+
+module.exports = {
+    itemsRegistry: {
+        class: 'itemsRegistry',
+        registry: {
+            method: 'get',
+            namespace: [1]
+        }
+    }
+};
+```
+
+This allows to use this service to inject objects/values retrieved with its method `get`. Imagine the following class for `itemsRegistry`:
+
+```javascript
+// lib/common/items-registry.js
+
+'use strict';
+
+module.exports = ItemsRegistry;
+
+function ItemsRegistry() {
+}
+
+ItemsRegistry.prototype.get = function(category, name) {
+    // ...
+
+    return item;
+}
+```
+
+You will then be able to inject some items into other services thanks to the reference `#itemsRegistry[computing][mouse]#`.
+
+`namespace` is used to tell the arguments which should be namespaced. Here this is the second one (`[1]`), so `mouse` will be namespaced with the current module contextual namespace (something like `main:mouse`).
 
 #### Factories
 
