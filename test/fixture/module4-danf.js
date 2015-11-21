@@ -376,7 +376,7 @@ module.exports = {
                             input: '@value@',
                             method: '|-',
                             parameters: {
-                                limit: 2
+                                limit: 1
                             },
                             aggregate: function(value) {
                                 var aggregatedValue = 1;

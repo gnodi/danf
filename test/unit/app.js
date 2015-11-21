@@ -286,7 +286,7 @@ describe('Danf application', function() {
         sequencingTests.forEach(function(test) {
             it('and allow to execute them', function(done) {
                 var sequence = sequencesContainer.get('main:dep4:{0}'.format(test.sequence));
-console.log(test.sequence);
+
                 sequence.execute(test.input || {}, test.context || {}, '.', function(stream) {
                     assert.deepEqual(stream, test.output);
                     done();
