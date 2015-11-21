@@ -63,7 +63,9 @@ module.exports = {
 * `callback`: optional callback that will be executed at the end of the execution of the sequence with the resulting output stream as first parameter.
 * `sequences`: list of sequences to execute.
 
-The event context is the one passed in the attribute `context`:
+The input stream is the data passed at the event triggering.
+
+The event context is the one passed in the attribute `context`.
 
 #### Request
 
@@ -134,9 +136,12 @@ Only on client side:
 * `process`: status which will process the sequences (possible values are `done`, `fail` or `always` with default to `done`).
 * `settings`: specific [jquery ajax settings](http://api.jquery.com/jquery.ajax/) (some will be overridden like `url`, `method`, ...).
 
-> In this example, you have three possible rendering formats (text, JSON and HTML).  
-> `%view.path%` is a parameter containing the path of your current module (`resource/private/view` by default).  
+> In this example, you have three possible rendering formats (text, JSON and HTML).
+> `%view.path%` is a parameter containing the path of your current module (`resource/private/view` by default).
 > [Jade](http://jade-lang.com/) is the default template engine, but you can use another one [like explained in Express](http://expressjs.com/guide/using-template-engines.html).
+
+The input stream for a request event on the server side are the `req.query` and `req.params` of [Express](http://expressjs.com/).
+The input stream for a request event on the client side is the response ajax data of [JQuery](http://api.jquery.com/jquery.ajax/).
 
 The event context is of the form:
 
@@ -211,6 +216,8 @@ The event context is of the form:
 For instance, you can access the jquery element which is processing the event with `!event.target!`.
 
 > You can use JQuery as a service. Danf is already defining this service for you: `danf:vendor.jquery`.
+
+The input stream for a dom event is the event data of [JQuery](https://api.jquery.com/category/events/).
 
 ### Factorize an event definition
 
