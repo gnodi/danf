@@ -13,6 +13,7 @@ module.exports = {
         dep1: require('./module1-danf'),
         dep2: require('./module2-danf'),
         dep3: require('./module3-danf'),
+        dep4: require('./module4-danf'),
         'dep2:module10': 'dep1:module10',
         'dep2:module11': 'dep1:module10'
     },
