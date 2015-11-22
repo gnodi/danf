@@ -38,11 +38,4 @@ You can also specify a negative number which means: `max core number - my number
 * `1` is equivalent to one of the CPU cores.
 * `undefined` is equivalent to one of the CPU cores.
 
-Navigation
-----------
-
-[Next section](configuration.md)
-
-[Application](../test/app.md)
-
 [←](../index.md)

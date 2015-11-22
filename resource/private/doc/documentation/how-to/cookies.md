@@ -38,9 +38,4 @@ API
 * *path (string|null)*: The optional path.
 * *domain (string|null)*: The optional domain.
 
-Navigation
-----------
-
-[Handle the Session](session.md)
-
 [←](../index.md)

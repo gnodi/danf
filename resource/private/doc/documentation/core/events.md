@@ -201,6 +201,8 @@ module.exports = {
 
 As you probably guess, [JQuery](http://jquery.com/) is used here. So you can refer to its own documentation for selectors, events, ...
 
+The input stream for a dom event is the event data of [JQuery](https://api.jquery.com/category/events/).
+
 The event context is of the form:
 
 ```javascript
@@ -216,8 +218,6 @@ The event context is of the form:
 For instance, you can access the jquery element which is processing the event with `!event.target!`.
 
 > You can use JQuery as a service. Danf is already defining this service for you: `danf:vendor.jquery`.
-
-The input stream for a dom event is the event data of [JQuery](https://api.jquery.com/category/events/).
 
 ### Factorize an event definition
 

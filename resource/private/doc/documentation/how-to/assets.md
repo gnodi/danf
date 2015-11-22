@@ -47,6 +47,7 @@ The file `.../custom-asset-directory/css/less/style.less` will not be accessible
 The rules can apply on both directories and files.
 
 Here is a description of the applied algorithm:
+
 *1. If the asked file is matched by a forbidden rule, the file will not be served (404).
 *2. Else if the asked file is matched by an allowed rule, the file will be served if it exists (otherwise 404).
 *3. Else (the asked file is not matched by any rule), the file will not be served (404) (anyway it cannot be mapped to a path).
