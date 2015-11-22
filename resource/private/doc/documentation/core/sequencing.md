@@ -324,10 +324,10 @@ module.exports = {
 **Execution details:**
 
 1. Resolve the input stream.
-2.
+2. At the same time.
     - Execute operation `asyncComputer.add('@value@', 3)`.
     - Execute operation `asyncComputer.add('@value@', 3)`.
-3.
+3. At the same time.
     - Set result in the stream field `value`.
     - Set result in the stream field `value`.
 
@@ -621,12 +621,12 @@ module.exports = {
 **Execution details:**
 
 1. Resolve the input stream.
-2.
+2. At the same time.
     - Execute operation `asyncComputer.add('@value.0@', 3)`.
     - Execute operation `asyncComputer.add('@value.1@', 3)`.
     - ...
     - Execute operation `asyncComputer.add('@value.n@', 3)`.
-3.
+3. At the same time.
     - Set result in the stream field `value.0`.
     - Set result in the stream field `value.1`.
     - ...
