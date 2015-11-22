@@ -196,6 +196,7 @@ module.exports = {
 ```
 
 **Execution details:**
+
 1. Resolve the input stream. If field `value` is not given, default to `4`.
 2. Execute operation `computer.add('@value@', 3)`.
 3. Set result in the stream field `result`.
@@ -230,6 +231,7 @@ module.exports = {
 ```
 
 **Execution details:**
+
 1. Execute operation `asyncComputer.add(2, 3)`.
 2. Set result in the stream field `result`.
 
@@ -273,6 +275,7 @@ module.exports = {
 ```
 
 **Execution details:**
+
 1. Resolve the input stream.
 2. Execute operation `computer.add('@value@', 3)`.
 3. Set result in the stream field `value`.
@@ -319,6 +322,7 @@ module.exports = {
 ```
 
 **Execution details:**
+
 1. Resolve the input stream.
 2.
     - Execute operation `asyncComputer.add('@value@', 3)`.
@@ -369,6 +373,7 @@ module.exports = {
 ```
 
 **Execution details:**
+
 1. Resolve the input stream.
 2. Execute operation `asyncComputer.add('@value@', 3)`.
 3. Set result in the stream field `value`.
@@ -448,6 +453,7 @@ module.exports = {
 ```
 
 **Execution details for sequence `computeChildrenParent`:**
+
 1. Resolve the input stream.
 2. Execute child sequence `computeChildrenChild`.
     1. Set parent stream field `value`(`@value@`) in child input stream field `value`.
@@ -551,6 +557,7 @@ module.exports = {
 ```
 
 **Execution details for sequence `computeParentChildName`:**
+
 1. Resolve the input stream.
 2. Execute parent sequence `computeParentParent`.
 3. Execute operation `asynComputer.mul('@value@', 2)`.
@@ -563,6 +570,7 @@ module.exports = {
 Sequence `computeParentChildName` matches `target: 'computeParentChildName'` and `target: '&parentChild&'`.
 
 **Execution details for sequence `computeParentChildName`:**
+
 1. Resolve the input stream.
 2. Execute parent sequence `computeParentParent`.
 3. Execute operation `asynComputer.mul('@value@', 2)`.
@@ -611,6 +619,7 @@ module.exports = {
 ```
 
 **Execution details:**
+
 1. Resolve the input stream.
 2.
     - Execute operation `asyncComputer.add('@value.0@', 3)`.
@@ -670,6 +679,7 @@ module.exports = {
 ```
 
 **Execution details:**
+
 1. Resolve the input stream.
 2. Execute operation `asyncComputer.add('@value.0@', @result@)`.
 3. Set result in the stream field `result` (thanks to `aggregate: true`).
@@ -727,6 +737,7 @@ module.exports = {
 ```
 
 **Execution details:**
+
 1. Resolve the input stream.
 2. Execute operation `asyncComputer.add('@value.0@', @result@)`.
 3. Set result in the stream field `value.0`.
@@ -772,6 +783,7 @@ module.exports = {
 ```
 
 **Execution details:**
+
 1. Resolve the input stream.
 2. Execute operation `computer.add('@value@', '!operand!')`.
 3. Set result in the stream field `result`.
@@ -805,6 +817,7 @@ module.exports = {
 ```
 
 **Execution details:**
+
 1. Resolve the input stream.
 2. Execute operation `proxyComputer.add(2, 3, '.')`.
 3. Set result in the stream field `result`.
@@ -836,6 +849,7 @@ module.exports = {
 ```
 
 **Execution details:**
+
 1. Resolve the input stream.
 2. Execute operation `proxyComputer.add(2, 3, 'value')`.
 3. Set result in the stream field `result.value`.
@@ -869,6 +883,7 @@ module.exports = {
 ```
 
 **Execution details:**
+
 1. Resolve the input stream.
 2. Execute operation `asyncComputer.add(2, 3)`.
 3. Set result in the stream field `result.value`.
@@ -903,6 +918,7 @@ module.exports = {
 ```
 
 **Execution details for sequence `addAlias`:**
+
 1. Execute operation `computer.add(2, 3)`.
 2. Set result in the stream field defined by the scope `result`.
 
