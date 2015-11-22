@@ -29,11 +29,15 @@ AsyncComputer.prototype.mul = function (value, operand) {
     this.__asyncProcess(function(returnAsync) {
         setTimeout(
             function() {
-                returnAsync(value * operand);
+                returnAsync(function(value) {
+                    return value * operand;
+                });
             },
             10
         );
     });
+
+    return value;
 }
 
 // Define class "ProxyComputer".

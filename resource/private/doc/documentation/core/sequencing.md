@@ -54,15 +54,21 @@ AsyncComputer.prototype.mul = function (value, operand) {
     this.__asyncProcess(function(returnAsync) {
         setTimeout(
             function() {
-                returnAsync(value * operand);
+                returnAsync(function(value) {
+                    return value * operand;
+                });
             },
             10
         );
     });
+
+    return value;
 }
 ```
 
 `setTimeout` is used here to simulate an asynchrone task. In Danf, all you have to do to make an asynchronous task be compatible with the flow is to wrap it with `this.__asyncProcess(function(returnAsync) {` and use `returnAsync()` instead of a simple `return`. You will see in the next chapter what this little wrapping allows you to do.
+
+Method `mul` has a slightly different implementation. This shows how to code a method which have a synchronous and an asynchronous return or which can be called on the same scope in parallel for instance. The first argument passed to the callback in `returnAsync` is the actual scoped value. You will see in the next chapter how to work with scopes.
 
 The last one is a proxy computer which is not directly processing an asynchronous task but call a method of the asynchronous computer which process an asynchronous task:
 
@@ -96,8 +102,8 @@ ProxyComputer.prototype.mul = function (value, operand, scope) {
 }
 ```
 
-As you would call `call` or `apply` in javascript, Danf provides the asynchronous versions `__asyncCall` and `__asyncApply` of these methods.
-The first argument is the context object (`this`) and the second one is the scope of the flow. You will see in the next chapter how to work with scopes.
+As you would use `call` or `apply` in javascript, Danf provides the asynchronous versions `__asyncCall` and `__asyncApply` of these methods.
+The first argument is the context object (`this`) and the second one is the scope of the flow.
 
 The services defined from these classes are of this form:
 
