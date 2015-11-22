@@ -10,14 +10,17 @@ module.exports = {
     cookiesRegistry: {
         class: 'danf:http.cookiesRegistry',
         properties: {
-            flowContext: '#danf:event.flowContext#'
+            flowContext: '#danf:sequencing.flowContext#'
         }
     },
     sessionHandler: {
         class: 'danf:http.sessionHandler',
         properties: {
-            flowContext: '#danf:event.flowContext#'
+            flowContext: '#danf:sequencing.flowContext#'
         }
+    },
+    redirector: {
+        class: 'danf:http.redirector'
     },
     event: {
         children: {

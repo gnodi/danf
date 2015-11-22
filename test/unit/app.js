@@ -192,6 +192,109 @@ describe('Danf application', function() {
         );
     })
 
+    describe('should interpret sequences', function() {
+        var sequencesContainer = app.servicesContainer.get('danf:sequencing.sequencesContainer'),
+            sequencingTests = [
+                {
+                    sequence: 'add',
+                    output: {result: 5}
+                },
+                {
+                    sequence: 'addInputStream',
+                    input: {value: 1},
+                    output: {value: 1, result: 4}
+                },
+                {
+                    sequence: 'addInputStream',
+                    input: {},
+                    output: {value: 4, result: 7}
+                },
+                {
+                    sequence: 'addAsync',
+                    output: {result: 5}
+                },
+                {
+                    sequence: 'addMultiSync',
+                    input: {value: 1},
+                    output: {value: 7}
+                },
+                {
+                    sequence: 'addMultiAsyncParallel',
+                    input: {value: 1},
+                    output: {value: 4}
+                },
+                {
+                    sequence: 'addMultiAsyncSeries',
+                    input: {value: 1},
+                    output: {value: 7}
+                },
+                {
+                    sequence: 'computeChildrenParent',
+                    input: {value: 4},
+                    output: {value: 28}
+                },
+                {
+                    sequence: 'computeParentChildName',
+                    input: {value: 1},
+                    output: {value: 20}
+                },
+                {
+                    sequence: 'computeParentChildCollection',
+                    input: {value: 1},
+                    output: {value: 8}
+                },
+                {
+                    sequence: 'addCollectionParallel',
+                    input: {value: [1, 3, 8]},
+                    output: {value: [3, 5, 10]}
+                },
+                {
+                    sequence: 'addCollectionSeries',
+                    input: {value: [1, 3, 8]},
+                    output: {value: [1, 3, 8], result: 14}
+                },
+                {
+                    sequence: 'addCollectionAggregate',
+                    input: {value: [1, 3, 8]},
+                    output: {value: [1, 3, 8], result: 150}
+                },
+                {
+                    sequence: 'addInputContext',
+                    input: {value: 1},
+                    context: {operand: 2},
+                    output: {value: 1, result: 3}
+                },
+                {
+                    sequence: 'addProxy',
+                    output: {result: 5}
+                },
+                {
+                    sequence: 'addProxyScope',
+                    output: {result: {value: 5}}
+                },
+                {
+                    sequence: 'addEmbeddedScope',
+                    output: {result: {value: 5}}
+                },
+                {
+                    sequence: 'addAlias',
+                    output: {result: 5}
+                }
+            ]
+        ;
+
+        sequencingTests.forEach(function(test) {
+            it('and allow to execute them', function(done) {
+                var sequence = sequencesContainer.get('main:dep4:{0}'.format(test.sequence));
+
+                sequence.execute(test.input || {}, test.context || {}, '.', function(stream) {
+                    assert.deepEqual(stream, test.output);
+                    done();
+                });
+            })
+        })
+    })
+
     it('should process requests', function(done) {
         request(app)
             .get('/computing?val=1')

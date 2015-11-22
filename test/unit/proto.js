@@ -17,9 +17,9 @@ describe('Danf proto application', function() {
             {
                 config: {
                     classes: {
-                        'foo.bar': requirePattern.format('lib/common/foo/bar.js'),
-                        bar: requirePattern.format('lib/server/bar.js'),
-                        foo: requirePattern.format('lib/common/foo.js'),
+                        'foo.bar': require(path.join(rootPath, 'lib/common/foo/bar.js')),
+                        bar: require(path.join(rootPath, 'lib/server/bar.js')),
+                        foo: require(path.join(rootPath, 'lib/common/foo.js')),
                         main: require(path.join(rootPath, 'lib/main.js'))
                     }
                 },
@@ -68,7 +68,7 @@ describe('Danf proto application', function() {
                                 dependencies: {},
                                 config: {
                                     classes: {
-                                        'foo.bar': requirePattern.format('node_modules/a/node_modules/c/lib/server/foo/bar.js')
+                                        'foo.bar': require(path.join(rootPath, 'node_modules/a/node_modules/c/lib/server/foo/bar.js'))
                                     }
                                 }
                             }

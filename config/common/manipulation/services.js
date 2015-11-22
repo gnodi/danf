@@ -238,6 +238,17 @@ module.exports = {
                     callback: '#danf:manipulation.asynchronousCallback.result#'
                 }
             },
+            filterLimit: {
+                properties: {
+                    method: 'filterLimit',
+                    input: '#danf:manipulation.asynchronousInput.array#',
+                    iterator: '#danf:manipulation.asynchronousIterator.collection#',
+                    callback: '#danf:manipulation.asynchronousCallback.result#',
+                    parameters: {
+                        limit: 1
+                    }
+                }
+            },
             reject: {
                 properties: {
                     method: 'reject',
@@ -252,6 +263,17 @@ module.exports = {
                     input: '#danf:manipulation.asynchronousInput.array#',
                     iterator: '#danf:manipulation.asynchronousIterator.collection#',
                     callback: '#danf:manipulation.asynchronousCallback.result#'
+                }
+            },
+            rejectLimit: {
+                properties: {
+                    method: 'rejectLimit',
+                    input: '#danf:manipulation.asynchronousInput.array#',
+                    iterator: '#danf:manipulation.asynchronousIterator.collection#',
+                    callback: '#danf:manipulation.asynchronousCallback.result#',
+                    parameters: {
+                        limit: 1
+                    }
                 }
             },
             reduce: {
@@ -292,6 +314,17 @@ module.exports = {
                     callback: '#danf:manipulation.asynchronousCallback.result#'
                 }
             },
+            detectLimit: {
+                properties: {
+                    method: 'detectLimit',
+                    input: '#danf:manipulation.asynchronousInput.array#',
+                    iterator: '#danf:manipulation.asynchronousIterator.collection#',
+                    callback: '#danf:manipulation.asynchronousCallback.result#',
+                    parameters: {
+                        limit: 1
+                    }
+                }
+            },
             sortBy: {
                 properties: {
                     method: 'sortBy',
@@ -308,12 +341,34 @@ module.exports = {
                     callback: '#danf:manipulation.asynchronousCallback.result#'
                 }
             },
+            someLimit: {
+                properties: {
+                    method: 'someLimit',
+                    input: '#danf:manipulation.asynchronousInput.array#',
+                    iterator: '#danf:manipulation.asynchronousIterator.collection#',
+                    callback: '#danf:manipulation.asynchronousCallback.result#',
+                    parameters: {
+                        limit: 1
+                    }
+                }
+            },
             every: {
                 properties: {
                     method: 'every',
                     input: '#danf:manipulation.asynchronousInput.array#',
                     iterator: '#danf:manipulation.asynchronousIterator.collection#',
                     callback: '#danf:manipulation.asynchronousCallback.result#'
+                }
+            },
+            everyLimit: {
+                properties: {
+                    method: 'everyLimit',
+                    input: '#danf:manipulation.asynchronousInput.array#',
+                    iterator: '#danf:manipulation.asynchronousIterator.collection#',
+                    callback: '#danf:manipulation.asynchronousCallback.result#',
+                    parameters: {
+                        limit: 1
+                    }
                 }
             },
             concat: {

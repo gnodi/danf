@@ -3,7 +3,7 @@ REPORTER = dot
 
 check: test
 
-test: test-utils test-manipulation test-configuration test-object test-dependency-injection test-file-system test-event test-http test-rendering test-logging test-test test-app test-proto
+test: test-utils test-manipulation test-configuration test-object test-dependency-injection test-file-system test-sequencing test-event test-http test-rendering test-logging test-test test-app test-proto
 
 test-utils:
 	# Utils
@@ -62,6 +62,16 @@ test-file-system:
 		--recursive \
 		$(MOCHA_OPTS) \
 		test/unit/file-system/*
+
+test-sequencing:
+	# Sequencing
+	@NODE_ENV=test ./node_modules/.bin/mocha \
+		--reporter $(REPORTER) \
+		--timeout 5000 \
+		--bail \
+		--recursive \
+		$(MOCHA_OPTS) \
+		test/unit/sequencing/*
 
 test-event:
 	# Event

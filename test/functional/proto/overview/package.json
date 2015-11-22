@@ -1,0 +1,35 @@
+{
+    "name": "danf-overview",
+    "description": "Code of the overview of a danf application/module",
+    "version": "0.0.0",
+    "author": {
+        "name": "Thomas Prelot",
+        "email": "tprelot@gmail.com",
+        "url": "https://github.com/Gnucki"
+    },
+    "contributors": [
+        {
+            "name": "Thomas Prelot",
+            "email": "tprelot@gmail.com",
+            "url": "https://github.com/Gnucki"
+        }
+    ],
+    "dependencies": {
+        "danf": "*"
+    },
+    "devDependencies": {
+        "mocha": "~2.2",
+        "supertest": "~1.0"
+    },
+    "keywords": [
+        "danf",
+        "module",
+        "overview"
+    ],
+    "scripts": {
+        "test": "make test"
+    },
+    "engines": {
+        "node": "*"
+    }
+}

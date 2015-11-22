@@ -1,5 +1,5 @@
 ![Danf](resource/public/img/small-logo.jpg)
-===========================
+===========================================
 
 [![NPM Version][npm-image]][npm-url]
 [![NPM Downloads][downloads-image]][downloads-url]
@@ -9,470 +9,134 @@
 Introduction
 ------------
 
-### Another javascript/node.js framework??
+Danf is a Node.js full-stack isomorphic OOP framework allowing to code the same way on both client and server sides. It helps you to make deep architectures and handle asynchronous flows in order to help produce scalable, maintainable, testable and performant applications.
 
-Yes!
+### Why use node Node.js instead of another language/technology?
 
-### Why?
+You certainly can find lots of reasons but there are 2 which make the success of Node.js before all others:
+- use the same language on both client and server sides
+- handle I/O in an asynchronous way to maximize your CPU load thanks to the main event loop
 
-The main goal of this full-stack framework is to help you organize, rationalize and homogenize your javascript code (website, api, ...) on both client-side (browser) and server-side (node.js).
+### Why use Danf?
 
-### Which features of this framework can help me to fulfill this goal?
+Danf reinforces the promises of Node.js:
+- use the same code on both client and server sides *(in a classic node.js style)*
+- maximize the power of asynchronicity thanks to a nice and innovative abstraction layer *(built upon [Async.js](https://github.com/caolan/async))*
 
-Danf provides several features in order to produce a scalable, maintainable, testable and performant code:
-* An object-oriented programming layer (formal classes, easy inheritance, ensured interfaces).
-* An inversion of control design (dependency injection via configuration files).
-* An isomorphic paradigm allowing to use the same code on both client-side and server-side.
-* A homogeneous way to handle all kind of events (HTTP requests, DOM events, ...).
-* An elegant solution to callback hell preserving asynchronicity.
-* A helper to develop performant ajax applications supporting deep linking.
-* A modular approach to develop and use (open source) modules.
-* Some other helpful sub features to easily manage cookies, session, ...
+### Why use Danf instead of another framework?
 
-### What?? An object-oriented programming layer?
+Danf is not better as any other existing framework but it has its own proposal. Most of Node.js web frameworks give you a structure to code the facade of your applications, like an easy way to define a REST API for example. Sometimes you can link this facade to some data in a mongodb database, if your are lucky.
 
-Object-oriented programming (OOP) is often a controversial topic in the javascript community. Most of the time, you can observe two reactions:
-* - But everything is already object in javascript!
-* - Why the hell do you want to use OOP in javascript?
+Danf do not care of what kind of database you use (use one for each specific need!). Instead, it provides a strong structure to harness the power of Node.js and create web applications (site, API, ...) in an easy way. But that's not all. It gives you a way to define a deep, maintenable and scalable architecture thanks to a great OOP layout implementing [features coming from years of reflection by the community on how to make pragmatic and industrial OOP applications](resource/private/doc/concepts.md) (interfaces, dependency injection, ...).
 
-First, that is not because all variables are objects that a langage can be considered as providing a way to make a straightforward and robust OOP. As for now, native javascript does not allow to make a reliable industrial OOP code (the reasons are explained in the [concepts](resource/private/doc/concepts.md) section of the documentation).
-Then, OOP is certainly not a matter of language, but rather a means of architecturing applications. So why not use OOP for a javascript application?
-
-Hello world
------------
-
-```javascript
-// app.js
-
-var danf = require('danf');
-
-danf({
-    config: {
-        events: {
-            request: {
-                helloWorld: {
-                    path: '/',
-                    methods: ['get'],
-                    view: {
-                        text: {
-                            value: 'Hello world!'
-                        }
-                    }
-                }
-            }
-        }
-    }
-});
-```
+**You can code big performant applications with a deep and strong architecture in an easy way and share your code thanks to a transparent module mechanism only requiring to use [npm](https://www.npmjs.com/) in the most standard way.**
 
 Installation
 ------------
 
+### Create a proto application
+
+The better way to create a new application/danf module (in Danf an application is a **danf module** and conversely) is to let [Yeoman](http://yeoman.io/) do it for you!
+
+First, install Yeoman:
 ```sh
-$ npm install -g danf
+$ npm install -g yo
 ```
 
-A better way to start a new application with Danf is to use the available [proto application](https://github.com/gnodi/danf-proto-app).
+Then, install the specific generator for Danf applications:
+```sh
+$ npm install -g yo generator-danf
+```
 
-Community
----------
+Finally, create an application using:
+```sh
+$ yo danf
+```
 
-Danf is a brand new framework. It can help you to master big projects by avoiding the divergence of the complexity as well as smaller fast and dynamic websites. Just give it a try on one of your project or by testing the [tutorial](resource/private/doc/test/index.md). Be careful, you could see your way of coding javascript in node.js forever change (or not...).
+### Start the server
 
-The community is still small, but it is an active community. You can post your issues on [github](https://github.com/gnodi/danf/issues) or on [stack overflow](http://stackoverflow.com/) with the tag `danf` and you will get an answer as quickly as possible.
+After creating your application, you should be able to start the server in this way:
+```sh
+$ node app-dev
+```
 
-> `<trailer-voice>`Have you ever wanted to participate in the early stages of a new technology? Let's try it on Danf! Join the community and contribute now.`</trailer-voice>`
+A welcome message is waiting for you at `http://localhost:3080`!
 
-You have several ways to contribute:
+> Use `app-prod` to start the server in prod environment (less debugging, more performances!).
 
-* Fork the project on [github](https://github.com/gnodi/danf) and improve framework's features, documentation, ...
-* Code your own module. In Danf, all your code is always automatically part of a **danf module**. This way you can easily share your modules with other people using npm. You can find a list of existing **danf modules** [here](resource/private/doc/modules.md).
-* Star the project to encourage its development.
-* Participate to the community in asking questions in the issues or on stack overflow.
+### Run the tests
 
-Code examples
--------------
+You can run the tests of your application thanks to:
+```sh
+$ make test
+```
 
-### Respond to a HTTP request with a server class processing
+Hello world
+-----------
 
-Here is an example of class:
+Here is the traditional hello world (even if it does not say a lot of things about the framework)!
 
 ```javascript
-// uppercaser.js
-
-'use strict';
-
-/**
- * Expose `Uppercaser`.
- */
-module.exports = Uppercaser;
-
-// Definition of the constructor.
-/**
- * Initialize a new uppercaser.
- */
-function Uppercaser() {
-}
-
-// Definition of the implemented interfaces.
-// Here, Uppercaser is implementing the interface "wordProcessor".
-Uppercaser.defineImplementedInterfaces(['wordProcessor']);
-
-// Implementation of the method of the interface.
-/**
- * @interface {wordProcessor}
- */
-Uppercaser.prototype.process = function(word) {
-    return word.toUpperCase();
-}
-```
-
-Here is an example of application using this class:
-
-```javascript
-// app.js
-
-'use strict';
-
-var danf = require('danf');
-
-danf(
-    // Define danf module configuration.
-    {
-        config: {
-            // Declaration of the class.
-            classes: {
-                uppercaser: require('./uppercaser')
-            },
-            // Definition of the interface implemented by this class.
-            interfaces: {
-                wordProcessor: {
-                    methods: {
-                        process: {
-                            arguments: ['string/word'],
-                            returns: 'string'
-                        }
-                    }
-                }
-            },
-            // Definition of a service using this class.
-            services: {
-                uppercaser: {
-                    class: 'uppercaser'
-                }
-            },
-            // Definition of a sequence using this service.
-            sequences: {
-                uppercaseName: [
-                    // Pass the field "name" of the input stream as first argument
-                    // to the method "process" of the service "uppercaser".
-                    {
-                        service: 'uppercaser',
-                        method: 'process',
-                        arguments: ['@name@'],
-                        returns: 'name'
-                    }
-                ]
-            },
-            // Definition of an event of kind HTTP request using this sequence.
-            events: {
-                request: {
-                    hello: {
-                        path: '/',
-                        methods: ['get'],
-                        // Description of expected input stream coming from requests.
-                        parameters: {
-                            name: {
-                                type: 'string',
-                                default: 'world'
-                            }
-                        },
-                        // Definition of the used view.
-                        view: {
-                            html: {
-                                body: {
-                                    file: __dirname + '/hello.jade'
-                                }
-                            }
-                        },
-                        // Description of the executed sequences.
-                        sequences: ['uppercaseName']
-                    }
-                }
-            }
-        }
-    },
-    // Define server context.
-    {
-        environment: 'prod',
-        debug: false
-    },
-    // Define client context.
-    {
-        environment: 'prod',
-        debug: false
-    }
-);
-```
-
-And here is the view:
-
-```jade
-//- hello.jade
-
-h1
-  = 'Hello ' + name + '!'
-```
-
-> Test it executing: `$ node app.js`
-
-Find the full example [here](resource/private/doc/observe/simple.md)!
-
-### Use a class on both client-side and server-side
-
-Here is a class both usable in the browser and in node.js:
-
-```javascript
-// logger.js
-
-'use strict';
-
-// Define "define" for the client or the server.
-var define = define ? define : require('amdefine')(module);
-
-// Wrapper allowing to use the class on both client-side and server-side.
-define(function(require) {
-    /**
-     * Initialize a new logger.
-     */
-    function Logger() {}
-
-    Logger.defineImplementedInterfaces(['logger']);
-
-    /**
-     * @interface {logger}
-     */
-    Logger.prototype.log = function(message) {
-        console.log(message);
-    }
-
-    /**
-     * Expose `Logger`.
-     */
-    return Logger;
-});
-```
-
-Find the full example [here](resource/private/doc/observe/client-server-class.md)!
-
-### Inject services into each others
-
-Here is an example of config with effective dependency injection:
-
-```javascript
-// app.js
-
-'use strict';
-
-var danf = require('danf');
-
-danf({
-    config: {
-        classes: {
-            processor: {
-                // "adder" and "multiplier" inherit from "abstract".
-                // You can see how inheritance works in the full example accessible in the link below.
-                abstract: require('./abstract-processor'),
-                adder: require('./adder'),
-                multiplier: require('./multiplier')
-            },
-            parser: require('./parser'),
-            computer: require('./computer')
-        },
-        // ...
-        services: {
-            processor: {
-                tags: ['processor'],
-                // Define children services which will inherit the tag.
-                // This feature is mainly used to improve readability.
-                // The names of the services are "processor.adder" and "processor.multiplier".
-                children: {
-                    adder: {
-                        class: 'processor.adder'
-                    },
-                    multiplier: {
-                        class: 'processor.multiplier'
-                    }
-                }
-            },
-            parser: {
-                class: 'parser'
-            },
-            computer: {
-                class: 'computer',
-                // Set the properties of the service "computer".
-                properties: {
-                    // Inject in the property "parser" the service "parser".
-                    parser: '#parser#',
-                    // Inject in the property "processors" the services tagged with "processor".
-                    processors: '&processor&'
-                }
-            }
-        },
-        // ...
-    }
-});
-```
-
-Find the full example [here](resource/private/doc/observe/dependency-injection.md)!
-
-### Define your own danf module config
-
-Here is an example of configuration defining some module config:
-
-```javascript
-// app.js
-
-'use strict';
-
-var danf = require('danf');
-
-danf({
-    // Define the contract that the config of your danf module must respect.
-    contract: {
-        helloMessage: {
-            type: 'string',
-            default: 'world'
-        }
-    },
-    config: {
-        // Define your config.
-        this: {
-            helloMessage: 'everybody'
-        },
-        sequences: {
-            getHelloMessage: [
-                {
-                    // Danf's service allowing to execute a callback.
-                    // Just use it for tests.
-                    service: 'danf:manipulation.callbackExecutor',
-                    method: 'execute',
-                    arguments: [
-                        function(message) {
-                            return message;
-                        },
-                        // Inject the config field "helloMessage".
-                        // You can use this to do the same in a property of a service.
-                        '$helloMessage$'
-                    ],
-                    returns: 'message'
-                }
-            ]
-        },
-        // ...
-    }
-});
-```
-
-Find the full example [here](resource/private/doc/observe/module-config.md)!
-
-### Override and use the config of a danf module dependency
-
-Here is the configuration of a danf module that will be used as a dependency by another one:
-
-```javascript
-// node_modules/form/danf.js
+// config/server/config/events/request.js
 
 'use strict';
 
 module.exports = {
-    contract: {
-        form: {
-            type: 'embedded_object',
-            embed: {
-                labels: {
-                    type: 'string_object'
-                }
+    helloWorld: {
+        path: '/',
+        methods: ['get'],
+        view: {
+            text: {
+                value: 'Hello world!'
             }
-        }
-    },
-    config: {
-        this: {
-            form: {
-                login: {
-                    labels: {
-                        login: 'Login',
-                        password: 'Password'
-                    }
-                }
-            }
-        },
-        sequences: {
-            getLoginLabels: [
-                // ...
-            ]
         }
     }
 };
 ```
 
-Here is the configuration of the main danf module using this dependency:
+Architecture
+------------
 
-```javascript
-'use strict';
+Here is a diagram of the macro architecture of Danf:
 
-var danf = require('danf');
+![architecture](resource/private/img/architecture.png)
 
-danf({
-    // Define a dependency "form" referencing its danf configuration file.
-    dependencies: {
-        form: require('form/danf')
-    },
-    config: {
-        // Override the default config of dependency "form".
-        // This will result in:
-        // form.login.labels = {login: 'Username', password: 'Password'}
-        form: {
-            form: {
-                login: {
-                    labels: {
-                        login: 'Username'
-                    }
-                }
-            }
-        },
-        sequences: {
-            // Override the sequence "getLoginLabels" of dependency "form".
-            // You can do the same for any classes, services, interfaces, ...
-            'form:getLoginLabels': [
-                {
-                    // Danf's service allowing to execute a callback.
-                    // Just use it for tests.
-                    service: 'danf:manipulation.callbackExecutor',
-                    method: 'execute',
-                    arguments: [
-                        function(labels) {
-                            return labels;
-                        },
-                        // Inject the config field "form.login.labels" of
-                        // dependency "form".
-                        '$form:form.login.labels$'
-                    ],
-                    returns: 'form.labels'
-                }
-            ]
-        },
-        // ...
-    }
-});
-```
+Features
+--------
 
-Find the full example [here](resource/private/doc/observe/dependency-config-override.md)!
+Here is a list of the major features proposed by Danf:
+- An object-oriented programming layer (with ensured interfaces).
+- An inversion of control design (dependency injection via configuration files).
+- A perfect isomorphism allowing to use the same code on both client and server sides (in a standard node.js coding style).
+- A homogeneous way to handle all kind of events (HTTP requests, DOM events, ...).
+- An original abstraction layer over [Async.js](https://github.com/caolan/async) to manage asynchronicity.
+- A helper to develop ultra performant ajax applications supporting deep linking.
+- A natural approach to share your modules and use others just using [npm](https://www.npmjs.com/).
+- Some other helpful sub features to easily manage cookies, session, ...
+
+Community
+---------
+
+Danf is a young framework and the community is still small but active. You can post your issues on [github](https://github.com/gnodi/danf/issues) or on [stack overflow](http://stackoverflow.com/) with the tag `danf` and you will get an answer as quickly as possible.
+
+If you want to contribute, here is a not limited list of how to do:
+
+- Fork the project on [github](https://github.com/gnodi/danf) and improve features, documentation, ...
+- Code your own module. In Danf, an application is a **danf module** and conversely. This way you can easily share your modules with other people simply using [npm](https://www.npmjs.com/).
+- Participate to the community in asking questions in the issues or on stack overflow.
 
 Documentation
 -------------
 
 Learn more about the framework in the [documentation](resource/private/doc/index.md).
+
+Tests
+-----
+
+You can run the tests of the framework using:
+```sh
+$ make test
+```
 
 License
 -------

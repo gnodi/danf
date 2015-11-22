@@ -329,6 +329,15 @@ module.exports = {
                         scope: 'c'
                     }
                 ]
+            },
+            redirect: {
+                operations: [
+                    {
+                        service: 'danf:http.redirector',
+                        method: 'redirect',
+                        arguments: ['/somewhere']
+                    }
+                ]
             }
         },
         events: {
@@ -519,6 +528,15 @@ module.exports = {
                             }
                         }
                     }
+                },
+                redirect: {
+                    path: '/redirect',
+                    methods: ['get'],
+                    sequences: [
+                        {
+                            name: 'redirect'
+                        }
+                    ]
                 }
             }
         },
