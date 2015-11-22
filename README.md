@@ -9,7 +9,7 @@
 Introduction
 ------------
 
-Danf is a Node.js full-stack isomorphic OOP framework allowing to code the same way on both client and server sides. It provides many features in order to help produce scalable, maintainable, testable and performant applications.
+Danf is a Node.js full-stack isomorphic OOP framework allowing to code the same way on both client and server sides. It helps you to make deep architectures and handle asynchronous flows in order to help produce scalable, maintainable, testable and performant applications.
 
 ### Why use node Node.js instead of another language/technology?
 
@@ -20,7 +20,7 @@ You certainly can find lots of reasons but there are 2 which make the success of
 ### Why use Danf?
 
 Danf reinforces the promises of Node.js:
-- use the same code on both client and server sides *(in a classic Node.js style)*
+- use the same code on both client and server sides *(in a classic node.js style)*
 - maximize the power of asynchronicity thanks to a nice and innovative abstraction layer *(built upon [Async.js](https://github.com/caolan/async))*
 
 ### Why use Danf instead of another framework?
@@ -105,9 +105,9 @@ Features
 --------
 
 Here is a list of the major features proposed by Danf:
-- An object-oriented programming layer (formal classes, easy inheritance, ensured interfaces, ...).
+- An object-oriented programming layer (with ensured interfaces).
 - An inversion of control design (dependency injection via configuration files).
-- A perfect isomorphism allowing to use the same code on both client and server sides (in a standard Node.js coding style).
+- A perfect isomorphism allowing to use the same code on both client and server sides (in a standard node.js coding style).
 - A homogeneous way to handle all kind of events (HTTP requests, DOM events, ...).
 - An original abstraction layer over [Async.js](https://github.com/caolan/async) to manage asynchronicity.
 - A helper to develop ultra performant ajax applications supporting deep linking.
@@ -121,7 +121,7 @@ Danf is a young framework and the community is still small but active. You can p
 
 If you want to contribute, here is a not limited list of how to do:
 
-- Fork the project on [github](https://github.com/gnodi/danf) and improve framework's features, documentation, ...
+- Fork the project on [github](https://github.com/gnodi/danf) and improve features, documentation, ...
 - Code your own module. In Danf, an application is a **danf module** and conversely. This way you can easily share your modules with other people simply using [npm](https://www.npmjs.com/).
 - Participate to the community in asking questions in the issues or on stack overflow.
 

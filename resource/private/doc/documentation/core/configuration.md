@@ -10,7 +10,7 @@ Danf provides a powerful configuration mechanism allowing you to develop dynamic
 
 ### Dependencies
 
-In Danf, an application is also a **danf module**. A danf module can use other danf modules as dependencies. A danf module can use dependencies of its dependencies... 
+In Danf, an application is also a **danf module**. A danf module can use other danf modules as dependencies. A danf module can use dependencies of its dependencies...
 
 Dependencies are automatically detected. All you have to do is to set the dependency in your file `package.json` as for any other node.js dependency:
 
@@ -56,7 +56,7 @@ Here is the corresponding contract:
 
 #### Define the contract of the module config
 
-Each danf module can define a contract for its own config: 
+Each danf module can define a contract for its own config:
 
 ```javascript
 // config/common/contract.js
@@ -751,7 +751,7 @@ Config:
 
 'use strict';
 
-module.exports = {  
+module.exports = {
 };
 ```
 

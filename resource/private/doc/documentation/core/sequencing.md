@@ -156,6 +156,7 @@ module.exports = {
 ```
 
 **Execution details:**
+
 1. Execute operation `computer.add(2, 3)`.
 2. Set result in the stream field defined by the scope `result`.
 
