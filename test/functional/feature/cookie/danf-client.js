@@ -8,9 +8,30 @@ module.exports = {
         services: {
             cookieTester: {
                 class: 'cookieTester',
-                parent: 'danf:ajaxApp.readyProcessor',
                 properties: {
                     _cookiesRegristry: '#danf:http.cookiesRegistry#'
+                }
+            }
+        },
+        sequences: {
+            testCookie: {
+                operations: [
+                    {
+                        service: 'cookieTester',
+                        method: 'process'
+                    }
+                ]
+            }
+        },
+        events: {
+            dom: {
+                ready: {
+                    event: 'ready',
+                    sequences: [
+                        {
+                            name: 'testCookie'
+                        }
+                    ]
                 }
             }
         }

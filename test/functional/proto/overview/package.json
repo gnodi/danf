@@ -1,17 +1,17 @@
 {
-    "name": "repository.name",
-    "description": "app.description",
+    "name": "danf-overview",
+    "description": "Code of the overview of a danf application/module",
     "version": "0.0.0",
     "author": {
-        "name": "author.name",
-        "email": "author.email",
-        "url": "author.url"
+        "name": "Thomas Prelot",
+        "email": "tprelot@gmail.com",
+        "url": "https://github.com/Gnucki"
     },
     "contributors": [
         {
-            "name": "author.name",
-            "email": "author.email",
-            "url": "author.url"
+            "name": "Thomas Prelot",
+            "email": "tprelot@gmail.com",
+            "url": "https://github.com/Gnucki"
         }
     ],
     "dependencies": {
@@ -24,9 +24,8 @@
     "keywords": [
         "danf",
         "module",
-        "app.name"
+        "overview"
     ],
-    "repository": "git://github.com/repository.username/repository.name",
     "scripts": {
         "test": "make test"
     },

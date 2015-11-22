@@ -8,7 +8,7 @@ var danf = require('danf'),
             environment: 'prod',
             debug: false,
             verbosity: 1,
-            secret: '<%= app.secret %>'
+            secret: 'secret'
         },
         {
             environment: 'prod',

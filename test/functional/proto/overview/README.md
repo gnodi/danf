@@ -1,43 +1,16 @@
-<%= repository.name %>
-======================
+Overview
+========
 
-<%= app.description %>
+This is the code of the overview of a danf application/module.
 
-Use as a danf module
---------------------
-
-Add the module to your `package.json`:
-```json
-{
-    ...
-    "dependencies": {
-        ...,
-        "<%= repository.name %>": "*"
-    },
-    ...
-}
-```
-
-Then, install this new dependency:
+Install the dependencies:
 ```sh
 $ npm install
 ```
 
-Use as an application
----------------------
-
-Start the server with the command:
+Start the server:
 ```sh
-$ node app-dev
+$ node app-prod
 ```
 
 You should be able to test the application at `http://localhost:3080`.
-
-> Use `app-prod` to start the server in prod environment.
-
-Execute tests
--------------
-
-```sh
-$ make test
-```

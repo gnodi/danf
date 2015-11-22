@@ -9,11 +9,37 @@ CookieTester.prototype.test = function() {
 
 module.exports = {
     config: {
+        classes: {
+            cookieTester: require('./cookie-tester')
+        },
+        services: {
+            cookieTester: {
+                class: 'cookieTester',
+                properties: {
+                    _cookiesRegristry: '#danf:http.cookiesRegistry#'
+                }
+            }
+        },
+        sequences: {
+            testCookie: {
+                operations: [
+                    {
+                        service: 'cookieTester',
+                        method: 'process'
+                    }
+                ]
+            }
+        },
         events: {
             request: {
                 helloWorld: {
                     path: '',
                     methods: ['get'],
+                    sequences: [
+                        {
+                            name: 'testCookie'
+                        }
+                    ],
                     view: {
                         html: {
                             body: {
@@ -21,36 +47,8 @@ module.exports = {
                             }
                         }
                     }
-                },
-                cookie: {
-                    path: '/cookie',
-                    methods: ['get'],
-                    sequences: ['testCookie'],
-                    view: {
-                        html: {
-                            body: {
-                                file: __dirname + '/cookie.jade'
-                            }
-                        }
-                    }
                 }
             }
-        },
-        services: {
-            cookieTester: {
-                class: CookieTester,
-                properties: {
-                    _cookiesRegristry: '#danf:http.cookiesRegistry#'
-                }
-            }
-        },
-        sequences: {
-            testCookie: [
-                {
-                    service: 'cookieTester',
-                    method: 'test'
-                }
-            ]
         }
     }
 };

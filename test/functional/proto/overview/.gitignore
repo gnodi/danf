@@ -18,3 +18,5 @@ build/Release
 .lock-wscript
 
 /.bin
+
+app-config-generated-entry.js
