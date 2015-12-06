@@ -672,8 +672,38 @@ var config = {
                     order: 0,
                     service: 'computer',
                     method: 'add',
-                    arguments: ['@a@', '!b!', 40],
+                    arguments: ['@a@', '!b!'],
                     scope: 'a'
+                }
+            ]
+        },
+        v: {
+            operations: [
+                {
+                    order: 1,
+                    service: 'asyncComputer',
+                    method: 'add',
+                    arguments: ['@input.a@', '@input.b@', 10],
+                    scope: 'result'
+                }
+            ]
+        },
+        w: {
+            children: [
+                {
+                    order: 0,
+                    name: 'v',
+                    input: {
+                        input: {
+                            a: '@a@',
+                            b: '@b@'
+                        }
+                    },
+                    output: {
+                        result: {
+                            c: '@result@'
+                        }
+                    }
                 }
             ]
         },
@@ -1231,6 +1261,16 @@ var sequenceTests = [
         input: {a: 11},
         context: {b: 22},
         expected: {a: 33}
+    },
+    {
+        name: 'v',
+        input: {input: {a: 14, b: 17}},
+        expected: {input: {a: 14, b: 17}, result: 31}
+    },
+    {
+        name: 'w',
+        input: {a: 14, b: 17},
+        expected: {a: 14, b: 17, result: {c: 31}}
     }
 ];
 
