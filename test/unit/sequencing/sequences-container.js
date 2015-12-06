@@ -30,7 +30,7 @@ FlowProvider.prototype.provide = function(properties) {
     var flow = new Flow();
 
     flow.stream = properties.stream;
-    flow.initialScope = properties.scope;
+    flow.initialScope = properties.initialScope;
     flow.context = properties.context;
     flow.callback = properties.callback;
 
