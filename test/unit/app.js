@@ -256,7 +256,7 @@ describe('Danf application', function() {
                 {
                     sequence: 'addCollectionAggregate',
                     input: {value: [1, 3, 8]},
-                    output: {value: [1, 3, 8], result: 150}
+                    output: {value: 150}
                 },
                 {
                     sequence: 'addInputContext',

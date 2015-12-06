@@ -392,7 +392,7 @@ module.exports = {
                                 return aggregatedValue;
                             }
                         },
-                        scope: 'result'
+                        scope: 'value'
                     }
                 ]
             },
