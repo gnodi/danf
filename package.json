@@ -1,7 +1,7 @@
 {
     "name": "danf",
     "description": "Danf is a Node.js full-stack isomorphic OOP framework allowing to code the same way on both client and server sides. It helps you to make deep architectures and handle asynchronous flows in order to help produce scalable, maintainable, testable and performant applications.",
-    "version": "0.3.0",
+    "version": "0.3.1",
     "author": {
         "name": "Thomas Prelot",
         "email": "tprelot@gmail.com",
