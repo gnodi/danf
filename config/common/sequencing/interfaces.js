@@ -22,7 +22,7 @@ module.exports = {
             /**
              * Resolve references of a specific type.
              *
-             * @param {string} source The source of references.
+             * @param {mixed} source The source of references.
              * @param {string} type The identifier of a reference type.
              * @param {mixed} context The resolving context.
              * @param {string|null} inText An optionnal text specifying where the reference is declared (errors).
@@ -30,7 +30,7 @@ module.exports = {
              */
             resolveSpecific: {
                 arguments: [
-                    'string/source',
+                    'mixed/source',
                     'string/type',
                     'mixed/context',
                     'string|null/inText'
