@@ -10,7 +10,10 @@ module.exports = {
         // Link the sequences.
         sequences: [
             {
-                name: 'compute'
+                name: 'compute',
+                output: {
+                    result: '@result@'
+                }
             }
         ],
         // Define the view.

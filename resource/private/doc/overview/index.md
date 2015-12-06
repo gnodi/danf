@@ -545,6 +545,11 @@ module.exports = {
                 input: {
                     value: 2,
                     name: 'simple'
+                },
+                output: {
+                    result: {
+                        simple: '@.@'
+                    }
                 }
             },
             {
@@ -552,6 +557,11 @@ module.exports = {
                 name: 'unpredictable',
                 input: {
                     name: 'unpredictable'
+                },
+                output: {
+                    result: {
+                        unpredictable: '@.@'
+                    }
                 }
             },
             {
@@ -559,6 +569,11 @@ module.exports = {
                 name: 'parallel',
                 input: {
                     name: 'parallel'
+                },
+                output: {
+                    result: {
+                        parallel: '@.@'
+                    }
                 }
             },
             {
@@ -566,6 +581,11 @@ module.exports = {
                 name: 'series',
                 input: {
                     name: 'series'
+                },
+                output: {
+                    result: {
+                        series: '@.@'
+                    }
                 }
             },
             {
@@ -573,6 +593,11 @@ module.exports = {
                 name: 'collection',
                 input: {
                     name: 'collection'
+                },
+                output: {
+                    result: {
+                        collection: '@.@'
+                    }
                 }
             }
         ]
@@ -608,9 +633,14 @@ module.exports = {
         // Define the available HTTP methods.
         methods: ['get'],
         // Link the sequences.
+        // This works the same as the definition
+        // of children sequences of a sequence.
         sequences: [
             {
-                name: 'compute'
+                name: 'compute',
+                output: {
+                    result: '@result@'
+                }
             }
         ],
         // Define the view.

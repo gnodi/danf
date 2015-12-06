@@ -230,6 +230,11 @@ module.exports = {
                 input: {
                     value: 2,
                     name: 'simple'
+                },
+                output: {
+                    result: {
+                        simple: '@.@'
+                    }
                 }
             },
             {
@@ -237,6 +242,11 @@ module.exports = {
                 name: 'unpredictable',
                 input: {
                     name: 'unpredictable'
+                },
+                output: {
+                    result: {
+                        unpredictable: '@.@'
+                    }
                 }
             },
             {
@@ -244,6 +254,11 @@ module.exports = {
                 name: 'parallel',
                 input: {
                     name: 'parallel'
+                },
+                output: {
+                    result: {
+                        parallel: '@.@'
+                    }
                 }
             },
             {
@@ -251,6 +266,11 @@ module.exports = {
                 name: 'series',
                 input: {
                     name: 'series'
+                },
+                output: {
+                    result: {
+                        series: '@.@'
+                    }
                 }
             },
             {
@@ -258,6 +278,11 @@ module.exports = {
                 name: 'collection',
                 input: {
                     name: 'collection'
+                },
+                output: {
+                    result: {
+                        collection: '@.@'
+                    }
                 }
             }
         ]
