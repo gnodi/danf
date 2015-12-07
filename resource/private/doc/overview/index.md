@@ -622,7 +622,7 @@ Event
 
 If you look at the path of the previously defined config, you can see that it has been done in the folder `/config/common`. This means that you will be able to use it on both client and server sides.
 
-The following event will link computations to a server request:
+The following definition will link computations to a server request:
 
 ```javascript
 // config/server/config/events/request.js
@@ -674,6 +674,8 @@ module.exports = {
 You can update your default `index.jade` to display the server computations:
 
 ```jade
+//- resource/private/view/index.jade
+
 h1 Overview
 
 p Here is the output of the server computations:
@@ -690,7 +692,7 @@ p Take a look at your console to see the client computations!
 
 > The event stream is used as jade locals variable.
 
-The following event will link computations to a client DOM ready event:
+The following definition will link the same computations to a client DOM ready event:
 
 ```javascript
 // config/client/config/events/dom.js
