@@ -238,7 +238,7 @@ module.exports = {
                 }
             },
             {
-                order: 1,
+                order: 0,
                 name: 'unpredictable',
                 input: {
                     name: 'unpredictable'
@@ -250,7 +250,7 @@ module.exports = {
                 }
             },
             {
-                order: 2,
+                order: 0,
                 name: 'parallel',
                 input: {
                     name: 'parallel'
@@ -262,7 +262,7 @@ module.exports = {
                 }
             },
             {
-                order: 3,
+                order: 0,
                 name: 'series',
                 input: {
                     name: 'series'
@@ -274,7 +274,7 @@ module.exports = {
                 }
             },
             {
-                order: 4,
+                order: 0,
                 name: 'collection',
                 input: {
                     name: 'collection'

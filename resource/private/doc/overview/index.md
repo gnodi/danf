@@ -3,6 +3,8 @@ Danf Overview
 
 [←](../index.md)
 
+This quick overview will give you an idea of the architecture and possibilities of the framework. A fast read should take you about 10 minutes and an accurate one about 30 minutes.
+
 If you want to test it by yourself, [start a new application](../installation.md) and copy/paste the following code in the right files. If you are tired, you can use the code available [here](../../../../test/functional/proto/overview) (do not forget to make a `npm install` if you use this last one).
 
 Model
@@ -553,7 +555,7 @@ module.exports = {
                 }
             },
             {
-                order: 1,
+                order: 0,
                 name: 'unpredictable',
                 input: {
                     name: 'unpredictable'
@@ -565,7 +567,7 @@ module.exports = {
                 }
             },
             {
-                order: 2,
+                order: 0,
                 name: 'parallel',
                 input: {
                     name: 'parallel'
@@ -577,7 +579,7 @@ module.exports = {
                 }
             },
             {
-                order: 3,
+                order: 0,
                 name: 'series',
                 input: {
                     name: 'series'
@@ -589,7 +591,7 @@ module.exports = {
                 }
             },
             {
-                order: 4,
+                order: 0,
                 name: 'collection',
                 input: {
                     name: 'collection'
@@ -605,6 +607,8 @@ module.exports = {
 };
 ```
 
+In this last sequence, all the computations will be executed in parallel because the order is the same for every children.
+
 > It is a good practice to use an action name for your sequence.
 > `simple` is bad.
 > `compute` is good.
@@ -618,7 +622,7 @@ Event
 
 If you look at the path of the previously defined config, you can see that it has been done in the folder `/config/common`. This means that you will be able to use it on both client and server sides.
 
-This event will link computations to a server request:
+The following event will link computations to a server request:
 
 ```javascript
 // config/server/config/events/request.js
@@ -638,6 +642,9 @@ module.exports = {
         sequences: [
             {
                 name: 'compute',
+                // Set the field "result" of the sequence
+                // output stream in the field "result"
+                // of the event stream.
                 output: {
                     result: '@result@'
                 }
@@ -646,7 +653,7 @@ module.exports = {
         // Define the view.
         view: {
             // Define an HTML view.
-            // It is possible to define a JSON or
+            // It is possible to define a JSON and
             // a text view too (or in place).
             html: {
                 layout: {
@@ -661,7 +668,29 @@ module.exports = {
 };
 ```
 
-This event will link computations to a client dom ready event:
+> `%view.path%` is a parameter containing the path of your current module (`resource/private/view` by default).
+> [Jade](http://jade-lang.com/) is the default template engine, but you can use another one [like explained in Express](http://expressjs.com/guide/using-template-engines.html).
+
+You can update your default `index.jade` to display the server computations:
+
+```jade
+h1 Overview
+
+p Here is the output of the server computations:
+
+ul
+    li= 'Simple: ' + JSON.stringify(result.simple)
+    li= 'Unpredictable: ' + JSON.stringify(result.unpredictable)
+    li= 'Parallel: ' + JSON.stringify(result.parallel)
+    li= 'Series: ' + JSON.stringify(result.series)
+    li= 'Collection: ' + JSON.stringify(result.collection)
+
+p Take a look at your console to see the client computations!
+```
+
+> The event stream is used as jade locals variable.
+
+The following event will link computations to a client DOM ready event:
 
 ```javascript
 // config/client/config/events/dom.js
