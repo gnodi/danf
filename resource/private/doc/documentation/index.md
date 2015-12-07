@@ -5,6 +5,10 @@ Danf Full Documentation
 
 ![architecture](../../img/architecture.png)
 
+If you are a begginer in Danf, you certainly should not try to master all this documentation right now, but instead use it as a reference to find specific informations when needed.
+
+If you do not find what you are looking for in this documentation, feel free to post a question on [stackoverflow](http://stackoverflow.com/) with the tag `[danf]` or in the [issues](https://github.com/gnodi/danf/issues) if you think you have a bug or an interesting idea for an additional feature.
+
 Learn more about the core features of the framework:
 
 * [Configuration](core/configuration.md)

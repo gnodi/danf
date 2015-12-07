@@ -128,6 +128,8 @@ If you want to contribute, here is a not limited list of how to do:
 Documentation
 -------------
 
+Get a quick [overview](resource/private/doc/overview/index.md) of the framework architecture and possibilities.
+
 Learn more about the framework in the [documentation](resource/private/doc/index.md).
 
 Tests
