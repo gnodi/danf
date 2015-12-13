@@ -14,7 +14,7 @@ $ npm install -g yo
 
 Then, install the specific generator for Danf applications:
 ```sh
-$ npm install -g yo generator-danf
+$ npm install -g generator-danf
 ```
 
 Finally, create an application using:
