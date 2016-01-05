@@ -117,6 +117,8 @@ Processor.prototype.process = function(value) {
 }
 ```
 
+> You can [use ES6 class syntaxic sugar](../documentation/how-to/es6-class.md) if you prefer but be aware of the [browser](https://developer.mozilla.org/en/docs/Web/JavaScript/Reference/Classes#Browser_compatibility)/[node.js version](https://github.com/nodejs/node/blob/master/CHANGELOG.md) compatibility.
+
 Here is the definition of the services you need if you want to have a computer which increment the input value by 1 then multiply it by 2:
 
 ```javascript

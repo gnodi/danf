@@ -26,5 +26,6 @@ Learn how to do things with Danf:
 * [How to redirect a HTTP request](how-to/redirect.md)
 * [How to start many workers](how-to/workers.md)
 * [How to works with public assets (images, css, ...)](how-to/assets.md)
+* [How to use ES6 class syntaxic sugar](how-to/es6-class.md)
 
 [←](../index.md)

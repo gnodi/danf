@@ -81,3 +81,57 @@ describe('Extender', function() {
         })
     })
 })
+
+// Test ES6 class.
+if (parseFloat(process.version.replace('v', '')) > 2) {
+    var X = require('../../../fixture/object/x'),
+        Y = require('../../../fixture/object/y'),
+        Z = require('../../../fixture/object/z')
+    ;
+
+    classesContainer.setDefinition('x', X);
+    classesContainer.setDefinition('y', Y);
+    classesContainer.setDefinition('z', Z);
+
+    describe('Extender', function() {
+        describe('method "process"', function() {
+            it('should process ES6 class syntaxic sugar', function() {
+                extender.process(X);
+
+                var object = new X();
+
+                assert.equal(typeof object.f, 'function');
+                assert.equal(typeof object.g, 'function');
+                assert.equal(typeof object.h, 'undefined');
+                assert.equal(typeof object.i, 'undefined');
+                assert.equal(object.f(), 1);
+                assert.equal(object.g(), 2);
+
+                extender.process(Y);
+
+                var object = new Y();
+
+                assert.equal(typeof object.f, 'function');
+                assert.equal(typeof object.g, 'function');
+                assert.equal(typeof object.h, 'function');
+                assert.equal(typeof object.i, 'undefined');
+                assert.equal(object.f(), 3);
+                assert.equal(object.g(), 2);
+                assert.equal(object.h(), 4);
+
+                extender.process(Z);
+
+                var object = new Z();
+
+                assert.equal(typeof object.f, 'function');
+                assert.equal(typeof object.g, 'function');
+                assert.equal(typeof object.h, 'function');
+                assert.equal(typeof object.i, 'function');
+                assert.equal(object.f(), 5);
+                assert.equal(object.g(), 2);
+                assert.equal(object.h(), 4);
+                assert.equal(object.i(), 6);
+            })
+        })
+    })
+}

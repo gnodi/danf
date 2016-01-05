@@ -8,7 +8,7 @@ var Manager = function() { this.name = 'manager'; };
 Manager.defineImplementedInterfaces(['ManagerInterface']);
 Manager.prototype.selectProvider = function(fileName) {};
 
-module.exports = {
+var config = {
     dependencies: {
         dep1: require('./module1-danf'),
         dep2: require('./module2-danf'),
@@ -408,3 +408,20 @@ module.exports = {
         }
     }
 };
+
+// Test ES6 class.
+if (parseFloat(process.version.replace('v', '')) > 2) {
+    config.config.classes.d = require('./app/d');
+    config.config.classes.e = require('./app/e');
+    config.config.interfaces.d = {
+        methods: {
+            d: {
+            }
+        }
+    };
+    config.config.services.es6Polymorphous = {
+        class: 'e'
+    };
+}
+
+module.exports = config;

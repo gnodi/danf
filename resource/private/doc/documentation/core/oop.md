@@ -35,6 +35,8 @@ Computer.prototype.compute = function() {
 }
 ```
 
+> You can [use ES6 class syntaxic sugar](../how-to/es6-class.md) if you prefer but be aware of the [browser](https://developer.mozilla.org/en/docs/Web/JavaScript/Reference/Classes#Browser_compatibility)/[node.js version](https://github.com/nodejs/node/blob/master/CHANGELOG.md) compatibility.
+
 The definition of a class is really easy, you just have to declare a function and return it with `module.exports` as in any other node.js file.
 You can, then, define some properties and some methods on this function as shown in this example.
 
@@ -62,7 +64,7 @@ function SuperComputer() {
     SuperComputer.Parent.call(this);
 }
 
-// Define inherited class 
+// Define inherited class
 // (use the identifier logical name of the parent class).
 SuperComputer.defineExtendedClass('computer');
 
