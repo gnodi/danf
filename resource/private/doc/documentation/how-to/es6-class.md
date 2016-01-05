@@ -48,7 +48,7 @@ class Computer {
         return this._host;
     }
 
-    set host(host){
+    set host(host) {
         if (host) {
             this._host = host;
         }
