@@ -84,9 +84,24 @@ describe('Danf application', function() {
         assert.equal(typeof polymorphous.a, 'function');
         assert.equal(typeof polymorphous.b, 'function');
         assert.equal(typeof polymorphous.c, 'function');
+        assert.equal(typeof polymorphous.d, 'undefined');
         assert.equal(polymorphous.a(), 2);
         assert.equal(polymorphous.b(), 3);
         assert.equal(polymorphous.c(), 4);
+
+        // Test ES6 class.
+        if (parseFloat(process.version.replace('v', '')) > 2) {
+            var polymorphous = app.servicesContainer.get('main:es6Polymorphous');
+
+            assert.equal(typeof polymorphous.a, 'function');
+            assert.equal(typeof polymorphous.b, 'function');
+            assert.equal(typeof polymorphous.c, 'function');
+            assert.equal(typeof polymorphous.d, 'function');
+            assert.equal(polymorphous.a(), 2);
+            assert.equal(polymorphous.b(), 3);
+            assert.equal(polymorphous.c(), 7);
+            assert.equal(polymorphous.d(), 11);
+        }
     })
 
     it('should allow cross danf modules inheritance', function() {
