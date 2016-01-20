@@ -155,7 +155,7 @@ describe('Danf proto application', function() {
                                             oldTopic: {},
                                             topic: {},
                                             'message-get.foo': {},
-                                            'message-get.bar': {}
+                                            'message-get.bar.abc': 123
                                         }
                                     }
                                 }
@@ -194,7 +194,11 @@ describe('Danf proto application', function() {
                     a: {
                         config: {
                             this: {foo: 'bar'},
-                            'dep1.subdep2': {key: 'value'},
+                            'dep1.subdep2': {
+                                'key.': 'value',
+                                'indexAb': 12,
+                                'indexCde': 345
+                            },
                             events: {
                                 request: {
                                     compute: {
