@@ -75,6 +75,9 @@ module.exports = {
     callbackExecutor: {
         class: 'danf:manipulation.callbackExecutor'
     },
+    proxyExecutor: {
+        class: 'danf:manipulation.proxyExecutor'
+    },
     mapProvider: {
         parent: 'danf:dependencyInjection.objectProvider',
         properties: {

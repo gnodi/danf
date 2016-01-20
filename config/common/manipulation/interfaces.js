@@ -487,6 +487,31 @@ module.exports = {
             }
         }
     },
+    proxyExecutor: {
+        methods: {
+            /**
+             * Execute a method of an object.
+             *
+             * @param {object} object The object.
+             * @param {string} method The method.
+             * @param {mixed} argN The N-th argument to pass to the method.
+             */
+            execute: {
+                arguments: ['object/object', 'string/method', 'mixed.../argN']
+            },
+            /**
+             * Execute an asynchronous method of an object.
+             *
+             * @param {object} object The object.
+             * @param {string} method The method.
+             * @param {string|null} scope The stream scope.
+             * @param {mixed} argN The N-th argument to pass to the method.
+             */
+            executeAsync: {
+                arguments: ['object/object', 'string/method', 'string|null/scope', 'mixed.../argN']
+            }
+        }
+    },
     flow: {
         methods: {
             /**
