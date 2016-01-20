@@ -10,7 +10,104 @@ var rootPath = fs.realpathSync(path.join(__dirname, '/../fixture/proto')),
     requirePattern = 'require(\'{0}/{1}\')'.format(rootPath, '{0}')
 ;
 
+var pathInterpretationTests = [
+        {
+            input: 'foo-bar',
+            output: 'fooBar'
+        },
+        {
+            input: '-foo-bar',
+            output: 'FooBar'
+        },
+        {
+            input: 'foo-.bar',
+            output: 'foo-bar'
+        },
+        {
+            input: 'foo.bar',
+            output: 'foo.bar'
+        },
+        {
+            input: 'foo&dev',
+            output: 'foo/dev'
+        },
+        {
+            input: 'foo.-bar',
+            output: 'foo.Bar'
+        },
+        {
+            input: 'foo~bar',
+            output: 'foo~bar'
+        },
+        {
+            input: 'foo~.bar',
+            output: 'foo~.bar'
+        },
+        {
+            input: 'foo;bar',
+            output: 'foo:bar'
+        },
+        {
+            input: 'ab-c-d-.efg.hI.-jk~l;mn.op~qrs.-t-.uvw&xyz',
+            output: 'abCD-efg.hI.Jk~l:mn.op~qrs.T-uvw/xyz'
+        },
+        {
+            input: 'abc{0}def{0}ghi'.format(path.sep),
+            output: 'abc~def~ghi'
+        },
+        {
+            input: 'abc{0}def.{0}ghi'.format(path.sep),
+            output: 'abc~def.ghi'
+        },
+        {
+            input: 'abc{0}def.ghi'.format(path.sep),
+            output: 'abc.def.ghi',
+            pathSeparator: '.'
+        }
+    ]
+;
+
+var pathSplitTests = [
+        {
+            input: 'abc-def.gh',
+            output: ['abc-def.gh']
+        },
+        {
+            input: 'ab~cde.f',
+            output: ['ab', 'cde.f']
+        },
+        {
+            input: 'ab~cde~fgHi',
+            output: ['ab', 'cde', 'fgHi']
+        },
+        {
+            input: 'ab~.cde~FgH.~i~.jk',
+            output: ['ab~cde', 'FgH.', 'i~jk']
+        },
+        {
+            input: 'abCD-efg.hI.Jk~l:mn.op~qrs.T-uvw/xyz',
+            output: ['abCD-efg.hI.Jk', 'l:mn.op', 'qrs.T-uvw/xyz']
+        }
+    ]
+;
+
 describe('Danf proto application', function() {
+    pathInterpretationTests.forEach(function(test) {
+        it('should interpret paths', function() {
+            var path = danf.prototype.interpretPath(test.input, test.pathSeparator || '~');
+
+            assert.equal(path, test.output);
+        })
+    });
+
+    pathSplitTests.forEach(function(test) {
+        it('should split interpreted paths', function() {
+            var path = danf.prototype.splitPath(test.input);
+
+            assert.deepEqual(path, test.output);
+        })
+    });
+
     it('should build its server configuration from files, folders and node modules', function() {
         assert.deepEqual(
             danf.prototype.buildSideConfiguration(rootPath, 'danf', 'server'),
@@ -56,7 +153,9 @@ describe('Danf proto application', function() {
                                                 }
                                             },
                                             oldTopic: {},
-                                            topic: {}
+                                            topic: {},
+                                            'message-get.foo': {},
+                                            'message-get.bar': {}
                                         }
                                     }
                                 }
