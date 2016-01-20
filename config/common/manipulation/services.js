@@ -72,6 +72,9 @@ module.exports = {
             }
         }
     },
+    registry: {
+        class: 'danf:manipulation.registry'
+    },
     callbackExecutor: {
         class: 'danf:manipulation.callbackExecutor'
     },
