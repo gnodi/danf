@@ -44,6 +44,7 @@
         "express": "~4.12",
         "express-session": "~1.10",
         "gnucki-r": "~1.0",
+        "gulp": "~3.9",
         "jade": "~1.9",
         "jquery": "~2.1",
         "parseurl": "~1.3",
