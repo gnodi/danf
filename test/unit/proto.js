@@ -149,7 +149,8 @@ describe('Danf proto application', function() {
                                                     }
                                                 },
                                                 children: {
-                                                    message: {}
+                                                    message: {},
+                                                    post: {}
                                                 }
                                             },
                                             oldTopic: {},
