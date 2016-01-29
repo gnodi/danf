@@ -59,6 +59,35 @@ module.exports = {
              */
             trigger: {
                 arguments: ['object|null/data']
+            },
+            /**
+             * Set a parameter.
+             *
+             * @param {string} name The identifier name of the parameter.
+             * @param {mixed} value The value of the parameter.
+             */
+            setParameter: {
+                arguments: ['string/name', 'mixed/value']
+            },
+            /**
+             * Set a parameter.
+             *
+             * @param {string} name The identifier name of the parameter.
+             * @return {mixed} The value of the parameter.
+             */
+            getParameter: {
+                arguments: ['string/name'],
+                returns: 'mixed'
+            },
+            /**
+             * Set a parameter.
+             *
+             * @param {string} name The identifier name of the parameter.
+             * @return {boolean} Whether or not the parameter exists.
+             */
+            hasParameter: {
+                arguments: ['string/name'],
+                returns: 'boolean'
             }
         },
         getters: {
