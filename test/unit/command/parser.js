@@ -23,7 +23,7 @@ var parsingTests = [
         },
         expected: {
             _name: 'foo0',
-            _parameters: {}
+            _options: {}
         }
     },
     {
@@ -36,7 +36,7 @@ var parsingTests = [
         },
         expected: {
             _name: 'foo1',
-            _parameters: {
+            _options: {
                 _: ['val']
             }
         }
@@ -51,7 +51,7 @@ var parsingTests = [
         },
         expected: {
             _name: 'foo2',
-            _parameters: {
+            _options: {
                 _: ['val1', 'val2']
             }
         }
@@ -69,7 +69,7 @@ var parsingTests = [
         },
         expected: {
             _name: 'foo3',
-            _parameters: {
+            _options: {
                 bar: true
             }
         }
@@ -87,7 +87,7 @@ var parsingTests = [
         },
         expected: {
             _name: 'foo4',
-            _parameters: {
+            _options: {
                 bar: 1
             }
         }
@@ -105,7 +105,7 @@ var parsingTests = [
         },
         expected: {
             _name: 'foo5',
-            _parameters: {
+            _options: {
                 bar: 3
             }
         }
@@ -123,7 +123,7 @@ var parsingTests = [
         },
         expected: {
             _name: 'foo6',
-            _parameters: {
+            _options: {
                 bar: 'val'
             }
         }
@@ -141,7 +141,7 @@ var parsingTests = [
         },
         expected: {
             _name: 'foo7',
-            _parameters: {
+            _options: {
                 bar: [3, 6, 7]
             }
         }
@@ -159,7 +159,7 @@ var parsingTests = [
         },
         expected: {
             _name: 'foo8',
-            _parameters: {
+            _options: {
                 bar: [3, 6, 'val']
             }
         }
@@ -177,7 +177,7 @@ var parsingTests = [
         },
         expected: {
             _name: 'foo9',
-            _parameters: {
+            _options: {
                 bar: 3,
                 _: [6, 'val']
             }
@@ -199,7 +199,7 @@ var parsingTests = [
         },
         expected: {
             _name: 'foo10',
-            _parameters: {
+            _options: {
                 bar: 3,
                 foo: true,
                 _: [6, 'val']
@@ -222,7 +222,7 @@ var parsingTests = [
         },
         expected: {
             _name: 'foo11',
-            _parameters: {
+            _options: {
                 bar: true
             }
         }
@@ -243,7 +243,7 @@ var parsingTests = [
         },
         expected: {
             _name: 'foo12',
-            _parameters: {
+            _options: {
                 bar: 1
             }
         }
@@ -264,7 +264,7 @@ var parsingTests = [
         },
         expected: {
             _name: 'foo13',
-            _parameters: {
+            _options: {
                 bar: 4
             }
         }
@@ -285,7 +285,7 @@ var parsingTests = [
         },
         expected: {
             _name: 'foo14',
-            _parameters: {
+            _options: {
                 bar: ['plop', 'plip']
             }
         }
@@ -310,7 +310,7 @@ var parsingTests = [
         },
         expected: {
             _name: 'foo15',
-            _parameters: {
+            _options: {
                 bar: ['plop', 'plip'],
                 foo: true
             }
@@ -336,7 +336,7 @@ var parsingTests = [
         },
         expected: {
             _name: 'foo16',
-            _parameters: {
+            _options: {
                 bar: 'plop',
                 foo: true,
                 _: ['plip']
@@ -363,7 +363,7 @@ var parsingTests = [
         },
         expected: {
             _name: 'foo17',
-            _parameters: {
+            _options: {
                 bar: 'plop',
                 foo: 'plip'
             }
@@ -385,7 +385,7 @@ var parsingTests = [
         },
         expected: {
             _name: 'foo18',
-            _parameters: {
+            _options: {
                 bar: 'plop plip'
             }
         }
@@ -406,7 +406,7 @@ var parsingTests = [
         },
         expected: {
             _name: 'foo19',
-            _parameters: {
+            _options: {
                 bar: {
                     a: 1,
                     b: 3,
@@ -431,7 +431,7 @@ var parsingTests = [
         },
         expected: {
             _name: 'foo20',
-            _parameters: {
+            _options: {
                 bar: {
                     a: 1,
                     b: 3,
@@ -459,7 +459,7 @@ var parsingTests = [
         },
         expected: {
             _name: 'foo21',
-            _parameters: {
+            _options: {
                 bar: 'plop plip',
                 foo: 'plap plup',
                 _: ['plep plyp', 'plyp plep']
@@ -477,7 +477,7 @@ var parsingErrorTests = [
                     default: []
                 }
             },
-            expected: /Unexpected parameter "foo" passed to the command "bar0"\./
+            expected: /Unexpected option "foo" passed to the command "bar0"\./
         },
         {
             line: 'bar1 --foo',
@@ -490,7 +490,7 @@ var parsingErrorTests = [
                     type: 'string'
                 }
             },
-            expected: /Missing parameter "foo" value for the command "bar1"\./
+            expected: /Missing option "foo" value for the command "bar1"\./
         },
         {
             line: 'bar2 -fb plop plip',
@@ -510,7 +510,7 @@ var parsingErrorTests = [
                 f: 'foo',
                 b: 'bar'
             },
-            expected: /Missing parameter "foo" value for the command "bar2"\./
+            expected: /Missing option "foo" value for the command "bar2"\./
         },
         {
             line: 'bar3 -fb plop',
