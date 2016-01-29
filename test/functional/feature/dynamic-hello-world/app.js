@@ -1,8 +1,13 @@
 'use strict';
 
-var danf = require('../../../..'),
-    app = danf(
+var danf = require('../../../..')(
         __dirname + '/danf-server.js',
-        __dirname + '/danf-client.js'
+        __dirname + '/danf-client.js',
+        {},
+        {}
     )
 ;
+
+danf.buildServer(function(app) {
+    app.listen();
+});
