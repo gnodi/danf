@@ -2,7 +2,7 @@
 
 require('./lib/common/init');
 
-var exec = require('child_process').exec,
+var spawn = require('child_process').spawn,
     path = require('path'),
     fs = require('fs')
 ;
@@ -31,7 +31,7 @@ for (var i = 0; i < commands.length; i++) {
     ;
 
     if (task in {'execute-cmd': true, '$': true}) {
-        command = '{0} --cmd "{1}" {2}'.format(
+        command = '{0} --cmd {1} {2}'.format(
             commandParts.shift(),
             commandParts.shift(),
             commandParts.join(' ')
@@ -39,20 +39,27 @@ for (var i = 0; i < commands.length; i++) {
     }
 
     // Forward the task execution to gulp.
-    var child = exec(
-            '{0} {1}'.format(gulpCommandPath, command),
-            function(error) {
-                if (error !== null) {
-                    console.log('Processing Error: ' + error);
-                }
+    var child = spawn(
+            gulpCommandPath,
+            process.argv.slice(2, 3).concat(['--colors']).concat(process.argv.slice(3)),
+            {
+                cwd: path.dirname(require.main.filename)
             }
-        )
+        ),
+        errored = false;
     ;
 
     child.stdout.on('data', function(data) {
         process.stdout.write(data);
     });
     child.stderr.on('data', function(data) {
-        process.stdout.write('Error: ' + data);
+        errored = true;
+        process.stdout.write('>>> Task errored: ' + data);
+    });
+    child.on('close', function(data) {
+        process.exit(errored ? 1 : 0);
+    });
+    child.on('exit', function(data) {
+        process.exit(errored ? 1 : 0);
     });
 }

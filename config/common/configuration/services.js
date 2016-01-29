@@ -21,7 +21,7 @@ module.exports = {
             referenceResolver: '#danf:manipulation.referenceResolver#',
             namespacer: '#danf:configuration.namespacer#',
             sectionProcessors: '&danf:configuration.sectionProcessor&',
-            environment: '%danf:context.environment%'
+            environment: '%danf:context.env%'
         },
         lock: true
     },
