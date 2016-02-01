@@ -2,52 +2,36 @@
 
 require('./lib/common/init');
 
-var path = require('path');
+var path = require('path'),
+    chalk = require('chalk'),
+    Logger = require('./lib/common/logging/logger')
+;
+
+var logger = new Logger();
+
+logger.chalk = chalk;
 
 module.exports = function(gulp) {
-    var commandServer = {
-            port: 3090
-        }
-    ;
-
     gulp.task('default', function(done) {
         // TODO: describe available tasks.
     });
 
     // Start a HTTP server.
     gulp.task('serve-http', function(done) {
-        var app = buildServer();
+        var command = parseCommandLine();
 
-        app.listenHttp(done);
+        buildServer(command, function(app) {
+            app.listenHttp(done);
+        });
     });
 
     // Start a command server.
     gulp.task('serve-cmd', function(done) {
-        var app = buildServer();
+        var command = parseCommandLine();
 
-        app.listenCmd(done);
-        /*var net = require('net');
-
-        var server = net.createServer(function(socket) {});
-
-        server.on('error', function(error) {
-            if (error.code == 'EADDRINUSE') {
-                console.log('Port {0} already in use.'.format(commandServer.port));
-            }
+        buildServer(command, function(app) {
+            app.listenCmd(done);
         });
-        server.on('connection', function(socket) {
-            socket.write('> Connected to command server on port {0}.'.format(commandServer.port));
-
-            socket.on('data', function(data) {
-                // TODO: execute a command.
-
-                console.log(data.toString('utf8'));
-            });
-        });
-        // Listen for commands.
-        server.listen(commandServer.port, function() {
-            console.log('Command server listening on port {0}...'.format(commandServer.port));
-        });*/
     });
 
     // Execute a command.
@@ -57,27 +41,33 @@ module.exports = function(gulp) {
         var command = parseCommandLine();
 
         // Try to connect to a command server.
-        var client = net.connect({port: commandServer.port}, function() {
+        logger.log('<<grey>>[client] <<yellow>>Trying to connect to command server...');
+
+        var client = net.connect({port: command.port}, function() {
             client.write(command.line);
         });
 
         client.on('error', function(error) {
             // Execute a standalone command if no command server is listening.
+            logger.log('<<grey>>[client] <<red>>Failed to connect.')
+
             if ('ECONNREFUSED' === error.code) {
-                console.log('You are executing a standalone command. To maximize the performances, start a command server with `node danf serve-cmd`.');
+                logger.log('<<grey>>[client] <<yellow>>You are executing a standalone command. To maximize the performances, start a command server with `node danf serve-cmd`.');
 
                 // Execute a standalone command.
                 command.app.server.context.clustered = false;
 
                 buildServer(command, function(app) {
                     app.executeCmd(command.line, function() {
+                        logger.log('<<grey>>[client]<</grey>> <<yellow>>Command processing ended.');
                         done();
+
                         // Wait for all stdout to be sent to parent process.
                         setTimeout(
                             function() {
                                 process.exit(0);
                             },
-                            1000
+                            2000
                         );
                     });
                 });
@@ -86,11 +76,10 @@ module.exports = function(gulp) {
             }
         });
         client.on('data', function(data) {
-            console.log(data.toString());
-            client.end();
+            logger.log('<<grey>>[server]<</grey>> {0}'.format(data.toString()));
         });
         client.on('end', function() {
-            console.log('> Disconnected from command server.');
+            logger.log('<<grey>>[client]<</grey>> <<yellow>>Command processing ended.');
             done();
         });
     });
@@ -124,15 +113,23 @@ function buildClient(command, callback) {
 
 function parseCommandLine() {
     var line = process.argv.slice(4).join(' ').replace(' ', ''),
-        env = line.match(/--env\s([^\s])+/),
-        environment = env ? env[1] : 'dev'
+        envOption = line.match(/--env\s([^\s])+/),
+        portOption = line.match(/--port\s([^\s])+/),
+        environment = envOption ? envOption[1] : 'dev',
+        port = portOption ? portOption[1] : 3111
     ;
 
     return {
-        line: line.replace(/\s--env\s([^\s])+/, '').replace(/\s--colors/, ''),
+        line: line
+            .replace(/\s--env\s([^\s])+/, '')
+            .replace(/\s--port\s([^\s])+/, '')
+            .replace(/\s--colors/, '')
+        ,
         app: require(path.join(
             process.cwd(),
             'app-{0}'.format(environment)
-        ))
+        )),
+        env: environment,
+        port: port
     };
 }
