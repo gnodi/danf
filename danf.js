@@ -54,7 +54,7 @@ for (var i = 0; i < commands.length; i++) {
     });
     child.stderr.on('data', function(data) {
         errored = true;
-        process.stdout.write('>>> Task errored: ' + data);
+        process.stdout.write(data);
     });
     child.on('close', function(data) {
         process.exit(errored ? 1 : 0);

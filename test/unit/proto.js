@@ -3,7 +3,7 @@
 var assert = require('assert'),
     path = require('path'),
     fs = require('fs'),
-    danf = require('../../lib/server/app')
+    danf = require('../../lib/server/app')({}, {}, {}, {})
 ;
 
 var rootPath = fs.realpathSync(path.join(__dirname, '/../fixture/proto')),
@@ -91,10 +91,94 @@ var pathSplitTests = [
     ]
 ;
 
+var workersComputationTests = [
+        {
+            input: {
+                http: 1
+            },
+            max: 8,
+            output: {
+                http: 1
+            }
+        },
+        {
+            input: {
+                http: 8
+            },
+            max: 8,
+            output: {
+                http: 8
+            }
+        },
+        {
+            input: {
+                http: 9
+            },
+            max: 8,
+            output: {
+                http: 9
+            }
+        },
+        {
+            input: {
+                http: 2,
+                cmd: 3
+            },
+            max: 8,
+            output: {
+                http: 2,
+                cmd: 3
+            }
+        },
+        {
+            input: {
+                http: 2,
+                cmd: -1
+            },
+            max: 8,
+            output: {
+                http: 2,
+                cmd: 5
+            }
+        },
+        {
+            input: {
+                http: 2,
+                cmd: 0
+            },
+            max: 10,
+            output: {
+                http: 2,
+                cmd: 8
+            }
+        },
+        {
+            input: {
+                http: 3,
+                cmd: null
+            },
+            max: 10,
+            output: {
+                http: 3,
+                cmd: 0
+            }
+        },
+        {
+            input: {
+                http: 0,
+                cmd: -1
+            },
+            max: 8,
+            output: /Cannot define a number lower than or equal to 0 for more than one type of workers./,
+            errored: true
+        }
+    ]
+;
+
 describe('Danf proto application', function() {
     pathInterpretationTests.forEach(function(test) {
         it('should interpret paths', function() {
-            var path = danf.prototype.interpretPath(test.input, test.pathSeparator || '~');
+            var path = danf.interpretPath(test.input, test.pathSeparator || '~');
 
             assert.equal(path, test.output);
         })
@@ -102,15 +186,32 @@ describe('Danf proto application', function() {
 
     pathSplitTests.forEach(function(test) {
         it('should split interpreted paths', function() {
-            var path = danf.prototype.splitPath(test.input);
+            var path = danf.splitPath(test.input);
 
             assert.deepEqual(path, test.output);
         })
     });
 
+    workersComputationTests.forEach(function(test) {
+        it('should split interpreted paths', function() {
+            if (!test.errored) {
+                var workersNumbers = danf.computeWorkersNumbers(test.input, test.max);
+
+                assert.deepEqual(workersNumbers, test.output);
+            } else {
+                assert.throws(
+                    function() {
+                        danf.computeWorkersNumbers(test.input, test.max);
+                    },
+                    test.output
+                );
+            }
+        })
+    });
+
     it('should build its server configuration from files, folders and node modules', function() {
         assert.deepEqual(
-            danf.prototype.buildSideConfiguration(rootPath, 'danf', 'server'),
+            danf.buildSideConfiguration(rootPath, 'danf', 'server'),
             {
                 config: {
                     classes: {
@@ -181,7 +282,7 @@ describe('Danf proto application', function() {
 
     it('should build its client configuration from files, folders and node modules', function() {
         assert.deepEqual(
-            danf.prototype.buildSideConfiguration(rootPath, 'danf', 'client'),
+            danf.buildSideConfiguration(rootPath, 'danf', 'client'),
             {
                 config: {
                     classes: {
