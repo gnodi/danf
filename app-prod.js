@@ -15,7 +15,7 @@ module.exports = {
             env: 'prod',
             debug: false,
             verbosity: 1,
-            secret: 'c8f6ef14-13f1-4399-9020-8c39fa71db1a'
+            secret: 'c8f6ef24-1af1-4398-9120-8c30fa81db1a'
         }
     }
 };
