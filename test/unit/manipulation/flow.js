@@ -71,7 +71,7 @@ describe('Flow', function() {
 
                     setTimeout(
                         function() {
-                            flow.end(task, function(stream) {
+                            flow.end(task, null, function(stream) {
                                 if (null == stream) {
                                     stream = 0;
                                 }
@@ -93,7 +93,7 @@ describe('Flow', function() {
 
                 setTimeout(
                     function() {
-                        flow.end(task, function(stream) {
+                        flow.end(task, null, function(stream) {
                             if (null == stream) {
                                 stream = 0;
                             }

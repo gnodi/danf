@@ -5,39 +5,39 @@ var assert = require('assert');
 function Computer() {}
 
 Computer.prototype.inc = function (value, inc) {
-    this.__asyncProcess(function(returnAsync) {
+    this.__asyncProcess(function(async) {
         setTimeout(
-            function() {
-                returnAsync(function(value) {
+            async(function() {
+                return function(value) {
                     return value + inc;
-                });
-            },
+                };
+            }),
             20
         );
     });
 }
 
 Computer.prototype.dec = function (value, dec) {
-    this.__asyncProcess(function(returnAsync) {
+    this.__asyncProcess(function(async) {
         setTimeout(
-            function() {
-                returnAsync(function(value) {
+            async(function() {
+                return function(value) {
                     return value - dec;
-                });
-            },
+                };
+            }),
             20
         );
     });
 }
 
 Computer.prototype.mul = function (value, coeff) {
-    this.__asyncProcess(function(returnAsync) {
+    this.__asyncProcess(function(async) {
         setTimeout(
-            function() {
-                returnAsync(function(value) {
+            async(function() {
+                return function(value) {
                     return value * coeff;
-                });
-            },
+                };
+            }),
             20
         );
     });

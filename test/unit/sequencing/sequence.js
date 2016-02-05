@@ -13,11 +13,11 @@ var mapProvider = require('../../fixture/manipulation/map-provider');
 function A() {
 }
 A.prototype.f = function(i, j) {
-    this.__asyncProcess(function(returnAsync) {
+    this.__asyncProcess(function(async) {
         setTimeout(
-            function() {
-                returnAsync(i + j);
-            },
+            async(function() {
+                return i + j;
+            }),
             20
         );
     });
@@ -27,17 +27,17 @@ A.prototype.g = function() {
 
     for (var i = 0; i <= 3; i++) {
         (function(i) {
-            self.__asyncProcess(function(returnAsync) {
+            self.__asyncProcess(function(async) {
                 setTimeout(
-                    function() {
-                        returnAsync(function(stream) {
+                    async(function() {
+                        return function(stream) {
                             if (null == stream) {
                                 stream = 0;
                             }
 
                             return stream + i;
-                        });
-                    },
+                        };
+                    }),
                     40 - (i * 10)
                 );
             });

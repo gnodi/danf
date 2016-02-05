@@ -18,11 +18,11 @@ var proxyExecutor = new ProxyExecutor(),
     },
     asyncComputer = {
         add: function(a, b) {
-            this.__asyncProcess(function(returnAsync) {
+            this.__asyncProcess(function(async) {
                 setTimeout(
-                    function() {
-                        returnAsync(a + b);
-                    },
+                    async(function() {
+                        return a + b;
+                    }),
                     10
                 );
             });
@@ -57,7 +57,7 @@ describe('ProxyExecutor', function() {
         proxyExecutor.__asyncFlow = flow;
 
         proxyExecutor.executeAsync(
-            computer,
+            asyncComputer,
             'add',
             'foo',
             4,

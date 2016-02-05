@@ -34,24 +34,24 @@ ForumHandler.prototype.getMessages = function(topicName, page) {
 };
 
 ForumHandler.prototype.computeForumSize = function(topics, messages) {
-    this.__asyncProcess(function(returnAsync) {
+    this.__asyncProcess(function(async) {
         setTimeout(
-            function() {
-                returnAsync(function(count) {
+            async(function() {
+                return function(count) {
                     return count + topics.length;
-                });
-            },
+                };
+            }),
             20
         );
     })
 
-    this.__asyncProcess(function(returnAsync) {
+    this.__asyncProcess(function(async) {
         setTimeout(
-            function() {
-                returnAsync(function(count) {
+            async(function() {
+                return function(count) {
                     return count + messages.length;
-                });
-            },
+                };
+            }),
             20
         );
     })

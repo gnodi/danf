@@ -177,11 +177,11 @@ var AsyncComputer = function() {};
 AsyncComputer.prototype.add = function(a, b, delay) {
     delay = delay ? delay : 10;
 
-    this.__asyncProcess(function(returnAsync) {
+    this.__asyncProcess(function(async) {
         setTimeout(
-            function() {
-                returnAsync(a + b);
-            },
+            async(function() {
+                return a + b;
+            }),
             delay
         );
     });
@@ -189,11 +189,11 @@ AsyncComputer.prototype.add = function(a, b, delay) {
 AsyncComputer.prototype.substract = function(a, b, delay) {
     delay = delay ? delay : 10;
 
-    this.__asyncProcess(function(returnAsync) {
+    this.__asyncProcess(function(async) {
         setTimeout(
-            function() {
-                returnAsync(a - b);
-            },
+            async(function() {
+                return a - b;
+            }),
             delay
         );
     });
@@ -201,11 +201,11 @@ AsyncComputer.prototype.substract = function(a, b, delay) {
 AsyncComputer.prototype.multiply = function(a, b, delay) {
     delay = delay ? delay : 10;
 
-    this.__asyncProcess(function(returnAsync) {
+    this.__asyncProcess(function(async) {
         setTimeout(
-            function() {
-                returnAsync(a * b);
-            },
+            async(function() {
+                return a * b;
+            }),
             delay
         );
     });
@@ -213,11 +213,11 @@ AsyncComputer.prototype.multiply = function(a, b, delay) {
 AsyncComputer.prototype.divide = function(a, b, delay) {
     delay = delay ? delay : 10;
 
-    this.__asyncProcess(function(returnAsync) {
+    this.__asyncProcess(function(async) {
         setTimeout(
-            function() {
-                returnAsync(a / b);
-            },
+            async(function() {
+                return a / b;
+            }),
             delay
         );
     });
@@ -225,11 +225,11 @@ AsyncComputer.prototype.divide = function(a, b, delay) {
 AsyncComputer.prototype.isGreaterThan = function(a, b, delay) {
     delay = delay ? delay : 10;
 
-    this.__asyncProcess(function(returnAsync) {
+    this.__asyncProcess(function(async) {
         setTimeout(
-            function() {
-                returnAsync(a > b);
-            },
+            async(function() {
+                return a > b;
+            }),
             delay
         );
     });
@@ -237,11 +237,11 @@ AsyncComputer.prototype.isGreaterThan = function(a, b, delay) {
 AsyncComputer.prototype.addSubstract = function(a, b, delay) {
     delay = delay ? delay : 10;
 
-    this.__asyncProcess(function(returnAsync) {
+    this.__asyncProcess(function(async) {
         setTimeout(
-            function() {
-                returnAsync([a + b, a - b]);
-            },
+            async(function() {
+                return [a + b, a - b];
+            }),
             delay
         );
     });
@@ -249,11 +249,11 @@ AsyncComputer.prototype.addSubstract = function(a, b, delay) {
 AsyncComputer.prototype.getAdjacentNumbers = function(a, delay) {
     delay = delay ? delay : 10;
 
-    this.__asyncProcess(function(returnAsync) {
+    this.__asyncProcess(function(async) {
         setTimeout(
-            function() {
-                returnAsync([a - 1, a, a + 1]);
-            },
+            async(function() {
+                return [a - 1, a, a + 1];
+            }),
             delay
         );
     });

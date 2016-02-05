@@ -5,24 +5,24 @@ module.exports = Scheduler;
 function Scheduler() {}
 
 Scheduler.prototype.start = function (value, inc, timeout) {
-    this.__asyncProcess(function(returnAsync) {
+    this.__asyncProcess(function(async) {
         setTimeout(
-            function() {
-                returnAsync(function(value) {
+            async(function() {
+                return function(value) {
                     return value + inc;
-                });
-            },
+                };
+            }),
             timeout + 20
         );
     });
 
-    this.__asyncProcess(function(returnAsync) {
+    this.__asyncProcess(function(async) {
         setTimeout(
-            function() {
-                returnAsync(function(value) {
+            async(function() {
+                return function(value) {
                     return value + inc;
-                });
-            },
+                };
+            }),
             timeout
         );
     });
