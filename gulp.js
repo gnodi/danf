@@ -21,7 +21,10 @@ function Gulp(gulp) {
 }
 
 Gulp.prototype.init = function(gulp) {
-    var self = this;
+    var self = this,
+        server,
+        serverStopped = false
+    ;
 
     // Display info on available tasks.
     gulp.task('default', function() {
@@ -31,37 +34,192 @@ Gulp.prototype.init = function(gulp) {
         logger.log('<<grey>>$<</grey>> node danf $ my-command --foo bar', 0, 1);
     });
 
-    // Start a server.
-    gulp.task('serve', function(done) {
-        // Forward the task in order to not create a gulp cluster.
-        var child = spawn(
-                'node',
-                [require.resolve('./main')].concat(process.argv),
-                {
-                    cwd: process.cwd()
-                }
-            ),
-            errored = false;
-        ;
-
-        child.stdout.on('data', function(data) {
-            process.stdout.write(data);
-        });
-        child.stderr.on('data', function(data) {
-            errored = true;
-            process.stdout.write(data);
-        });
-        child.on('close', function(data) {
-            process.exit(errored ? 1 : 0);
-        });
-        child.on('exit', function(data) {
-            process.exit(errored ? 1 : 0);
-        });
-    });
-
     // Execute a command.
     gulp.task('$', function(done) {
         self.executeCommand(done)
+    });
+
+    // Start a self watching server with a fresh client.
+    gulp.task('serve', ['build-client', 'start-server'], function() {
+        var options = {
+                interval: 700
+            }
+        ;
+
+        // Watch for client modifications.
+        this.watch(
+            [
+                './node_modules/danf/**/*.js',
+                '!./node_modules/danf/node_modules/**'
+            ],
+            options,
+            ['build-client-danf', 'build-client-config']
+        );
+        this.watch(
+            [
+                './lib/common/**/*.js',
+                './lib/client/**/*.js',
+                './config/common/**/*.js',
+                './config/client/**/*.js'
+            ],
+            options,
+            ['build-client-app']
+        );
+        this.watch(
+            './node_modules/danf/lib/common/init.js',
+            options,
+            ['build-client-init']
+        );
+
+        // Watch for server modifications.
+        this.watch(
+            [
+                './lib/common/**/*.js',
+                './lib/server/**/*.js',
+                './config/common/**/*.js',
+                './config/server/**/*.js',
+                './resource/private/**/*',
+                './app-*.js'
+            ],
+            options,
+            ['start-server']
+        );
+    });
+
+    // Build client.
+    gulp.task('build-client', function(done) {
+        self.buildClient(function() {
+            done();
+        });
+    });
+
+    // Build client danf file.
+    gulp.task('build-client-danf', function(done) {
+        logger.log('<<magenta>><<bold>>Client danf file<</bold>> rebuilding...');
+
+        var danf = self.prepareBuilder(false);
+
+        danf.buildClientFiles(
+            [danf.clientDanfBuildConfiguration],
+            done
+        );
+    });
+
+    // Build client app file.
+    gulp.task('build-client-app', function(done) {
+        logger.log('<<magenta>><<bold>>Client app file<</bold>> rebuilding...');
+
+        var danf = self.prepareBuilder(false);
+
+        danf.buildClientFiles(
+            [danf.clientAppBuildConfiguration],
+            done
+        );
+    });
+
+    // Build client init file.
+    gulp.task('build-client-init', function(done) {
+        logger.log('<<magenta>><<bold>>Client init file<</bold>> rebuilding...');
+
+        var danf = self.prepareBuilder(false);
+
+        danf.buildClientFiles(
+            [danf.clientInitBuildConfiguration],
+            done
+        );
+    });
+
+    // Build client require file.
+    gulp.task('build-client-require', function(done) {
+        logger.log('<<magenta>><<bold>>Client require file<</bold>> rebuilding...');
+
+        var danf = self.prepareBuilder(false);
+
+        danf.buildClientFiles(
+            [danf.clientRequireBuildConfiguration],
+            done
+        );
+    });
+
+    // Build client jquery file.
+    gulp.task('build-client-jquery', function(done) {
+        logger.log('<<magenta>><<bold>>Client jquery file<</bold>> rebuilding...');
+
+        var danf = self.prepareBuilder(false);
+
+        danf.buildClientFiles(
+            [danf.clientJqueryBuildConfiguration],
+            done
+        );
+    });
+
+    // Build client config file.
+    gulp.task('build-client-config', function(done) {
+        logger.log('<<magenta>><<bold>>Client config file<</bold>> rebuilding...');
+
+        var danf = self.prepareBuilder(false);
+
+        danf.buildClientFiles(
+            [danf.clientConfigBuildConfiguration],
+            done
+        );
+    });
+
+    // Start a server.
+    gulp.task('start-server', function(done) {
+        var hasProcessedDone = false;
+
+        // Kill existing server.
+        if (server) {
+            server.kill();
+            serverStopped = true;
+        }
+
+        if (serverStopped) {
+            logger.log('<<magenta>><<bold>>Server<</bold>> restarting...');
+            serverStopped = false;
+        }
+
+        // Forward the task in order to not create a gulp cluster.
+        server = spawn(
+            'node',
+            [require.resolve('./main')].concat(process.argv),
+            {
+                cwd: process.cwd()
+            }
+        );
+
+        server.stdout.on('data', function(data) {
+            process.stdout.write(data);
+
+            if (
+                -1 !== data.toString('utf8').indexOf('__________') &&
+                !hasProcessedDone
+            ) {
+                hasProcessedDone = true;
+                done();
+            }
+        });
+        server.stderr.on('data', function(data) {
+            process.stdout.write(data);
+        });
+        server.on('close', function(code, signal) {
+            if (!hasProcessedDone) {
+                hasProcessedDone = true;
+                done();
+            }
+
+            if (code >= 1) {
+                logger.log('<<red>>An error occured during server starting. Waiting for correction...');
+                serverStopped = true;
+            }
+        });
+    });
+
+    process.on('exit', function() {
+        if (server) {
+            server.kill();
+        }
     });
 }
 
@@ -87,12 +245,9 @@ Gulp.prototype.executeCommand = function(done) {
             logger.log('<<grey>>[client] <<yellow>>You are executing a standalone command. To maximize the performances, start a command server with `node danf serve-cmd`.');
 
             // Execute a standalone command.
-            if (null == command.app.server.context.cluster) {
-                command.app.server.context.cluster = {};
-            }
-            command.app.server.context.cluster.active = false;
+            var danf = self.prepareBuilder(false);
 
-            self.buildServer(command, function(app) {
+            danf.buildServer(function(app) {
                 app.executeCmd(command.line, function() {
                     logger.log('<<grey>>[client]<</grey>> <<yellow>>Command processing ended.');
                     done();
@@ -119,6 +274,31 @@ Gulp.prototype.executeCommand = function(done) {
     });
 }
 
+Gulp.prototype.buildServer = function(callback) {
+    var danf = this.prepareBuilder();
+
+    danf.buildServer(callback);
+}
+
+Gulp.prototype.buildClient = function(callback) {
+    var danf = this.prepareBuilder(false);
+
+    danf.buildClient(callback);
+}
+
+Gulp.prototype.prepareBuilder = function(clustered) {
+    var command = this.parseCommandLine();
+
+    if (!clustered && undefined !== clustered) {
+        if (null == command.app.server.context.cluster) {
+            command.app.server.context.cluster = {};
+        }
+        command.app.server.context.cluster.active = false;
+    }
+
+    return this.getAppBuilder(command);
+}
+
 Gulp.prototype.getAppBuilder = function(command) {
     return require('./index')(
             command.app.server.configuration,
@@ -127,18 +307,6 @@ Gulp.prototype.getAppBuilder = function(command) {
             command.app.client.context
         )
     ;
-}
-
-Gulp.prototype.buildServer = function(command, callback) {
-    var danf = this.getAppBuilder(command);
-
-    danf.buildServer(callback);
-}
-
-Gulp.prototype.buildClient = function(command, callback) {
-    var danf = this.getAppBuilder(command);
-
-    danf.buildClient(callback);
 }
 
 Gulp.prototype.parseCommandLine = function() {

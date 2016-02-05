@@ -527,10 +527,15 @@ module.exports = {
              * End a task.
              *
              * @param {number} task The id of the task.
+             * @param {error|null} error The optional error.
              * @param {mixed|undefined} returnedValue The optional value returned by the task.
              */
             end: {
-                arguments: ['number/task', 'mixed|undefined/returnedValue']
+                arguments: [
+                    'number/task',
+                    'error|null/error',
+                    'mixed|undefined/returnedValue'
+                ]
             },
             /**
              * Add a tributary and set the context as this tributary.
@@ -541,7 +546,11 @@ module.exports = {
              * @return {number} The id of the tributary.
              */
             addTributary: {
-                arguments: ['string|null/scope', 'function|null/format', 'function|null/callback'],
+                arguments: [
+                    'string|null/scope',
+                    'function|null/format',
+                    'function|null/callback'
+                ],
                 returns: 'number'
             },
             /**

@@ -2,10 +2,8 @@
 
 var Gulp = require('./gulp');
 
-var gulp = new Gulp(),
-    command = gulp.parseCommandLine()
-;
+var gulp = new Gulp();
 
-gulp.buildServer(command, function(app) {
+gulp.buildServer(function(app) {
     app.listen();
 });
