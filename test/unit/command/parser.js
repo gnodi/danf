@@ -465,6 +465,25 @@ var parsingTests = [
                 _: ['plep plyp', 'plyp plep']
             }
         }
+    },
+    {
+        line: 'foo22 --foo bar',
+        contract: {
+            _: {
+                type: 'mixed_array',
+                default: []
+            },
+            foo: {
+                type: 'boolean'
+            }
+        },
+        expected: {
+            _name: 'foo22',
+            _options: {
+                foo: true,
+                _: ['bar']
+            }
+        }
     }
 ];
 

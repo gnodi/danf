@@ -11,6 +11,7 @@ var spawn = require('child_process').spawn,
 var logger = new Logger();
 
 logger.chalk = chalk;
+logger.verbosity = 1;
 
 module.exports = Gulp;
 
@@ -227,11 +228,12 @@ Gulp.prototype.executeCommand = function(done) {
     var net = require('net');
 
     var self = this,
-        command = this.parseCommandLine()
+        command = this.parseCommandLine(),
+        verbosity = command.silent ? 10 : 1
     ;
 
     // Try to connect to a command server.
-    logger.log('<<grey>>[client] <<yellow>>Trying to connect to command server...');
+    logger.log('<<grey>>[client] <<yellow>>Trying to connect to command server...', verbosity);
 
     var client = net.connect({port: command.port}, function() {
         client.write(command.line);
@@ -239,17 +241,17 @@ Gulp.prototype.executeCommand = function(done) {
 
     client.on('error', function(error) {
         // Execute a standalone command if no command server is listening.
-        logger.log('<<grey>>[client] <<red>>Failed to connect.')
+        logger.log('<<grey>>[client] <<red>>Failed to connect.', verbosity)
 
         if ('ECONNREFUSED' === error.code) {
-            logger.log('<<grey>>[client] <<yellow>>You are executing a standalone command. To maximize the performances, start a command server with `node danf serve-cmd`.');
+            logger.log('<<grey>>[client] <<yellow>>You are executing a standalone command. To maximize the performances, start a command server with `node danf serve-cmd`.', verbosity);
 
             // Execute a standalone command.
             var danf = self.prepareBuilder(false);
 
             danf.buildServer(function(app) {
                 app.executeCmd(command.line, function() {
-                    logger.log('<<grey>>[client]<</grey>> <<yellow>>Command processing ended.');
+                    logger.log('<<grey>>[client]<</grey>> <<yellow>>Command processing ended.', verbosity);
                     done();
 
                     // Wait for all stdout to be sent to parent process.
@@ -266,10 +268,10 @@ Gulp.prototype.executeCommand = function(done) {
         }
     });
     client.on('data', function(data) {
-        logger.log('<<grey>>[server]<</grey>> {0}'.format(data.toString()));
+        logger.log('<<grey>>[server]<</grey>> {0}'.format(data.toString()), verbosity);
     });
     client.on('end', function() {
-        logger.log('<<grey>>[client]<</grey>> <<yellow>>Command processing ended.');
+        logger.log('<<grey>>[client]<</grey>> <<yellow>>Command processing ended.', verbosity);
         done();
     });
 }
@@ -311,10 +313,11 @@ Gulp.prototype.getAppBuilder = function(command) {
 
 Gulp.prototype.parseCommandLine = function() {
     var line = process.argv.slice(4).join(' ').replace(' ', ''),
-        envOption = line.match(/--env\s([^\s]+)+/),
-        portOption = line.match(/--port\s([^\s]+)/),
-        environment = envOption ? envOption[1] : 'dev',
-        port = portOption ? portOption[1] : 3111
+        envOption = line.match(/\s--env\s([^\s]+)+/),
+        portOption = line.match(/\s--port\s([^\s]+)/),
+        environment = envOption ? envOption[1].replace(/^---/, '') : 'dev',
+        port = portOption ? portOption[1].replace(/^---/, '') : 3111,
+        silent = line.match(/\s--silent/)
     ;
 
     return {
@@ -322,12 +325,14 @@ Gulp.prototype.parseCommandLine = function() {
             .replace(/\s--env\s([^\s])+/, '')
             .replace(/\s--port\s([^\s])+/, '')
             .replace(/\s--colors/, '')
+            .replace(/\s--silent/, '')
         ,
         app: require(path.join(
             process.cwd(),
             'app-{0}'.format(environment)
         )),
         env: environment,
-        port: port
+        port: port,
+        silent: silent
     };
 }
