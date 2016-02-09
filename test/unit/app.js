@@ -301,7 +301,7 @@ danf.buildServer(function(app) {
                 it('and allow to execute them', function(done) {
                     var sequence = sequencesContainer.get('main:dep4:{0}'.format(test.sequence));
 
-                    sequence.execute(test.input || {}, test.context || {}, '.', function(stream) {
+                    sequence.execute(test.input || {}, test.context || {}, '.', null, function(stream) {
                         assert.deepEqual(stream, test.output);
                         done();
                     });

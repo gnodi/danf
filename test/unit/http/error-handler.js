@@ -34,6 +34,16 @@ var processTests = [
             error: {message: '400'},
             expected: {name: 'Bad Request', status: 400, message: 'Bad Request'},
             debugExpected: {name: 'Bad Request', status: 400, message: 'Bad Request'}
+        },
+        {
+            error: {embedded: [{status: 404, message: 'Nowhere'}]},
+            expected: {name: 'Not Found', status: 404, message: 'Not Found'},
+            debugExpected: {name: 'Not Found', status: 404, message: 'Nowhere'}
+        },
+        {
+            error: {embedded: [{status: 404, message: 'Nowhere'}, {message: 'down'}], message: 'Errored'},
+            expected: {name: 'Internal Server Error', status: 500, message: 'Internal Server Error', embedded: [{status: 404, message: 'Nowhere'}, {status: 500, message: 'down'}]},
+            debugExpected: {name: 'Internal Server Error', status: 500, message: 'Errored ([404] Nowhere; [500] down)', embedded: [{status: 404, message: 'Nowhere'}, {status: 500, message: 'down'}]}
         }
     ]
 ;

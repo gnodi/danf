@@ -47,6 +47,11 @@ A.prototype.g = function() {
 A.prototype.h = function(i, j) {
     return i + j;
 }
+A.prototype.i = function() {
+    this.__asyncProcess(function(async) {
+        throw new Error('Errored');
+    });
+}
 
 function B(a) {
     this._a = a;
@@ -347,5 +352,28 @@ describe('Inheriting from __async properties should allow', function() {
         a.__asyncFlow = flow;
 
         b.z();
+    })
+
+    it('to handle thrown errors', function(done) {
+        var expected = {foo: 'bar'},
+            flow = new Flow(),
+            a = new A()
+        ;
+
+        flow.stream = {};
+        flow.initialScope = null;
+        flow.context = mapProvider.provide();
+        flow.globalCatch = function(errors, stream) {
+            stream.foo = 'bar';
+        };
+        flow.callback = function(result) {
+            assert.deepEqual(result, expected);
+            done();
+        };
+        flow.__init();
+
+        a.__asyncFlow = flow;
+
+        a.i();
     })
 })

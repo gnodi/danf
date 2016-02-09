@@ -541,13 +541,15 @@ module.exports = {
              * Add a tributary and set the context as this tributary.
              *
              * @param {string|null} scope The optional scope.
+             * @param {function|null} catch The optional function allowing to catch the errors.
              * @param {function|null} format The optional function allowing to format the result.
-             * @param {function|null} format The optional final callback.
+             * @param {function|null} callback The optional final callback.
              * @return {number} The id of the tributary.
              */
             addTributary: {
                 arguments: [
                     'string|null/scope',
+                    'function|null/catch',
                     'function|null/format',
                     'function|null/callback'
                 ],
