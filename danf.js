@@ -38,10 +38,19 @@ for (var i = 0; i < commands.length; i++) {
         );
     }
 
+    var args = process.argv.slice(2, 3).concat(['--colors']).concat(process.argv.slice(3));
+
+    for (var j = 1; j < args.length; j++) {
+        // Escape value parameter to avoid being interpreted as a task by gulp.
+        if (/^[^-"]/.test(args[j])) {
+            args[j] = '---{0}'.format(args[j]);
+        }
+    }
+
     // Forward the task execution to gulp.
     var child = spawn(
             gulpCommandPath,
-            process.argv.slice(2, 3).concat(['--colors']).concat(process.argv.slice(3)),
+            args,
             {
                 cwd: path.dirname(require.main.filename)
             }

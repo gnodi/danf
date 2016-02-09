@@ -17,7 +17,7 @@ module.exports = {
              * @return {mixed} The value of the option.
              */
             getOption: {
-                arguments: ['string/name', 'mixed/value'],
+                arguments: ['string/name'],
                 returns: 'mixed'
             },
             /**
