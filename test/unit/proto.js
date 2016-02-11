@@ -264,6 +264,14 @@ describe('Danf proto application', function() {
                             }
                         },
                         dependencies: {
+                            b: {
+                                dependencies: {},
+                                config: {
+                                    classes: {
+                                        'bar': require(path.join(rootPath, 'node_modules/a/node_modules/b/lib/common/bar.js'))
+                                    }
+                                }
+                            },
                             c: {
                                 contract: {},
                                 dependencies: {},
@@ -357,6 +365,10 @@ describe('Danf proto application', function() {
                                         foo: requirePattern.format('node_modules/a/node_modules/b/lib/client/foo.js')
                                     }
                                 }
+                            },
+                            c: {
+                                dependencies: {},
+                                config: {}
                             }
                         }
                     }
