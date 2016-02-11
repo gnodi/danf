@@ -211,7 +211,7 @@ describe('Danf proto application', function() {
 
     it('should build its server configuration from files, folders and node modules', function() {
         assert.deepEqual(
-            danf.buildSideConfiguration(rootPath, 'danf', 'server'),
+            danf.buildSideConfiguration(rootPath, 'server'),
             {
                 config: {
                     classes: {
@@ -290,7 +290,7 @@ describe('Danf proto application', function() {
 
     it('should build its client configuration from files, folders and node modules', function() {
         assert.deepEqual(
-            danf.buildSideConfiguration(rootPath, 'danf', 'client'),
+            danf.buildSideConfiguration(rootPath, 'client'),
             {
                 config: {
                     classes: {
