@@ -63,12 +63,9 @@ for (var i = 0; i < commands.length; i++) {
     });
     child.stderr.on('data', function(data) {
         errored = true;
-        process.stdout.write(data);
+        process.stderr.write(data);
     });
     child.on('close', function(data) {
-        process.exit(errored ? 1 : 0);
-    });
-    child.on('exit', function(data) {
         process.exit(errored ? 1 : 0);
     });
 }

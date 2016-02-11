@@ -50,8 +50,11 @@ Gulp.prototype.init = function(gulp) {
         // Watch for client modifications.
         this.watch(
             [
-                './node_modules/danf/**/*.js',
-                '!./node_modules/danf/node_modules/**'
+                './node_modules/danf/lib/client/main.js',
+                './node_modules/danf/lib/common/**/*.js',
+                './node_modules/danf/lib/client/**/*.js',
+                './node_modules/danf/config/common/**/.js',
+                './node_modules/danf/config/client/**/.js'
             ],
             options,
             ['build-client-danf', 'build-client-config']
@@ -79,8 +82,13 @@ Gulp.prototype.init = function(gulp) {
                 './lib/server/**/*.js',
                 './config/common/**/*.js',
                 './config/server/**/*.js',
-                './resource/private/**/*',
-                './app-*.js'
+                './app-*.js',
+                './node_modules/danf/*.js',
+                './node_modules/danf/lib/common/**/*.js',
+                './node_modules/danf/lib/server/**/*.js',
+                './node_modules/danf/config/common/**/.js',
+                './node_modules/danf/config/server/**/.js',
+                './node_modules/danf/resource/**/.js'
             ],
             options,
             ['start-server']
@@ -202,7 +210,7 @@ Gulp.prototype.init = function(gulp) {
             }
         });
         server.stderr.on('data', function(data) {
-            process.stdout.write(data);
+            process.stderr.write(data);
         });
         server.on('close', function(code, signal) {
             if (!hasProcessedDone) {
@@ -217,7 +225,7 @@ Gulp.prototype.init = function(gulp) {
         });
     });
 
-    process.on('exit', function() {
+    process.on('close', function() {
         if (server) {
             server.kill();
         }
@@ -241,9 +249,8 @@ Gulp.prototype.executeCommand = function(done) {
 
     client.on('error', function(error) {
         // Execute a standalone command if no command server is listening.
-        logger.log('<<grey>>[client] <<red>>Failed to connect.', verbosity)
-
         if ('ECONNREFUSED' === error.code) {
+            logger.log('<<grey>>[client] <<red>>Failed to connect.', verbosity)
             logger.log('<<grey>>[client] <<yellow>>You are executing a standalone command. To maximize the performances, start a command server with `node danf serve-cmd`.', verbosity);
 
             // Execute a standalone command.
@@ -270,7 +277,7 @@ Gulp.prototype.executeCommand = function(done) {
     client.on('data', function(data) {
         logger.log('<<grey>>[server]<</grey>> {0}'.format(data.toString()), verbosity);
     });
-    client.on('end', function() {
+    client.on('close', function() {
         logger.log('<<grey>>[client]<</grey>> <<yellow>>Command processing ended.', verbosity);
         done();
     });
