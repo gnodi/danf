@@ -20,7 +20,10 @@ module.exports = {
                 parent: 'danf:event.notifier',
                 children: {
                     request: {
-                        class: 'danf:command.event.notifier.command'
+                        class: 'danf:command.event.notifier.command',
+                        properties: {
+                            logger: 'danf:logging.logger'
+                        }
                     }
                 }
             }
