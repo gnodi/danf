@@ -15,24 +15,24 @@ Computer.prototype.mul = function (value, operand) {
 function AsyncComputer() {}
 
 AsyncComputer.prototype.add = function (value, operand) {
-    this.__asyncProcess(function(returnAsync) {
+    this.__asyncProcess(function(async) {
         setTimeout(
-            function() {
-                returnAsync(value + operand);
-            },
+            async(function() {
+                return value + operand;
+            }),
             10
         );
     });
 }
 
 AsyncComputer.prototype.mul = function (value, operand) {
-    this.__asyncProcess(function(returnAsync) {
+    this.__asyncProcess(function(async) {
         setTimeout(
-            function() {
-                returnAsync(function(value) {
+            async(function() {
+                return function(value) {
                     return value * operand;
-                });
-            },
+                };
+            }),
             10
         );
     });

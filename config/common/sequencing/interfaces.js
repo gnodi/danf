@@ -47,6 +47,7 @@ module.exports = {
              * @param {object} input The input of the sequence.
              * @param {object} context The context of execution.
              * @param {string|null} scope The scope of execution in the stream.
+             * @param {function|null} catch The optional function allowing to catch the errors.
              * @param {function|null} callback The optional callback.
              */
             execute: {
@@ -54,6 +55,7 @@ module.exports = {
                     'object/input',
                     'object/context',
                     'string|null/scope',
+                    'function|null/catch',
                     'function|null/callback'
                 ]
             },

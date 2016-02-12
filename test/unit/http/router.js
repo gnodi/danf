@@ -354,7 +354,7 @@ describe('Router', function() {
         findTests.forEach(function(test) {
             if (null !== test.expected) {
                 it('should follow a route from an existing path/url and method', function(done) {
-                    router.follow(test.url, test.method, {id: test.expected, done: done});
+                    router.follow(test.url, test.method, {id: test.expected, done: function() { return done; }});
                 })
             }
         })

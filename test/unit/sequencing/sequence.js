@@ -13,11 +13,11 @@ var mapProvider = require('../../fixture/manipulation/map-provider');
 function A() {
 }
 A.prototype.f = function(i, j) {
-    this.__asyncProcess(function(returnAsync) {
+    this.__asyncProcess(function(async) {
         setTimeout(
-            function() {
-                returnAsync(i + j);
-            },
+            async(function() {
+                return i + j;
+            }),
             20
         );
     });
@@ -27,17 +27,17 @@ A.prototype.g = function() {
 
     for (var i = 0; i <= 3; i++) {
         (function(i) {
-            self.__asyncProcess(function(returnAsync) {
+            self.__asyncProcess(function(async) {
                 setTimeout(
-                    function() {
-                        returnAsync(function(stream) {
+                    async(function() {
+                        return function(stream) {
                             if (null == stream) {
                                 stream = 0;
                             }
 
                             return stream + i;
-                        });
-                    },
+                        };
+                    }),
                     40 - (i * 10)
                 );
             });
@@ -46,6 +46,11 @@ A.prototype.g = function() {
 }
 A.prototype.h = function(i, j) {
     return i + j;
+}
+A.prototype.i = function() {
+    this.__asyncProcess(function(async) {
+        throw new Error('Errored');
+    });
 }
 
 function B(a) {
@@ -347,5 +352,28 @@ describe('Inheriting from __async properties should allow', function() {
         a.__asyncFlow = flow;
 
         b.z();
+    })
+
+    it('to handle thrown errors', function(done) {
+        var expected = {foo: 'bar'},
+            flow = new Flow(),
+            a = new A()
+        ;
+
+        flow.stream = {};
+        flow.initialScope = null;
+        flow.context = mapProvider.provide();
+        flow.globalCatch = function(errors, stream) {
+            stream.foo = 'bar';
+        };
+        flow.callback = function(result) {
+            assert.deepEqual(result, expected);
+            done();
+        };
+        flow.__init();
+
+        a.__asyncFlow = flow;
+
+        a.i();
     })
 })

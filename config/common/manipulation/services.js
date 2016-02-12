@@ -72,8 +72,14 @@ module.exports = {
             }
         }
     },
+    registry: {
+        class: 'danf:manipulation.registry'
+    },
     callbackExecutor: {
         class: 'danf:manipulation.callbackExecutor'
+    },
+    proxyExecutor: {
+        class: 'danf:manipulation.proxyExecutor'
     },
     mapProvider: {
         parent: 'danf:dependencyInjection.objectProvider',

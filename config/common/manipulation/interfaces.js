@@ -487,6 +487,31 @@ module.exports = {
             }
         }
     },
+    proxyExecutor: {
+        methods: {
+            /**
+             * Execute a method of an object.
+             *
+             * @param {object} object The object.
+             * @param {string} method The method.
+             * @param {mixed} argN The N-th argument to pass to the method.
+             */
+            execute: {
+                arguments: ['object/object', 'string/method', 'mixed.../argN']
+            },
+            /**
+             * Execute an asynchronous method of an object.
+             *
+             * @param {object} object The object.
+             * @param {string} method The method.
+             * @param {string|null} scope The stream scope.
+             * @param {mixed} argN The N-th argument to pass to the method.
+             */
+            executeAsync: {
+                arguments: ['object/object', 'string/method', 'string|null/scope', 'mixed.../argN']
+            }
+        }
+    },
     flow: {
         methods: {
             /**
@@ -502,21 +527,32 @@ module.exports = {
              * End a task.
              *
              * @param {number} task The id of the task.
+             * @param {error|null} error The optional error.
              * @param {mixed|undefined} returnedValue The optional value returned by the task.
              */
             end: {
-                arguments: ['number/task', 'mixed|undefined/returnedValue']
+                arguments: [
+                    'number/task',
+                    'error|null/error',
+                    'mixed|undefined/returnedValue'
+                ]
             },
             /**
              * Add a tributary and set the context as this tributary.
              *
              * @param {string|null} scope The optional scope.
+             * @param {function|null} catch The optional function allowing to catch the errors.
              * @param {function|null} format The optional function allowing to format the result.
-             * @param {function|null} format The optional final callback.
+             * @param {function|null} callback The optional final callback.
              * @return {number} The id of the tributary.
              */
             addTributary: {
-                arguments: ['string|null/scope', 'function|null/format', 'function|null/callback'],
+                arguments: [
+                    'string|null/scope',
+                    'function|null/catch',
+                    'function|null/format',
+                    'function|null/callback'
+                ],
                 returns: 'number'
             },
             /**

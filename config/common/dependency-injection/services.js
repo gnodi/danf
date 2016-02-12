@@ -59,6 +59,9 @@ module.exports = {
         properties: {
             interfacer: '#danf:object.interfacer#'
         },
+        registry: {
+            method: 'get'
+        },
         abstract: true
     }
 };

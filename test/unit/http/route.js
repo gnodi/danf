@@ -161,15 +161,15 @@ describe('Route', function() {
 
     describe('method "follow"', function() {
         it('should follow a route triggering its request event', function(done) {
-            route.follow({done: done});
+            route.follow({done: function() { return done; }});
         })
 
         it('should resolve and follow a route with given parameters and headers', function(done) {
-            querystringRoute.follow({bar: 6, done: done}, {x: 'foo'});
+            querystringRoute.follow({bar: 6, done: function() { return done; }}, {x: 'foo'});
         })
 
         it('should resolve and follow a route from metadata', function(done) {
-            paramRoute.follow({done: done}, null, {path: '/foo/7/bar/ijk'});
+            paramRoute.follow({done: function() { return done; }}, null, {path: '/foo/7/bar/ijk'});
         })
 
         it('should fail to resolve and follow a route from incompatible metadata', function() {

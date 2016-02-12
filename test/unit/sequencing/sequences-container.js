@@ -31,6 +31,7 @@ FlowProvider.prototype.provide = function(properties) {
 
     flow.stream = properties.stream;
     flow.initialScope = properties.initialScope;
+    flow.globalCatch = properties.globalCatch;
     flow.context = properties.context;
     flow.callback = properties.callback;
 
@@ -177,11 +178,11 @@ var AsyncComputer = function() {};
 AsyncComputer.prototype.add = function(a, b, delay) {
     delay = delay ? delay : 10;
 
-    this.__asyncProcess(function(returnAsync) {
+    this.__asyncProcess(function(async) {
         setTimeout(
-            function() {
-                returnAsync(a + b);
-            },
+            async(function() {
+                return a + b;
+            }),
             delay
         );
     });
@@ -189,11 +190,11 @@ AsyncComputer.prototype.add = function(a, b, delay) {
 AsyncComputer.prototype.substract = function(a, b, delay) {
     delay = delay ? delay : 10;
 
-    this.__asyncProcess(function(returnAsync) {
+    this.__asyncProcess(function(async) {
         setTimeout(
-            function() {
-                returnAsync(a - b);
-            },
+            async(function() {
+                return a - b;
+            }),
             delay
         );
     });
@@ -201,11 +202,11 @@ AsyncComputer.prototype.substract = function(a, b, delay) {
 AsyncComputer.prototype.multiply = function(a, b, delay) {
     delay = delay ? delay : 10;
 
-    this.__asyncProcess(function(returnAsync) {
+    this.__asyncProcess(function(async) {
         setTimeout(
-            function() {
-                returnAsync(a * b);
-            },
+            async(function() {
+                return a * b;
+            }),
             delay
         );
     });
@@ -213,11 +214,11 @@ AsyncComputer.prototype.multiply = function(a, b, delay) {
 AsyncComputer.prototype.divide = function(a, b, delay) {
     delay = delay ? delay : 10;
 
-    this.__asyncProcess(function(returnAsync) {
+    this.__asyncProcess(function(async) {
         setTimeout(
-            function() {
-                returnAsync(a / b);
-            },
+            async(function() {
+                return a / b;
+            }),
             delay
         );
     });
@@ -225,11 +226,11 @@ AsyncComputer.prototype.divide = function(a, b, delay) {
 AsyncComputer.prototype.isGreaterThan = function(a, b, delay) {
     delay = delay ? delay : 10;
 
-    this.__asyncProcess(function(returnAsync) {
+    this.__asyncProcess(function(async) {
         setTimeout(
-            function() {
-                returnAsync(a > b);
-            },
+            async(function() {
+                return a > b;
+            }),
             delay
         );
     });
@@ -237,11 +238,11 @@ AsyncComputer.prototype.isGreaterThan = function(a, b, delay) {
 AsyncComputer.prototype.addSubstract = function(a, b, delay) {
     delay = delay ? delay : 10;
 
-    this.__asyncProcess(function(returnAsync) {
+    this.__asyncProcess(function(async) {
         setTimeout(
-            function() {
-                returnAsync([a + b, a - b]);
-            },
+            async(function() {
+                return [a + b, a - b];
+            }),
             delay
         );
     });
@@ -249,16 +250,48 @@ AsyncComputer.prototype.addSubstract = function(a, b, delay) {
 AsyncComputer.prototype.getAdjacentNumbers = function(a, delay) {
     delay = delay ? delay : 10;
 
-    this.__asyncProcess(function(returnAsync) {
+    this.__asyncProcess(function(async) {
         setTimeout(
-            function() {
-                returnAsync([a - 1, a, a + 1]);
-            },
+            async(function() {
+                return [a - 1, a, a + 1];
+            }),
             delay
         );
     });
 };
 servicesContainer.set('asyncComputer', new AsyncComputer());
+
+var BuggyComputer = function() {};
+BuggyComputer.prototype.addSync = function(a, b) {
+    throw new Error('foo');
+};
+BuggyComputer.prototype.addAsync = function(a, b) {
+    this.__asyncProcess(function(async) {
+        setTimeout(
+            async(function() {
+                throw new Error('bar');
+            }),
+            10
+        );
+    });
+};
+BuggyComputer.prototype.addMultiAsync = function(t) {
+    var self = this;
+
+    for (var i = 0; i < t.length; i++) {
+        (function(i) {
+            self.__asyncProcess(function(async) {
+                setTimeout(
+                    async(function() {
+                        throw new Error(t[i]);
+                    }),
+                    10
+                );
+            });
+        })(i);
+    }
+};
+servicesContainer.set('buggyComputer', new BuggyComputer());
 
 var config = {
     sequences: {
@@ -1151,6 +1184,148 @@ var config = {
                     }
                 }
             ]
+        },
+        errorA: {
+            operations: [
+                {
+                    order: 0,
+                    service: 'buggyComputer',
+                    method: 'addSync',
+                    arguments: [1, 2],
+                    scope: 'result',
+                    catch: function(errors, stream) {
+                        if ('foo' === errors[0].message) {
+                            stream.errored = true;
+                        }
+
+                        return 4;
+                    }
+                }
+            ]
+        },
+        errorB: {
+            operations: [
+                {
+                    order: 0,
+                    service: 'buggyComputer',
+                    method: 'addAsync',
+                    arguments: [3, 2],
+                    scope: 'result',
+                    catch: function(errors, stream) {
+                        if ('bar' === errors[0].message) {
+                            stream.errored = true;
+                        }
+
+                        return 11;
+                    }
+                }
+            ]
+        },
+        errorC: {
+            operations: [
+                {
+                    order: 0,
+                    service: 'buggyComputer',
+                    method: 'addSync',
+                    arguments: [4, 2],
+                    scope: 'result'
+                }
+            ]
+        },
+        errorD: {
+            operations: [
+                {
+                    order: 0,
+                    service: 'buggyComputer',
+                    method: 'addAsync',
+                    arguments: [5, 2],
+                    scope: 'result'
+                }
+            ]
+        },
+        errorE: {
+            children: [
+                {
+                    name: 'errorC',
+                    output: {
+                        result: '@result@'
+                    },
+                    catch: function(errors, stream) {
+                        if ('foo' === errors[0].message) {
+                            return {result: 8};
+                        }
+
+                        return {result: 4};
+                    }
+                }
+            ]
+        },
+        errorF: {
+            children: [
+                {
+                    name: 'errorD',
+                    output: {
+                        result: '@result@'
+                    },
+                    catch: function(errors, stream) {
+                        stream.errored = true;
+
+                        if ('foo' === errors[0].message) {
+                            return {result: 9};
+                        }
+
+                        return {result: 5};
+                    }
+                }
+            ]
+        },
+        errorG: {
+            operations: [
+                {
+                    order: 0,
+                    service: 'buggyComputer',
+                    method: 'addAsync',
+                    arguments: [6, 2],
+                    scope: 'result'
+                }
+            ]
+        },
+        errorH: {
+            operations: [
+                {
+                    order: 0,
+                    service: 'buggyComputer',
+                    method: 'addMultiAsync',
+                    arguments: [[1, 2, 3]],
+                    scope: 'result',
+                    catch: function(errors) {
+                        var error = new Error('Errored');
+
+                        error.embedded = errors;
+
+                        throw error;
+                    }
+                }
+            ]
+        },
+        errorI: {
+            children: [
+                {
+                    name: 'errorH',
+                    output: {
+                        result: '@result@'
+                    },
+                    catch: function(errors, stream) {
+                        var result = 0;
+
+                        for (var i = 0; i < errors.length; i++) {
+                            result += parseInt(errors[i].message, 10);
+                        }
+
+                        return {result: result};
+                    }
+                }
+            ]
         }
     }
 };
@@ -1459,6 +1634,37 @@ var rebuildSequenceTests = [
     }
 ];
 
+var erroredSequenceTests = [
+    {
+        name: 'errorA',
+        expected: {result: 4, errored: true}
+    },
+    {
+        name: 'errorB',
+        expected: {result: 11, errored: true}
+    },
+    {
+        name: 'errorE',
+        expected: {result: 8}
+    },
+    {
+        name: 'errorF',
+        expected: {result: 5, errored: true}
+    },
+    {
+        name: 'errorG',
+        expected: 1
+    },
+    {
+        name: 'errorH',
+        expected: 3
+    },
+    {
+        name: 'errorI',
+        expected: {result: 6}
+    }
+];
+
 describe('SequencesContainer', function() {
     sequencesContainer.config = config;
     sequencesContainer.handleRegistryChange(config.sequences);
@@ -1486,7 +1692,7 @@ describe('SequencesContainer', function() {
                     }
                 ;
 
-                sequence.execute(test.input, test.context || {}, '.', end);
+                sequence.execute(test.input, test.context || {}, '.', null, end);
             })
         })
 
@@ -1503,7 +1709,7 @@ describe('SequencesContainer', function() {
                     }
                 ;
 
-                sequence.execute(test.input, {}, '.', end);
+                sequence.execute(test.input, {}, '.', null, end);
             })
         })
 
@@ -1520,7 +1726,35 @@ describe('SequencesContainer', function() {
                     }
                 ;
 
-                sequence.execute(test.input, {}, '.', end);
+                sequence.execute(test.input, {}, '.', null, end);
+            })
+        })
+
+        erroredSequenceTests.forEach(function(test) {
+            it('should allow to retrieve a built sequence handling thrown errors', function(done) {
+                var sequence = sequencesContainer.get(test.name),
+                    errored = false,
+                    catch_ = function(errors) {
+                        assert.equal(
+                            errors.length,
+                            test.expected
+                        );
+
+                        errored = true;
+                    },
+                    end = function(result) {
+                        if ('object' === typeof test.expected) {
+                            assert.deepEqual(
+                                result,
+                                test.expected
+                            );
+                        }
+
+                        done();
+                    }
+                ;
+
+                sequence.execute({}, {}, '.', catch_, end);
             })
         })
 
@@ -1531,7 +1765,7 @@ describe('SequencesContainer', function() {
                         end = function() {}
                     ;
 
-                    sequence.execute({x: 0}, {}, '.', end);
+                    sequence.execute({x: 0}, {}, '.', null, end);
                 },
                 /The value is required for the field "sequence\[h\].y"\./
             );
@@ -1544,7 +1778,7 @@ describe('SequencesContainer', function() {
                         end = function() {}
                     ;
 
-                    sequence.execute({}, {}, '.', end);
+                    sequence.execute({}, {}, '.', null, end);
                 },
                 /The parameter "limit" must be defined for the collection method "mapLimit"\./
             );
@@ -1599,7 +1833,7 @@ describe('SequencesContainer', function() {
                     }
                 ;
 
-                sequence.execute(test.input, {}, null, end);
+                sequence.execute(test.input, {}, null, null, end);
             })
         })
     })
@@ -1623,7 +1857,7 @@ describe('SequencesContainer', function() {
                 }
             ;
 
-            sequence.execute({}, {}, null, end);
+            sequence.execute({}, {}, null, null, end);
         })
     })
 })
