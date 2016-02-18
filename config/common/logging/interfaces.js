@@ -4,15 +4,15 @@ module.exports = {
     logger: {
         methods: {
             /**
-             * Log a message.
+             * Log a value.
              *
-             * @param {string} message The message.
+             * @param {mixed} value The value.
              * @param {number} verbosity The verbosity level.
              * @param {number|null} indentation The optional indentation level.
              */
             log: {
                 arguments: [
-                    'string/message',
+                    'mixed/value',
                     'number/verbosity',
                     'number|null/indentation'
                 ]
