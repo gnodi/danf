@@ -51,7 +51,6 @@
         "requirejs": "~2.1",
         "send": ">=0.12.0 <0.14.0",
         "socket.io": "~1.0",
-        "socketio-sticky-session": "0.3.*",
         "tosource": "~1.0",
         "utils-merge": "~1.0"
     },

@@ -91,85 +91,387 @@ var pathSplitTests = [
     ]
 ;
 
-var workersComputationTests = [
+var clusterInterpretationTests = [
         {
-            input: {
-                http: 1
-            },
-            max: 8,
-            output: {
-                http: 1
-            }
+            input: {}
         },
         {
             input: {
-                http: 8
+                cluster: [
+                    {
+                        listen: 'http',
+                        port: 2000,
+                        workers: 1
+                    }
+                ]
             },
             max: 8,
-            output: {
-                http: 8
-            }
+            output: [
+                {
+                    listen: 'http',
+                    port: 2000,
+                    workers: 1,
+                    proxy: true
+                }
+            ]
         },
         {
             input: {
-                http: 9
+                cluster: [
+                    {
+                        listen: 'http',
+                        port: 100,
+                        workers: 8
+                    }
+                ]
             },
             max: 8,
-            output: {
-                http: 9
-            }
+            output: [
+                {
+                    listen: 'http',
+                    port: 100,
+                    workers: 8,
+                    proxy: true
+                }
+            ]
         },
         {
             input: {
-                http: 2,
-                cmd: 3
+                cluster: [
+                    {
+                        listen: 'http',
+                        port: 100,
+                        workers: 9
+                    }
+                ]
             },
             max: 8,
-            output: {
-                http: 2,
-                cmd: 3
-            }
+            output: [
+                {
+                    listen: 'http',
+                    port: 100,
+                    workers: 9,
+                    proxy: true
+                }
+            ]
         },
         {
             input: {
-                http: 2,
-                cmd: -1
+                cluster: [
+                    {
+                        listen: 'http',
+                        port: 100,
+                        workers: 2
+                    },
+                    {
+                        listen: 'command',
+                        port: 200,
+                        workers: 3
+                    }
+                ]
             },
             max: 8,
-            output: {
-                http: 2,
-                cmd: 5
-            }
+            output: [
+                {
+                    listen: 'http',
+                    port: 100,
+                    workers: 2,
+                    proxy: true
+                },
+                {
+                    listen: 'command',
+                    port: 200,
+                    workers: 3,
+                    proxy: false
+                }
+            ]
         },
         {
             input: {
-                http: 2,
-                cmd: 0
+                cluster: [
+                    {
+                        listen: 'http',
+                        port: 100,
+                        workers: -1
+                    }
+                ]
+            },
+            max: 8,
+            output: [
+                {
+                    listen: 'http',
+                    port: 100,
+                    workers: 7,
+                    proxy: true
+                }
+            ]
+        },
+        {
+            input: {
+                cluster: [
+                    {
+                        listen: 'http',
+                        port: 100,
+                        workers: -1
+                    },
+                    {
+                        listen: 'command',
+                        port: 200,
+                        workers: 2
+                    }
+                ]
+            },
+            max: 8,
+            output: [
+                {
+                    listen: 'http',
+                    port: 100,
+                    workers: 5,
+                    proxy: true
+                },
+                {
+                    listen: 'command',
+                    port: 200,
+                    workers: 2,
+                    proxy: false
+                }
+            ]
+        },
+        {
+            input: {
+                cluster: [
+                    {
+                        listen: 'http',
+                        port: 100,
+                        workers: 0
+                    }
+                ]
             },
             max: 10,
-            output: {
-                http: 2,
-                cmd: 8
-            }
+            output: [
+                {
+                    listen: 'http',
+                    port: 100,
+                    workers: 10,
+                    proxy: true
+                }
+            ]
         },
         {
             input: {
-                http: 3,
-                cmd: null
-            },
-            max: 10,
-            output: {
-                http: 3,
-                cmd: 0
-            }
-        },
-        {
-            input: {
-                http: 0,
-                cmd: -1
+                cluster: [
+                    {
+                        listen: 'http',
+                        port: 100
+                    },
+                    {
+                        listen: 'command',
+                        port: 200
+                    }
+                ]
             },
             max: 8,
-            output: /Cannot define a number lower than or equal to 0 for more than one type of workers./,
+            output: [
+                {
+                    listen: 'http',
+                    port: 100,
+                    workers: 1,
+                    proxy: true
+                },
+                {
+                    listen: 'command',
+                    port: 200,
+                    workers: 1,
+                    proxy: false
+                }
+            ]
+        },
+        {
+            input: {
+                cluster: [
+                    {
+                        listen: 'http',
+                        port: 100
+                    },
+                    {
+                        listen: 'command',
+                        port: 200,
+                        workers: -3
+                    }
+                ]
+            },
+            max: 8,
+            output: [
+                {
+                    listen: 'http',
+                    port: 100,
+                    workers: 1,
+                    proxy: true
+                },
+                {
+                    listen: 'command',
+                    port: 200,
+                    workers: 4,
+                    proxy: false
+                }
+            ]
+        },
+        {
+            input: {
+                foo: 'bar',
+                cluster: [
+                    {
+                        listen: 'http',
+                        port: 100,
+                        bar: 'foo'
+                    },
+                    {
+                        listen: 'command',
+                        port: 200,
+                        workers: -3
+                    }
+                ]
+            },
+            max: 8,
+            output: [
+                {
+                    listen: 'http',
+                    port: 100,
+                    workers: 1,
+                    foo: 'bar',
+                    bar: 'foo',
+                    proxy: true
+                },
+                {
+                    listen: 'command',
+                    port: 200,
+                    workers: 4,
+                    foo: 'bar',
+                    proxy: false
+                }
+            ]
+        },
+        {
+            input: {
+                foo: 'bar',
+                cluster: [
+                    {
+                        listen: ['http', 'socket'],
+                        port: 100,
+                        bar: 'foo'
+                    },
+                    {
+                        listen: 'command',
+                        port: 200,
+                        workers: -3
+                    }
+                ]
+            },
+            max: 8,
+            output: [
+                {
+                    listen: ['http', 'socket'],
+                    port: 100,
+                    workers: 1,
+                    foo: 'bar',
+                    bar: 'foo',
+                    proxy: true
+                },
+                {
+                    listen: 'command',
+                    port: 200,
+                    workers: 4,
+                    foo: 'bar',
+                    proxy: false
+                }
+            ]
+        },
+        {
+            input: {
+                listen: 'http'
+            },
+            max: 8,
+            output: /A listening server must define a port\./,
+            errored: true
+        },
+        {
+            input: {
+                listen: 'dumb',
+                port: 100
+            },
+            max: 8,
+            output: /Server of type "dumb" are not handled\./,
+            errored: true
+        },
+        {
+            input: {
+                listen: ['http', 'dumb', 'socket'],
+                port: 100
+            },
+            max: 8,
+            output: /Server of type "dumb" are not handled\./,
+            errored: true
+        },
+        {
+            input: {
+                foo: 'bar',
+                cluster: [
+                    {
+                        listen: ['http', 'socket']
+                    }
+                ]
+            },
+            max: 8,
+            output: /A listening server must define a port\./,
+            errored: true
+        },
+        {
+            input: {
+                foo: 'bar',
+                port: 100,
+                cluster: [
+                    {
+                        listen: ['http', 'command']
+                    }
+                ]
+            },
+            max: 8,
+            output: /Server of type "command" cannot share listening\./,
+            errored: true
+        },
+        {
+            input: {
+                foo: 'bar',
+                port: 300,
+                cluster: [
+                    {
+                        listen: ['http']
+                    },
+                    {
+                        listen: ['socket']
+                    }
+                ]
+            },
+            output: /Cannot use the same port "300" for different cluster chunks\./,
+            errored: true
+        },
+        {
+            input: {
+                foo: 'bar',
+                port: 300,
+                cluster: [
+                    {
+                        listen: ['http'],
+                        workers: -2,
+                    },
+                    {
+                        listen: 'socket',
+                        port: 200,
+                        workers: 0
+                    }
+                ]
+            },
+            output: /Cannot define many filler chunk in a cluster\./,
             errored: true
         }
     ]
@@ -192,16 +494,16 @@ describe('Danf proto application', function() {
         })
     });
 
-    workersComputationTests.forEach(function(test) {
-        it('should split interpreted paths', function() {
+    clusterInterpretationTests.forEach(function(test) {
+        it('should interpret cluster', function() {
             if (!test.errored) {
-                var workersNumbers = danf.computeWorkersNumbers(test.input, test.max);
+                var cluster = danf.interpretCluster(test.input, test.max);
 
-                assert.deepEqual(workersNumbers, test.output);
+                assert.deepEqual(cluster, test.output);
             } else {
                 assert.throws(
                     function() {
-                        danf.computeWorkersNumbers(test.input, test.max);
+                        danf.interpretCluster(test.input, test.max);
                     },
                     test.output
                 );
