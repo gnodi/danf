@@ -4,7 +4,7 @@ require('../../../../../lib/common/init');
 
 var assert = require('assert'),
     request = require('supertest'),
-    danf = require('../../../../../lib/server/app')(require('../../../../fixture/http/danf'), '', {environment: 'test', verbosity: 0, cluster: {active: false}})
+    danf = require('../../../../../lib/server/app')(require('../../../../fixture/http/danf'), '', {environment: 'test', verbosity: 0, cluster: null})
 ;
 
 danf.buildServer(function(app) {

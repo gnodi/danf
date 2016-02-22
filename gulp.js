@@ -302,7 +302,7 @@ Gulp.prototype.prepareBuilder = function(clustered) {
         if (null == command.app.server.context.cluster) {
             command.app.server.context.cluster = {};
         }
-        command.app.server.context.cluster.active = false;
+        command.app.server.context.cluster = null;
     }
 
     return this.getAppBuilder(command);
