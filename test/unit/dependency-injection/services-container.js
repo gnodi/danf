@@ -83,6 +83,8 @@ childrenServiceBuilder.referenceResolver = referenceResolver;
 var classServiceBuilder = new ClassServiceBuilder();
 classServiceBuilder.servicesContainer = servicesContainer;
 classServiceBuilder.referenceResolver = referenceResolver;
+classServiceBuilder.modulesTree = modulesTree;
+classServiceBuilder.namespacer = namespacer;
 
 var declinationsServiceBuilder = new DeclinationsServiceBuilder();
 declinationsServiceBuilder.servicesContainer = servicesContainer;
