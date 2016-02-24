@@ -53,14 +53,15 @@ Gulp.prototype.init = function(gulp) {
                 './node_modules/danf/lib/client/main.js',
                 './node_modules/danf/lib/common/**/*.js',
                 './node_modules/danf/lib/client/**/*.js',
-                './node_modules/danf/config/common/**/.js',
-                './node_modules/danf/config/client/**/.js'
+                './node_modules/danf/config/common/**/*.js',
+                './node_modules/danf/config/client/**/*.js'
             ],
             options,
             ['build-client-danf', 'build-client-config']
         );
         this.watch(
             [
+                './*.js',
                 './lib/common/**/*.js',
                 './lib/client/**/*.js',
                 './config/common/**/*.js',
@@ -78,17 +79,17 @@ Gulp.prototype.init = function(gulp) {
         // Watch for server modifications.
         this.watch(
             [
+                './*.js',
                 './lib/common/**/*.js',
                 './lib/server/**/*.js',
                 './config/common/**/*.js',
                 './config/server/**/*.js',
-                './app-*.js',
                 './node_modules/danf/*.js',
                 './node_modules/danf/lib/common/**/*.js',
                 './node_modules/danf/lib/server/**/*.js',
-                './node_modules/danf/config/common/**/.js',
-                './node_modules/danf/config/server/**/.js',
-                './node_modules/danf/resource/**/.js'
+                './node_modules/danf/config/common/**/*.js',
+                './node_modules/danf/config/server/**/*.js',
+                './node_modules/danf/resource/**/*.js'
             ],
             options,
             ['start-server']
