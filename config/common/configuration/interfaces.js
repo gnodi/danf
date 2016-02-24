@@ -197,6 +197,16 @@ module.exports = {
             prefixReferences: {
                 arguments: ['mixed/source', 'string/delimiter', 'danf:configuration.module/module', 'danf:configuration.modulesTree/modulesTree'],
                 returns: 'mixed'
+            },
+            /**
+             * Extract a prefix from a source.
+             *
+             * @param {string} source The source.
+             * @return {string} The prefix.
+             */
+            extractPrefix: {
+                arguments: ['string/source'],
+                returns: 'string'
             }
         }
     },
