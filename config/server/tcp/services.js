@@ -12,7 +12,6 @@ module.exports = {
                             app: '#danf:app#',
                             debug: '%danf:context.debug%',
                             socketIo: '#danf:vendor.socketIo#',
-                            escaper: '#danf:manipulation.escaper#',
                             logger: '#danf:logging.logger#'
                         }
                     }
