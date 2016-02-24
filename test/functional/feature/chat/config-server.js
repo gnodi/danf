@@ -56,7 +56,7 @@ module.exports = utils.merge(
                 messenger: {
                     class: Messenger,
                     properties: {
-                        messageEvent: 'danf:event.eventsContainer[socket][messageCreationNotification]'
+                        messageEvent: '#danf:event.eventsContainer[socket][messageCreationNotification]#'
                     }
                 }
             }

@@ -21,7 +21,9 @@ Messenger.prototype.send = function(submitter) {
         this.messageEvent.trigger({message: message});
     }
 }
-Messenger.prototype.write = function(data) {
+Messenger.prototype.write = function(message) {
+    var $ = this.jquery;
+
     $('#chat').append('<p>{0}</p>'.format(message));
 }
 
@@ -95,7 +97,7 @@ module.exports = utils.merge(
                     class: Messenger,
                     properties: {
                         jquery: '#danf:vendor.jquery#',
-                        messageEvent: 'danf:event.eventsContainer[socket][messageCreation]'
+                        messageEvent: '#danf:event.eventsContainer[socket][messageCreation]#'
                     }
                 }
             }
