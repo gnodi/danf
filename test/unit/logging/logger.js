@@ -59,6 +59,10 @@ var tests = [
         verbosity: 0
     },
     {
+        message: '---<<error>>test ERRORED',
+        length: 3
+    },
+    {
         message: '<<grey>>------------------------------------<</grey>>',
         verbosity: 0
     }
@@ -68,7 +72,7 @@ describe('Logger', function() {
     describe('method "log"', function() {
         tests.forEach(function(test) {
             it('should log to the console with the defined style', function() {
-                logger.log(test.message, test.verbosity, test.indentation, test.style);
+                logger.log(test.message, test.verbosity, test.indentation, test.length);
             })
         })
     })
