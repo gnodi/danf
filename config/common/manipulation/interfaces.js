@@ -548,7 +548,7 @@ module.exports = {
              */
             addTributary: {
                 arguments: [
-                    'string|null/scope',
+                    'string|number|null/scope',
                     'function|null/catch',
                     'function|null/format',
                     'function|null/callback'
