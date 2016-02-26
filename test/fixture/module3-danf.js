@@ -4,7 +4,7 @@ var assert = require('assert');
 
 function Computer() {}
 
-Computer.prototype.inc = function (value, inc) {
+Computer.prototype.inc = function (value, inc, timeout) {
     this.__asyncProcess(function(async) {
         setTimeout(
             async(function() {
@@ -12,7 +12,7 @@ Computer.prototype.inc = function (value, inc) {
                     return value + inc;
                 };
             }),
-            20
+            timeout ? timeout : 20
         );
     });
 }
@@ -77,13 +77,22 @@ module.exports = {
                     inc: {
                         type: 'number',
                         required: true
+                    },
+                    timeout: {
+                        type: 'number',
+                        default: 20,
+                        validate: function(value) {
+                            if (value < 10) {
+                                return value * 10;
+                            }
+                        }
                     }
                 },
                 operations: [
                     {
                         service: 'computer',
                         method: 'inc',
-                        arguments: ['@value@', '@inc@'],
+                        arguments: ['@value@', '@inc@', '@timeout@'],
                         scope: 'value'
                     }
                 ],
@@ -251,7 +260,8 @@ module.exports = {
                         name: 'inc',
                         input: {
                             value: '@@.@@',
-                            inc: '@result@'
+                            inc: '@result@',
+                            timeout: '@@.@@'
                         },
                         collection: {
                             input: '@input@',
