@@ -631,7 +631,19 @@ module.exports = {
              *
              * @return {string}
              */
-            currentLevel: 'number'
+            currentLevel: 'number',
+            /**
+             * Whether or not the current tributary errored.
+             *
+             * @return {boolean}
+             */
+            errored: 'boolean',
+            /**
+             * The current tributary errors.
+             *
+             * @return {error_array}
+             */
+            errors: 'error_array'
         },
         setters: {
             /**
