@@ -14,6 +14,7 @@ var assert = require('assert'),
     PropertiesServiceBuilder = require('../../../lib/common/dependency-injection/service-builder/properties'),
     CollectionsServiceBuilder = require('../../../lib/common/dependency-injection/service-builder/collections'),
     RegistryServiceBuilder = require('../../../lib/common/dependency-injection/service-builder/registry'),
+    InducedServiceBuilder = require('../../../lib/common/dependency-injection/service-builder/induced'),
     AbstractBuilder = require('../../../lib/common/dependency-injection/service-builder/abstract-service-builder'),
     ReferenceResolver = require('../../../lib/common/manipulation/reference-resolver'),
     ReferenceType = require('../../../lib/common/manipulation/reference-type'),
@@ -115,6 +116,10 @@ registryServiceBuilder.interfacer = interfacer;
 registryServiceBuilder.modulesTree = modulesTree;
 registryServiceBuilder.namespacer = namespacer;
 
+var inducedServiceBuilder = new InducedServiceBuilder();
+inducedServiceBuilder.servicesContainer = servicesContainer;
+inducedServiceBuilder.referenceResolver = referenceResolver;
+
 servicesContainer.addServiceBuilder(abstractServiceBuilder);
 servicesContainer.addServiceBuilder(aliasServiceBuilder);
 servicesContainer.addServiceBuilder(childrenServiceBuilder);
@@ -125,6 +130,8 @@ servicesContainer.addServiceBuilder(parentServiceBuilder);
 servicesContainer.addServiceBuilder(propertiesServiceBuilder);
 servicesContainer.addServiceBuilder(collectionsServiceBuilder);
 servicesContainer.addServiceBuilder(registryServiceBuilder);
+servicesContainer.addServiceBuilder(inducedServiceBuilder);
+servicesContainer.referenceResolver = referenceResolver;
 
 var servicesContainerPrototype = utils.clone(servicesContainer),
     getServiceContainer = function(create) {
@@ -142,6 +149,9 @@ var servicesContainerPrototype = utils.clone(servicesContainer),
         factoriesServiceBuilder.servicesContainer = currentServicesContainer;
         parentServiceBuilder.servicesContainer = currentServicesContainer;
         propertiesServiceBuilder.servicesContainer = currentServicesContainer;
+        collectionsServiceBuilder.servicesContainer = currentServicesContainer;
+        registryServiceBuilder.servicesContainer = currentServicesContainer;
+        inducedServiceBuilder.servicesContainer = currentServicesContainer;
 
         return currentServicesContainer;
     }
@@ -231,19 +241,37 @@ var config = {
             declinations: '$providers$',
             properties: {
                 id: '@_@',
-                rules: '>rule.@rules@>provider>@@rules.@rules@@@>',
+//                rules: '>rule.@rules@>provider>@@rules.@rules@@@>',
                 storages: '#storage.@storages@#',
                 adapter: '#@adapter@#',
                 item: '#registry[b]#',
                 deepItem: '#deepRegistry[b][j]#'
             },
-            collections: ['provider']
+            collections: ['provider'],
+            induced: {
+                parameter: {
+                    service: 'rule',
+                    factory: 'provider',
+                    context: '@rules@',
+                    property: 'rules'
+                }
+            }
         },
         rule: {
             factories: {
                 provider: {
+                    parent: 'rule.@_@',
+                    declinations: '!.!',
                     properties: {
-                        parameters: '>parameter.@parameters.type@>rule>@@parameters.@parameters@@@>'
+//                        parameters: '>parameter.@parameters.type@>rule>@@parameters.@parameters@@@>'
+                    },
+                    induced: {
+                        parameter: {
+                            service: 'parameter',
+                            factory: 'rule',
+                            context: '@parameters@',
+                            property: 'parameters'
+                        }
                     }
                 }
             },
@@ -265,27 +293,25 @@ var config = {
                 }
             }
         },
-        'parameter.size': {
-            class: function() { this.name = 'parameter size'; },
-            abstract: true,
+        parameter: {
             factories: {
                 rule: {
+                    parent: 'parameter.@_@',
+                    declinations: '!.!',
                     properties: {
                         value: '@value@'
                     }
                 }
-            }
+            },
+            abstract: true
+        },
+        'parameter.size': {
+            class: function() { this.name = 'parameter size'; },
+            abstract: true
         },
         'parameter.unit': {
             class: function() { this.name = 'parameter unit'; },
-            abstract: true,
-            factories: {
-                rule: {
-                    properties: {
-                        value: '@value@'
-                    }
-                }
-            }
+            abstract: true
         },
         abstractStorage: {
             abstract: true,
@@ -320,7 +346,34 @@ var config = {
             registry: {
                 method: 'retrieve'
             }
-        }
+        }/*,
+        database: {
+            class: function() { this.type = 'database'; },
+            declinations: '$databases$',
+            properties: {
+                name: 'database @name@'
+            },
+            induced: {
+                collection: {
+                    service: 'collection',
+                    factory: 'database',
+                    context: '@.@',
+                    property: 'collections'
+                }
+            }
+        },
+        collection: {
+            class: function() { this.type = 'collection'; },
+            abstract: true,
+            factories: {
+                database: {
+                    declinations: '!collections!',
+                    properties: {
+                        name: 'collection @name@'
+                    }
+                }
+            }
+        }*/
     },
     providers: {
         smallImages: {
@@ -366,7 +419,28 @@ var config = {
             adapter: 'adapter.image'
         }
     },
-    timeOut: 2000
+    timeOut: 2000,
+    databases: {
+        forums: {
+            name: 'forum',
+            collections: {
+                forums: {
+                    name: 'forum'
+                },
+                topics: {
+                    name: 'topic'
+                }
+            }
+        },
+        users: {
+            name: 'user',
+            collection: {
+                users: {
+                    name: 'author'
+                }
+            }
+        }
+    }
 };
 
 var expectedBigImagesProvider = {
