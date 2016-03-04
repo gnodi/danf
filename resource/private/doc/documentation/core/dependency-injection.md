@@ -348,7 +348,7 @@ Synchronizer.prototype.compute = function() {
 
 #### Registry
 
-You can control the instantiation of a service injected into another. To do this, use the attribute `factories` and the references of type `>`:
+You can use a service as a registry. To do this, use the attribute `registry`:
 
 ```javascript
 // config/common/config/service.js
