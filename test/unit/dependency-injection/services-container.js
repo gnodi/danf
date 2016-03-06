@@ -42,6 +42,10 @@ var contextType = new ReferenceType();
 contextType.name = '@';
 contextType.delimiter = '@';
 
+var factoryContextType = new ReferenceType();
+factoryContextType.name = '!';
+factoryContextType.delimiter = '!';
+
 var configType = new ReferenceType();
 configType.name = '$';
 configType.delimiter = '$';
@@ -64,6 +68,7 @@ serviceFactoryType.allowsConcatenation = false;
 
 referenceResolver.addReferenceType(parameterType);
 referenceResolver.addReferenceType(contextType);
+referenceResolver.addReferenceType(factoryContextType);
 referenceResolver.addReferenceType(configType);
 referenceResolver.addReferenceType(serviceType);
 referenceResolver.addReferenceType(serviceCollectionType);
