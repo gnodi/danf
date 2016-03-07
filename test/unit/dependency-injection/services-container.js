@@ -246,7 +246,6 @@ var config = {
             declinations: '$providers$',
             properties: {
                 id: '@_@',
-//                rules: '>rule.@rules@>provider>@@rules.@rules@@@>',
                 storages: '#storage.@storages@#',
                 adapter: '#@adapter@#',
                 item: '#registry[b]#',
@@ -254,11 +253,12 @@ var config = {
             },
             collections: ['provider'],
             induced: {
-                parameter: {
+                rule: {
                     service: 'rule',
                     factory: 'provider',
                     context: '@rules@',
-                    property: 'rules'
+                    property: 'rules',
+                    collection: true
                 }
             }
         },
@@ -267,26 +267,24 @@ var config = {
                 provider: {
                     parent: 'rule.@_@',
                     declinations: '!.!',
-                    properties: {
-//                        parameters: '>parameter.@parameters.type@>rule>@@parameters.@parameters@@@>'
-                    },
                     induced: {
                         parameter: {
                             service: 'parameter',
                             factory: 'rule',
                             context: '@parameters@',
-                            property: 'parameters'
+                            property: 'parameters',
+                            collection: true
                         }
                     }
                 }
             },
             children: {
                 minSize: {
-                    class:  function() { this.name = 'rule minSize'; },
+                    class: function() { this.name = 'rule minSize'; },
                     abstract: true
                 },
                 maxSize: {
-                    class:  function() { this.name = 'rule maxSize'; },
+                    class: function() { this.name = 'rule maxSize'; },
                     abstract: true
                 }
             }
@@ -301,7 +299,7 @@ var config = {
         parameter: {
             factories: {
                 rule: {
-                    parent: 'parameter.@_@',
+                    parent: 'parameter.@type@',
                     declinations: '!.!',
                     properties: {
                         value: '@value@'
@@ -439,7 +437,7 @@ var config = {
         },
         users: {
             name: 'user',
-            collection: {
+            collections: {
                 users: {
                     name: 'author'
                 }
@@ -497,8 +495,8 @@ describe('ServicesContainer', function() {
             assert(provider instanceof Provider);
         })
 
-        it('should resolve and inject the dependencies of the services', function() {
-            assert.deepEqual(expectedBigImagesProvider, utils.clean(provider));
+        it('should resolve and inject the dependencies of the services', function() {console.log(Object.keys(servicesContainer._definitions), Object.keys(servicesContainer._services))
+            assert.deepEqual(utils.clean(provider), expectedBigImagesProvider);
         })
 
         it('should resolve and inject registry dependencies of the services', function() {
