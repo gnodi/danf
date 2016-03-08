@@ -349,25 +349,32 @@ var config = {
             registry: {
                 method: 'retrieve'
             }
-        }/*,
+        },
+        server: {
+            class: function() { this.name = 'server'; },
+            properties: {
+                databases: '&databases&'
+            }
+        },
         database: {
             class: function() { this.type = 'database'; },
             declinations: '$databases$',
             properties: {
-                name: 'database @name@'
+                name: 'database @_@'
             },
+            collections: ['databases'],
             induced: {
                 collection: {
                     service: 'collection',
                     factory: 'database',
                     context: '@.@',
-                    property: 'collections'
+                    property: 'collections',
+                    collection: true
                 }
             }
         },
         collection: {
             class: function() { this.type = 'collection'; },
-            abstract: true,
             factories: {
                 database: {
                     declinations: '!collections!',
@@ -376,7 +383,7 @@ var config = {
                     }
                 }
             }
-        }*/
+        }
     },
     providers: {
         smallImages: {
@@ -474,6 +481,36 @@ var expectedBigImagesProvider = {
     adapter: {name: 'adapter image'}
 };
 
+var expectedServer = {
+    name: 'server',
+    databases: [
+        {
+            type: 'database',
+            name: 'database forums',
+            collections: [
+                {
+                    type: 'collection',
+                    name: 'collection forum'
+                },
+                {
+                    type: 'collection',
+                    name: 'collection topic'
+                }
+            ]
+        },
+        {
+            type: 'database',
+            name: 'database users',
+            collections: [
+                {
+                    type: 'collection',
+                    name: 'collection author'
+                }
+            ]
+        }
+    ]
+};
+
 describe('ServicesContainer', function() {
     it('method "handleRegistryChange" should set the definitions of the configured services', function() {
         servicesContainer.config = config;
@@ -495,7 +532,7 @@ describe('ServicesContainer', function() {
             assert(provider instanceof Provider);
         })
 
-        it('should resolve and inject the dependencies of the services', function() {console.log(Object.keys(servicesContainer._definitions), Object.keys(servicesContainer._services))
+        it('should resolve and inject the dependencies of the services', function() {
             assert.deepEqual(utils.clean(provider), expectedBigImagesProvider);
         })
 
@@ -534,6 +571,12 @@ describe('ServicesContainer', function() {
                 },
                 /The reference "\$providersTypo\$" in source "\$providersTypo\$" declared in the definition of the service "provider" cannot be resolved./
             );
+        })
+
+        it('should resolve and inject the dependencies of the services', function() {
+            var server = servicesContainer.get('server');
+
+            assert.deepEqual(utils.clean(server), expectedServer);
         })
 
         it('should fail to instantiate an abstract service', function() {

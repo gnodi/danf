@@ -33,7 +33,7 @@ danf.buildServer(function(app) {
         })
 
         it('should resolve the defined parameters', function() {
-            var parameter = app.servicesContainer.get('main:provider.bigImages.rules.0.parameters.0');
+            var parameter = app.servicesContainer.get('main:provider.bigImages.rule.minSize.parameter.0');
 
             assert.equal(parameter.name, 'parameter size');
         })
