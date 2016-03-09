@@ -138,6 +138,7 @@ test-app:
 	@NODE_ENV=test ./node_modules/.bin/mocha \
 		--reporter $(REPORTER) \
 		--timeout 5000 \
+		--delay \
 		$(MOCHA_OPTS) \
 		test/unit/app.js
 

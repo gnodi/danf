@@ -7,12 +7,11 @@ var utils = require('../../lib/common/utils.js'),
 var Manager = function() {};
 Manager.defineImplementedInterfaces(['ManagerInterface']);
 Manager.prototype.__init = function() {
-    var self = this;
-
     this.__asyncProcess(function(async) {
         setTimeout(
+            function() {  },
             async(function() {
-                self.name = 'manager';
+                this.name = 'manager';
             }),
             10
         );

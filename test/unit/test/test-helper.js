@@ -20,7 +20,10 @@ var configuration = {
             }
         }
     },
-    context = {check: 1}
+    context = {
+        verbosity: 0,
+        check: 1
+    }
 ;
 
 TestHelper.use(configuration, context, function(testHelper) {
