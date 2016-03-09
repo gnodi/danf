@@ -579,6 +579,10 @@ describe('ServicesContainer', function() {
             assert.deepEqual(utils.clean(server), expectedServer);
         })
 
+        it('should handle induced services', function() {
+            servicesContainer.get('database.forums.collection.topics');
+        })
+
         it('should fail to instantiate an abstract service', function() {
             assert.throws(
                 function() {
