@@ -30,6 +30,7 @@ danf.buildServer(function(app) {
             var manager = app.servicesContainer.get('main:manager');
 
             assert(Object.isInstanceOf(manager, 'main:ManagerInterface'));
+            assert(manager.name, 'manager');
         })
 
         it('should resolve the defined parameters', function() {

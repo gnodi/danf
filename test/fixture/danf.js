@@ -4,8 +4,20 @@ var utils = require('../../lib/common/utils.js'),
     assert = require('assert')
 ;
 
-var Manager = function() { this.name = 'manager'; };
+var Manager = function() {};
 Manager.defineImplementedInterfaces(['ManagerInterface']);
+Manager.prototype.__init = function() {
+    var self = this;
+
+    this.__asyncProcess(function(async) {
+        setTimeout(
+            async(function() {
+                self.name = 'manager';
+            }),
+            10
+        );
+    });
+};
 Manager.prototype.selectProvider = function(fileName) {};
 
 var config = {
