@@ -21,7 +21,7 @@ danf.buildServer(function(app) {
             assert.notEqual(dataResolver, undefined);
         })
 
-        it('should instanciate the services of the dependencies', function() {
+        it('should instantiate the services of the dependencies', function() {
             assert.equal(app.servicesContainer.get('main:dep2:storage.local').name, 'local storage');
             assert.equal(app.servicesContainer.get('main:dep2:provider.bigImages').rules[0].parameters[0].value, 3);
         })
@@ -396,7 +396,7 @@ danf.buildServer(function(app) {
                 ;
             });
         })
-
-        run();
     })
+
+    run();
 });

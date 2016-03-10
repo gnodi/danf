@@ -112,4 +112,6 @@ danf.buildServer(function(app) {
             html.render(response, embeddedContext, embeddedConfig, embeddedCallback);
         })
     })
+
+    run();
 });

@@ -53,4 +53,6 @@ danf.buildServer(function(app) {
             });
         })
     })
-})
+
+    run();
+});
