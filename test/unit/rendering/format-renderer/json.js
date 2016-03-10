@@ -22,8 +22,6 @@ danf.buildServer(function(app) {
     json.referenceResolver = referenceResolver;
     response.req = app.request;
 
-    response.req = app.request;
-
     var config = {
             value: {
                 topic: '@topic@',
