@@ -9,7 +9,6 @@ Manager.defineImplementedInterfaces(['ManagerInterface']);
 Manager.prototype.__init = function() {
     this.__asyncProcess(function(async) {
         setTimeout(
-            function() {  },
             async(function() {
                 this.name = 'manager';
             }),
