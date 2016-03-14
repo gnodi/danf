@@ -17,6 +17,22 @@ var configuration = {
                 a: {
                     class: require('../../fixture/app/a')
                 }
+            },
+            sequences: {
+                s: {
+                    operations: [
+                        {
+                            service: 'a',
+                            method: 'a',
+                            scope: 'a'
+                        },
+                        {
+                            service: 'a',
+                            method: 'a',
+                            scope: 'b'
+                        }
+                    ]
+                }
             }
         }
     },
@@ -28,12 +44,6 @@ var configuration = {
 
 TestHelper.use(configuration, context, function(testHelper) {
     describe('TestHelper', function() {
-        it('method "getService" should be able to retrieve a defined service', function() {
-            var a = testHelper.getService('a');
-
-            assert.equal(2, a.a());
-        })
-
         it('method "getClass" should be able to retrieve a defined and processed (inheritance, ...) class', function() {
             var C = testHelper.getClass('c'),
                 c = new C()
@@ -46,6 +56,28 @@ TestHelper.use(configuration, context, function(testHelper) {
             var b = testHelper.getInstance('b');
 
             assert.equal(3, b.b());
+        })
+
+        it('method "getService" should be able to retrieve a defined service', function() {
+            var a = testHelper.getService('a');
+
+            assert.equal(2, a.a());
+        })
+
+        it('method "getSequence" should be able to retrieve a defined sequence', function(done) {
+            var s = testHelper.getSequence('s');
+
+            s.execute({}, {}, '.', null, function(output) {
+                assert.deepEqual(
+                    output,
+                    {
+                        a: 3,
+                        b: 4
+                    }
+                );
+
+                done();
+            });
         })
 
         it('method "getApp" should be able to retrieve the built app', function() {
