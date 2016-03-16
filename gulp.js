@@ -245,14 +245,18 @@ Gulp.prototype.executeCommand = function(done) {
     logger.log('<<grey>>[client] <<yellow>>Trying to connect to command server...', verbosity);
 
     var client = net.connect({port: command.port}, function() {
-        client.write(command.line);
-    });
+            client.write(command.line);
+        }),
+        standalone = false
+    ;
 
     client.on('error', function(error) {
         // Execute a standalone command if no command server is listening.
         if ('ECONNREFUSED' === error.code) {
+            standalone = true;
+
             logger.log('<<grey>>[client] <<red>>Failed to connect.', verbosity)
-            logger.log('<<grey>>[client] <<yellow>>You are executing a standalone command. To maximize the performances, start a command server with `node danf serve-cmd`.', verbosity);
+            logger.log('<<grey>>[client] <<yellow>>You are executing a standalone command. To maximize the performances, start a command server with `node danf serve`.', verbosity);
 
             // Execute a standalone command.
             var danf = self.prepareBuilder(false);
@@ -280,7 +284,10 @@ Gulp.prototype.executeCommand = function(done) {
     });
     client.on('close', function() {
         logger.log('<<grey>>[client]<</grey>> <<yellow>>Command processing ended.', verbosity);
-        done();
+
+        if (!standalone) {
+            done();
+        }
     });
 }
 
