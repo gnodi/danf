@@ -6,7 +6,8 @@ var assert = require('assert'),
     danf = require('../../lib/server/app')({}, {}, {}, {})
 ;
 
-var rootPath = fs.realpathSync(path.join(__dirname, '/../fixture/proto')),
+var rootPath = fs.realpathSync(path.join(__dirname, '/../fixture/proto/app')),
+    dependenciesPath =  fs.realpathSync(path.join(__dirname, '/../fixture/proto/dependencies')),
     requirePattern = 'require(\'{0}/{1}\')'.format(rootPath, '{0}')
 ;
 
@@ -676,6 +677,13 @@ describe('Danf proto application', function() {
                     }
                 }
             }
+        );
+    })
+
+    it('should build dependencies tree', function() {
+        assert.deepEqual(
+            danf.buildDepenciesTree(rootPath),
+            {}
         );
     })
 })

@@ -37,6 +37,7 @@
         "test"
     ],
     "dependencies": {
+        "archy": "^1.0",
         "async": "^1.0",
         "chalk": "^1.1",
         "cookie-parser": "^1.3",
@@ -48,8 +49,10 @@
         "jade": "^1.9",
         "jquery": "^2.1",
         "parseurl": "^1.3",
+        "read-package-tree": "^5.1",
         "requirejs": "^2.1",
-        "send": "^0.13.0",
+        "semver": "^5.1",
+        "send": "^0.13",
         "socket.io": "^1.0",
         "tosource": "^1.0",
         "utils-merge": "^1.0"
