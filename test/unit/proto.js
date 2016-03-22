@@ -6,9 +6,11 @@ var assert = require('assert'),
     danf = require('../../lib/server/app')({}, {}, {}, {})
 ;
 
-var rootPath = fs.realpathSync(path.join(__dirname, '/../fixture/proto/app')),
+var rootPath = fs.realpathSync(path.join(__dirname, '/../fixture/proto')),
+    appPath = path.join(rootPath, 'app'),
+    dependenciesPath = path.join(rootPath, 'dependencies'),
     dependenciesPath =  fs.realpathSync(path.join(__dirname, '/../fixture/proto/dependencies')),
-    requirePattern = 'require(\'{0}/{1}\')'.format(rootPath, '{0}')
+    requirePattern = 'require(\'{0}/{1}\')'.format(appPath, '{0}')
 ;
 
 var pathInterpretationTests = [
@@ -514,14 +516,14 @@ describe('Danf proto application', function() {
 
     it('should build its server configuration from files, folders and node modules', function() {
         assert.deepEqual(
-            danf.buildSideConfiguration(rootPath, 'server'),
+            danf.buildSideConfiguration(appPath, 'server'),
             {
                 config: {
                     classes: {
-                        'foo.bar': require(path.join(rootPath, 'lib/common/foo/bar.js')),
-                        bar: require(path.join(rootPath, 'lib/server/bar.js')),
-                        foo: require(path.join(rootPath, 'lib/common/foo.js')),
-                        main: require(path.join(rootPath, 'lib/main.js'))
+                        'foo.bar': require(path.join(appPath, 'lib/common/foo/bar.js')),
+                        bar: require(path.join(appPath, 'lib/server/bar.js')),
+                        foo: require(path.join(appPath, 'lib/common/foo.js')),
+                        main: require(path.join(appPath, 'lib/main.js'))
                     }
                 },
                 dependencies: {
@@ -571,7 +573,7 @@ describe('Danf proto application', function() {
                                 dependencies: {},
                                 config: {
                                     classes: {
-                                        'bar': require(path.join(rootPath, 'node_modules/a/node_modules/b/lib/common/bar.js'))
+                                        'bar': require(path.join(appPath, 'node_modules/a/node_modules/b/lib/common/bar.js'))
                                     }
                                 }
                             },
@@ -580,7 +582,7 @@ describe('Danf proto application', function() {
                                 dependencies: {},
                                 config: {
                                     classes: {
-                                        'foo.bar': require(path.join(rootPath, 'node_modules/a/node_modules/c/lib/server/foo/bar.js'))
+                                        'foo.bar': require(path.join(appPath, 'node_modules/a/node_modules/c/lib/server/foo/bar.js'))
                                     }
                                 }
                             }
@@ -593,14 +595,14 @@ describe('Danf proto application', function() {
 
     it('should build its client configuration from files, folders and node modules', function() {
         assert.deepEqual(
-            danf.buildSideConfiguration(rootPath, 'client'),
+            danf.buildSideConfiguration(appPath, 'client'),
             {
                 config: {
                     classes: {
                         'foo.bar': requirePattern.format('lib/common/foo/bar.js'),
                         bar: requirePattern.format('lib/common/bar.js'),
                         foo: requirePattern.format('lib/client/foo.js'),
-                        main: require(path.join(rootPath, 'lib/main.js'))
+                        main: require(path.join(appPath, 'lib/main.js'))
                     }
                 },
                 dependencies: {
@@ -680,10 +682,153 @@ describe('Danf proto application', function() {
         );
     })
 
-    it('should build dependencies tree', function() {
+    it('should build dependencies tree', function(done) {
         assert.deepEqual(
-            danf.buildDepenciesTree(rootPath),
-            {}
+            danf.buildDepenciesTree(
+                dependenciesPath,
+                function(dependencies) {
+                    assert.deepEqual(
+                        dependencies,
+                        {
+                            b: {
+                                id: 'b@1.0.0',
+                                name: 'b',
+                                version: '1.0.0',
+                                path: path.join(dependenciesPath, 'node_modules/b'),
+                                dependencies: {}
+                            },
+                            c: {
+                                id: 'c@1.1.0',
+                                name: 'c',
+                                version: '1.1.0',
+                                path: path.join(dependenciesPath, 'node_modules/c'),
+                                dependencies: {}
+                            },
+                            d: {
+                                id: 'd@1.0.0',
+                                name: 'd',
+                                version: '1.0.0',
+                                path: path.join(dependenciesPath, 'node_modules/d'),
+                                dependencies: {
+                                    e: ':e',
+                                    'e:c': ':c',
+                                    c: ':c',
+                                    f: ':f',
+                                    g: ':g',
+                                    h: ':h',
+                                    j: ':j',
+                                    'h:j': ':j',
+                                    'h:o': ':o',
+                                    o: ':o'
+                                }
+                            },
+                            'd:e': ':e',
+                            'd:e:c': ':c',
+                            'd:c': ':c',
+                            'd:f': ':f',
+                            'd:g': ':g',
+                            'd:h': ':h',
+                            'd:h:j': ':j',
+                            'd:j': ':j',
+                            'd:h:o': ':o',
+                            'd:o': ':o',
+                            e: {
+                                id: 'e@1.0.0',
+                                name: 'e',
+                                version: '1.0.0',
+                                path: path.join(dependenciesPath, 'node_modules/d/node_modules/e'),
+                                dependencies: {
+                                    c: ':c'
+                                }
+                            },
+                            'e:c': ':c',
+                            f: {
+                                id: 'f@2.0.0',
+                                name: 'f',
+                                version: '2.0.0',
+                                path: path.join(dependenciesPath, 'node_modules/d/node_modules/f'),
+                                dependencies: {}
+                            },
+                            g: {
+                                id: 'g@1.0.0',
+                                name: 'g',
+                                version: '1.0.0',
+                                path: path.join(dependenciesPath, 'node_modules/d/node_modules/g'),
+                                dependencies: {}
+                            },
+                            h: {
+                                id: 'h@2.0.0',
+                                name: 'h',
+                                version: '2.0.0',
+                                path: path.join(dependenciesPath, 'node_modules/n/node_modules/h'),
+                                dependencies: {
+                                    j: ':j',
+                                    o: ':o'
+                                }
+                            },
+                            'h:j': ':j',
+                            'h:o': ':o',
+                            j: {
+                                id: 'j@0.0.4-beta',
+                                name: 'j',
+                                version: '0.0.4-beta',
+                                path: path.join(dependenciesPath, 'node_modules/n/node_modules/h/node_modules/j'),
+                                dependencies: {}
+                            },
+                            l: {
+                                id: 'l@1.0.0',
+                                name: 'l',
+                                version: '1.0.0',
+                                path: path.join(dependenciesPath, 'node_modules/l'),
+                                dependencies: {}
+                            },
+                            m: {
+                                id: 'm@1.0.0',
+                                name: 'm',
+                                version: '1.0.0',
+                                path: path.join(dependenciesPath, 'node_modules/m'),
+                                dependencies: {
+                                    c: ':c',
+                                    f: ':f',
+                                    g: ':g',
+                                    j: ':j'
+                                }
+                            },
+                            'm:c': ':c',
+                            'm:f': ':f',
+                            'm:g': ':g',
+                            'm:j': ':j',
+                            n: {
+                                id: 'n@1.0.0',
+                                name: 'n',
+                                version: '1.0.0',
+                                path: path.join(dependenciesPath, 'node_modules/n'),
+                                dependencies: {
+                                    h: ':h',
+                                    'h:j': ':j',
+                                    j: ':j',
+                                    'h:o': ':o',
+                                    o: ':o'
+                                }
+                            },
+                            'n:h': ':h',
+                            'n:h:j': ':j',
+                            'n:j': ':j',
+                            'n:h:o': ':o',
+                            'n:o': ':o',
+                            o: {
+                                id: 'o@1.0.0',
+                                name: 'o',
+                                version: '1.0.0',
+                                path: path.join(dependenciesPath, 'node_modules/o'),
+                                dependencies: {}
+                            }
+                        }
+                    );
+
+                    done();
+                }
+            )
         );
     })
 })
