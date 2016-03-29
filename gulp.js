@@ -41,7 +41,11 @@ Gulp.prototype.init = function(gulp) {
     });
 
     // Start a self watching server with a fresh client.
-    gulp.task('serve', ['build-client', 'start-server'], function() {
+    gulp.task('serve', ['watch', 'build-client', 'start-server'], function() {
+    });
+
+    // Build client.
+    gulp.task('watch', function(done) {
         var options = {
                 interval: 700
             }
@@ -54,7 +58,8 @@ Gulp.prototype.init = function(gulp) {
                 './node_modules/danf/lib/common/**/*.js',
                 './node_modules/danf/lib/client/**/*.js',
                 './node_modules/danf/config/common/**/*.js',
-                './node_modules/danf/config/client/**/*.js'
+                './node_modules/danf/config/client/**/*.js',
+                './node_modules/danf/resource/public/**/*.js'
             ],
             options,
             ['build-client-danf', 'build-client-config']
@@ -65,7 +70,8 @@ Gulp.prototype.init = function(gulp) {
                 './lib/common/**/*.js',
                 './lib/client/**/*.js',
                 './config/common/**/*.js',
-                './config/client/**/*.js'
+                './config/client/**/*.js',
+                './resource/public/**/*.js'
             ],
             options,
             ['build-client-app']
@@ -84,12 +90,13 @@ Gulp.prototype.init = function(gulp) {
                 './lib/server/**/*.js',
                 './config/common/**/*.js',
                 './config/server/**/*.js',
+                './resource/private/**/*.js',
                 './node_modules/danf/*.js',
                 './node_modules/danf/lib/common/**/*.js',
                 './node_modules/danf/lib/server/**/*.js',
                 './node_modules/danf/config/common/**/*.js',
                 './node_modules/danf/config/server/**/*.js',
-                './node_modules/danf/resource/**/*.js'
+                './node_modules/danf/resource/private/**/*.js'
             ],
             options,
             ['start-server']
@@ -109,8 +116,8 @@ Gulp.prototype.init = function(gulp) {
 
         var danf = self.prepareBuilder(false);
 
-        danf.buildClientFiles(
-            [danf.clientDanfBuildConfiguration],
+        danf.buildClientParts(
+            ['danf'],
             done
         );
     });
@@ -121,8 +128,8 @@ Gulp.prototype.init = function(gulp) {
 
         var danf = self.prepareBuilder(false);
 
-        danf.buildClientFiles(
-            [danf.clientAppBuildConfiguration],
+        danf.buildClientParts(
+            ['app'],
             done
         );
     });
@@ -133,8 +140,8 @@ Gulp.prototype.init = function(gulp) {
 
         var danf = self.prepareBuilder(false);
 
-        danf.buildClientFiles(
-            [danf.clientInitBuildConfiguration],
+        danf.buildClientParts(
+            ['init'],
             done
         );
     });
@@ -145,8 +152,8 @@ Gulp.prototype.init = function(gulp) {
 
         var danf = self.prepareBuilder(false);
 
-        danf.buildClientFiles(
-            [danf.clientRequireBuildConfiguration],
+        danf.buildClientParts(
+            ['require'],
             done
         );
     });
@@ -157,8 +164,8 @@ Gulp.prototype.init = function(gulp) {
 
         var danf = self.prepareBuilder(false);
 
-        danf.buildClientFiles(
-            [danf.clientJqueryBuildConfiguration],
+        danf.buildClientParts(
+            ['jquery'],
             done
         );
     });
@@ -169,8 +176,8 @@ Gulp.prototype.init = function(gulp) {
 
         var danf = self.prepareBuilder(false);
 
-        danf.buildClientFiles(
-            [danf.clientConfigBuildConfiguration],
+        danf.buildClientParts(
+            ['config'],
             done
         );
     });
