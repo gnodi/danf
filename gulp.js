@@ -59,7 +59,7 @@ Gulp.prototype.init = function(gulp) {
                 './node_modules/danf/lib/client/**/*.js',
                 './node_modules/danf/config/common/**/*.js',
                 './node_modules/danf/config/client/**/*.js',
-                './node_modules/danf/resource/public/**/*.js'
+                './node_modules/danf/resource/public/**/*'
             ],
             options,
             ['build-client-danf', 'build-client-config']
@@ -71,7 +71,7 @@ Gulp.prototype.init = function(gulp) {
                 './lib/client/**/*.js',
                 './config/common/**/*.js',
                 './config/client/**/*.js',
-                './resource/public/**/*.js'
+                './resource/public/**/*'
             ],
             options,
             ['build-client-app']
@@ -90,13 +90,13 @@ Gulp.prototype.init = function(gulp) {
                 './lib/server/**/*.js',
                 './config/common/**/*.js',
                 './config/server/**/*.js',
-                './resource/private/**/*.js',
+                './resource/private/**/*',
                 './node_modules/danf/*.js',
                 './node_modules/danf/lib/common/**/*.js',
                 './node_modules/danf/lib/server/**/*.js',
                 './node_modules/danf/config/common/**/*.js',
                 './node_modules/danf/config/server/**/*.js',
-                './node_modules/danf/resource/private/**/*.js'
+                './node_modules/danf/resource/private/**/*'
             ],
             options,
             ['start-server']
