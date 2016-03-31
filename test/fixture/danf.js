@@ -339,9 +339,12 @@ var config = {
                         arguments: [
                             function(data) {
                                 data.i++;
+
+                                return data;
                             },
                             '@data@'
-                        ]
+                        ],
+                        scope: 'data'
                     },
                     {
                         condition: function(stream, context) {
