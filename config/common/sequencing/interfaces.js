@@ -275,6 +275,7 @@ module.exports = {
              * @param {number|null} tributary The tributary.
              * @param {number|null} level The current logging level.
              * @param {date|null} startedAt The start date of the task.
+             * @param {number|null} maxLength The max logged length.
              */
             log: {
                 arguments: [
@@ -283,7 +284,8 @@ module.exports = {
                     'number/indentation',
                     'number|null/tributary',
                     'number|null/level',
-                    'date|null/startedAt'
+                    'date|null/startedAt',
+                    'number|null/maxLength'
                 ]
             }
         }
