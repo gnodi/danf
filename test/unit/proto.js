@@ -684,7 +684,7 @@ describe('Danf proto application', function() {
 
     it('should build dependencies tree', function(done) {
         assert.deepEqual(
-            danf.buildDepenciesTree(
+            danf.buildDepencies(
                 dependenciesPath,
                 function(dependencies) {
                     assert.deepEqual(
@@ -694,6 +694,7 @@ describe('Danf proto application', function() {
                                 id: 'b@1.0.0',
                                 name: 'b',
                                 version: '1.0.0',
+                                versions: ['1.0.0'],
                                 path: path.join(dependenciesPath, 'node_modules/b'),
                                 dependencies: {}
                             },
@@ -701,6 +702,8 @@ describe('Danf proto application', function() {
                                 id: 'c@1.1.0',
                                 name: 'c',
                                 version: '1.1.0',
+                                versions: ['4.0.0', '3.0.0', '2.0.0', '1.1.0'],
+                                conflict: 0,
                                 path: path.join(dependenciesPath, 'node_modules/c'),
                                 dependencies: {}
                             },
@@ -708,6 +711,7 @@ describe('Danf proto application', function() {
                                 id: 'd@1.0.0',
                                 name: 'd',
                                 version: '1.0.0',
+                                versions: ['1.0.0'],
                                 path: path.join(dependenciesPath, 'node_modules/d'),
                                 dependencies: {
                                     e: ':e',
@@ -736,6 +740,7 @@ describe('Danf proto application', function() {
                                 id: 'e@1.0.0',
                                 name: 'e',
                                 version: '1.0.0',
+                                versions: ['1.0.0'],
                                 path: path.join(dependenciesPath, 'node_modules/d/node_modules/e'),
                                 dependencies: {
                                     c: ':c'
@@ -743,9 +748,11 @@ describe('Danf proto application', function() {
                             },
                             'e:c': ':c',
                             f: {
-                                id: 'f@2.0.0',
+                                id: 'f@1.2.0',
                                 name: 'f',
-                                version: '2.0.0',
+                                version: '1.2.0',
+                                versions: ['1.2.0', '1.0.0'],
+                                conflict: 2,
                                 path: path.join(dependenciesPath, 'node_modules/d/node_modules/f'),
                                 dependencies: {}
                             },
@@ -753,6 +760,7 @@ describe('Danf proto application', function() {
                                 id: 'g@1.0.0',
                                 name: 'g',
                                 version: '1.0.0',
+                                versions: ['1.0.0'],
                                 path: path.join(dependenciesPath, 'node_modules/d/node_modules/g'),
                                 dependencies: {}
                             },
@@ -760,6 +768,8 @@ describe('Danf proto application', function() {
                                 id: 'h@2.0.0',
                                 name: 'h',
                                 version: '2.0.0',
+                                versions: ['2.0.0', '1.0.0'],
+                                conflict: 0,
                                 path: path.join(dependenciesPath, 'node_modules/n/node_modules/h'),
                                 dependencies: {
                                     j: ':j',
@@ -772,6 +782,8 @@ describe('Danf proto application', function() {
                                 id: 'j@0.0.4-beta',
                                 name: 'j',
                                 version: '0.0.4-beta',
+                                versions: ['0.0.4-beta', '0.0.3-beta', '0.0.1-beta'],
+                                conflict: 5,
                                 path: path.join(dependenciesPath, 'node_modules/n/node_modules/h/node_modules/j'),
                                 dependencies: {}
                             },
@@ -779,6 +791,7 @@ describe('Danf proto application', function() {
                                 id: 'l@1.0.0',
                                 name: 'l',
                                 version: '1.0.0',
+                                versions: ['1.0.0'],
                                 path: path.join(dependenciesPath, 'node_modules/l'),
                                 dependencies: {}
                             },
@@ -786,6 +799,7 @@ describe('Danf proto application', function() {
                                 id: 'm@1.0.0',
                                 name: 'm',
                                 version: '1.0.0',
+                                versions: ['1.0.0'],
                                 path: path.join(dependenciesPath, 'node_modules/m'),
                                 dependencies: {
                                     c: ':c',
@@ -802,6 +816,7 @@ describe('Danf proto application', function() {
                                 id: 'n@1.0.0',
                                 name: 'n',
                                 version: '1.0.0',
+                                versions: ['1.0.0'],
                                 path: path.join(dependenciesPath, 'node_modules/n'),
                                 dependencies: {
                                     h: ':h',
@@ -820,11 +835,14 @@ describe('Danf proto application', function() {
                                 id: 'o@1.0.0',
                                 name: 'o',
                                 version: '1.0.0',
+                                versions: ['1.0.0'],
                                 path: path.join(dependenciesPath, 'node_modules/o'),
                                 dependencies: {}
                             }
                         }
                     );
+
+                    danf.displayDependencies(dependencies);
 
                     done();
                 }
