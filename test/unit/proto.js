@@ -514,177 +514,9 @@ describe('Danf proto application', function() {
         })
     });
 
-    it('should build its server configuration from files, folders and node modules', function() {
-        assert.deepEqual(
-            danf.buildSideConfiguration(appPath, 'server'),
-            {
-                config: {
-                    classes: {
-                        'foo.bar': require(path.join(appPath, 'lib/common/foo/bar.js')),
-                        bar: require(path.join(appPath, 'lib/server/bar.js')),
-                        foo: require(path.join(appPath, 'lib/common/foo.js')),
-                        main: require(path.join(appPath, 'lib/main.js'))
-                    }
-                },
-                dependencies: {
-                    a: {
-                        config: {
-                            events: {
-                                request: {
-                                    compute: {
-                                        path: 'computing',
-                                        methods: ['get'],
-                                        view: {
-                                            html: {
-                                                body: {
-                                                    file: './computing.jade'
-                                                }
-                                            }
-                                        }
-                                    },
-                                    api: {
-                                        children: {
-                                            user: {
-                                                path: 'users',
-                                                methods: ['get', 'post', 'put'],
-                                                view: {
-                                                    html: {
-                                                        body: {
-                                                            file: './user.jade'
-                                                        }
-                                                    }
-                                                },
-                                                children: {
-                                                    message: {},
-                                                    post: {}
-                                                }
-                                            },
-                                            oldTopic: {},
-                                            topic: {},
-                                            'message-get.foo': {},
-                                            'message-get.bar.abc': 123
-                                        }
-                                    }
-                                }
-                            }
-                        },
-                        dependencies: {
-                            b: {
-                                dependencies: {},
-                                config: {
-                                    classes: {
-                                        'bar': require(path.join(appPath, 'node_modules/a/node_modules/b/lib/common/bar.js'))
-                                    }
-                                }
-                            },
-                            c: {
-                                contract: {},
-                                dependencies: {},
-                                config: {
-                                    classes: {
-                                        'foo.bar': require(path.join(appPath, 'node_modules/a/node_modules/c/lib/server/foo/bar.js'))
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        );
-    })
-
-    it('should build its client configuration from files, folders and node modules', function() {
-        assert.deepEqual(
-            danf.buildSideConfiguration(appPath, 'client'),
-            {
-                config: {
-                    classes: {
-                        'foo.bar': requirePattern.format('lib/common/foo/bar.js'),
-                        bar: requirePattern.format('lib/common/bar.js'),
-                        foo: requirePattern.format('lib/client/foo.js'),
-                        main: require(path.join(appPath, 'lib/main.js'))
-                    }
-                },
-                dependencies: {
-                    a: {
-                        config: {
-                            this: {foo: 'bar'},
-                            'dep1.subdep2': {
-                                'key.': 'value',
-                                'indexAb': 12,
-                                'indexCde': 345
-                            },
-                            events: {
-                                request: {
-                                    compute: {
-                                        path: 'computing',
-                                        methods: ['get'],
-                                        view: {
-                                            html: {
-                                                body: {
-                                                    file: './computing.jade'
-                                                }
-                                            }
-                                        }
-                                    },
-                                    api: {
-                                        children: {
-                                            user: {
-                                                methods: ['get', 'post'],
-                                                view: {
-                                                    html: {
-                                                        body: {
-                                                            file: './user.jade'
-                                                        }
-                                                    }
-                                                }
-                                            }
-                                        }
-                                    }
-                                }
-                            },
-                            'events/dev': {
-                                request: {
-                                    compute: {
-                                        path: 'computing/dev',
-                                        methods: ['get'],
-                                        view: {
-                                            html: {
-                                                body: {
-                                                    file: './computing.jade'
-                                                }
-                                            }
-                                        }
-                                    }
-                                }
-                            }
-                        },
-                        contract: {},
-                        dependencies: {
-                            b: {
-                                contract: {},
-                                dependencies: {},
-                                config: {
-                                    classes: {
-                                        bar: requirePattern.format('node_modules/a/node_modules/b/lib/common/bar.js'),
-                                        foo: requirePattern.format('node_modules/a/node_modules/b/lib/client/foo.js')
-                                    }
-                                }
-                            },
-                            c: {
-                                dependencies: {},
-                                config: {}
-                            }
-                        }
-                    }
-                }
-            }
-        );
-    })
-
     it('should build dependencies tree', function(done) {
         assert.deepEqual(
-            danf.buildDepencies(
+            danf.buildDependencies(
                 dependenciesPath,
                 function(dependencies) {
                     assert.deepEqual(
@@ -714,28 +546,28 @@ describe('Danf proto application', function() {
                                 versions: ['1.0.0'],
                                 path: path.join(dependenciesPath, 'node_modules/d'),
                                 dependencies: {
-                                    e: ':e',
-                                    'e:c': ':c',
-                                    c: ':c',
-                                    f: ':f',
-                                    g: ':g',
-                                    h: ':h',
-                                    j: ':j',
-                                    'h:j': ':j',
-                                    'h:o': ':o',
-                                    o: ':o'
+                                    e: 'e',
+                                    'e:c': 'c',
+                                    c: 'c',
+                                    f: 'f',
+                                    g: 'g',
+                                    h: 'h',
+                                    j: 'j',
+                                    'h:j': 'j',
+                                    'h:o': 'o',
+                                    o: 'o'
                                 }
                             },
-                            'd:e': ':e',
-                            'd:e:c': ':c',
-                            'd:c': ':c',
-                            'd:f': ':f',
-                            'd:g': ':g',
-                            'd:h': ':h',
-                            'd:h:j': ':j',
-                            'd:j': ':j',
-                            'd:h:o': ':o',
-                            'd:o': ':o',
+                            'd:e': 'e',
+                            'd:e:c': 'c',
+                            'd:c': 'c',
+                            'd:f': 'f',
+                            'd:g': 'g',
+                            'd:h': 'h',
+                            'd:h:j': 'j',
+                            'd:j': 'j',
+                            'd:h:o': 'o',
+                            'd:o': 'o',
                             e: {
                                 id: 'e@1.0.0',
                                 name: 'e',
@@ -743,10 +575,10 @@ describe('Danf proto application', function() {
                                 versions: ['1.0.0'],
                                 path: path.join(dependenciesPath, 'node_modules/d/node_modules/e'),
                                 dependencies: {
-                                    c: ':c'
+                                    c: 'c'
                                 }
                             },
-                            'e:c': ':c',
+                            'e:c': 'c',
                             f: {
                                 id: 'f@1.2.0',
                                 name: 'f',
@@ -772,12 +604,12 @@ describe('Danf proto application', function() {
                                 conflict: 0,
                                 path: path.join(dependenciesPath, 'node_modules/n/node_modules/h'),
                                 dependencies: {
-                                    j: ':j',
-                                    o: ':o'
+                                    j: 'j',
+                                    o: 'o'
                                 }
                             },
-                            'h:j': ':j',
-                            'h:o': ':o',
+                            'h:j': 'j',
+                            'h:o': 'o',
                             j: {
                                 id: 'j@0.0.4-beta',
                                 name: 'j',
@@ -802,16 +634,16 @@ describe('Danf proto application', function() {
                                 versions: ['1.0.0'],
                                 path: path.join(dependenciesPath, 'node_modules/m'),
                                 dependencies: {
-                                    c: ':c',
-                                    f: ':f',
-                                    g: ':g',
-                                    j: ':j'
+                                    c: 'c',
+                                    f: 'f',
+                                    g: 'g',
+                                    j: 'j'
                                 }
                             },
-                            'm:c': ':c',
-                            'm:f': ':f',
-                            'm:g': ':g',
-                            'm:j': ':j',
+                            'm:c': 'c',
+                            'm:f': 'f',
+                            'm:g': 'g',
+                            'm:j': 'j',
                             n: {
                                 id: 'n@1.0.0',
                                 name: 'n',
@@ -819,18 +651,18 @@ describe('Danf proto application', function() {
                                 versions: ['1.0.0'],
                                 path: path.join(dependenciesPath, 'node_modules/n'),
                                 dependencies: {
-                                    h: ':h',
-                                    'h:j': ':j',
-                                    j: ':j',
-                                    'h:o': ':o',
-                                    o: ':o'
+                                    h: 'h',
+                                    'h:j': 'j',
+                                    j: 'j',
+                                    'h:o': 'o',
+                                    o: 'o'
                                 }
                             },
-                            'n:h': ':h',
-                            'n:h:j': ':j',
-                            'n:j': ':j',
-                            'n:h:o': ':o',
-                            'n:o': ':o',
+                            'n:h': 'h',
+                            'n:h:j': 'j',
+                            'n:j': 'j',
+                            'n:h:o': 'o',
+                            'n:o': 'o',
                             o: {
                                 id: 'o@1.0.0',
                                 name: 'o',
@@ -847,6 +679,196 @@ describe('Danf proto application', function() {
                     done();
                 }
             )
+        );
+    })
+
+    it('should build its server configuration from files, folders and node modules', function(done) {
+        danf.buildDependencies(
+            appPath,
+            function(dependencies) {
+                assert.deepEqual(
+                    danf.buildSideConfiguration(appPath, dependencies, 'server'),
+                    {
+                        config: {
+                            classes: {
+                                'foo.bar': require(path.join(appPath, 'lib/common/foo/bar.js')),
+                                bar: require(path.join(appPath, 'lib/server/bar.js')),
+                                foo: require(path.join(appPath, 'lib/common/foo.js')),
+                                main: require(path.join(appPath, 'lib/main.js'))
+                            }
+                        },
+                        dependencies: {
+                            a: {
+                                config: {
+                                    events: {
+                                        request: {
+                                            compute: {
+                                                path: 'computing',
+                                                methods: ['get'],
+                                                view: {
+                                                    html: {
+                                                        body: {
+                                                            file: './computing.jade'
+                                                        }
+                                                    }
+                                                }
+                                            },
+                                            api: {
+                                                children: {
+                                                    user: {
+                                                        path: 'users',
+                                                        methods: ['get', 'post', 'put'],
+                                                        view: {
+                                                            html: {
+                                                                body: {
+                                                                    file: './user.jade'
+                                                                }
+                                                            }
+                                                        },
+                                                        children: {
+                                                            message: {},
+                                                            post: {}
+                                                        }
+                                                    },
+                                                    oldTopic: {},
+                                                    topic: {},
+                                                    'message-get.foo': {},
+                                                    'message-get.bar.abc': 123
+                                                }
+                                            }
+                                        }
+                                    }
+                                },
+                                dependencies: {
+                                    b: 'b',
+                                    c: 'c'
+                                }
+                            },
+                            b: {
+                                dependencies: {},
+                                config: {
+                                    classes: {
+                                        'bar': require(path.join(appPath, 'node_modules/a/node_modules/b/lib/common/bar.js'))
+                                    }
+                                }
+                            },
+                            c: {
+                                contract: {},
+                                dependencies: {},
+                                config: {
+                                    classes: {
+                                        'foo.bar': require(path.join(appPath, 'node_modules/a/node_modules/c/lib/server/foo/bar.js'))
+                                    }
+                                }
+                            },
+                            'a:b': 'b',
+                            'a:c': 'c'
+                        }
+                    }
+                );
+
+                done();
+            }
+        );
+    })
+
+    it('should build its client configuration from files, folders and node modules', function() {
+        danf.buildDependencies(
+            appPath,
+            function(dependencies) {
+                assert.deepEqual(
+                    danf.buildSideConfiguration(appPath, 'client'),
+                    {
+                        config: {
+                            classes: {
+                                'foo.bar': requirePattern.format('lib/common/foo/bar.js'),
+                                bar: requirePattern.format('lib/common/bar.js'),
+                                foo: requirePattern.format('lib/client/foo.js'),
+                                main: require(path.join(appPath, 'lib/main.js'))
+                            }
+                        },
+                        dependencies: {
+                            a: {
+                                config: {
+                                    this: {foo: 'bar'},
+                                    'dep1.subdep2': {
+                                        'key.': 'value',
+                                        'indexAb': 12,
+                                        'indexCde': 345
+                                    },
+                                    events: {
+                                        request: {
+                                            compute: {
+                                                path: 'computing',
+                                                methods: ['get'],
+                                                view: {
+                                                    html: {
+                                                        body: {
+                                                            file: './computing.jade'
+                                                        }
+                                                    }
+                                                }
+                                            },
+                                            api: {
+                                                children: {
+                                                    user: {
+                                                        methods: ['get', 'post'],
+                                                        view: {
+                                                            html: {
+                                                                body: {
+                                                                    file: './user.jade'
+                                                                }
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    },
+                                    'events/dev': {
+                                        request: {
+                                            compute: {
+                                                path: 'computing/dev',
+                                                methods: ['get'],
+                                                view: {
+                                                    html: {
+                                                        body: {
+                                                            file: './computing.jade'
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                },
+                                contract: {},
+                                dependencies: {
+                                    b: 'b',
+                                    c: 'c'
+                                }
+                            },
+                            b: {
+                                contract: {},
+                                dependencies: {},
+                                config: {
+                                    classes: {
+                                        bar: requirePattern.format('node_modules/a/node_modules/b/lib/common/bar.js'),
+                                        foo: requirePattern.format('node_modules/a/node_modules/b/lib/client/foo.js')
+                                    }
+                                }
+                            },
+                            c: {
+                                dependencies: {},
+                                config: {}
+                            },
+                            'a:b': 'b',
+                            'a:c': 'c'
+                        }
+                    }
+                );
+
+                done();
+            }
         );
     })
 })
