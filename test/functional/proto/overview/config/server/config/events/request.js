@@ -12,7 +12,13 @@ module.exports = {
             {
                 name: 'compute',
                 output: {
-                    result: '@result@'
+                    result: {
+                        simple: '@simple@',
+                        unpredictable: '@unpredictable@',
+                        parallel: '@parallel@',
+                        series: '@series@',
+                        collection: '@collection@'
+                    }
                 }
             }
         ],

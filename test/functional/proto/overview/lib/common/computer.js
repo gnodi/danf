@@ -31,17 +31,17 @@ Computer.prototype.compute = function(value, timeout) {
     // Handle asynchronous computation.
     if (timeout) {
         // Wrap an asynchronous operation in order to return the result to the stream.
-        this.__asyncProcess(function(returnAsync) {
+        this.__asyncProcess(function(async) {
             // Simulate an asynchronous computation.
             setTimeout(
-                function() {
+                async(function() {
                     for (var i = 0; i < self._processors.length; i++) {
                         value = self._processors[i].process(value);
                     }
 
                     // Return the computed value to the stream.
-                    returnAsync(value);
-                },
+                    return value;
+                }),
                 timeout
             );
         });

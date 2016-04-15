@@ -232,9 +232,7 @@ module.exports = {
                     name: 'simple'
                 },
                 output: {
-                    result: {
-                        simple: '@.@'
-                    }
+                    simple: '@.@'
                 }
             },
             {
@@ -244,9 +242,7 @@ module.exports = {
                     name: 'unpredictable'
                 },
                 output: {
-                    result: {
-                        unpredictable: '@.@'
-                    }
+                    unpredictable: '@.@'
                 }
             },
             {
@@ -256,9 +252,7 @@ module.exports = {
                     name: 'parallel'
                 },
                 output: {
-                    result: {
-                        parallel: '@.@'
-                    }
+                    parallel: '@.@'
                 }
             },
             {
@@ -268,9 +262,7 @@ module.exports = {
                     name: 'series'
                 },
                 output: {
-                    result: {
-                        series: '@.@'
-                    }
+                    series: '@.@'
                 }
             },
             {
@@ -280,9 +272,7 @@ module.exports = {
                     name: 'collection'
                 },
                 output: {
-                    result: {
-                        collection: '@.@'
-                    }
+                    collection: '@.@'
                 }
             }
         ]

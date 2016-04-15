@@ -153,10 +153,11 @@ module.exports = utils.merge(
                                 function(parameters) {
                                     var date = new Date();
 
-                                    parameters.date = date.toLocaleTimeString();
+                                    return date.toLocaleTimeString();
                                 },
                                 '@.@'
-                            ]
+                            ],
+                            scope: 'date'
                         }
                     ]
                 },
