@@ -37,7 +37,6 @@
         "test"
     ],
     "dependencies": {
-        "archy": "^1.0",
         "async": "^1.0",
         "chalk": "^1.1",
         "cookie-parser": "^1.3",
