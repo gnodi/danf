@@ -1,3 +1,5 @@
+-> Big changes
+
 Testing
 =======
 
@@ -24,6 +26,18 @@ function AbstractComputer() {
 
 AbstractComputer.prototype.compute = function() {
     return this.value * 2;
+}
+
+AbstractComputer.prototype.computeAsync = function() {
+    this.__asyncProcess(function(async) {
+        // Simulate an asynchronous computing.
+        setTimeout(
+            async(function() {
+                return this.value * 3;
+            }),
+            10
+        );
+    });
 }
 ```
 
@@ -61,42 +75,45 @@ module.exports = {
 };
 ```
 
-You can retrieve an instance of the `TestHelper` class like this:
+You can use a test helper like this:
 
 ```javascript
 // test/unit/computer.js
 
 'use strict';
 
-var TestHelper = require('-/danf/lib/test/test-helper'),
-    configuration = require('../../danf-server'),
-    testHelper = new TestHelper(configuration)
+var assert = require('assert'),
+    TestHelper = require('danf/lib/server/test/test-helper')
 ;
+
+TestHelper.use(null, null, function(helper) {
+    // TODO: implement your tests here.
+});
 ```
 
-This `testHelper` then allows you to:
+This `helper` then allows you to:
 
 * Retrieve a class:
 ```javascript
-    var class_ = testHelper.getClass('computer');
+    var class_ = helper.getClass('computer');
 ```
 
 * Retrieve an instance of a class:
 ```javascript
-    var computer = testHelper.getInstance('computer');
+    var computer = helper.getInstance('computer');
 ```
 
 * Retrieve a service:
 ```javascript
-    var computer = testHelper.getService('computer');
+    var computer = helper.getService('computer');
 ```
 
 * Retrieve the current app:
 ```javascript
-    var app = testHelper.getApp();
+    var app = helper.getApp();
 ```
 
-In most cases you will use `testHelper.getInstance('...')` because you want to test an isolated instance of your class (mock dependencies). In some cases, however, you might want to retrieve a service in order to make "more functional" tests.
+In most cases you will use `helper.getInstance('...')` because you want to test an isolated instance of your class (mock dependencies). In some cases, however, you might want to retrieve a service in order to make "more functional" tests.
 
 ### Make tests
 
@@ -110,26 +127,42 @@ Let's test the previous example with mocha:
 'use strict';
 
 var assert = require('assert'),
-    TestHelper = require('-/danf/lib/test/test-helper'),
-    configuration = require('../../danf-server'),
-    testHelper = new TestHelper(configuration)
+    TestHelper = require('danf/lib/server/test/test-helper')
 ;
 
-describe('Computer', function() {
-    // Test the class.
-    it('should compute correctly', function() {
-        var computer = testHelper.getInstance('computer')
+TestHelper.use(null, null, function(helper) {
+    describe('Computer', function() {
+        // Test the class.
+        it('should compute correctly', function() {
+            var computer = testHelper.getInstance('computer')
 
-        assert.equal(computer.compute(), 6);
+            assert.equal(computer.compute(), 6);
+        })
+
+        // Test a synchronous process of the service.
+        it('should compute correctly', function() {
+            var computer = testHelper.getService('computer');
+
+            assert.equal(computer.compute(), 8);
+        })
+
+        // Test an asynchronous process of the service.
+        it('should compute correctly even asynchronously', function() {
+            var computer = testHelper.getService('computer');
+
+            test.testAsync(
+                function() {
+                    computer.computeAsync();
+                },
+                function(error, result) {
+                    assert.equal(result, 24);
+
+                    done();
+                }
+            );
+        })
     })
-
-    // Test the service.
-    it('should compute correctly', function() {
-        var computer = testHelper.getService('computer')
-
-        assert.equal(computer.compute(), 8);
-    })
-})
+});
 ```
 
 See the [Mocha](https://github.com/mochajs/mocha) and [Supertest](https://github.com/tj/supertest) documentation for more informations.

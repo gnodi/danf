@@ -12,7 +12,7 @@ Danf provides a powerful configuration mechanism allowing you to develop dynamic
 
 In Danf, an application is also a **danf module**. A danf module can use other danf modules as dependencies. A danf module can use dependencies of its dependencies...
 
-Dependencies are automatically detected. All you have to do is to set the dependency in your file `package.json` as for any other node.js dependency:
+Dependencies are automatically detected. All you have to do is to set the dependency in your file `package.json` as for any other node.js dependency and process a `npm install`:
 
 ```json
 {
@@ -24,7 +24,10 @@ Dependencies are automatically detected. All you have to do is to set the depend
 }
 ```
 
-*Do not forget to process a `npm install`.*
+If your dependency is correctly loaded, you should see it in the list of dependencies displayed at server start (with the used version in bold).
+Dependencies with conflicted versions will be displayed in red, with multiple but compatible SemVer versions in yellow and with a unique version in green.
+
+> The name displayed for the dependency is the namespace of the dependency and so is the one you must use in the config.
 
 ### Contract
 
@@ -218,9 +221,9 @@ The config is built from logical directory tree structure. For instance, if you 
 > Each dependency has a contextual namespace in its anchestor modules:
 > - The namespace of `bar` seen by `foo` is `bar:`.
 > - The namespace of `foo` seen by your module is `foo:`.
-> - The namespace of `bar` seen by your module is `foo:bar:`.
+> - The namespace of `bar` seen by your module is `bar:` or `foo:bar:`.
 > - The absolute namespace of your module is 'main:'.
-> - The absolute namespace of `bar` is `main:foo:bar:`.
+> - The absolute namespace of `foo` is `main:foo:`.
 
 #### Use the contract attributes
 

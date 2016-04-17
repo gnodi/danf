@@ -11,7 +11,7 @@ Introduction
 
 Danf is a Node.js full-stack isomorphic OOP framework allowing to code the same way on both client and server sides. It helps you to make deep architectures and handle asynchronous flows in order to help produce scalable, maintainable, testable and performant applications.
 
-### Why use node Node.js instead of another language/technology?
+### Why use node Node.js instead of another technology?
 
 You certainly can find lots of reasons but there are 2 which make the success of Node.js before all others:
 - use the same language on both client and server sides
@@ -25,11 +25,19 @@ Danf reinforces the promises of Node.js:
 
 ### Why use Danf instead of another framework?
 
-Danf is not better as any other existing framework but it has its own proposal. Most of Node.js web frameworks give you a structure to code the facade of your applications, like an easy way to define a REST API for example. Sometimes you can link this facade to some data in a mongodb database, if your are lucky.
+Danf is not better as any other existing framework but it has its own proposal. Danf is an agnostic framework: it will not force you to use sockets or this or that database. It will just help you to make a strong application thanks to a 3 layers architecture:
+- Model: implement your code in "classes" and use a dynamic dependency injection (SOA) to make a low coupling between your components
+- Sequencing: abstract parallel and series synchronous and asynchronous executions of methods of your model instances
+- Event: plug events on your sequences (HTTP requests, socket messages, commands, DOM events, ...)
 
-Danf do not care of what kind of database you use (use one for each specific need!). Instead, it provides a strong structure to harness the power of Node.js and create web applications (site, API, ...) in an easy way. But that's not all. It gives you a way to define a deep, maintenable and scalable architecture thanks to a great OOP layout implementing [features coming from years of reflection by the community on how to make pragmatic and industrial OOP applications](resource/private/doc/concepts.md) (interfaces, dependency injection, ...).
+You can make a lot of different applications with Danf:
+- Single page website (AJAX, sockets)
+- REST API
+- Task executor
+- Utility module (on client or/and server side) for modular achitecture
+- ...
 
-**You can code big performant applications with a deep and strong architecture in an easy way and share your code thanks to a transparent module mechanism only requiring to use [npm](https://www.npmjs.com/) in the most standard way.**
+**You can code big (and small!) performant and modular applications with a deep and strong architecture in an easy way and share your code thanks to a transparent module mechanism only requiring to use [npm](https://www.npmjs.com/) in the most standard way.**
 
 Installation
 ------------
@@ -57,12 +65,13 @@ $ yo danf
 
 After creating your application, you should be able to start the server in this way:
 ```sh
-$ node app-dev
+$ node danf serve
 ```
 
-A welcome message is waiting for you at `http://localhost:3080`!
+This will create a server and process client side files automatically rebuilding each time a file is changed.
+At the end of this processing, a welcome message will be available at `http://localhost:3080`!
 
-> Use `app-prod` to start the server in prod environment (less debugging, more performances!).
+> Use `node danf serve --env prod` to start the server in prod environment (less debugging, more performances!).
 
 ### Run the tests
 
@@ -108,7 +117,7 @@ Here is a list of the major features proposed by Danf:
 - An object-oriented programming layer (with ensured interfaces).
 - An inversion of control design (dependency injection via configuration files).
 - A perfect isomorphism allowing to use the same code on both client and server sides (in a standard node.js coding style).
-- A homogeneous way to handle all kind of events (HTTP requests, DOM events, ...).
+- A homogeneous way to handle all kind of events (HTTP requests, socket messages, commands, DOM events, ...).
 - An original abstraction layer over [Async.js](https://github.com/caolan/async) to manage asynchronicity.
 - A helper to develop ultra performant ajax applications supporting deep linking.
 - A natural approach to share your modules and use others just using [npm](https://www.npmjs.com/).
@@ -122,8 +131,10 @@ Danf is a young framework and the community is still small but active. You can p
 If you want to contribute, here is a not limited list of how to do:
 
 - Fork the project on [github](https://github.com/gnodi/danf) and improve features, documentation, ...
-- Code your own module. In Danf, an application is a **danf module** and conversely. This way you can easily share your modules with other people simply using [npm](https://www.npmjs.com/).
+- Code your own module. In Danf, an application is a **danf module** and conversely. This way you can easily share your modules with other people simply using [npm](https://www.npmjs.com/)(here is a [list of available danf modules](resource/private/doc/modules.md)).
 - Participate to the community in asking questions in the issues or on stack overflow.
+
+> Danf is always improving. Keep an eye on its new versions and features!
 
 Documentation
 -------------
@@ -147,7 +158,7 @@ Open Source Initiative OSI - The MIT License
 
 http://www.opensource.org/licenses/mit-license.php
 
-Copyright (c) 2014 Thomas Prelot
+Copyright (c) 2014-2016 Thomas Prelot
 
 Permission is hereby granted, free of charge, to any person obtaining
 a copy of this software and associated documentation files (the

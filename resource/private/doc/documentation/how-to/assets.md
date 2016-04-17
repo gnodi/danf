@@ -13,12 +13,12 @@ To access one of these assets with an HTTP request use:
 ```http://{domain}/-/{package-name}/{path-relative-to-public-directory}```
 
 * *{domain}*: Your domain.
-* *{package-name}*: The name defined in the file `package.json` of the module containing the asset file.
+* *{package-name}*: The name defined in the file `package.json` of the module containing the asset file without starting "danf-".
 * *{path-relative-to-public-directory}*: The path of the file relative to the directory `/resource/public`.
 
-**Example:**
+**Example for a npm module which would be called `danf-gnodi-form`:**
 
-```http://www.my-domain/-/danf-gnodi-form/css/input.css```
+```http://www.my-domain/-/gnodi-form/css/input.css```
 
 > The package file can be the one of the current application or one of a dependency danf module.
 
