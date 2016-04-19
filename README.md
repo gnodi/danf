@@ -25,7 +25,7 @@ Danf reinforces the promises of Node.js:
 
 ### Why use Danf instead of another framework?
 
-Danf is not better as any other existing framework or library but it has its own proposal. Danf is an agnostic framework: it will not force you to use sockets or this or that database or a big client library phagocyting all the others (with heavy impact on architecture, bookmarquing, security, ...).In fact, it just provides a layer to help in making strong architectures and use the power of Node.js in an easy way. You can still use all your prefered client or server libraries/packages with Danf!
+Danf is not better as any other existing framework or library but it has its own proposal. Danf is an agnostic framework: it will not force you to use sockets or this or that database or a big client library phagocyting all the others (with heavy impact on architecture, bookmarquing, security, ...). In fact, it just provides a layer to help in making strong architectures and use the power of Node.js in an easy way. You can still use all your prefered client or server libraries/packages with Danf!
 
 Here is a fast description of its 3 layers architecture:
 - Model: implement your code in "classes" and use a dynamic dependency injection (SOA) to make a low coupling between your components
@@ -39,7 +39,7 @@ You can make a lot of different applications with Danf:
 - Utility module (on client or/and server side) for modular achitecture
 - ...
 
-**You can code big (and small!) performant and modular applications with a deep and strong architecture in an easy way and share your code thanks to a transparent module mechanism only requiring to use [npm](https://www.npmjs.com/) in the most standard way.**
+> You can code big (and small!) performant and modular applications with a deep and strong architecture in an easy way and share your code thanks to a transparent module mechanism only requiring to use [npm](https://www.npmjs.com/) in the most standard way.**
 
 Installation
 ------------
