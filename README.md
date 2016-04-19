@@ -9,7 +9,7 @@
 Introduction
 ------------
 
-Danf is a Node.js full-stack isomorphic OOP framework allowing to code the same way on both client and server sides. It helps you to make deep architectures and handle asynchronous flows in order to help produce scalable, maintainable, testable and performant applications.
+Danf is a Node.js full-stack isomorphic OOP framework allowing to code the same way on both client and server sides. It helps you to make deep architectures and handle asynchronous flows in order to help in producing scalable, maintainable, testable and performant applications.
 
 ### Why use node Node.js instead of another technology?
 
@@ -25,7 +25,9 @@ Danf reinforces the promises of Node.js:
 
 ### Why use Danf instead of another framework?
 
-Danf is not better as any other existing framework but it has its own proposal. Danf is an agnostic framework: it will not force you to use sockets or this or that database. It will just help you to make a strong application thanks to a 3 layers architecture:
+Danf is not better as any other existing framework or library but it has its own proposal. Danf is an agnostic framework: it will not force you to use sockets or this or that database or a big client library phagocyting all the others (with heavy impact on architecture, bookmarquing, security, ...).In fact, it just provides a layer to help in making strong architectures and use the power of Node.js in an easy way. You can still use all your prefered client or server libraries/packages with Danf!
+
+Here is a fast description of its 3 layers architecture:
 - Model: implement your code in "classes" and use a dynamic dependency injection (SOA) to make a low coupling between your components
 - Sequencing: abstract parallel and series synchronous and asynchronous executions of methods of your model instances
 - Event: plug events on your sequences (HTTP requests, socket messages, commands, DOM events, ...)
@@ -80,29 +82,6 @@ You can run the tests of your application thanks to:
 $ make test
 ```
 
-Hello world
------------
-
-Here is the traditional hello world (even if it does not say a lot of things about the framework)!
-
-```javascript
-// config/server/config/events/request.js
-
-'use strict';
-
-module.exports = {
-    helloWorld: {
-        path: '/',
-        methods: ['get'],
-        view: {
-            text: {
-                value: 'Hello world!'
-            }
-        }
-    }
-};
-```
-
 Architecture
 ------------
 
@@ -119,7 +98,7 @@ Here is a list of the major features proposed by Danf:
 - A perfect isomorphism allowing to use the same code on both client and server sides (in a standard node.js coding style).
 - A homogeneous way to handle all kind of events (HTTP requests, socket messages, commands, DOM events, ...).
 - An original abstraction layer over [Async.js](https://github.com/caolan/async) to manage asynchronicity.
-- A helper to develop ultra performant ajax applications supporting deep linking.
+- A helper to develop ultra performant AJAX and "real time" applications supporting deep linking.
 - A natural approach to share your modules and use others just using [npm](https://www.npmjs.com/).
 - Some other helpful sub features to easily manage cookies, session, ...
 
