@@ -1,5 +1,3 @@
--> Factories
-
 Dependency Injection
 ====================
 

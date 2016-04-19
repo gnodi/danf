@@ -216,6 +216,7 @@ module.exports = {
         ]
     }
 };
+```
 
 * `data`: optional contract to check the format of data passed on manual event triggering.
 * `sequences`: list of sequences to execute.

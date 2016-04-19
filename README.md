@@ -133,7 +133,7 @@ Danf is a young framework and the community is still small but active. You can p
 If you want to contribute, here is a not limited list of how to do:
 
 - Fork the project on [github](https://github.com/gnodi/danf) and improve features, documentation, ...
-- Code your own module. In Danf, an application is a **danf module** and conversely. This way you can easily share your modules with other people simply using [npm](https://www.npmjs.com/)(here is a [list of available danf modules](resource/private/doc/modules.md)).
+- Code your own module. In Danf, an application is a **danf module** and conversely. This way you can easily share your modules with other people simply using [npm](https://www.npmjs.com/) (here is a [list of available danf modules](resource/private/doc/modules.md)).
 - Participate to the community in asking questions in the issues or on stack overflow.
 
 > Danf is always improving. Keep an eye on its new versions and features!
