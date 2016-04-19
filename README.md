@@ -123,6 +123,8 @@ Here is a list of the major features proposed by Danf:
 - A natural approach to share your modules and use others just using [npm](https://www.npmjs.com/).
 - Some other helpful sub features to easily manage cookies, session, ...
 
+> Danf is stable and is already used by some applications in production.
+
 Community
 ---------
 

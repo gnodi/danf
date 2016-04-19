@@ -714,7 +714,7 @@ module.exports = {
 };
 ```
 
-Now, if you start the server with the command `node app-prod` and ask for `http://localhost:3080/` in your browser, you should be able to see the result of your computations in both your server and browser consoles.
+Now, if you start the server with the command `node danf serve --env prod` (this should start the server and build the client files) and ask for `http://localhost:3080/` in your browser, you should be able to see the result of your computations in both your server and browser consoles.
 
 > Note that all the dependencies and sequencing is coded into configuration files. This gives you a pretty scalable dynamic application.
 
