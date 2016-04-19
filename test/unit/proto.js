@@ -637,13 +637,15 @@ describe('Danf proto application', function() {
                                     c: 'c',
                                     f: 'f',
                                     g: 'g',
-                                    j: 'j'
+                                    j: 'j',
+                                    o: 'o'
                                 }
                             },
                             'm:c': 'c',
                             'm:f': 'f',
                             'm:g': 'g',
                             'm:j': 'j',
+                            'm:o': 'o',
                             n: {
                                 id: 'n@1.0.0',
                                 name: 'n',
@@ -664,10 +666,11 @@ describe('Danf proto application', function() {
                             'n:h:o': 'o',
                             'n:o': 'o',
                             o: {
-                                id: 'o@1.0.0',
+                                id: 'o@0.2.0',
                                 name: 'o',
-                                version: '1.0.0',
-                                versions: ['1.0.0'],
+                                version: '0.2.0',
+                                versions: ['0.2.0', '0.1.1'],
+                                conflict: 2,
                                 path: path.join(dependenciesPath, 'node_modules/o'),
                                 dependencies: {}
                             }
