@@ -740,6 +740,72 @@ var config = {
                 }
             ]
         },
+        x: {
+            operations: [
+                {
+                    order: 0,
+                    service: 'asyncComputer',
+                    method: 'add',
+                    arguments: ['@embedded.input@', 3],
+                    scope: 'result'
+                }
+            ]
+        },
+        y: {
+            operations: [
+                {
+                    order: 1,
+                    service: 'asyncComputer',
+                    method: 'add',
+                    arguments: [1, 3],
+                    scope: 'embedded.a'
+                }
+            ],
+            children: [
+                {
+                    order: 0,
+                    name: 'x',
+                    input: {
+                        embedded: {
+                            input: 2
+                        }
+                    },
+                    output: {
+                        embedded: {
+                            b: '@result@'
+                        }
+                    }
+                },
+                {
+                    order: 0,
+                    name: 'x',
+                    input: {
+                        embedded: {
+                            input: 3
+                        }
+                    },
+                    output: {
+                        embedded: {
+                            c: '@result@'
+                        }
+                    }
+                },
+                {
+                    order: 2,
+                    name: 'x',
+                    input: {
+                        embedded: {
+                            input: 4
+                        }
+                    },
+                    output: {
+                        embedded: {
+                            d: '@result@'
+                        }
+                    }
+                }
+            ]
+        },
         each: {
             operations: [
                 {
@@ -1502,6 +1568,16 @@ var sequenceTests = [
         name: 'w',
         input: {a: 14, b: 17},
         expected: {a: 14, b: 17, result: {c: 31}}
+    },
+    {
+        name: 'x',
+        input: {embedded: {input: 37}},
+        expected: {embedded: {input: 37}, result: 40}
+    },
+    {
+        name: 'y',
+        input: {},
+        expected: {embedded: {a: 4, b: 5, c: 6, d: 7}}
     }
 ];
 
