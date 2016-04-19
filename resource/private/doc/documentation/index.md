@@ -24,7 +24,7 @@ Learn how to do things with Danf:
 * [How to use cookies](how-to/cookies.md)
 * [How to handle the session](how-to/session.md)
 * [How to redirect a HTTP request](how-to/redirect.md)
-* [How to start many workers](how-to/workers.md)
+* [How to configure the cluster](how-to/cluster.md)
 * [How to works with public assets (images, css, ...)](how-to/assets.md)
 * [How to use ES6 class syntaxic sugar](how-to/es6-class.md)
 

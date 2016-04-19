@@ -10,11 +10,12 @@ module.exports = {
         alias: require('../../../lib/common/dependency-injection/service-builder/alias'),
         children: require('../../../lib/common/dependency-injection/service-builder/children'),
         class: require('../../../lib/common/dependency-injection/service-builder/class'),
+        collections: require('../../../lib/common/dependency-injection/service-builder/collections'),
         declinations: require('../../../lib/common/dependency-injection/service-builder/declinations'),
+        induced: require('../../../lib/common/dependency-injection/service-builder/induced'),
         factories: require('../../../lib/common/dependency-injection/service-builder/factories'),
         parent: require('../../../lib/common/dependency-injection/service-builder/parent'),
-        properties: require('../../../lib/common/dependency-injection/service-builder/properties'),
-        collections: require('../../../lib/common/dependency-injection/service-builder/collections')
+        properties: require('../../../lib/common/dependency-injection/service-builder/properties')
     },
     configuration: {
         sectionProcessor: {

@@ -4,11 +4,18 @@ require('./lib/common/init');
 
 var spawn = require('child_process').spawn,
     path = require('path'),
-    fs = require('fs')
+    fs = require('fs'),
+    os = require('os')
 ;
 
 // Retrieve gulp command path.
-var gulpCommandPath = path.join(__dirname, 'node_modules/.bin/gulp');
+var gulpCommandPath = path.join(
+        __dirname,
+        -1 === os.platform().indexOf('win')
+            ? 'node_modules/.bin/gulp'
+            : 'node_modules/.bin/gulp.cmd'
+    )
+;
 
 try {
     fs.statSync(gulpCommandPath);
@@ -18,7 +25,12 @@ try {
         throw error;
     }
 
-    gulpCommandPath = path.join(__dirname, '../../node_modules/.bin/gulp');
+    gulpCommandPath = path.join(
+        __dirname,
+        -1 === os.platform().indexOf('win')
+            ? '../../node_modules/.bin/gulp'
+            : '../../node_modules/.bin/gulp.cmd'
+    );
 }
 
 // Handle "&&" separated commands.
@@ -31,7 +43,7 @@ for (var i = 0; i < commands.length; i++) {
     ;
 
     if (task in {'execute-cmd': true, '$': true}) {
-        command = '{0} --cmd {1} {2}'.format(
+        command = '{0} --cmd {1} {2}'.format(
             commandParts.shift(),
             commandParts.shift(),
             commandParts.join(' ')
@@ -42,7 +54,7 @@ for (var i = 0; i < commands.length; i++) {
 
     for (var j = 1; j < args.length; j++) {
         // Escape value parameter to avoid being interpreted as a task by gulp.
-        if (/^[^-"]/.test(args[j])) {
+        if (/^[^-"]/.test(args[j])) {
             args[j] = '---{0}'.format(args[j]);
         }
     }

@@ -57,7 +57,7 @@ module.exports = {
 You can pass some values and inject some dependencies thanks to the attribute `properties`:
 
 ```javascript
-// config/common/config/service.js
+// config/common/config/services.js
 
 'use strict';
 
@@ -117,7 +117,7 @@ It is a really good practice to define your public properties with `Object.defin
 Sometimes, you would like to define some base for other services inside your own module or for the ones using your module. However, it is not an instantiable service because it needs some more properties for instance. In that cases, you can use the attribute `abstract`:
 
 ```javascript
-// config/common/config/service.js
+// config/common/config/services.js
 
 'use strict';
 
@@ -138,7 +138,7 @@ module.exports = {
 You can inherit from a parent service to override another definition:
 
 ```javascript
-// config/common/config/service.js
+// config/common/config/services.js
 
 'use strict';
 
@@ -170,7 +170,7 @@ module.exports = {
 In some cases, you have to define some homogeneous services. The attribute `children` allows you to easily and visually arrange that:
 
 ```javascript
-// config/common/config/service.js
+// config/common/config/services.js
 
 'use strict';
 
@@ -206,7 +206,7 @@ This will create 3 definitions of services, 1 abstract: `computer` and 2 definit
 Another way to define homogeneous services is to use the attribute `declinations`. Here is an equivalent of the example for the attribute `children` but with declinations:
 
 ```javascript
-// config/common/config/service.js
+// config/common/config/services.js
 
 'use strict';
 
@@ -256,7 +256,7 @@ module.exports = {
 The associated contract for this config is not given here but remember that you have to define a corresponding one.
 
 ```javascript
-// config/common/config/service.js
+// config/common/config/services.js
 
 'use strict';
 
@@ -286,7 +286,7 @@ This will do exactly the same as the previous example, you just set the definiti
 You can add your homogeneous services to a collection in order to inject all of them to another service:
 
 ```javascript
-// config/common/config/service.js
+// config/common/config/services.js
 
 'use strict';
 
@@ -348,10 +348,10 @@ Synchronizer.prototype.compute = function() {
 
 #### Registry
 
-You can control the instantiation of a service injected into another. To do this, use the attribute `factories` and the references of type `>`:
+You can use a service as a registry. To do this, use the attribute `registry`:
 
 ```javascript
-// config/common/config/service.js
+// config/common/config/services.js
 
 'use strict';
 
@@ -391,100 +391,97 @@ You will then be able to inject some items into other services thanks to the ref
 
 #### Factories
 
-You can control the instantiation of a service injected into another. To do this, use the attribute `factories` and the references of type `>`:
+You can control the instantiation of a service injected into another. To do this, use the attributes `factories` and `induced`:
 
 ```javascript
-// config/common/config/service.js
+// config/common/config/services.js
 
 'use strict';
 
 module.exports = {
-    processor: {
-        class: 'processor',
-        factories: {
-            computer: {
-                properties: {
-                    operations: '@operations@'
-                }
+    database: {
+        class: function() { this.type = 'database'; },
+        declinations: '$databases$',
+        properties: {
+            name: 'database @_@'
+        },
+        collections: ['databases'],
+        induced: {
+            collection: {
+                service: 'collection',
+                factory: 'database',
+                context: '@.@',
+                property: 'collections',
+                collection: true
             }
         }
     },
-    computer: {
-        class: 'computer',
-        declinations: {
-            local: {
-                host: '127.0.0.1',
-                operations: [1, 2]
-            },
-            remote: {
-                host: '192.168.0.1',
-                operations: [3]
+    collection: {
+        class: function() { this.type = 'collection'; },
+        factories: {
+            database: {
+                declinations: '!collections!',
+                properties: {
+                    name: 'collection @name@'
+                }
             }
-        },
-        properties: {
-            host: '@host@',
-            processor: '>processor>computer>@@_@@>'
         }
     }
 };
 ```
 
-`>processor>computer>@@_@@>` is a reference to a factory. `>processor>...` means this will be a factory of the service `processor`. `...>computer>...` means this will use the factory of name `computer`. The last optional part `...>@@_@@>`, is the context that will be applied to the factory (like for `declinations`). Here, we took the root of the declinations. `{host: '127.0.0.1', operations: [1, 2]}` will be passed to the factory for the service `computer.local` for instance.
-
-There is a double interpretation of the context. That's why you must use a double `@`. The first interpretation of `@@_@@` will lead to `@_@`, then the second to `{host: '127.0.0.1', operations: [1, 2]}`. This could be useful in the following case:
+`!collections!` is a reference of type '!' resolving in the context given in `induced.collection.context`.
+`$databases$` is a reference of type `$` resolving in the context of the config. Here is a possible config:
 
 ```javascript
-// config/common/config/service.js
+// config/common/config/this.js
 
 'use strict';
 
 module.exports = {
-    processor: {
-        class: 'processor',
-        factories: {
-            computer: {
-                properties: {
-                    operations: '@operations@'
-                }
-            }
-        }
-    },
-    computer: {
-        class: 'computer',
-        declinations: {
-            local: {
-                host: '127.0.0.1',
-                processors: {
-                    cpu: {operations: [1, 2]},
-                    gpu: {operations: [3]}
-                }
-            },
-            remote: {
-                host: '192.168.0.1',
-                processors: {
-                    cpu: {operations: [4]},
-                    gpu: {operations: [3, 5]}
+    databases: {
+        forums: {
+            name: 'forum',
+            collections: {
+                forums: {
+                    name: 'forum'
+                },
+                topics: {
+                    name: 'topic'
                 }
             }
         },
-        properties: {
-            host: '@host@',
-            processors: '>processor>computer>@@processors.@processors@@@>'
+        users: {
+            name: 'user',
+            collections: {
+                users: {
+                    name: 'author'
+                }
+            }
         }
     }
 };
 ```
 
-The first interpretation of `@@processors.@processors@@@` will lead to `[@processors.cpu@, @processors.gpu@]` that will induce the instantiation and injection of two services of type `processor` in the service `computer.local`. The first with the context {operations: [1, 2]} and the second with `{operations: [3]}`.
+This config will induce the creation of 5 services:
+- `databases.forums`
+- `databases.forums.collection.forums`
+- `databases.forums.collection.topics`
+- `databases.users`
+- `databases.users.collection.users`
 
-You can also use the references coming from the config (`$`).
+`databases.forums` will have the services `databases.forums.collection.forums` and `databases.forums.collection.topics` injected in an array in the property `collections`.
+
+`databases.users` will have the service `databases.forums.collection.users` injected in an array in the property `collections`.
+
+> In fact, `factories` act as standard service definitions with an additional context passed by the caller. Note that a factory inherit from the attributes of the service it belongs to.
 
 #### Alias
 
 You can define aliases to refer to a service with a different name thanks to the attribute `alias`:
 
 ```javascript
-// config/common/config/service.js
+// config/common/config/services.js
 
 'use strict';
 
@@ -517,7 +514,7 @@ module.exports = {
 Of course, some of your classes are not instantiated as services (as data class for instance). The way to work with that kind of objects in Danf is to use providers:
 
 ```javascript
-// config/common/config/service.js
+// config/common/config/services.js
 
 'use strict';
 

@@ -1,4 +1,4 @@
-MOCHA_OPTS = --check-leaks
+MOCHA_OPTS = --check-leaks --globals async
 REPORTER = dot
 
 check: test
@@ -100,6 +100,7 @@ test-rendering:
 		--timeout 5000 \
 		--bail \
 		--recursive \
+		--delay \
 		$(MOCHA_OPTS) \
 		test/unit/rendering/*
 
@@ -127,9 +128,10 @@ test-test:
 	# Test
 	@NODE_ENV=test ./node_modules/.bin/mocha \
 		--reporter $(REPORTER) \
-		--timeout 20000 \
+		--timeout 10000 \
 		--bail \
 		--recursive \
+		--delay \
 		$(MOCHA_OPTS) \
 		test/unit/test/*
 
@@ -138,6 +140,7 @@ test-app:
 	@NODE_ENV=test ./node_modules/.bin/mocha \
 		--reporter $(REPORTER) \
 		--timeout 5000 \
+		--delay \
 		$(MOCHA_OPTS) \
 		test/unit/app.js
 

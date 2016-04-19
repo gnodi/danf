@@ -3,7 +3,7 @@
 require('../../../../lib/common/init');
 
 var assert = require('assert'),
-    danf = require('../../../../lib/server/app')(require('../../../fixture/rendering/danf'), '', {environment: 'test', verbosity: 0, cluster: {active: false}}),
+    danf = require('../../../../lib/server/app')(require('../../../fixture/rendering/danf'), '', {environment: 'test', verbosity: 0, cluster: null}),
     Html = require('../../../../lib/server/rendering/format-renderer/html')
 ;
 
@@ -112,4 +112,6 @@ danf.buildServer(function(app) {
             html.render(response, embeddedContext, embeddedConfig, embeddedCallback);
         })
     })
+
+    run();
 });

@@ -740,6 +740,72 @@ var config = {
                 }
             ]
         },
+        x: {
+            operations: [
+                {
+                    order: 0,
+                    service: 'asyncComputer',
+                    method: 'add',
+                    arguments: ['@embedded.input@', 3],
+                    scope: 'result'
+                }
+            ]
+        },
+        y: {
+            operations: [
+                {
+                    order: 1,
+                    service: 'asyncComputer',
+                    method: 'add',
+                    arguments: [1, 3],
+                    scope: 'embedded.a'
+                }
+            ],
+            children: [
+                {
+                    order: 0,
+                    name: 'x',
+                    input: {
+                        embedded: {
+                            input: 2
+                        }
+                    },
+                    output: {
+                        embedded: {
+                            b: '@result@'
+                        }
+                    }
+                },
+                {
+                    order: 0,
+                    name: 'x',
+                    input: {
+                        embedded: {
+                            input: 3
+                        }
+                    },
+                    output: {
+                        embedded: {
+                            c: '@result@'
+                        }
+                    }
+                },
+                {
+                    order: 2,
+                    name: 'x',
+                    input: {
+                        embedded: {
+                            input: 4
+                        }
+                    },
+                    output: {
+                        embedded: {
+                            d: '@result@'
+                        }
+                    }
+                }
+            ]
+        },
         each: {
             operations: [
                 {
@@ -1315,7 +1381,7 @@ var config = {
                     output: {
                         result: '@result@'
                     },
-                    catch: function(errors, stream) {
+                    catch: function(errors) {
                         var result = 0;
 
                         for (var i = 0; i < errors.length; i++) {
@@ -1323,6 +1389,62 @@ var config = {
                         }
 
                         return {result: result};
+                    }
+                }
+            ]
+        },
+        errorJ: {
+            operations: [
+                {
+                    order: 0,
+                    service: 'computer',
+                    method: 'add',
+                    arguments: [1, 2],
+                    scope: 'result'
+                },
+                {
+                    order: 1,
+                    service: 'buggyComputer',
+                    method: 'addAsync',
+                    arguments: ['@result@', 3],
+                    scope: 'result'
+                },
+                {
+                    order: 2,
+                    service: 'asyncComputer',
+                    method: 'add',
+                    arguments: ['@result@', 4],
+                    scope: 'result'
+                },
+                {
+                    order: 3,
+                    service: 'computer',
+                    method: 'add',
+                    arguments: ['@result@', 5],
+                    scope: 'result'
+                }
+            ]
+        },
+        errorK: {
+            children: [
+                {
+                    name: 'errorJ',
+                    output: {
+                        result: '@result@'
+                    },
+                    catch: function(errors, stream) {}
+                }
+            ]
+        },
+        errorL: {
+            children: [
+                {
+                    name: 'errorJ',
+                    output: {
+                        result: '@result@'
+                    },
+                    catch: function(errors, stream, scopedStream) {
+                        return scopedStream;
                     }
                 }
             ]
@@ -1446,6 +1568,16 @@ var sequenceTests = [
         name: 'w',
         input: {a: 14, b: 17},
         expected: {a: 14, b: 17, result: {c: 31}}
+    },
+    {
+        name: 'x',
+        input: {embedded: {input: 37}},
+        expected: {embedded: {input: 37}, result: 40}
+    },
+    {
+        name: 'y',
+        input: {},
+        expected: {embedded: {a: 4, b: 5, c: 6, d: 7}}
     }
 ];
 
@@ -1662,6 +1794,18 @@ var erroredSequenceTests = [
     {
         name: 'errorI',
         expected: {result: 6}
+    },
+    {
+        name: 'errorJ',
+        expected: 1
+    },
+    {
+        name: 'errorK',
+        expected: {result: 3}
+    },
+    {
+        name: 'errorL',
+        expected: {result: 3}
     }
 ];
 

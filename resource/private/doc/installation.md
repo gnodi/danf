@@ -26,12 +26,13 @@ $ yo danf
 
 After creating your application, you should be able to start the server in this way:
 ```sh
-$ node app-dev
+$ node danf serve
 ```
 
-A welcome message is waiting for you at `http://localhost:3080`!
+This will create a server and process client side files automatically rebuilding each time a file is changed.
+At the end of this processing, a welcome message will be available at `http://localhost:3080`!
 
-> Use `app-prod` to start the server in prod environment (less debugging, more performances!).
+> Use `node danf serve --env prod` to start the server in prod environment (less debugging, more performances!).
 
 ### Run the tests
 

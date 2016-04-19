@@ -19,10 +19,10 @@ module.exports = {
             notifier: {
                 parent: 'danf:event.notifier',
                 children: {
-                    request: {
+                    command: {
                         class: 'danf:command.event.notifier.command',
                         properties: {
-                            logger: 'danf:logging.logger'
+                            logger: '#danf:logging.logger#'
                         }
                     }
                 }

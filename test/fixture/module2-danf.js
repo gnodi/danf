@@ -57,17 +57,33 @@ module.exports = {
                 class: function() { this.name = 'provider'; },
                 declinations: '$providers$',
                 properties: {
-                    rules: '>rule.@rules@>provider>@@rules.@rules@@@>',
                     storages: '#storage.@storages@#',
                     adapter: '#@adapter@#'
                 },
-                collections: ['provider']
+                collections: ['provider'],
+                induced: {
+                    rule: {
+                        service: 'rule',
+                        factory: 'provider',
+                        context: '@rules@',
+                        property: 'rules',
+                        collection: true
+                    }
+                }
             },
             rule: {
                 factories: {
                     provider: {
-                        properties: {
-                            parameters: '>parameter.@parameters.type@>rule>@@parameters.@parameters@@@>'
+                        parent: 'rule.@_@',
+                        declinations: '!.!',
+                        induced: {
+                            parameter: {
+                                service: 'parameter',
+                                factory: 'rule',
+                                context: '@parameters@',
+                                property: 'parameters',
+                                collection: true
+                            }
                         }
                     }
                 },
@@ -89,27 +105,25 @@ module.exports = {
                     }
                 }
             },
-            'parameter.size': {
-                class: function() { this.name = 'parameter size'; },
-                abstract: true,
+            parameter: {
                 factories: {
                     rule: {
+                        parent: 'parameter.@type@',
+                        declinations: '!.!',
                         properties: {
                             value: '@value@'
                         }
                     }
-                }
+                },
+                abstract: true
+            },
+            'parameter.size': {
+                class: function() { this.name = 'parameter size'; },
+                abstract: true
             },
             'parameter.unit': {
                 class: function() { this.name = 'parameter unit'; },
-                abstract: true,
-                factories: {
-                    rule: {
-                        properties: {
-                            value: '@value@'
-                        }
-                    }
-                }
+                abstract: true
             },
             storage: {
                 children: {

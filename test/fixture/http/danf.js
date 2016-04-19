@@ -197,12 +197,14 @@ module.exports = {
 
                                 topic = topic.charAt(0).toUpperCase() + topic.slice(1);
                                 parameters.topic = topic.charAt(0) + topic.slice(1).toLowerCase();
-
                                 parameters.page = undefined !== parameters.page ? parameters.page : defaultPage;
+
+                                return parameters;
                             },
                             '@.@',
                             '$main:defaultPage$'
-                        ]
+                        ],
+                        scope: '.'
                     },
                     {
                         order: 1,
@@ -233,10 +235,13 @@ module.exports = {
                             function(parameters, title) {
                                 parameters.count = parameters.messages.length;
                                 parameters.title = title;
+
+                                return parameters;
                             },
                             '@.@',
                             '$main:title$'
-                        ]
+                        ],
+                        scope: '.'
                     }
                 ]
             },

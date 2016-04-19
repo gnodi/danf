@@ -1,0 +1,8 @@
+{
+    "name": "test",
+    "version": "1.0.0",
+    "dependencies": {
+        "hello": "1.0.0",
+        "world": "1.0.0"
+    }
+}

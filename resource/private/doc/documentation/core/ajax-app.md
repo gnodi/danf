@@ -6,18 +6,19 @@ Ajax App
 Documentation
 -------------
 
-The better way to do a website with native Danf is to make an ajax app. This will allow you to maximize the performances and should offer a great experience to your users.
-Danf provides an easy way to do that while keeping deep linking, bookmarking and a full navigable website even without javascript.
+The better way to do a website with native Danf is to make a single page application. This will allow you to maximize the performances and should offer a great experience to your users.
 
-### Use ajax links
+As you can do a pure socket application, you can also decide to make an AJAX application (of course you can use sockets at the same time) to keep features like deep linking, bookmarking and a full navigable website even without javascript. A mix of AJAX and sockets will, in most cases, be the best choice for your user experience.
+
+### Use AJAX links
 
 ```jade
 //- resource/private/view/index.jade
 
 a(href='/a/1') a-1 (standard link - reload the page)
-a(href='/a/2', data-ajax='{}') a-2 (ajax link - reload the body of the page asynchronously)
-a(href='/a/3', data-ajax='{"autoload":0}') a-3 (autoload ajax link - load the content of the link automatically)
-a(href='/a/4', data-ajax='{"autoload":60}') a-3 (autoload ajax link - reload the content of the link automatically every 60 secondes)
+a(href='/a/2', data-ajax='{}') a-2 (AJAX link - reload the body of the page asynchronously)
+a(href='/a/3', data-ajax='{"autoload":0}') a-3 (autoload AJAX link - load the content of the link automatically)
+a(href='/a/4', data-ajax='{"autoload":60}') a-3 (autoload AJAX link - reload the content of the link automatically every 60 secondes)
 ```
 
 * The first link is a standard link.
@@ -25,7 +26,7 @@ a(href='/a/4', data-ajax='{"autoload":60}') a-3 (autoload ajax link - reload the
 * The third link is loaded automaticaly and replaced with the loaded content. No history state is created. It feels like it is a normal part of the page. This is usefull to factorize page chunks like a menu, a header, a footer, ...
 * The fourth link is like the third one, except that the content will be reloaded every 60 secondes.
 
-For these ajax links to work, you have to define a request event for each one:
+For these AJAX links to work, you have to define a request event for each one:
 
 ```javascript
 // config/common/config/events/request.js
@@ -54,7 +55,7 @@ module.exports = {
 >     a1: {
 >         headers: {
 >             'Content-Type': 'application/json; charset=utf-8'
->         },   
+>         },
 >         view: {
 >             html: {
 >                 layout: {
@@ -99,7 +100,7 @@ html
     footer ...
 ```
 
-> You can move the body used by the ajax app mechanism defining your own body element with the attribute `id="body"`.
+> You can move the body used by the AJAX app mechanism defining your own body element with the attribute `id="body"`.
 
 And a possible simple corresponding view configuration:
 
@@ -128,7 +129,7 @@ module.exports = {
 
 > You can use another template engine using the [Express'](http://expressjs.com/api.html) mechanism. For this, you can use the variable `app` in your files `app-dev.js` and `app-prod.js`.
 
-### Use ajax forms
+### Use AJAX forms
 
 ```jade
 // resource/private/view/form.jade
@@ -139,7 +140,7 @@ form(action='/form', method='get', data-ajax='{}')
     input(type='submit')
 ```
 
-Here is a simple ajax form allowing to post names (not a really interesting example ok...). As for links, you have to define a request event:
+Here is a simple AJAX form allowing to post names (not a really interesting example ok...). As for links, you have to define a request event:
 
 ```javascript
 // config/common/config/events/request.js

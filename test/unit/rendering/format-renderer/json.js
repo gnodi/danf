@@ -3,7 +3,7 @@
 require('../../../../lib/common/init');
 
 var assert = require('assert'),
-    danf = require('../../../../lib/server/app')(require('../../../fixture/rendering/danf'), '', {environment: 'test', verbosity: 0, cluster: {active: false}}),
+    danf = require('../../../../lib/server/app')(require('../../../fixture/rendering/danf'), '', {environment: 'test', verbosity: 0, cluster: null}),
     ReferenceType = require('../../../../lib/common/manipulation/reference-type'),
     ReferenceResolver = require('../../../../lib/common/manipulation/reference-resolver'),
     Json = require('../../../../lib/server/rendering/format-renderer/json')
@@ -20,8 +20,6 @@ danf.buildServer(function(app) {
     referenceType.delimiter = '@';
     referenceResolver.addReferenceType(referenceType);
     json.referenceResolver = referenceResolver;
-    response.req = app.request;
-
     response.req = app.request;
 
     var config = {
@@ -53,4 +51,6 @@ danf.buildServer(function(app) {
             });
         })
     })
-})
+
+    run();
+});

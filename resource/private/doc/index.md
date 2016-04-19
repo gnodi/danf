@@ -11,6 +11,8 @@ You have many ways to learn more about [Danf](../../../README.md):
 
 > All this documentation assumes you [use an application created with the danf yeoman generator](installation.md).
 
+Here is a [list of available danf modules](modules.md)!
+
 [←](../../../README.md)
 
 ![powered-bis](../../public/img/powered-bis.png) ![powered](../../public/img/powered.png) ![powered-white](../../public/img/powered-white.png)

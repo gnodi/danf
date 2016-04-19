@@ -53,6 +53,13 @@ describe('ModulesTree', function() {
             assert.equal(module.id, 'app:module1');
         })
 
+        it('should retrieve an existing module from its id', function() {
+            var module = modulesTree.get('app:module2');
+
+            assert(module);
+            assert.equal(module.id, 'app:module2');
+        })
+
         it('should fail to retrieve a non-existing module', function() {
             assert.throws(
                 function() {

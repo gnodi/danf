@@ -68,7 +68,7 @@ module.exports = {
                 }
             }
         },
-        context: {environment: 'test', verbosity: 0, cluster: {active: false}}
+        context: {environment: 'test', verbosity: 0, cluster: null}
     },
     client: {
         configuration: 'auto',

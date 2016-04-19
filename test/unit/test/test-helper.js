@@ -17,20 +17,33 @@ var configuration = {
                 a: {
                     class: require('../../fixture/app/a')
                 }
+            },
+            sequences: {
+                s: {
+                    operations: [
+                        {
+                            service: 'a',
+                            method: 'a',
+                            scope: 'a'
+                        },
+                        {
+                            service: 'a',
+                            method: 'a',
+                            scope: 'b'
+                        }
+                    ]
+                }
             }
         }
     },
-    context = {check: 1}
+    context = {
+        verbosity: 0,
+        check: 1
+    }
 ;
 
 TestHelper.use(configuration, context, function(testHelper) {
     describe('TestHelper', function() {
-        it('method "getService" should be able to retrieve a defined service', function() {
-            var a = testHelper.getService('a');
-
-            assert.equal(2, a.a());
-        })
-
         it('method "getClass" should be able to retrieve a defined and processed (inheritance, ...) class', function() {
             var C = testHelper.getClass('c'),
                 c = new C()
@@ -45,6 +58,28 @@ TestHelper.use(configuration, context, function(testHelper) {
             assert.equal(3, b.b());
         })
 
+        it('method "getService" should be able to retrieve a defined service', function() {
+            var a = testHelper.getService('a');
+
+            assert.equal(2, a.a());
+        })
+
+        it('method "getSequence" should be able to retrieve a defined sequence', function(done) {
+            var s = testHelper.getSequence('s');
+
+            s.execute({}, {}, '.', null, function(output) {
+                assert.deepEqual(
+                    output,
+                    {
+                        a: 3,
+                        b: 4
+                    }
+                );
+
+                done();
+            });
+        })
+
         it('method "getApp" should be able to retrieve the built app', function() {
             var app = testHelper.getApp();
 
@@ -56,15 +91,13 @@ TestHelper.use(configuration, context, function(testHelper) {
                 var expected = 2;
 
                 testHelper.testAsync(
-                    function() {
-                        this.__asyncProcess(function(async) {
-                            setTimeout(
-                                async(function() {
-                                    return expected;
-                                }),
-                                10
-                            );
-                        });
+                    function(async) {
+                        setTimeout(
+                            async(function() {
+                                return expected;
+                            }),
+                            10
+                        );
                     },
                     function(error, result) {
                         assert.equal(result, expected);
@@ -74,46 +107,45 @@ TestHelper.use(configuration, context, function(testHelper) {
                 );
             })
 
-            it('should allow to test an errored path in an asynchronous process', function() {
+            it('should allow to test an errored path in an asynchronous process', function(done) {
                 testHelper.testAsync(
-                    function() {
-                        this.__asyncProcess(function(async) {
-                            setTimeout(
-                                async(function() {
-                                    throw new Error('foo');
-                                }),
-                                10
-                            );
-                        });
+                    function(async) {
+                        setTimeout(
+                            async(function() {
+                                throw new Error('foo');
+                            }),
+                            10
+                        );
                     },
                     function(error, result) {
-                        assert.throws(
-                            function() {
-                                if (error) {
-                                    throw error;
-                                }
-                            },
-                            /^foo$/
-                        );
+                        try {
+                            assert.throws(
+                                function() {
+                                    if (error) {
+                                        throw error;
+                                    }
+                                },
+                                /^foo$/
+                            );
+                        } catch (err) {
+                        }
 
                         done();
                     }
                 );
             })
 
-            it('should allow to catch the error of an errored path in an asynchronous process and set a result', function() {
+            it('should allow to catch the error of an errored path in an asynchronous process and set a result', function(done) {
                 var expected = 'foo';
 
                 testHelper.testAsync(
-                    function() {
-                        this.__asyncProcess(function(async) {
-                            setTimeout(
-                                async(function() {
-                                    throw new Error(expected);
-                                }),
-                                10
-                            );
-                        });
+                    function(async) {
+                        setTimeout(
+                            async(function() {
+                                throw new Error(expected);
+                            }),
+                            10
+                        );
                     },
                     function(error, result) {
                         assert.equal(result, expected);
@@ -126,20 +158,18 @@ TestHelper.use(configuration, context, function(testHelper) {
                 );
             })
 
-            it('should allow to catch the error of an errored path in an asynchronous process to forward another one', function() {
+            it('should allow to catch the error of an errored path in an asynchronous process to forward another one', function(done) {
                 testHelper.testAsync(
-                    function() {
-                        this.__asyncProcess(function(async) {
-                            setTimeout(
-                                async(function() {
-                                    throw new Error('foo');
-                                }),
-                                10
-                            );
-                        });
+                    function(async) {
+                        setTimeout(
+                            async(function() {
+                                throw new Error('foo');
+                            }),
+                            10
+                        );
                     },
                     function(error, result) {
-                        assert.equal(result, 'foobar');
+                        assert.equal(error.message, 'foobar');
 
                         done();
                     },
@@ -147,6 +177,8 @@ TestHelper.use(configuration, context, function(testHelper) {
                         var err = new Error(error.message);
 
                         err.message += 'bar';
+
+                        throw err;
                     }
                 );
             })
@@ -165,11 +197,13 @@ TestHelper.use(configuration, context, function(testHelper) {
             it('should retrieve a different test helper instance for different arguments', function(done) {
                 testHelper.foo = 'bar';
 
-                TestHelper.use(configuration, {check: 2}, function(otherTestHelper) {
+                TestHelper.use(configuration, {check: 2, verbosity: 0}, function(otherTestHelper) {
                     assert.notEqual(otherTestHelper.foo, 'bar');
                     done();
                 });
             })
         })
     })
+
+    run();
 });

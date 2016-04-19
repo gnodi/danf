@@ -132,15 +132,15 @@ module.exports = {
              *            'Bobby Bob is 28 and lives in Houston'
              *        ]
              *
-             * @param {string} source The string where the reference occurred.
-             * @param {string} type The type of the reference.
-             * @param {mixed} context The context allowing to resolve the reference.
-             * @param {string|null} inText An optionnal text specifying where the reference is declared (errors).
+             * @param {mixed} source The source where the references occurred.
+             * @param {string} type The type of the references.
+             * @param {mixed} context The context allowing to resolve the references.
+             * @param {string|null} inText An optionnal text specifying where the references are declared (errors).
              * @return {mixed} The resolved references.
              */
             resolve: {
                 arguments: [
-                    'string/source',
+                    'mixed/source',
                     'string/type',
                     'mixed/context',
                     'string|null/inText'
@@ -548,7 +548,7 @@ module.exports = {
              */
             addTributary: {
                 arguments: [
-                    'string|null/scope',
+                    'string|number|null/scope',
                     'function|null/catch',
                     'function|null/format',
                     'function|null/callback'
@@ -631,7 +631,19 @@ module.exports = {
              *
              * @return {string}
              */
-            currentLevel: 'number'
+            currentLevel: 'number',
+            /**
+             * Whether or not the current tributary errored.
+             *
+             * @return {boolean}
+             */
+            errored: 'boolean',
+            /**
+             * The current tributary errors.
+             *
+             * @return {error_array}
+             */
+            errors: 'error_array'
         },
         setters: {
             /**

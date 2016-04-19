@@ -24,7 +24,7 @@ module.exports = {
              *
              * @param {mixed} source The source of references.
              * @param {string} type The identifier of a reference type.
-             * @param {mixed} context The resolving context.
+             * @param {mixed|null} context The resolving context.
              * @param {string|null} inText An optionnal text specifying where the reference is declared (errors).
              * @return {mixed} The resolved references.
              */
@@ -32,7 +32,7 @@ module.exports = {
                 arguments: [
                     'mixed/source',
                     'string/type',
-                    'mixed/context',
+                    'mixed|null/context',
                     'string|null/inText'
                 ],
                 returns: 'mixed'
@@ -275,6 +275,7 @@ module.exports = {
              * @param {number|null} tributary The tributary.
              * @param {number|null} level The current logging level.
              * @param {date|null} startedAt The start date of the task.
+             * @param {number|null} maxLength The max logged length.
              */
             log: {
                 arguments: [
@@ -283,7 +284,8 @@ module.exports = {
                     'number/indentation',
                     'number|null/tributary',
                     'number|null/level',
-                    'date|null/startedAt'
+                    'date|null/startedAt',
+                    'number|null/maxLength'
                 ]
             }
         }

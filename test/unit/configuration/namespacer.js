@@ -124,6 +124,22 @@ var prefixReferencesTests = [
     ]
 ;
 
+var extractPrefixTests = [
+        {
+            source: 'module1',
+            expected: ''
+        },
+        {
+            source: 'module1:module3',
+            expected: 'module1'
+        },
+        {
+            source: 'main:module1:module3:foo.bar',
+            expected: 'main:module1:module3'
+        }
+    ]
+;
+
 modulesTree.build(require('../../fixture/configuration/danf'));
 
 describe('Namespacer', function() {
@@ -152,6 +168,14 @@ describe('Namespacer', function() {
                 result,
                 test.expected
             );
+        })
+    })
+
+    extractPrefixTests.forEach(function(test) {
+        it('method "prefix" should prefix a source', function() {
+            var result = namespacer.extractPrefix(test.source);
+
+            assert.deepEqual(result, test.expected);
         })
     })
 })

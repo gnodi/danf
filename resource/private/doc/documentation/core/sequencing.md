@@ -40,24 +40,24 @@ module.exports = function AsyncComputer() {
 }
 
 AsyncComputer.prototype.add = function (value, operand) {
-    this.__asyncProcess(function(returnAsync) {
+    this.__asyncProcess(function(async) {
         setTimeout(
-            function() {
-                returnAsync(value + operand);
-            },
+            async(function() {
+                return value + operand;
+            }),
             10
         );
     });
 }
 
 AsyncComputer.prototype.mul = function (value, operand) {
-    this.__asyncProcess(function(returnAsync) {
+    this.__asyncProcess(function(async) {
         setTimeout(
-            function() {
-                returnAsync(function(value) {
+            async(function() {
+                return function(value) {
                     return value * operand;
-                });
-            },
+                };
+            }),
             10
         );
     });
@@ -66,7 +66,9 @@ AsyncComputer.prototype.mul = function (value, operand) {
 }
 ```
 
-`setTimeout` is used here to simulate an asynchrone task. In Danf, all you have to do to make an asynchronous task be compatible with the flow is to wrap it with `this.__asyncProcess(function(returnAsync) {` and use `returnAsync()` instead of a simple `return`. You will see in the next chapter what this little wrapping allows you to do.
+`setTimeout` is used here to simulate an asynchrone task. In Danf, all you have to do to make an asynchronous task be compatible with the flow is to wrap it with `this.__asyncProcess(function(async) {` and wrap asynchronous callback with `async(...)`. Then, you can return a value or throw real errors as if you were in a pure synchronous code. Danf handle the sequencing logic for you. You will see in the next chapter what this little wrapping allows you to do.
+
+> Not that the scope `this` in your async wrapped callback is the one of your current class instance. This means that you do not need a `self` variable if you use ES5 function syntax.
 
 Method `mul` has a slightly different implementation. This shows how to code a method which have a synchronous and an asynchronous return or which can be called on the same scope in parallel for instance. The first argument passed to the callback in `returnAsync` is the actual scoped value. You will see in the next chapter how to work with scopes.
 

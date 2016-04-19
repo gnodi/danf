@@ -144,7 +144,6 @@ The input stream for a request event on the server side are the `req.query` and 
 The input stream for a request event on the client side is the response ajax data of [JQuery](http://api.jquery.com/jquery.ajax/).
 
 The event context is of the form:
-
 ```javascript
 {
     request: request,
@@ -155,7 +154,138 @@ The event context is of the form:
 * `request`: request data (express object on the server side).
 * `response`: response data (express object on the server side).
 
-#### Dom
+#### Socket
+
+The type `socket` is the type for sockect messages and is available for both the client and server sides:
+It is a good practice to declare the signature of the messages in the common folder:
+
+```javascript
+// config/common/config/events/socket.js
+
+'use strict';
+
+module.exports = {
+    messageCreation: {
+    },
+    messageCreationNotification: {
+    }
+};
+```
+
+Then, you can define the other parameters on both sides:
+
+```javascript
+// config/server/config/events/socket.js
+
+'use strict';
+
+module.exports = {
+    messageCreation: {
+        sequences: [
+            {
+                name: 'notifyMessage',
+                input: {
+                    message: '@message@'
+                }
+            }
+        ]
+    }
+};
+```
+
+```javascript
+// config/client/config/events/socket.js
+
+'use strict';
+
+module.exports = {
+    messageCreationNotification: {
+        data: {
+            message: {
+                type: 'string',
+                required: true
+            }
+        },
+        sequences: [
+            {
+                name: 'receiveMessage',
+                input: {
+                    message: '@message@'
+                }
+            }
+        ]
+    }
+};
+```
+
+* `data`: optional contract to check the format of data passed on manual event triggering.
+* `sequences`: list of sequences to execute.
+
+You can inject the event in a service thanks to: `messageEvent: #danf:event.eventsContainer[socket][messageCreation]#` then trigger the event with something like `this.messageEvent.trigger({message: message});`.
+Take a look at the [chat functional test](../../../../../test/functional/feature/chat) for a full example.
+
+Library [socket.io](http://socket.io/) is used here. You can refer to its own documentation to have a deeper understanding of sockets.
+
+The event context is of the form:
+```javascript
+{
+    socket: socket
+}
+```
+
+* `socket`: socket object.
+
+#### Command
+
+The type `command` is the type for command and is available for both the client and server sides:
+
+```javascript
+// config/common/config/events/command.js
+
+'use strict';
+
+module.exports = {
+    welcome: {
+        options: {
+            name: {
+                type: 'string',
+                default: 'World'
+            }
+        },
+        aliases: {
+            n: 'name'
+        },
+        sequences: [
+            {
+                name: 'log',
+                input: {
+                    name: '@name@'
+                }
+            }
+        ]
+    }
+};
+```
+
+* `options`: optional contract to check the options available for the command.
+* `aliases`: aliases for options.
+* `sequences`: list of sequences to execute.
+
+You can execute this command on the server side with:
+```sh
+node danf $ welcome --name all
+```
+You can execute this command on the client side with:
+```javascript
+danf.$('welcome --name all')
+```
+
+The event context is of the form:
+```javascript
+{}
+```
+
+#### DOM
 
 The type `dom` is the type for DOM events and is only available for the client side:
 
@@ -199,12 +329,11 @@ module.exports = {
 * `data`: optional contract to check the format of data passed on manual event triggering.
 * `sequences`: list of sequences to execute.
 
-As you probably guess, [JQuery](http://jquery.com/) is used here. So you can refer to its own documentation for selectors, events, ...
+As you probably guess, [JQuery](http://jquery.com/) is used here. You can refer to its own documentation for selectors, events, ...
 
 The input stream for a dom event is the event data of [JQuery](https://api.jquery.com/category/events/).
 
 The event context is of the form:
-
 ```javascript
 {
     name: name,

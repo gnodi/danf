@@ -26,10 +26,10 @@ var store = new Store(),
 ;
 
 // A first possibility.
-store->sell(product, customer);
+store.sell(product, customer);
 
 // A second possibility.
-product->buy(store, customer);
+product.buy(store, customer);
 
 // ...
 ```
@@ -40,7 +40,7 @@ This almost automatically leads to have duplicated codes very hard to maintain:
 
 Of course, you can try to only have one implemented method. But where? In `Product`? `Store`? `Customer`? And how to be sure it is implemented only once?
 
-A better way, to handle that is to use a "service" (SOA pattern):
+A better way, to design that is to use a "service" (SOA pattern):
 
 ```javascript
 var store = new Store(),
@@ -49,7 +49,7 @@ var store = new Store(),
     saleHandler = new SaleHandler()
 ;
 
-saleHandler->sell(product, store, customer);
+saleHandler.sell(product, store, customer);
 ```
 
 The handler `saleHandler` is a service which is responsible for sales. He has the intelligence to manipulate data objects like `store`, `product` or `customer`.
@@ -71,9 +71,9 @@ var clothingSaleHandler = new ClothingSaleHandler(),
     logger = new Logger()
 ;
 
-clothingSaleHandler->setLogger(logger);
-perfumeSaleHandler->setLogger(logger);
-jewelSaleHandler->setLogger(logger);
+clothingSaleHandler.setLogger(logger);
+perfumeSaleHandler.setLogger(logger);
+jewelSaleHandler.setLogger(logger);
 ```
 
 The responsability of a sale handler is not to log or be loggable but to handle sales. This is why composition must be used instead of inheritance. Here, the logging factored code is in the class `Logger`.
@@ -85,9 +85,9 @@ Coupling is the degree of interaction between two classes. In an inheritance rel
 Imagine, `Logger` has 30 methods. Sale handlers only need to call method `log()`. Then, a sale handler only need an object from a class implementing the interface `LoggerInterface` defining `log()`.
 
 You can easily see the resulting benefits:
-* Scalability: you can change the class `Logger` by another one implementing `LoggerInterface`.
-* Maintenability: you can understand real dependencies between classes at a glance.
-* Testability: you can mock dependencies just implementing the interfaces.
+- Scalability: you can change the class `Logger` by another one implementing `LoggerInterface`.
+- Maintenability: you can understand real dependencies between classes at a glance.
+- Testability: you can mock dependencies just implementing the interfaces.
 
 Danf allows to define and ensure interfaces to reduce coupling. This concept is important because it is the basis for using the dependency injection to its full potential and dependency injection is the basis for a strong OOP architecture.
 
@@ -103,17 +103,18 @@ Isomorphism
 
 One of the big interests of Node.js is that you can use the same langage (javascript) on both client and server sides. But the ways of coding in Node.js and for a webpage is often so different that this asset is not operated at 100%. Danf is an isomorphic framework which propose you to potentially and easily use the same code on both sides with a classic Node.js coding style.
 
-Event driven
-------------
+Pattern Event/Sequencing/Model
+------------------------------
 
 This framework does not forget the spirit of javascript and node.js: events drive the flow. In Danf, you will be able to handle all incoming events the same way. For instance, a HTTP request event will be handled as a click on an element in the browser. This give a pretty easy global architecture for your workflows:
 
-* an event is triggered
-* a list of sequences is executed
-    * a sequence is a list of operations (synchronous or asynchronous)
+- Event: an event is triggered (DOM event, HTTP request, socket message, command, ...)
+- Sequencing: a list of sequences is processed allowing to easily control parallel and series executions of synchronous and asynchronous operations
+    * a sequence is a list of operations and sub-sequences
     * an operation is a call to a method of a service
     * a service is an instantiation of a class with some dependencies injected
-
-> Moreover, the way the events are handled gives a pretty easy alternative to callback hell.
+- Model: implementations are separated from the sequencing and injection logic allowing to have a real dynamic and scalable architecture
+    * a dynamic injection is available thanks to configuration of services
+    * interfaces can be defined with some configuration to ensure contract between classes and enable a real low coupling
 
 [←](../index.md)

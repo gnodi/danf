@@ -58,7 +58,8 @@ var checkTypeTests = [
         {type: 'interface_object', data: {}},
         {type: 'string_array', data: []},
         {type: 'number', data: '2', interpret: 2},
-        {type: 'boolean_array_object', data: {foo: [2, '3', false, 0], bar: ['0']}, interpret: {foo: [true, true, false, false], bar: [false]}}
+        {type: 'boolean_array_object', data: {foo: [2, '3', false, 0], bar: ['0']}, interpret: {foo: [true, true, false, false], bar: [false]}},
+        {type: 'mixed_object_array', data: [{foo: '2'}, {bar: '1'}]}
     ]
 ;
 

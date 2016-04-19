@@ -2,7 +2,7 @@
 
 var assert = require('assert'),
     request = require('supertest'),
-    danf = require('../../lib/server/app')(require(__dirname + '/../fixture/danf'), '', {environment: 'test', verbosity: 5, cluster: {active: false}})
+    danf = require('../../lib/server/app')(require(__dirname + '/../fixture/danf'), '', {environment: 'test', verbosity: 5, cluster: null})
 ;
 
 danf.buildServer(function(app) {
@@ -21,7 +21,7 @@ danf.buildServer(function(app) {
             assert.notEqual(dataResolver, undefined);
         })
 
-        it('should instanciate the services of the dependencies', function() {
+        it('should instantiate the services of the dependencies', function() {
             assert.equal(app.servicesContainer.get('main:dep2:storage.local').name, 'local storage');
             assert.equal(app.servicesContainer.get('main:dep2:provider.bigImages').rules[0].parameters[0].value, 3);
         })
@@ -30,10 +30,11 @@ danf.buildServer(function(app) {
             var manager = app.servicesContainer.get('main:manager');
 
             assert(Object.isInstanceOf(manager, 'main:ManagerInterface'));
+            assert(manager.name, 'manager');
         })
 
         it('should resolve the defined parameters', function() {
-            var parameter = app.servicesContainer.get('main:provider.bigImages.rules.0.parameters.0');
+            var parameter = app.servicesContainer.get('main:provider.bigImages.rule.minSize.parameter.0');
 
             assert.equal(parameter.name, 'parameter size');
         })
@@ -396,4 +397,6 @@ danf.buildServer(function(app) {
             });
         })
     })
+
+    run();
 });

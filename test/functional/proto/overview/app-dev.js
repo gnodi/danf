@@ -1,8 +1,12 @@
 'use strict';
 
-var danf = require('danf'),
-    app = danf(
-        __dirname + '/danf-server.js',
-        __dirname + '/danf-client.js'
-    )
-;
+module.exports = {
+    server: {
+        configuration: 'auto',
+        context: {}
+    },
+    client: {
+        configuration: 'auto',
+        context: {}
+    }
+};

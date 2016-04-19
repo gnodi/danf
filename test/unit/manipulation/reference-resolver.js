@@ -320,6 +320,10 @@ var tests = [
             source: '%a\\%\\b%',
             context: {'a\\%\\b': 2},
             expected: 2
+        },
+        {
+            source: '%foo.bar%',
+            context: {foo: {bar: null}}
         }
     ]
 ;

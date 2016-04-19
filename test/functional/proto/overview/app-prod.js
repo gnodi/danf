@@ -1,19 +1,21 @@
 'use strict';
 
-var danf = require('danf'),
-    app = danf(
-        __dirname + '/danf-server.js',
-        __dirname + '/danf-client.js',
-        {
-            environment: 'prod',
-            debug: false,
-            verbosity: 1,
-            secret: 'secret'
-        },
-        {
+module.exports = {
+    server: {
+        configuration: 'auto',
+        context: {
             environment: 'prod',
             debug: false,
             verbosity: 1
         }
-    )
-;
+    },
+    client: {
+        configuration: 'auto',
+        context: {
+            environment: 'prod',
+            debug: false,
+            verbosity: 1,
+            secret: 'test'
+        }
+    }
+};
