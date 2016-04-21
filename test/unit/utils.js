@@ -103,6 +103,73 @@ var mergeTests = [
     ]
 ;
 
+var circularObject = {};
+circularObject.a = circularObject;
+
+var stringifyTests = [
+        {
+            object: {
+                a: {
+                    a: {
+                        a: 2,
+                        b: 3
+                    },
+                    b: 4,
+                },
+                foo: 'bar'
+            },
+            length: 100,
+            expected: '{"a":{"a":{"a":2,"b":3},"b":4},"foo":"bar"}'
+        },
+        {
+            object: {
+                a: {
+                    a: {
+                        a: 2,
+                        b: 3
+                    },
+                    b: 4,
+                },
+                foo: 'bar'
+            },
+            length: 10,
+            expected: '{"a":{"a":...'
+        },
+        {
+            object: circularObject,
+            length: 100,
+            expected: '...'
+        },
+        {
+            object: {
+                a: {
+                    a: {
+                        a: 2,
+                        b: 3
+                    },
+                    b: 4,
+                },
+                foo: 'bar'
+            },
+            expected: '{"a":{"a":{"a":2,"b":3},"b":4},"foo":"bar"}'
+        },
+        {
+            object: {
+                a: {
+                    a: {
+                        a: 2,
+                        b: 3
+                    },
+                    b: 4,
+                },
+                foo: 'bar'
+            },
+            length: 0,
+            expected: '{"a":{"a":{"a":2,"b":3},"b":4},"foo":"bar"}'
+        }
+    ]
+;
+
 describe('utils', function() {
     mergeTests.forEach(function(test) {
         it('"merge" should merge objects', function() {
@@ -232,4 +299,12 @@ describe('utils', function() {
         assert.equal(cleanedObject.c, 3);
         assert.equal(object.c, 3);
     })
+
+    stringifyTests.forEach(function(test) {
+        it('"stringify" should stringify an object', function() {
+            var result = utils.stringify(test.object, test.length);
+
+            assert.deepEqual(result, test.expected);
+        })
+    });
 })
