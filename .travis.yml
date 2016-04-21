@@ -2,8 +2,7 @@ sudo: false
 language: node_js
 node_js:
   - '0.12'
-  - '1.0'
-  - '2.0'
   - '4.2'
   - '5.0'
+  - 'node'
 script: 'make test'
