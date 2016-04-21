@@ -774,7 +774,8 @@ var config = {
                         embedded: {
                             b: '@result@'
                         }
-                    }
+                    },
+                    merge: true
                 },
                 {
                     order: 0,
@@ -788,7 +789,8 @@ var config = {
                         embedded: {
                             c: '@result@'
                         }
-                    }
+                    },
+                    merge: true
                 },
                 {
                     order: 2,
@@ -802,7 +804,8 @@ var config = {
                         embedded: {
                             d: '@result@'
                         }
-                    }
+                    },
+                    merge: true
                 }
             ]
         },

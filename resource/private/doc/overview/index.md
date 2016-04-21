@@ -554,7 +554,10 @@ module.exports = {
                     result: {
                         simple: '@.@'
                     }
-                }
+                },
+                // Merge output with current stream if true,
+                // overwrite otherwise (default to overwrite).
+                merge: true
             },
             {
                 order: 0,
@@ -566,7 +569,8 @@ module.exports = {
                     result: {
                         unpredictable: '@.@'
                     }
-                }
+                },
+                merge: true
             },
             {
                 order: 0,
@@ -578,7 +582,8 @@ module.exports = {
                     result: {
                         parallel: '@.@'
                     }
-                }
+                },
+                merge: true
             },
             {
                 order: 0,
@@ -590,7 +595,8 @@ module.exports = {
                     result: {
                         series: '@.@'
                     }
-                }
+                },
+                merge: true
             },
             {
                 order: 0,
@@ -602,7 +608,8 @@ module.exports = {
                     result: {
                         collection: '@.@'
                     }
-                }
+                },
+                merge: true
             }
         ]
     }
