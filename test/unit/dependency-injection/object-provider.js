@@ -71,7 +71,7 @@ describe('ObjectProvider', function() {
                 obj.public();
                 obj.private();
             },
-            /The method "private" is not accessible in the scope of the interface "interface"\./
+            /The method "private" .* is not accessible in the scope of the interface "interface"\.$/
         );
     })
 })
