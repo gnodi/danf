@@ -47,7 +47,7 @@ module.exports = {
              * @param {mixed} value The value.
              */
             set: {
-                arguments: ['string/key', 'value/mixed']
+                arguments: ['string/key', 'mixed/value']
             },
             /**
              * Regenerate the session.
