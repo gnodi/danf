@@ -20,6 +20,7 @@ module.exports = {
                             app: '#danf:app#',
                             debug: '%danf:context.debug%',
                             socketIo: '#danf:vendor.socketIo#',
+                            sessionHandler: '#danf:http.sessionHandler#',
                             logger: '#danf:logging.logger#'
                         }
                     }
