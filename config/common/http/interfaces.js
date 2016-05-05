@@ -48,6 +48,12 @@ module.exports = {
         },
         getters: {
             /**
+             * Name.
+             *
+             * @return {string}
+             */
+            name: 'string',
+            /**
              * Path.
              *
              * @return {string}
@@ -65,6 +71,14 @@ module.exports = {
              * @return {danf:event.event}
              */
             event: 'danf:event.event'
+        },
+        setters: {
+            /**
+             * Name.
+             *
+             * @param {string}
+             */
+            name: 'string'
         }
     },
     router: {
