@@ -78,6 +78,14 @@ module.exports = {
              */
             touch: {
                 arguments: []
+            },
+            /**
+             * Check the existence of the session.
+             *
+             * @return {boolean} True if the session exists, false otherwise.
+             */
+            check: {
+                returns: 'boolean'
             }
         }
     }
