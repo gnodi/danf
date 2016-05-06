@@ -14,9 +14,7 @@ module.exports = {
                 arguments: [
                     'string/name',
                     'mixed|null/data',
-                    'string|string_array|null/target',
-                    'object/config',
-                    'function/callback'
+                    'string|string_array|null/target'
                 ]
             },
             /**
