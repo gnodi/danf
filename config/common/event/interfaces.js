@@ -16,9 +16,14 @@ module.exports = {
              *
              * @param {danf:event.event} event The event.
              * @param {mixed} data The data associated with the triggered event.
+             * @param {object} data The metadata associated with the triggered event.
              */
             notify: {
-                arguments: ['danf:event.event/event', 'mixed/data']
+                arguments: [
+                    'danf:event.event/event',
+                    'mixed/data',
+                    'object/meta'
+                ]
             },
             /**
              * Merge a field of contract.
@@ -55,10 +60,14 @@ module.exports = {
             /**
              * Trigger the execution of the event.
              *
-             * @param {object|null} data The optional data related to the event.
+             * @param {mixed} data The optional data related to the event.
+             * @param {object|null} meta The optional metadata related to the event.
              */
             trigger: {
-                arguments: ['object|null/data']
+                arguments: [
+                    'mixed|null/data',
+                    'object|null/meta'
+                ]
             },
             /**
              * Set a parameter.

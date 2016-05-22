@@ -13,13 +13,17 @@ var route = new Route(),
     querystringRoute = new Route(),
     routes = [route, paramRoute, regexpRoute, hostRoute, querystringRoute],
     event = {
-        trigger: function(data) {
-            data.parameters.done();
+        trigger: function(data, meta) {
+            var done = meta.done();
+
+            done();
         }
     },
     paramEvent = {
-        trigger: function(data) {
-            data.parameters.done();
+        trigger: function(data, meta) {
+            var done = meta.done();
+
+            done();
 
             assert.equal(data.parameters.bar, 6);
             assert.equal(data.path, '/bar?foo=6');
@@ -161,15 +165,15 @@ describe('Route', function() {
 
     describe('method "follow"', function() {
         it('should follow a route triggering its request event', function(done) {
-            route.follow({done: function() { return done; }});
+            route.follow({}, null, {done: function() { return done; }});
         })
 
         it('should resolve and follow a route with given parameters and headers', function(done) {
-            querystringRoute.follow({bar: 6, done: function() { return done; }}, {x: 'foo'});
+            querystringRoute.follow({bar: 6}, {x: 'foo'}, {done: function() { return done; }});
         })
 
         it('should resolve and follow a route from metadata', function(done) {
-            paramRoute.follow({done: function() { return done; }}, null, {path: '/foo/7/bar/ijk'});
+            paramRoute.follow({}, null, {path: '/foo/7/bar/ijk', done: function() { return done; }});
         })
 
         it('should fail to resolve and follow a route from incompatible metadata', function() {

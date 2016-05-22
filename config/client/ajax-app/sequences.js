@@ -7,8 +7,22 @@ module.exports = {
                 order: 0,
                 service: 'danf:ajaxApp.linkFollower',
                 method: 'follow',
-                arguments: ['!event.target!'],
+                arguments: ['!event!'],
                 scope: 'response'
+            },
+            {
+                order: 1,
+                service: 'danf:manipulation.callbackExecutor',
+                method: 'execute',
+                arguments: [
+                    function(response) {
+                        var url = response.headers['X-Danf-Path'];
+
+                        return url ? url : response.url;
+                    },
+                    '@response@'
+                ],
+                scope: 'url'
             },
             {
                 condition: function(stream) {
@@ -17,7 +31,7 @@ module.exports = {
                 order: 10,
                 service: 'danf:ajaxApp.linkFollower',
                 method: 'write',
-                arguments: ['@response.text@', '@response.url@', '!event.target!', '!event!']
+                arguments: ['@response.text@', '@url@', '!event!']
             }
         ]
     },
@@ -27,8 +41,22 @@ module.exports = {
                 order: 0,
                 service: 'danf:ajaxApp.formSubmitter',
                 method: 'submit',
-                arguments: ['!event.target!'],
+                arguments: ['!event!'],
                 scope: 'response'
+            },
+            {
+                order: 1,
+                service: 'danf:manipulation.callbackExecutor',
+                method: 'execute',
+                arguments: [
+                    function(response) {
+                        var url = response.headers['X-Danf-Path'];
+
+                        return url ? url : response.url;
+                    },
+                    '@response@'
+                ],
+                scope: 'url'
             },
             {
                 condition: function(stream) {
@@ -37,7 +65,7 @@ module.exports = {
                 order: 10,
                 service: 'danf:ajaxApp.formSubmitter',
                 method: 'write',
-                arguments: ['@response.text@', '@response.url@', '!event.target!']
+                arguments: ['@response.text@', '@url@', '!event!']
             }
         ]
     }

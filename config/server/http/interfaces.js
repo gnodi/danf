@@ -47,7 +47,7 @@ module.exports = {
              * @param {mixed} value The value.
              */
             set: {
-                arguments: ['string/key', 'value/mixed']
+                arguments: ['string/key', 'mixed/value']
             },
             /**
              * Regenerate the session.
@@ -78,6 +78,14 @@ module.exports = {
              */
             touch: {
                 arguments: []
+            },
+            /**
+             * Check the existence of the session.
+             *
+             * @return {boolean} True if the session exists, false otherwise.
+             */
+            check: {
+                returns: 'boolean'
             }
         }
     }

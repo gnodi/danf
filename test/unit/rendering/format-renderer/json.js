@@ -3,7 +3,7 @@
 require('../../../../lib/common/init');
 
 var assert = require('assert'),
-    danf = require('../../../../lib/server/app')(require('../../../fixture/rendering/danf'), '', {environment: 'test', verbosity: 0, cluster: null}),
+    danf = require('../../../../lib/server/app')(require('../../../fixture/rendering/danf'), null, {environment: 'test', verbosity: 0, cluster: null}),
     ReferenceType = require('../../../../lib/common/manipulation/reference-type'),
     ReferenceResolver = require('../../../../lib/common/manipulation/reference-resolver'),
     Json = require('../../../../lib/server/rendering/format-renderer/json')

@@ -1,6 +1,14 @@
 'use strict';
 
 module.exports = {
+    messenger: {
+        class: 'danf:tcp.messenger',
+        properties: {
+            app: '#danf:app#',
+            event: '#danf:event.eventsContainer[socket][danf:tcp.forwarder]#',
+            sessionHandler: '#danf:http.sessionHandler#'
+        }
+    },
     event: {
         children: {
             notifier: {
@@ -12,6 +20,7 @@ module.exports = {
                             app: '#danf:app#',
                             debug: '%danf:context.debug%',
                             socketIo: '#danf:vendor.socketIo#',
+                            sessionHandler: '#danf:http.sessionHandler#',
                             logger: '#danf:logging.logger#'
                         }
                     }

@@ -1,6 +1,12 @@
 'use strict';
 
 module.exports = {
+    messenger: {
+        class: 'danf:tcp.messenger',
+        properties: {
+            event: '#danf:event.eventsContainer[socket][danf:tcp.forwarder]#'
+        }
+    },
     event: {
         children: {
             notifier: {
