@@ -4,5 +4,5 @@ node_js:
   - '0.12'
   - '4.2'
   - '5.0'
-  - 'node'
-script: 'make test'
+  #- 'node' wait for gulp 4 corrections
+script: 'npm test'
