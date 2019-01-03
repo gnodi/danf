@@ -1,75 +1,63 @@
 {
-    "name": "danf",
-    "description": "Danf is a Node.js full-stack isomorphic OOP framework allowing to code the same way on both client and server sides. It helps you to make deep architectures and handle asynchronous flows in order to help produce scalable, maintainable, testable and performant applications.",
-    "version": "0.4.3",
-    "author": {
-        "name": "Thomas Prelot",
-        "email": "tprelot@gmail.com",
-        "url": "https://github.com/Gnucki"
-    },
-    "contributors": [
-        {
-            "name": "Thomas Prelot",
-            "email": "tprelot@gmail.com",
-            "url": "https://github.com/Gnucki"
-        }
-    ],
-    "keywords": [
-        "danf",
-        "framework",
-        "full-stack",
-        "client",
-        "server",
-        "dependency",
-        "injection",
-        "node",
-        "nodejs",
-        "oop",
-        "object",
-        "class",
-        "classes",
-        "interface",
-        "inheritance",
-        "modular",
-        "module",
-        "performant",
-        "event",
-        "test"
-    ],
-    "dependencies": {
-        "async": "^1.0",
-        "chalk": "^1.1",
-        "cookie-parser": "^1.3",
-        "escape-html": "^1.0",
-        "express": "^4.12",
-        "express-session": "^1.10",
-        "gnucki-r": "^1.0",
-        "gulp": "^3.9",
-        "jquery": "^2.1",
-        "parseurl": "^1.3",
-        "pug": "^2.0.0-beta4",
-        "read-package-tree": "^5.1",
-        "requirejs": "^2.1",
-        "semver": "^5.1",
-        "send": "^0.13",
-        "socket.io": "^1.0",
-        "tosource": "^1.0",
-        "utils-merge": "^1.0"
-    },
-    "devDependencies": {
-        "mocha": "^2.2",
-        "supertest": "^1.0"
-    },
-    "license": "MIT",
-    "repository": {
-        "type": "git",
-        "url": "gnodi/danf"
-    },
-    "main": "index",
-    "scripts": {
-        "test": "make test"
-    },
-    "engines": {
-        "node": "*"
-    }
+  "name": "danf",
+  "description": "Dependency injector and container.",
+  "version": "0.5.0",
+  "author": "Thomas Prelot <tprelot@gmail.com> (https://github.com/Gnucki)",
+  "contributors": [],
+  "keywords": [
+    "gnodi",
+    "lib",
+    "danf",
+    "nead",
+    "fast",
+    "easy",
+    "simple",
+    "light",
+    "dependency",
+    "injection",
+    "injector",
+    "ducktype",
+    "ducktyping",
+    "duck type",
+    "duck typing",
+    "interface",
+    "container",
+    "di",
+    "service",
+    "soa",
+    "dynamic",
+    "config"
+  ],
+  "dependencies": {
+    "nead": "^0.1.0"
+  },
+  "devDependencies": {
+    "@gnodi/eslint-config": "^0.4.0",
+    "chai": "^4.1.0",
+    "chai-as-promised": "^7.1.1",
+    "coveralls": "^3.0.2",
+    "mocha": "^5.2.0",
+    "nyc": "^13.0.1"
+  },
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/gnodi/danf"
+  },
+  "main": "index",
+  "scripts": {
+    "check": "gnodi-lint && npm run test-coverage && npm run test-integration",
+    "lint": "gnodi-lint",
+    "test": "NODE_ENV='test' mocha --recursive test/unit/ src/",
+    "test-coverage": "nyc npm test && nyc report --reporter text-summary",
+    "test-coveralls": "nyc npm test && nyc report --reporter text-lcov | coveralls",
+    "test-debug": "NODE_ENV='test' mocha --recursive --full-trace --check-leaks test/unit/ src/",
+    "test-integration": "NODE_ENV='test' mocha --recursive test/integration/",
+    "test-watch": "NODE_ENV='test' mocha -w -b --recursive test/unit/ test/integration/ test/fixtures/ index.js"
+  },
+  "bin": {},
+  "engines": {
+    "node": ">=8",
+    "npm": ">=5"
+  }
 }

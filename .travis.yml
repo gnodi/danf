@@ -1,8 +1,9 @@
 sudo: false
 language: node_js
 node_js:
-  - '0.12'
-  - '4.2'
-  - '5.0'
-  #- 'node' wait for gulp 4 corrections
-script: 'npm test'
+  - '8.0'
+  - node
+script:
+  - npm run lint
+  - npm run test-coveralls
+  - npm run test-integration
